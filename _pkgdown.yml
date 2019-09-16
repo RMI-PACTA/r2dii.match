@@ -1,0 +1,31 @@
+destination: docs
+
+template:
+  params:
+    bootswatch: flatly
+
+url: https://github.com/2DegreesInvesting/r2dii.match/
+
+authors:
+  Mauro Lepore:
+    href: https://www.linkedin.com/in/mauro-lepore/
+  2 Degrees Investing Initiative:
+    href: https://2degrees-investing.org/
+
+home:
+  links:
+  - text: Learn more
+    href: https://2degrees-investing.org/
+
+
+
+navbar:
+
+  type: default
+
+  right:
+    - icon: fa-gavel
+      href: https://github.com/maurolepore
+
+    - icon: fa-github
+      href: https://github.com/2DegreesInvesting/r2dii.match

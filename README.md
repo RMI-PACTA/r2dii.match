@@ -25,6 +25,22 @@ devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
 
 ## Example
 
+For an approximation of what this package will eventually do see [this
+flowchart](https://docs.google.com/document/d/10smLkRUIIc5zRYltx1jXLuTpEXslw018ihEq9LSQ3kA/edit?ts=5d7bae6c#heading=h.ogg9badrp207).
+
+A great place to see the documentation of this package is in its private
+website.
+
 ``` r
-## TODO: Add example
+library(r2dii)
+#> Loading required package: r2dii.dataprep
+#> Loading required package: r2dii.dataraw
+
+if (interactive()) {
+  browse_private_site()
+}
 ```
+
+In an interactive session you should see something like this:
+
+![](https://i.imgur.com/YIXj8GF.png)
