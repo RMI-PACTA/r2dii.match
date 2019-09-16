@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match a loanbook with asset level data
+# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
 
 <!-- badges: start -->
 
@@ -10,7 +10,7 @@
 status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 <!-- badges: end -->
 
-The goal of r2dii.match is to match a loanbook with asset level data.
+The goal of r2dii.match is to match loanbook data with asset level data.
 
 ## Installation
 

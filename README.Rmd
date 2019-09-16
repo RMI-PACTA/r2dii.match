@@ -11,14 +11,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match a loanbook with asset level data
+# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
 
 <!-- badges: start -->
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 <!-- badges: end -->
 
-The goal of r2dii.match is to match a loanbook with asset level data.
+The goal of r2dii.match is to match loanbook data with asset level data.
 
 ## Installation
 
