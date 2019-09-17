@@ -7,9 +7,15 @@ Authors@R:
              role = c("aut", "ctr", "cre"),
              email = "maurolepore@gmail.com",
              comment = c(ORCID = "0000-0002-1986-7988")),
+      person(given = "Jackson",
+             family = "Hoffart",
+             role = c("ctb"),
+             email = "jackson@2degrees-investing.org",
+             comment = c(ORCID = "0000-0002-8600-5042")),
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
+
 Description: Match loanbook with asset level data. For more
     information visit <https://2degrees-investing.org/>.
 License: file LICENSE
