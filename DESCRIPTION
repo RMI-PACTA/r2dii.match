@@ -12,6 +12,10 @@ Authors@R:
              role = c("ctb"),
              email = "jackson@2degrees-investing.org",
              comment = c(ORCID = "0000-0002-8600-5042")),
+      person(given = "Klaus",
+             family = "Hagedorn",
+             role = c("aut"),
+             email = "klaus@2degrees-investing.org"),
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
