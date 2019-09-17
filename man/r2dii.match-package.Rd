@@ -20,8 +20,14 @@ Useful links:
 \author{
 \strong{Maintainer}: Mauro Lepore \email{maurolepore@gmail.com} (0000-0002-1986-7988) [contractor]
 
+Authors:
+\itemize{
+  \item Klaus Hagedorn \email{klaus@2degrees-investing.org}
+}
+
 Other contributors:
 \itemize{
+  \item Jackson Hoffart \email{jackson@2degrees-investing.org} (0000-0002-8600-5042) [contributor]
   \item 2 Degrees Investing Initiative \email{contact@2degrees-investing.org} [copyright holder, funder]
 }
 
