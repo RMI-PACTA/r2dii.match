@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • r2dii.match</title>
+<title>Match loanbook with asset level data — match_addin • r2dii.match</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,22 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Match loanbook with asset level data — match_addin" />
+
+<meta property="og:description" content="FIXME: This is work in progress. At this stage these functions do useless
+stuff. We use them only to test the interfaces they provide:
+match_addin():
+The user enter parameters on a pop-up window.
+The app prints stuff on the R console.
+It must run from R or RStudio (can't be hosted online).
+
+match_app():
+The user enter parameters on the web browser.
+The app prints stuff on the web browser.
+It can be hosted online, maybe on our private server.
+
+" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +62,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,42 +115,56 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Match loanbook with asset level data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/match_addin.R'><code>R/match_addin.R</code></a></small>
+    <div class="hidden name"><code>match_addin.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>FIXME: This is work in progress. At this stage these functions do useless
+stuff. We use them only to test the interfaces they provide:</p><ul>
+<li><p><code>match_addin()</code>:</p><ul>
+<li><p>The user enter parameters on a pop-up window.</p></li>
+<li><p>The app prints stuff on the R console.</p></li>
+<li><p>It must run from R or RStudio (can't be hosted online).</p></li>
+</ul></li>
+<li><p><code>match_app()</code>:</p><ul>
+<li><p>The user enter parameters on the web browser.</p></li>
+<li><p>The app prints stuff on the web browser.</p></li>
+<li><p>It can be hosted online, maybe on our private server.</p></li>
+</ul></li>
+</ul>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>match_addin</span>()
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
+<span class='fu'>match_app</span>()</pre>
         
-        <td>
-          <p><code><a href="match_addin.html">match_addin()</a></code> <code><a href="match_addin.html">match_app()</a></code> </p>
-        </td>
-        <td><p>Match loanbook with asset level data</p></td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>Called for its side effects.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>match_addin</span>()
+
+<span class='fu'>match_app</span>()
+<span class='co'># }</span></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

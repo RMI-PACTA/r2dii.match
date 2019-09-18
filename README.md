@@ -25,18 +25,34 @@ devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
 
 ## Example
 
-For an approximation of what this package will eventually do see [this
-flowchart](https://docs.google.com/document/d/10smLkRUIIc5zRYltx1jXLuTpEXslw018ihEq9LSQ3kA/edit?ts=5d7bae6c#heading=h.ogg9badrp207).
+### Aspirational flowchart
+
+[This
+flowchart](https://docs.google.com/document/d/10smLkRUIIc5zRYltx1jXLuTpEXslw018ihEq9LSQ3kA/edit?ts=5d7bae6c#heading=h.ogg9badrp207)
+approximates what the package will eventually do.
 
 ![](https://i.imgur.com/bSenVBp.png)
 
-## Browse private site
+### User Interface
 
-This package comes with a local site, which is a great place to read the
-documentation. It looks more or less like this:
+We aim to provide a graphical user interface. Here are three options:
 
-``` r
-browse_private_site()
-```
+  - An addin-based shiny app (a pop-up window in RStudio). See
+    `?match_addin()`.
 
-![](https://i.imgur.com/YIXj8GF.png)
+<img src="https://i.imgur.com/HUlgI45.png" align="center" width=400 />
+
+  - An browser-based shiny app. See `?match_app()`.
+
+<img src="https://i.imgur.com/IeHQQHt.png" align="center" width=400 />
+
+  - A parametrized Rmarkdown document. See
+    [param\_rmd.md](./buildignore/param_rmd.md). this is easiest to
+    develop. It runs locally or online on rstudioconnect.
+
+<img src="https://i.imgur.com/t1uqQ0i.png" align="center" width=400 />
+
+Another alternative that we haven’t considered is a terminal-based,
+interactive function.
+
+<img src="https://i.imgur.com/m2On1Ib.png" align="center" width=400 />

@@ -1,0 +1,54 @@
+---
+title: "Parametrized Rmarkdown"
+output: github_document
+params:
+  loanbook_path: "loanbook.csv"
+  do_match: yes
+  do_analyze: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  error = TRUE,
+  collapse = TRUE
+)
+```
+
+This is a parametrized Rmarkdown document. It provides a GUI for the user to provide parameters, and an easy way for developers to use those parameters in R code.
+
+## User perspective
+
+To access the graphical user interface, go to _Knit > Knit with Parameters ..._
+
+![](https://i.imgur.com/SgY2me1.png)
+
+![](https://i.imgur.com/26PsRsw.png)
+
+Now edit the parameters and "Knit". The underlying R code will now do whatever it's been designed to do.
+
+## Developer perspective
+
+To create a parametrized Rmarkdown document simply add the `param:` field to the YAML header. For example:
+
+```
+---
+title: "Parametrized Rmarkdown"
+params:
+  loanbook_path: "loanbook.csv"
+  do_match: yes
+  do_analyze: no
+---
+```
+
+Now the each parameter is available via `params$<value>`, for example:
+
+```{r, message=FALSE}
+params$do_match
+params$do_analyze
+
+path <- params$loanbook_path
+readr::read_csv(path)
+```
+
