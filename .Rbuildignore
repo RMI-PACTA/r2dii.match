@@ -5,3 +5,4 @@
 ^buildignore$
 ^_pkgdown\.yml$
 
+^\.github/workflows$
