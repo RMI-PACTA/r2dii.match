@@ -18,13 +18,13 @@ stuff. We use them only to test the interfaces they provide:
 \itemize{
 \item \code{match_addin()}:
 \itemize{
-\item The user enter parameters on a pop-up window.
+\item The user enters parameters on a pop-up window.
 \item The app prints stuff on the R console.
 \item It must run from R or RStudio (can't be hosted online).
 }
 \item \code{match_app()}:
 \itemize{
-\item The user enter parameters on the web browser.
+\item The user enters parameters on the web browser.
 \item The app prints stuff on the web browser.
 \item It can be hosted online, maybe on our private server.
 }
