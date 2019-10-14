@@ -10,7 +10,7 @@ gen_id(lbk_input)
 \item{lbk}{The input loanbook. See r2ii.dataraw for details.}
 }
 \value{
-lbk The input loanbook, with adjusted ids
+The input loanbook, with adjusted ids
 }
 \description{
 This function will generate identifiers for id_direct_loantaker and

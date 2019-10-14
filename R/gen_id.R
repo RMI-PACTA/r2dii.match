@@ -1,4 +1,4 @@
-#' Populate id_direct_loantaker, and id_ultimate_parent in the loanbook
+#' Populate `id_direct_loantaker`, and `id_ultimate_parent` in the loanbook
 #'
 #' This function will generate identifiers for id_direct_loantaker and
 #' id_ultimate_parent that are unique to every (Name,Sector) pair.
