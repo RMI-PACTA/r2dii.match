@@ -15,7 +15,7 @@
 #' @examples
 #' gen_id(r2dii.dataraw::loanbook_demo)
 gen_id <- function(data) {
-  lbk_output <- data %>%
+  data %>%
     mutate(
       id_direct_loantaker = dplyr::group_indices(
         .,
