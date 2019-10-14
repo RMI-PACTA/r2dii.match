@@ -2,7 +2,7 @@
 % Please edit documentation in R/gen_id.R
 \name{gen_id}
 \alias{gen_id}
-\title{Populate id_direct_loantaker, and id_ultimate_parent in the loanbook}
+\title{Populate \code{id_direct_loantaker}, and \code{id_ultimate_parent} in the loanbook}
 \usage{
 gen_id(lbk_input)
 }
@@ -17,5 +17,7 @@ This function will generate identifiers for id_direct_loantaker and
 id_ultimate_parent that are unique to every (Name,Sector) pair.
 }
 \examples{
+lbk <- r2dii.dataraw::loanbook_demo
 lbk_id_adjusted <- gen_id(lbk)
+lbk_id_adjusted
 }
