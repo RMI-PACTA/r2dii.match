@@ -9,9 +9,7 @@
 #' @export
 #'
 #' @examples
-#' lbk <- r2dii.dataraw::loanbook_demo
-#' lbk_id_adjusted <- gen_id(lbk)
-#' lbk_id_adjusted
+#' gen_id(r2dii.dataraw::loanbook_demo)
 gen_id <- function(data) {
   lbk_output <- data %>%
     mutate(
