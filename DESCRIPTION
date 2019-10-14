@@ -36,4 +36,7 @@ RoxygenNote: 6.1.1
 Imports: 
     here,
     usethis,
-    readr
+    readr,
+    dplyr,
+    magrittr,
+    r2dii.dataraw
