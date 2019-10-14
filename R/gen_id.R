@@ -1,7 +1,8 @@
 #' Populate `id_direct_loantaker`, and `id_ultimate_parent` in the loanbook
 #'
-#' This function will generate identifiers for id_direct_loantaker and
-#' id_ultimate_parent that are unique to every (Name,Sector) pair.
+#' This function generates identifiers for `id_direct_loantaker` and
+#' `id_ultimate_parent` that are unique by every combination of the columns
+#' `name_direct_loantaker` and `sector_classification_direct_loantaker`.
 #'
 #' @param data The input loanbook. See r2ii.dataraw for details.
 #'
