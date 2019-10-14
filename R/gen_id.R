@@ -15,6 +15,15 @@
 #' @examples
 #' gen_id(r2dii.dataraw::loanbook_demo)
 gen_id <- function(data) {
+  crucial <- c(
+    "name_direct_loantaker",
+    "sector_classification_direct_loantaker",
+    "name_ultimate_parent",
+    "id_direct_loantaker",
+    "id_ultimate_parent"
+  )
+  check_crucial_names(data, crucial)
+
   data %>%
     mutate(
       id_direct_loantaker = dplyr::group_indices(
