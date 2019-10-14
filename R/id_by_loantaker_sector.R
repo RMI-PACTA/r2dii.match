@@ -13,8 +13,8 @@
 #' @export
 #'
 #' @examples
-#' gen_id(r2dii.dataraw::loanbook_demo)
-gen_id <- function(data) {
+#' id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
+id_by_loantaker_sector <- function(data) {
   crucial <- c(
     "name_direct_loantaker",
     "sector_classification_direct_loantaker",
