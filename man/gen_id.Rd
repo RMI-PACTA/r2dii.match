@@ -13,8 +13,8 @@ gen_id(data)
 The input loanbook, with adjusted ids
 }
 \description{
-This function will generate identifiers for id_direct_loantaker and
-id_ultimate_parent that are unique to every (Name,Sector) pair.
+This function generates identifiers for \code{id_direct_loantaker} and
+\code{id_ultimate_parent} that are unique by every Name-Sector pair.
 }
 \examples{
 lbk <- r2dii.dataraw::loanbook_demo
