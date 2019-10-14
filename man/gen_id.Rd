@@ -4,10 +4,10 @@
 \alias{gen_id}
 \title{Populate \code{id_direct_loantaker}, and \code{id_ultimate_parent} in the loanbook}
 \usage{
-gen_id(lbk_input)
+gen_id(data)
 }
 \arguments{
-\item{lbk}{The input loanbook. See r2ii.dataraw for details.}
+\item{data}{The input loanbook. See r2ii.dataraw for details.}
 }
 \value{
 The input loanbook, with adjusted ids

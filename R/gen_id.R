@@ -3,17 +3,17 @@
 #' This function will generate identifiers for id_direct_loantaker and
 #' id_ultimate_parent that are unique to every (Name,Sector) pair.
 #'
-#' @param lbk The input loanbook. See r2ii.dataraw for details.
+#' @param data The input loanbook. See r2ii.dataraw for details.
 #'
-#' @return lbk The input loanbook, with adjusted ids
+#' @return The input loanbook, with adjusted ids
 #' @export
 #'
 #' @examples
 #' lbk <- r2dii.dataraw::loanbook_demo
 #' lbk_id_adjusted <- gen_id(lbk)
 #' lbk_id_adjusted
-gen_id <- function(lbk_input) {
-  lbk_output <- lbk_input %>%
+gen_id <- function(data) {
+  lbk_output <- data %>%
     mutate(
       id_direct_loantaker = dplyr::group_indices(
         .,
