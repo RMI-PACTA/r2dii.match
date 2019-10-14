@@ -2,15 +2,15 @@
 % Please edit documentation in R/gen_id.R
 \name{gen_id}
 \alias{gen_id}
-\title{Populate \code{id_direct_loantaker}, and \code{id_ultimate_parent} in the loanbook}
+\title{In loanbook data, identify unique combinations of "loan-takers + sector"}
 \usage{
 gen_id(data)
 }
 \arguments{
-\item{data}{The input loanbook. See r2ii.dataraw for details.}
+\item{data}{A loanbook dataframe.}
 }
 \value{
-The input loanbook, with adjusted ids
+A loanbook dataframe with adjusted ids.
 }
 \description{
 This function generates identifiers for \code{id_direct_loantaker} and
@@ -19,4 +19,8 @@ This function generates identifiers for \code{id_direct_loantaker} and
 }
 \examples{
 gen_id(r2dii.dataraw::loanbook_demo)
+}
+\seealso{
+\link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description},
+\link[r2dii.dataraw:loanbook_demo]{r2dii.dataraw::loanbook_demo}.
 }

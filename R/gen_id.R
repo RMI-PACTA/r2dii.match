@@ -4,9 +4,12 @@
 #' `id_ultimate_parent` that are unique by every combination of the columns
 #' `name_direct_loantaker` and `sector_classification_direct_loantaker`.
 #'
-#' @param data The input loanbook. See r2ii.dataraw for details.
+#' @param data A loanbook dataframe.
 #'
-#' @return The input loanbook, with adjusted ids
+#' @seealso [r2dii.dataraw::loanbook_description],
+#'   [r2dii.dataraw::loanbook_demo].
+#'
+#' @return A loanbook dataframe with adjusted ids.
 #' @export
 #'
 #' @examples
