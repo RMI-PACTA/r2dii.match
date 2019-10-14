@@ -1,4 +1,4 @@
-#' Populate `id_direct_loantaker`, and `id_ultimate_parent` in the loanbook
+#' In loanbook data, identify unique combinations of "loan-takers + sector"
 #'
 #' This function generates identifiers for `id_direct_loantaker` and
 #' `id_ultimate_parent` that are unique by every combination of the columns
