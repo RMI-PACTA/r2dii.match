@@ -40,6 +40,8 @@ Imports:
     readr,
     dplyr,
     magrittr,
-    r2dii.dataraw (>= 0.0.2.9000)
+    r2dii.dataraw (>= 0.0.2.9000),
+    rlang,
+    glue
 Remotes: 
     2degreesinvesting/r2dii.dataraw
