@@ -33,7 +33,8 @@ Imports:
     r2dii.dataraw (>= 0.0.2.9000),
     readr,
     rlang,
-    usethis
+    usethis,
+    purrr
 Suggests: 
     miniUI,
     rstudioapi,
