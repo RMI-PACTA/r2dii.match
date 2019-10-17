@@ -23,15 +23,15 @@ sector_bridge <- function(data){
   # *_classification.csv files, however they are managed by r2dii.dataraw. Best
   # practice to check for these fields in this function? or add a test for these
   # fields before incorporating the files into r2dii.dataraw
-  nace_classification <- read.csv(
+  nace_classification <- readr::read_csv(
     "https://raw.githubusercontent.com/jdhoffa/r2dii.dataraw/classification-bridges/data-raw/nace_classification.csv"
   ) %>%
-    select(code, sector, borderline)
+    dplyr::select(.data$code, .data$sector, .data$borderline)
 
-  isic_classification <- read.csv(
+  isic_classification <- readr::read_csv(
     "https://raw.githubusercontent.com/jdhoffa/r2dii.dataraw/classification-bridges/data-raw/isic_classification.csv"
   ) %>%
-    select(code, sector, borderline)
+    dplyr::select(.data$code, .data$sector, .data$borderline)
 
 
   data_classification_names <- c("nace", "isic")
@@ -59,7 +59,7 @@ sector_bridge <- function(data){
   }
 
   data %>%
-    left_join(
+    dplyr::left_join(
       full_classification,
       by = c(
         "sector_classification_system" = "code_system",

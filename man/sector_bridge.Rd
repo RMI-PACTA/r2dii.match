@@ -10,11 +10,12 @@ sector_bridge(data)
 \item{data}{A loanbook dataframe.}
 }
 \value{
-A loanbook dataframe with additional \code{sector} and \code{borderline} columns
+A loanbook dataframe with additional \code{sector} and \code{borderline}
+columns.
 }
 \description{
-This function adds two columns, \code{sector} and \code{borderline} to the input portfolio,
-corresponding to the bridged sector classification.
+This function adds two columns, \code{sector} and \code{borderline} to the input
+portfolio, corresponding to the bridged sector classification.
 }
 \examples{
 sector_bridge(r2dii.dataraw::loanbook_demo)
