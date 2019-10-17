@@ -34,7 +34,8 @@ Imports:
     readr,
     rlang,
     usethis,
-    purrr
+    purrr,
+    utils
 Suggests: 
     miniUI,
     rstudioapi,

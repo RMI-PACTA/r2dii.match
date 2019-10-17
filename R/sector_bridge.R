@@ -10,60 +10,75 @@
 #' @export
 #'
 #' @examples
+#' # Must be attached
+#' library(r2dii.dataraw)
+#'
 #' sector_bridge(r2dii.dataraw::loanbook_demo)
-sector_bridge <- function(data){
+sector_bridge <- function(data) {
 
   # check that crucial columns are present in input data
-  crucial <- c(
+  crucial_in_data <- c(
     "sector_classification_system",
-    "sector_classification_direct_loantaker")
+    "sector_classification_direct_loantaker"
+  )
 
-  # TODO: this must be removed. classification files must be read directly from
-  # r2dii.dataraw NOTE: c("code", "sector", "borderline") are crucial columns in
-  # *_classification.csv files, however they are managed by r2dii.dataraw. Best
-  # practice to check for these fields in this function? or add a test for these
-  # fields before incorporating the files into r2dii.dataraw
-  nace_classification <- readr::read_csv(
-    "https://raw.githubusercontent.com/jdhoffa/r2dii.dataraw/classification-bridges/data-raw/nace_classification.csv"
-  ) %>%
-    dplyr::select(.data$code, .data$sector, .data$borderline)
+  crucial_in_classification <- c(
+    "code", "code_system", "sector", "borderline"
+  )
 
-  isic_classification <- readr::read_csv(
-    "https://raw.githubusercontent.com/jdhoffa/r2dii.dataraw/classification-bridges/data-raw/isic_classification.csv"
-  ) %>%
-    dplyr::select(.data$code, .data$sector, .data$borderline)
-
-
-  data_classification_names <- c("nace", "isic")
-  # data_classification_names <- unique(tolower(data$sector_classification_system))
-
-  # TODO: swap next two lines once classification files are present in
-  # r2dii.dataraw
-  # data_classification <- data_classification_names %>%
-  #   purrr::map_chr(~glue::glue("r2dii.dataraw::{.x}_classification"))
-  data_classification <- data_classification_names %>%
-    purrr::map_chr(~glue::glue("{.x}_classification"))
-
-  data_classification <- data_classification %>%
-    purrr::map(get) %>%
-    purrr::set_names(data_classification_names)
-
-  full_classification <- data.frame()
-
-  # there's definitely a better way to do this
-  for (name in data_classification_names){
-    element <- data_classification[[name]] %>%
-      mutate(code_system = toupper(name))
-    full_classification <- full_classification %>%
-      rbind(element)
+  pkg <- "package:r2dii.dataraw"
+  is_attached <- any(grepl(pkg, search()))
+  if (!is_attached) {
+    rlang::abort(glue::glue(
+      "r2dii.dataraw must be attached.
+      Run `library(r2dii.dataraw)`."
+    ))
   }
 
-  data %>%
+  data_classification_names <- grep(
+    pattern = "_classification$",
+    x = exported_data("r2dii.dataraw"),
+    value = TRUE
+  )
+
+  data_classification <- data_classification_names %>%
+    purrr::map(~get(.x, envir = as.environment(pkg))) %>%
+    purrr::set_names(data_classification_names)
+
+  full_classification <- data_classification %>%
+    purrr::imap(~dplyr::mutate(.x, code_system = toupper(.y))) %>%
+    purrr::map(~dplyr::select(.,
+      # Documented  in @return (by @jdhoffa)
+      .data$sector, .data$borderline,
+      # Required in `by` below
+      .data$code, .data$code_system
+    )) %>%
+    # Coherce every column to character for more robust reduce() and join()
+    purrr::map(~purrr::modify(.x, as.character)) %>%
+    # Collapse the list of dataframes to a single, row-bind dataframe
+    purrr::reduce(dplyr::bind_rows) %>%
+    # Avoid duplicates
+    unique()
+
+  data2 <- data %>%
+    # Coherce every column to character for more robust join()
+    purrr::modify_at(
+      c(
+        "sector_classification_system",
+        "sector_classification_direct_loantaker"
+      ),
+      as.character
+    )
+
     dplyr::left_join(
-      full_classification,
+      data2, full_classification,
       by = c(
         "sector_classification_system" = "code_system",
         "sector_classification_direct_loantaker" = "code"
       )
     )
+}
+
+exported_data <- function(package) {
+  utils::data(package = package)$results[, "Item"]
 }
