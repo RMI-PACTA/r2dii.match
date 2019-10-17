@@ -30,11 +30,12 @@ Imports:
     glue,
     here,
     magrittr,
+    purrr,
     r2dii.dataraw (>= 0.0.2.9000),
+    r2dii.utils (>= 0.0.0.9000),
     readr,
     rlang,
     usethis,
-    purrr,
     utils
 Suggests: 
     miniUI,
@@ -42,7 +43,8 @@ Suggests:
     shiny,
     testthat (>= 2.1.0)
 Remotes: 
-    2degreesinvesting/r2dii.dataraw
+    2degreesinvesting/r2dii.dataraw,
+    2degreesinvesting/r2dii.utils
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

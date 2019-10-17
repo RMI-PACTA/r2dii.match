@@ -15,16 +15,11 @@
 #'
 #' sector_bridge(r2dii.dataraw::loanbook_demo)
 sector_bridge <- function(data) {
-
-  # check that crucial columns are present in input data
-  crucial_in_data <- c(
+  crucial <- c(
     "sector_classification_system",
     "sector_classification_direct_loantaker"
   )
-
-  crucial_in_classification <- c(
-    "code", "code_system", "sector", "borderline"
-  )
+  r2dii.utils::check_crucial_names(data, crucial)
 
   pkg <- "package:r2dii.dataraw"
   is_attached <- any(grepl(pkg, search()))
