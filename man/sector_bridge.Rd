@@ -2,7 +2,7 @@
 % Please edit documentation in R/sector_bridge.R
 \name{sector_bridge}
 \alias{sector_bridge}
-\title{Bridge between portfolio classification system and 2dii's classification standard}
+\title{Bridge classification between portfolio's system and 2dii's standard}
 \usage{
 sector_bridge(data)
 }
