@@ -16,6 +16,9 @@ Authors@R:
              family = "Hagedorn",
              role = "aut",
              email = "klaus@2degrees-investing.org"),
+      person(given = "Evgeny",
+             family = "Petrovsky",
+             role = c("aut", "ctr")),
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
@@ -31,18 +34,21 @@ Imports:
     here,
     magrittr,
     purrr,
+    r2dii.dataraw (>= 0.0.2.9000),
     r2dii.utils (>= 0.0.0.9000),
     readr,
     rlang,
-    usethis,
-    utils
+    stringi,
+    tibble,
+    usethis
 Suggests: 
     miniUI,
-    r2dii.dataraw (>= 0.0.2.9000),
+    pacta (>= 0.0.0.9000),
     rstudioapi,
     shiny,
     testthat (>= 2.1.0)
 Remotes: 
+    2DegreesInvesting/pacta,
     2degreesinvesting/r2dii.dataraw,
     2degreesinvesting/r2dii.utils
 Encoding: UTF-8

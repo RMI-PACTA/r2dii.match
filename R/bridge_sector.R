@@ -28,21 +28,22 @@ bridge_sector <- function(data) {
   check_is_attached(pkg)
 
   classification <- enlist_datasets(pkg, pattern = "_classification$") %>%
-    purrr::imap(~dplyr::mutate(.x, code_system = toupper(.y))) %>%
-    purrr::map(~dplyr::select(.,
+    purrr::imap(~ dplyr::mutate(.x, code_system = toupper(.y))) %>%
+    purrr::map(~ dplyr::select(
+      .,
       # Documented  in @return (by @jdhoffa)
       .data$sector, .data$borderline,
       # Required in `by` below
       .data$code, .data$code_system
     )) %>%
     # Coherce every column to character for more robust reduce() and join()
-    purrr::map(~purrr::modify(.x, as.character)) %>%
+    purrr::map(~ purrr::modify(.x, as.character)) %>%
     # Collapse the list of dataframes to a single, row-bind dataframe
     purrr::reduce(dplyr::bind_rows) %>%
     # Avoid duplicates
     unique() %>%
     # Reformat code_system
-    dplyr::mutate(code_system = gsub('_CLASSIFICATION', '', .data$code_system))
+    dplyr::mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
 
   # Coherce crucial columns to character for more robust join()
   data2 <- data %>% purrr::modify_at(crucial, as.character)
@@ -73,7 +74,7 @@ enlist_datasets <- function(package, pattern) {
   datasets_name <- grep(pattern, exported_data("r2dii.dataraw"), value = TRUE)
 
   datasets_name %>%
-    purrr::map(~get(.x, envir = as.environment(package))) %>%
+    purrr::map(~ get(.x, envir = as.environment(package))) %>%
     purrr::set_names(datasets_name)
 }
 
@@ -84,7 +85,7 @@ restore_typeof <- function(data, out, crucial) {
 
   column_types <- purrr::map_chr(data[crucial], typeof)
 
-  out1 <- as_type(out,  crucial[[1]], column_types[[1]])
+  out1 <- as_type(out, crucial[[1]], column_types[[1]])
   out2 <- as_type(out1, crucial[[2]], column_types[[2]])
   out2
 }

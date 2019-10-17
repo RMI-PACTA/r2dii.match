@@ -23,6 +23,7 @@ Useful links:
 Authors:
 \itemize{
   \item Klaus Hagedorn \email{klaus@2degrees-investing.org}
+  \item Evgeny Petrovsky [contractor]
 }
 
 Other contributors:
