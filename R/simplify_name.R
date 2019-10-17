@@ -77,7 +77,7 @@ simplifyName <- function(
   cleanName <- Reduce(f = substituteF, x = abbreviations, init = cleanName)
 
   # trim redundant whitespaces
-  cleanName <- trim(cleanName)
+  cleanName <- trimws(cleanName,which = "both")
 
   # ?
   cleanName <- gsub("(?<=\\s[a-z]{1}) (?=[a-z]{1})", "", cleanName, perl = TRUE)
