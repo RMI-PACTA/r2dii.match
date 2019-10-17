@@ -9,26 +9,28 @@ simplifyName(name, cut.ownership = FALSE,
   ownership = pacta::data.ownership.types)
 }
 \arguments{
-\item{name}{text string to simplify}
+\item{name}{text string to simplify.}
 
 \item{cut.ownership}{flag that defines whether ownership type (like llc)
-should be cut-off from name during simplification}
+should be cut-off from name during simplification.}
 
 \item{reduction}{data frame with reduction rules to be applied, contains
-columns From (for initial values) and To (for resulting values)}
+columns From (for initial values) and To (for resulting values).}
 
-\item{ownership}{vector of company ownership types to be disctinguished
-for cut-off or separation}
+\item{ownership}{vector of company ownership types to be distinguished for
+cut-off or separation.}
 }
 \value{
-Character string with simplified name
+Character string with simplified name.
 }
 \description{
-Takes customer name and simplifies it by
-converting to lower case; converting to latin-ascii characters;
-converting ownership types to standard abbreviations.
+Takes customer name and simplifies it by converting to lower case; converting
+to latin-ascii characters; converting ownership types to standard
+abbreviations.
 }
 \examples{
 simplifyName("Acuity Brands Inc")
-simplifyName(c("3M Company", "Abbott Laboratories", "AbbVie Inc.", "Accenture plc"))
+simplifyName(
+  c("3M Company", "Abbott Laboratories", "AbbVie Inc.", "Accenture plc")
+)
 }

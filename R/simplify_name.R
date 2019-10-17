@@ -1,29 +1,29 @@
 #' Simplify customer name
 #'
-#' @description Takes customer name and simplifies it by
-#' converting to lower case; converting to latin-ascii characters;
-#' converting ownership types to standard abbreviations.
+#' Takes customer name and simplifies it by converting to lower case; converting
+#' to latin-ascii characters; converting ownership types to standard
+#' abbreviations.
 #'
-#' @return Character string with simplified name
+#' @param name text string to simplify.
+#' @param cut.ownership flag that defines whether ownership type (like llc)
+#'   should be cut-off from name during simplification.
+#' @param reduction data frame with reduction rules to be applied, contains
+#'   columns From (for initial values) and To (for resulting values).
+#' @param ownership vector of company ownership types to be distinguished for
+#'   cut-off or separation.
 #'
 #' @export
-#' @param name text string to simplify
-#' @param cut.ownership flag that defines whether ownership type (like llc)
-#'   should be cut-off from name during simplification
-#' @param reduction data frame with reduction rules to be applied, contains
-#'   columns From (for initial values) and To (for resulting values)
-#' @param ownership vector of company ownership types to be disctinguished
-#'   for cut-off or separation
+#' @return Character string with simplified name.
 #'
 #' @examples
 #' simplifyName("Acuity Brands Inc")
-#' simplifyName(c("3M Company", "Abbott Laboratories", "AbbVie Inc.", "Accenture plc"))
-simplifyName <- function(
-  name,
-  cut.ownership = FALSE,
-  reduction = pacta::data.name.reductions,
-  ownership = pacta::data.ownership.types
-) {
+#' simplifyName(
+#'   c("3M Company", "Abbott Laboratories", "AbbVie Inc.", "Accenture plc")
+#' )
+simplifyName <- function(name,
+                         cut.ownership = FALSE,
+                         reduction = pacta::data.name.reductions,
+                         ownership = pacta::data.ownership.types) {
   # replace long words with abbreviations
   substituteF <- function(text, abr) {
     from <- abr[1]
@@ -36,15 +36,14 @@ simplifyName <- function(
     gsub(from, to, text)
   }
 
-  replacements <-  list(
+  replacements <- list(
     c(".", " "),
     c(",", " "),
-    #c("-", " "),
+    # c("-", " "),
     c("_", " "),
     c("/", " "),
     c("$", "")
   )
-
 
   # convert dataframe reductions into list of abbreviation rules (From -> To pairs)
   abbreviations <- mapply(
@@ -54,8 +53,11 @@ simplifyName <- function(
 
   ownerships <- Map(
     f = function(x) {
-      if (cut.ownership) c(paste0(" ", x, "$"), "")
-      else c(paste0(" ", x, "$"), paste0("$", x))
+      if (cut.ownership) {
+        c(paste0(" ", x, "$"), "")
+      } else {
+        c(paste0(" ", x, "$"), paste0("$", x))
+      }
     },
     ownership
   )
@@ -77,7 +79,7 @@ simplifyName <- function(
   cleanName <- Reduce(f = substituteF, x = abbreviations, init = cleanName)
 
   # trim redundant whitespaces
-  cleanName <- trimws(cleanName,which = "both")
+  cleanName <- trimws(cleanName, which = "both")
 
   # ?
   cleanName <- gsub("(?<=\\s[a-z]{1}) (?=[a-z]{1})", "", cleanName, perl = TRUE)
@@ -88,8 +90,8 @@ simplifyName <- function(
   # final adjustments
   cleanName <- gsub("-", " ", cleanName)
   cleanName <- gsub("[[:space:]]", "", cleanName)
-  cleanName <- gsub("[^[:alnum:][:space:]$]","",cleanName)
-  cleanName <- gsub("$"," ", cleanName, fixed = T)
+  cleanName <- gsub("[^[:alnum:][:space:]$]", "", cleanName)
+  cleanName <- gsub("$", " ", cleanName, fixed = T)
 
   return(cleanName)
 }

@@ -30,20 +30,20 @@ Imports:
     glue,
     here,
     magrittr,
+    pacta (>= 0.0.0.9000),
     r2dii.dataraw (>= 0.0.2.9000),
     readr,
     rlang,
-    usethis,
     stringi,
-    pacta (>= 0.0.0.9000)
+    usethis
 Suggests: 
     miniUI,
     rstudioapi,
     shiny,
     testthat (>= 2.1.0)
-Remotes:  
-    2degreesinvesting/r2dii.dataraw,
-    2DegreesInvesting/pacta
+Remotes: 
+    2DegreesInvesting/pacta,
+    2degreesinvesting/r2dii.dataraw
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

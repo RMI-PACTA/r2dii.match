@@ -24,12 +24,14 @@ match_addin <- function() { # nocov start
 
   dep_ok <- vapply(
     c("rstudioapi", "shiny", "miniUI"),
-    requireNamespace, logical(1), quietly = TRUE
+    requireNamespace, logical(1),
+    quietly = TRUE
   )
   if (any(!dep_ok)) {
     stop(
       "Install these packages in order to use the reprex addin:\n",
-      collapse(names(dep_ok[!dep_ok])), call. = FALSE
+      collapse(names(dep_ok[!dep_ok])),
+      call. = FALSE
     )
   }
 
@@ -69,7 +71,7 @@ read_and_save <- function(input) {
   out <- readr::read_csv(input)
   print(out)
 
-  path <- here::here('output.csv')
+  path <- here::here("output.csv")
   readr::write_csv(out, path)
   usethis::ui_done("Output saved to {usethis::ui_path(path)}")
 }
@@ -82,10 +84,12 @@ match_app <- function() {
   ui <- shiny::fluidPage(shiny::sidebarLayout(
     shiny::sidebarPanel(
       shiny::fileInput(
-        "loanbook", "Choose loanbook (.csv) file", accept = accept
+        "loanbook", "Choose loanbook (.csv) file",
+        accept = accept
       ),
       shiny::fileInput(
-        "matching", "Choose matching (.csv) file", accept = accept
+        "matching", "Choose matching (.csv) file",
+        accept = accept
       ),
       shiny::tags$hr(),
       shiny::checkboxInput("run_matching", "Run matching", TRUE),
@@ -106,13 +110,17 @@ match_app <- function() {
 
   server <- function(input, output) {
     output$loanbook <- shiny::renderTable({
-      if (is.null(input$loanbook)) return(NULL)
+      if (is.null(input$loanbook)) {
+        return(NULL)
+      }
       readr::read_csv(input$loanbook$datapath)
     })
 
     output$matching <- shiny::renderTable({
       inFile <- input$matching
-      if (is.null(inFile)) return(NULL)
+      if (is.null(inFile)) {
+        return(NULL)
+      }
       readr::read_csv(inFile$datapath)
     })
 

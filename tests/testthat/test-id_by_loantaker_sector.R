@@ -9,7 +9,6 @@ test_that("id_by_loantaker_sector returns a tibble dataframe", {
 })
 
 test_that("id_by_loantaker_sector errs gracefully with wrong input", {
-
   invalidate <- function(data, x) {
     dplyr::rename(data, bad = x)
   }
@@ -35,5 +34,4 @@ test_that("id_by_loantaker_sector errs gracefully with wrong input", {
     id_by_loantaker_sector(invalidate(lbk, "id_ultimate_parent")),
     "must have.*id_ultimate_parent"
   )
-
 })
