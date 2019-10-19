@@ -1,8 +1,3 @@
-test_that("sector_bridge prints its output", {
-  out <- capture.output(sector_bridge(sector_bridge(r2dii.dataraw::loanbook_demo)))
-  expect_false(identical(out, character(0)))
-})
-
 test_that("sector_bridge returns a tibble dataframe", {
   out <- sector_bridge(sector_bridge(r2dii.dataraw::loanbook_demo))
   expect_is(out, "tbl_df")
