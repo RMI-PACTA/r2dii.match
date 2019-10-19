@@ -4,7 +4,7 @@
 #' portfolio, corresponding to the bridged sector classification.
 #'
 #' The r2dii.dataraw package must be attached (i.e. run `library(r2dii.dataraw)`
-#' before you call `sector_bridge()`).
+#' before you call `bridge_sector()`).
 #'
 #' @param data A loanbook dataframe.
 #'
@@ -16,8 +16,8 @@
 #' # Must be attached
 #' library(r2dii.dataraw)
 #'
-#' sector_bridge(r2dii.dataraw::loanbook_demo)
-sector_bridge <- function(data) {
+#' bridge_sector(r2dii.dataraw::loanbook_demo)
+bridge_sector <- function(data) {
   crucial <- c(
     "sector_classification_system",
     "sector_classification_direct_loantaker"

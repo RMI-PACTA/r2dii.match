@@ -1,4 +1,4 @@
-# sector_bridge() needs r2dii.dataraw in the search() path
+# bridge_sector() needs r2dii.dataraw in the search() path
 library(r2dii.dataraw)
 
 test_that("bridge_sector outputs known output", {
@@ -20,24 +20,24 @@ test_that("bridge_sector with wrong input errs gracefully", {
   lbk_missing_sector_classification_system <-
     rename_crucial_column(lbk, "sector_classification_system")
   expect_error(
-    sector_bridge(lbk_missing_sector_classification_system),
+    bridge_sector(lbk_missing_sector_classification_system),
     "must have.*sector_classification_system"
   )
 
   lbk_missing_sector_classification_direct_loantaker <-
     rename_crucial_column(lbk, "sector_classification_direct_loantaker")
   expect_error(
-    sector_bridge(lbk_missing_sector_classification_direct_loantaker),
+    bridge_sector(lbk_missing_sector_classification_direct_loantaker),
     "must have.*sector_classification_direct_loantaker"
   )
 })
 
-test_that("sector_bridge adds two columns: `sector` and `borderline`", {
+test_that("bridge_sector adds two columns: `sector` and `borderline`", {
   input <- r2dii.dataraw::loanbook_demo
   expect_false(hasName(input, "sector"))
   expect_false(hasName(input, "borderline"))
 
-  output <- sector_bridge(input)
+  output <- bridge_sector(input)
   new_columns <- sort(setdiff(names(output), names(input)))
   expect_equal(
     new_columns, c("borderline", "sector")
