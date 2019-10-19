@@ -3,6 +3,9 @@
 #' This function adds two columns, `sector` and `borderline` to the input
 #' portfolio, corresponding to the bridged sector classification.
 #'
+#' The r2dii.dataraw package must be attached (i.e. run `library(r2dii.dataraw)`
+#' before you call `sector_bridge()`).
+#'
 #' @param data A loanbook dataframe.
 #'
 #' @return A loanbook dataframe with additional `sector` and `borderline`

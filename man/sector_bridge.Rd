@@ -17,6 +17,10 @@ columns.
 This function adds two columns, \code{sector} and \code{borderline} to the input
 portfolio, corresponding to the bridged sector classification.
 }
+\details{
+The r2dii.dataraw package must be attached (i.e. run \code{library(r2dii.dataraw)}
+before you call \code{sector_bridge()}).
+}
 \examples{
 # Must be attached
 library(r2dii.dataraw)
