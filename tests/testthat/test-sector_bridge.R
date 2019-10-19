@@ -1,4 +1,5 @@
 test_that("sector_bridge returns a tibble dataframe", {
+  library(r2dii.dataraw)
   out <- sector_bridge(sector_bridge(r2dii.dataraw::loanbook_demo))
   expect_is(out, "tbl_df")
 })
