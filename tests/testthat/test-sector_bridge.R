@@ -1,10 +1,17 @@
-test_that("sector_bridge returns a tibble dataframe", {
-  library(r2dii.dataraw)
-  out <- sector_bridge(sector_bridge(r2dii.dataraw::loanbook_demo))
+# sector_bridge() needs r2dii.dataraw in the search() path
+library(r2dii.dataraw)
+
+test_that("bridge_sector outputs known output", {
+  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+  expect_known_output(out, "ref-bridge_sector", update = FALSE)
+})
+
+test_that("bridge_sector returns a tibble dataframe", {
+  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
   expect_is(out, "tbl_df")
 })
 
-test_that("sector_bridge errs gracefully with wrong input", {
+test_that("bridge_sector with wrong input errs gracefully", {
   rename_crucial_column <- function(data, x) {
     dplyr::rename(data, bad = x)
   }
@@ -22,5 +29,17 @@ test_that("sector_bridge errs gracefully with wrong input", {
   expect_error(
     sector_bridge(lbk_missing_sector_classification_direct_loantaker),
     "must have.*sector_classification_direct_loantaker"
+  )
+})
+
+test_that("sector_bridge adds two columns: `sector` and `borderline`", {
+  input <- r2dii.dataraw::loanbook_demo
+  expect_false(hasName(input, "sector"))
+  expect_false(hasName(input, "borderline"))
+
+  output <- sector_bridge(input)
+  new_columns <- sort(setdiff(names(output), names(input)))
+  expect_equal(
+    new_columns, c("borderline", "sector")
   )
 })
