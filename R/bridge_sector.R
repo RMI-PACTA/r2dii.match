@@ -24,20 +24,10 @@ bridge_sector <- function(data) {
   )
   r2dii.utils::check_crucial_names(data, crucial)
 
-  package <- "package:r2dii.dataraw"
-  check_is_attached(package)
+  pkg <- "package:r2dii.dataraw"
+  check_is_attached(pkg)
 
-  datasets_name <- grep(
-    pattern = "_classification$",
-    x = exported_data("r2dii.dataraw"),
-    value = TRUE
-  )
-
-  data_classification <- datasets_name %>%
-    purrr::map(~get(.x, envir = as.environment(package))) %>%
-    purrr::set_names(datasets_name)
-
-  full_classification <- data_classification %>%
+  classification <- enlist_datasets(pkg, pattern = "_classification$") %>%
     purrr::imap(~dplyr::mutate(.x, code_system = toupper(.y))) %>%
     purrr::map(~dplyr::select(.,
       # Documented  in @return (by @jdhoffa)
@@ -52,18 +42,11 @@ bridge_sector <- function(data) {
     # Avoid duplicates
     unique()
 
-  data2 <- data %>%
-    # Coherce every column to character for more robust join()
-    purrr::modify_at(
-      c(
-        "sector_classification_system",
-        "sector_classification_direct_loantaker"
-      ),
-      as.character
-    )
+  # Coherce crucial columns to character for more robust join()
+  data2 <- purrr::modify_at(data, crucial, as.character)
 
     dplyr::left_join(
-      data2, full_classification,
+      data2, classification,
       by = c(
         "sector_classification_system" = "code_system",
         "sector_classification_direct_loantaker" = "code"
@@ -85,4 +68,12 @@ check_is_attached <- function(package) {
   }
 
   invisible(package)
+}
+
+enlist_datasets <- function(package, pattern) {
+  datasets_name <- grep(pattern, exported_data("r2dii.dataraw"), value = TRUE)
+
+  datasets_name %>%
+    purrr::map(~get(.x, envir = as.environment(package))) %>%
+    purrr::set_names(datasets_name)
 }
