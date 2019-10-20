@@ -76,9 +76,13 @@ enlist_datasets <- function(package, pattern) {
 }
 
 restore_typeof <- function(data, out, crucial) {
+  # This seems too rigid but fine for now
+  crucial_has_length_2 <- identical(length(crucial), 2L)
+  stopifnot(crucial_has_length_2)
+
   column_types <- purrr::map_chr(data[crucial], typeof)
 
-  out1 <- as_type(out, crucial[[1]], column_types[[1]])
+  out1 <- as_type(out,  crucial[[1]], column_types[[1]])
   out2 <- as_type(out1, crucial[[2]], column_types[[2]])
   out2
 }
