@@ -43,15 +43,12 @@ bridge_sector <- function(data) {
     unique()
 
   # Coherce crucial columns to character for more robust join()
-  data2 <- purrr::modify_at(data, crucial, as.character)
+  data2 <- data %>% purrr::modify_at(crucial, as.character)
 
-    dplyr::left_join(
-      data2, classification,
-      by = c(
-        "sector_classification_system" = "code_system",
-        "sector_classification_direct_loantaker" = "code"
-      )
-    )
+  by <- rlang::set_names(c("code_system", "code"), crucial)
+  out <- dplyr::left_join(data2, classification, by = by)
+
+  restore_typeof(data, out, crucial)
 }
 
 exported_data <- function(package) {
@@ -76,4 +73,17 @@ enlist_datasets <- function(package, pattern) {
   datasets_name %>%
     purrr::map(~get(.x, envir = as.environment(package))) %>%
     purrr::set_names(datasets_name)
+}
+
+restore_typeof <- function(data, out, crucial) {
+  column_types <- purrr::map_chr(data[crucial], typeof)
+
+  out1 <- as_type(out, crucial[[1]], column_types[[1]])
+  out2 <- as_type(out1, crucial[[2]], column_types[[2]])
+  out2
+}
+
+as_type <- function(.x, .at, type) {
+  as_type <- paste0("as.", type)
+  purrr::modify_at(.x, .at, .f = get(as_type))
 }

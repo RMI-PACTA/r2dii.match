@@ -43,3 +43,13 @@ test_that("bridge_sector adds two columns: `sector` and `borderline`", {
     new_columns, c("borderline", "sector")
   )
 })
+
+test_that("bridge_sector preserves typeof() input columns", {
+  input <- r2dii.dataraw::loanbook_demo
+  output <- bridge_sector(input)
+
+  expect_equal(
+    purrr::map_chr(input, typeof),
+    purrr::map_chr(output[names(input)], typeof),
+  )
+})
