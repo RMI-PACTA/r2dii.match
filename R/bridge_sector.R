@@ -24,14 +24,8 @@ bridge_sector <- function(data) {
   )
   r2dii.utils::check_crucial_names(data, crucial)
 
-  pkg <- "package:r2dii.dataraw"
-  is_attached <- any(grepl(pkg, search()))
-  if (!is_attached) {
-    rlang::abort(glue::glue(
-      "r2dii.dataraw must be attached.
-      Run `library(r2dii.dataraw)`."
-    ))
-  }
+  package <- "package:r2dii.dataraw"
+  check_is_attached(package)
 
   data_classification_names <- grep(
     pattern = "_classification$",
@@ -40,7 +34,7 @@ bridge_sector <- function(data) {
   )
 
   data_classification <- data_classification_names %>%
-    purrr::map(~get(.x, envir = as.environment(pkg))) %>%
+    purrr::map(~get(.x, envir = as.environment(package))) %>%
     purrr::set_names(data_classification_names)
 
   full_classification <- data_classification %>%
@@ -79,4 +73,16 @@ bridge_sector <- function(data) {
 
 exported_data <- function(package) {
   utils::data(package = package)$results[, "Item"]
+}
+
+check_is_attached <- function(package) {
+  is_attached <- any(grepl(package, search()))
+  if (!is_attached) {
+    rlang::abort(glue::glue(
+      "r2dii.dataraw must be attached.
+      Run `library(r2dii.dataraw)`."
+    ))
+  }
+
+  invisible(package)
 }
