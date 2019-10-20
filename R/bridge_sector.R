@@ -27,15 +27,15 @@ bridge_sector <- function(data) {
   package <- "package:r2dii.dataraw"
   check_is_attached(package)
 
-  data_classification_names <- grep(
+  datasets_name <- grep(
     pattern = "_classification$",
     x = exported_data("r2dii.dataraw"),
     value = TRUE
   )
 
-  data_classification <- data_classification_names %>%
+  data_classification <- datasets_name %>%
     purrr::map(~get(.x, envir = as.environment(package))) %>%
-    purrr::set_names(data_classification_names)
+    purrr::set_names(datasets_name)
 
   full_classification <- data_classification %>%
     purrr::imap(~dplyr::mutate(.x, code_system = toupper(.y))) %>%
