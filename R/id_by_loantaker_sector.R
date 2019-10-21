@@ -22,7 +22,7 @@ id_by_loantaker_sector <- function(data) {
     "id_direct_loantaker",
     "id_ultimate_parent"
   )
-  check_crucial_names(data, crucial)
+  r2dii.utils::check_crucial_names(data, crucial)
 
   data %>%
     mutate(
