@@ -40,12 +40,15 @@ bridge_sector <- function(data) {
     # Collapse the list of dataframes to a single, row-bind dataframe
     purrr::reduce(dplyr::bind_rows) %>%
     # Avoid duplicates
-    unique()
+    unique() %>%
+    # Reformat code_system
+    dplyr::mutate(code_system = gsub('_CLASSIFICATION', '', code_system))
 
   # Coherce crucial columns to character for more robust join()
-  data2 <- data %>% purrr::modify_at(crucial, as.character)
+  data2 <- data %>% purrr::modify_at(crucial, as.character) %>%
+    dplyr::mutate()
 
-  by <- rlang::set_names(c("code_system", "code"), crucial)
+  by <- rlang::set_names(c("sector_classification_system" = "code_system", "sector_classification_direct_loantaker" = "code"), crucial)
   out <- dplyr::left_join(data2, classification, by = by)
 
   restore_typeof(data, out, crucial)
