@@ -47,7 +47,7 @@ bridge_sector <- function(data) {
   # Coherce crucial columns to character for more robust join()
   data2 <- data %>% purrr::modify_at(crucial, as.character)
 
-  by <- rlang::set_names(c("sector_classification_system" = "code_system", "sector_classification_direct_loantaker" = "code"), crucial)
+  by <- rlang::set_names(c("code_system", "code"), crucial)
   out <- dplyr::left_join(data2, classification, by = by)
 
   restore_typeof(data, out, crucial)
