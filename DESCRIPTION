@@ -32,7 +32,6 @@ Imports:
     magrittr,
     pacta (>= 0.0.0.9000),
     purrr,
-    r2dii.dataraw (>= 0.0.2.9000),
     r2dii.utils (>= 0.0.0.9000),
     readr,
     rlang,
@@ -41,6 +40,7 @@ Imports:
     utils
 Suggests: 
     miniUI,
+    r2dii.dataraw (>= 0.0.2.9000),
     rstudioapi,
     shiny,
     testthat (>= 2.1.0)
