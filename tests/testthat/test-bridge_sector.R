@@ -53,3 +53,13 @@ test_that("bridge_sector preserves typeof() input columns", {
     purrr::map_chr(output[names(input)], typeof),
   )
 })
+
+test_that("bridge_sector outputs no missing value of `sector`", {
+  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+  expect_false(any(is.na(out$sector)))
+})
+
+test_that("bridge_sector outputs no missing value of `borderline`", {
+  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+  expect_false(any(is.na(out$borderline)))
+})
