@@ -35,7 +35,7 @@ bridge_sector <- function(data) {
       # Required in `by` below
       .data$code, .data$code_system
     )) %>%
-    # Coherce every column to character for more robust reduce() and join()
+    # Coerce every column to character for more robust reduce() and join()
     purrr::map(~purrr::modify(.x, as.character)) %>%
     # Collapse the list of dataframes to a single, row-bind dataframe
     purrr::reduce(dplyr::bind_rows) %>%
@@ -44,11 +44,23 @@ bridge_sector <- function(data) {
     # Reformat code_system
     dplyr::mutate(code_system = gsub('_CLASSIFICATION', '', .data$code_system))
 
-  # Coherce crucial columns to character for more robust join()
+  # Coerce crucial columns to character for more robust join()
   data2 <- data %>% purrr::modify_at(crucial, as.character)
+
+  # Throw error and stop bridging if any code_systems are not in our database
+  if (!any(data2$sector_classification_system %in% classification$code_system)){
+    stop('At least one loan is classified using a sector code system outside of the 2Dii database.')
+  }
 
   by <- rlang::set_names(c("code_system", "code"), crucial)
   out <- dplyr::left_join(data2, classification, by = by)
+
+  # Throw warning if any output sectors are NA
+  if( any(is.na(out$sector)) ) {
+    warning('Some sector codes were not bridged. Output sector will be flagged: code not found')
+    out <- dplyr::mutate(out, sector = ifelse(is.na(sector), 'code not found', sector),
+                         borderline = ifelse(is.na(borderline), T, borderline))
+  }
 
   restore_typeof(data, out, crucial)
 }
