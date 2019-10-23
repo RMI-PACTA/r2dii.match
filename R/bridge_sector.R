@@ -36,7 +36,7 @@ bridge_sector <- function(data) {
       # Required in `by` below
       .data$code, .data$code_system
     )) %>%
-    # Coherce every column to character for more robust reduce() and join()
+    # Coerce every column to character for more robust reduce() and join()
     purrr::map(~ purrr::modify(.x, as.character)) %>%
     # Collapse the list of dataframes to a single, row-bind dataframe
     purrr::reduce(dplyr::bind_rows) %>%
@@ -45,11 +45,35 @@ bridge_sector <- function(data) {
     # Reformat code_system
     dplyr::mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
 
-  # Coherce crucial columns to character for more robust join()
+  # Coerce crucial columns to character for more robust join()
   data2 <- data %>% purrr::modify_at(crucial, as.character)
+
+  has_unknown_code_system <-
+    !any(data2$sector_classification_system %in% classification$code_system)
+  if (has_unknown_code_system){
+    stop(
+      "At least one loan must use 2dfii's sector code system.\n",
+      "Are all of your loans classified as in 2dii's database?",
+      call. = FALSE
+    )
+  }
 
   by <- rlang::set_names(c("code_system", "code"), crucial)
   out <- dplyr::left_join(data2, classification, by = by)
+
+  any_output_sectors_is_missing <- any(is.na(out$sector))
+  if(any_output_sectors_is_missing) {
+    warning("Can't bridge some sector codes.", call. = FALSE)
+
+    usethis::ui_oops(
+      "Flagging missing values of {ui_field('sector')} as: code not found"
+    )
+    out <- dplyr::mutate(
+      out,
+      sector = ifelse(is.na(.data$sector), 'code not found', .data$sector),
+      borderline = ifelse(is.na(.data$borderline), TRUE, .data$borderline)
+    )
+  }
 
   restore_typeof(data, out, crucial)
 }
