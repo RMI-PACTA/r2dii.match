@@ -50,7 +50,10 @@ bridge_sector <- function(data) {
   has_unknown_code_system <-
     !any(data2$sector_classification_system %in% classification$code_system)
   if (has_unknown_code_system){
-    stop('At least one loan is classified using a sector code system outside of the 2Dii database.')
+    stop(
+      'At least one loan is classified using a sector code system outside of the 2Dii database.',
+      call. = FALSE
+    )
   }
 
   by <- rlang::set_names(c("code_system", "code"), crucial)
