@@ -60,20 +60,6 @@ bridge_sector <- function(data) {
   by <- rlang::set_names(c("code_system", "code"), crucial)
   out <- dplyr::left_join(data2, classification, by = by)
 
-  any_output_sectors_is_missing <- any(is.na(out$sector))
-  if(any_output_sectors_is_missing) {
-    warning("Can't bridge some sector codes.", call. = FALSE)
-
-    usethis::ui_oops(
-      "Flagging missing values of {ui_field('sector')} as: code not found"
-    )
-    out <- dplyr::mutate(
-      out,
-      sector = ifelse(is.na(.data$sector), 'code not found', .data$sector),
-      borderline = ifelse(is.na(.data$borderline), TRUE, .data$borderline)
-    )
-  }
-
   restore_typeof(data, out, crucial)
 }
 
