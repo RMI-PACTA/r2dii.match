@@ -47,19 +47,26 @@ bridge_sector <- function(data) {
   # Coerce crucial columns to character for more robust join()
   data2 <- data %>% purrr::modify_at(crucial, as.character)
 
-  # Throw error and stop bridging if any code_systems are not in our database
-  if (!any(data2$sector_classification_system %in% classification$code_system)){
+  has_unknown_code_system <-
+    !any(data2$sector_classification_system %in% classification$code_system)
+  if (has_unknown_code_system){
     stop('At least one loan is classified using a sector code system outside of the 2Dii database.')
   }
 
   by <- rlang::set_names(c("code_system", "code"), crucial)
   out <- dplyr::left_join(data2, classification, by = by)
 
-  # Throw warning if any output sectors are NA
-  if( any(is.na(out$sector)) ) {
-    warning('Some sector codes were not bridged. Output sector will be flagged: code not found')
-    out <- dplyr::mutate(out, sector = ifelse(is.na(sector), 'code not found', sector),
-                         borderline = ifelse(is.na(borderline), T, borderline))
+  any_output_sectors_is_missing <- any(is.na(out$sector))
+  if(any_output_sectors_is_missing) {
+    warning(
+      "Some sector codes were not bridged. Output sector will be flagged: code not found",
+      call. = FALSE
+    )
+    out <- dplyr::mutate(
+      out,
+      sector = ifelse(is.na(sector), 'code not found', .data$sector),
+      borderline = ifelse(is.na(.data$borderline), TRUE, .data$borderline)
+    )
   }
 
   restore_typeof(data, out, crucial)
