@@ -51,7 +51,8 @@ bridge_sector <- function(data) {
     !any(data2$sector_classification_system %in% classification$code_system)
   if (has_unknown_code_system){
     stop(
-      'At least one loan is classified using a sector code system outside of the 2Dii database.',
+      "At least one loan must use 2dfii's sector code system.\n",
+      "Are all of your loans classified as in 2dii's database?",
       call. = FALSE
     )
   }
@@ -61,13 +62,14 @@ bridge_sector <- function(data) {
 
   any_output_sectors_is_missing <- any(is.na(out$sector))
   if(any_output_sectors_is_missing) {
-    warning(
-      "Some sector codes were not bridged. Output sector will be flagged: code not found",
-      call. = FALSE
+    warning("Can't bridge some sector codes.", call. = FALSE)
+
+    usethis::ui_oops(
+      "Flagging missing values of {ui_field('sector')} as: code not found"
     )
     out <- dplyr::mutate(
       out,
-      sector = ifelse(is.na(sector), 'code not found', .data$sector),
+      sector = ifelse(is.na(.data$sector), 'code not found', .data$sector),
       borderline = ifelse(is.na(.data$borderline), TRUE, .data$borderline)
     )
   }
