@@ -86,4 +86,3 @@ test_that("bridge_sector with bad sector code system errs gracefully", {
     "must use 2dfii's sector code system"
   )
 })
-
