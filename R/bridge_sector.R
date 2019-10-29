@@ -50,7 +50,7 @@ bridge_sector <- function(data) {
 
   has_unknown_code_system <-
     !any(data2$sector_classification_system %in% classification$code_system)
-  if (has_unknown_code_system){
+  if (has_unknown_code_system) {
     stop(
       "At least one loan must use 2dfii's sector code system.\n",
       "Are all of your loans classified as in 2dii's database?",

@@ -48,13 +48,22 @@ test_that("bridge_sector added columns return acceptable values", {
   input <- r2dii.dataraw::loanbook_demo
   output <- bridge_sector(input)
 
-  acceptable_sectors <- c("automotive", "aviation", "cement", "coal",
-                          "code not found", "not in scope", "oil and gas",
-                          "power", "shipping", "steel")
+  acceptable_sectors <- c(
+    "automotive",
+    "aviation",
+    "cement",
+    "coal",
+    "code not found",
+    "not in scope",
+    "oil and gas",
+    "power",
+    "shipping",
+    "steel"
+  )
 
   expect_true(
     all(output$sector %in% acceptable_sectors)
-    )
+  )
 })
 
 test_that("bridge_sector preserves typeof() input columns", {
