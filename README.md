@@ -25,34 +25,36 @@ devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
 
 ## Example
 
-### Aspirational flowchart
+``` r
+library(r2dii.match)
 
-[This
-flowchart](https://docs.google.com/document/d/10smLkRUIIc5zRYltx1jXLuTpEXslw018ihEq9LSQ3kA/edit?ts=5d7bae6c#heading=h.ogg9badrp207)
-approximates what the package will eventually do.
+a_loanbook <- r2dii.dataraw::loanbook_demo
+id_by_loantaker_sector(a_loanbook)
+#> # A tibble: 320 x 18
+#>    id_loan id_direct_loant~ name_direct_loa~ id_ultimate_par~
+#>    <chr>   <chr>            <chr>            <chr>           
+#>  1 L1      C294             Yuamen Xinneng ~ UP15            
+#>  2 L2      C293             Yuamen Changyua~ UP84            
+#>  3 L3      C292             Yuama Ethanol L~ UP288           
+#>  4 L4      C299             Yudaksel Holdin~ UP54            
+#>  5 L5      C305             Yukon Energy Co~ UP104           
+#>  6 L6      C304             Yukon Developme~ UP83            
+#>  7 L7      C227             Yaugoa-Zapadnay~ UP134           
+#>  8 L8      C303             Yueyang City Co~ UP163           
+#>  9 L9      C301             Yuedxiu Group    UP138           
+#> 10 L10     C302             Yuexi County AA~ UP32            
+#> # ... with 310 more rows, and 14 more variables:
+#> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+#> #   loan_size_credit_limit_currency <chr>,
+#> #   sector_classification_system <chr>,
+#> #   sector_classification_input_type <chr>,
+#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
+#> #   flag_project_finance_loan <chr>, name_intermediate_parent <lgl>,
+#> #   name_project <lgl>, lei_direct_loantaker <lgl>,
+#> #   isin_direct_loantaker <lgl>
 
-![](https://i.imgur.com/bSenVBp.png)
-
-### User Interface
-
-We aim to provide a graphical user interface. Here are three options:
-
-  - An addin-based shiny app (a pop-up window in RStudio). See
-    `?match_addin()`.
-
-<img src="https://i.imgur.com/HUlgI45.png" align="center" width=400 />
-
-  - An browser-based shiny app. See `?match_app()`.
-
-<img src="https://i.imgur.com/IeHQQHt.png" align="center" width=400 />
-
-  - A parametrized Rmarkdown document. See
-    [param\_rmd.md](./buildignore/param_rmd.md). this is easiest to
-    develop. It runs locally or online on rstudioconnect.
-
-<img src="https://i.imgur.com/t1uqQ0i.png" align="center" width=400 />
-
-Another alternative that we haven’t considered is a terminal-based,
-interactive function.
-
-<img src="https://i.imgur.com/m2On1Ib.png" align="center" width=400 />
+some_customer_names <- c("3M Company", "Abbott Laboratories", "AbbVie Inc.")
+replace_customer_name(some_customer_names)
+#> [1] "threem co"          "abbottlaboratories" "abbvie inc"
+```
