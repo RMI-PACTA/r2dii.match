@@ -26,7 +26,7 @@ jobs:
           Rscript -e "remotes::install_deps(dependencies = TRUE)"
       - name: Check package
         run: |
-          Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check')"
+          Rscript -e "rcmdcheck::rcmdcheck(error_on = 'error', check_dir = 'check', args = '--no-manual')"
       - name: Document Package
         run: |
           Rscript -e "pkgdown::build_site(examples = FALSE)"
