@@ -3,8 +3,6 @@
 export("%>%")
 export(bridge_sector)
 export(id_by_loantaker_sector)
-export(match_addin)
-export(match_app)
 export(replace_customer_name)
 importFrom(dplyr,mutate)
 importFrom(magrittr,"%>%")
