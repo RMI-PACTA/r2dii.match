@@ -53,11 +53,8 @@ Imports:
     tibble,
     usethis
 Suggests: 
-    miniUI,
     pacta (>= 0.0.0.9000),
     r2dii.dataraw (>= 0.0.2.9000),
-    rstudioapi,
-    shiny,
     testthat (>= 2.1.0)
 Remotes: 
     2DegreesInvesting/pacta,
