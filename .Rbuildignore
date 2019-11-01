@@ -2,7 +2,5 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
-^buildignore$
 ^_pkgdown\.yml$
-
 ^\.github/workflows$
