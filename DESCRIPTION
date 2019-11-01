@@ -42,6 +42,7 @@ BugReports:
     https://github.com/2DegreesInvesting/r2dii.match/issues
 Imports: 
     dplyr,
+    ellipsis,
     glue,
     here,
     magrittr,
@@ -49,6 +50,7 @@ Imports:
     r2dii.utils (>= 0.0.0.9000),
     readr,
     rlang,
+    stringdist,
     stringi,
     tibble,
     usethis
