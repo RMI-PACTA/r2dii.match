@@ -2,10 +2,13 @@
 % Please edit documentation in R/replace_customer_name.R
 \name{replace_customer_name}
 \alias{replace_customer_name}
-\title{Simplify customer name}
+\alias{get_replacements}
+\title{Replace customer names}
 \usage{
 replace_customer_name(x, from_to = NULL, ownership = NULL,
   remove_ownership = FALSE)
+
+get_replacements()
 }
 \arguments{
 \item{x}{Character string, (likely) containing customer names.}
@@ -20,26 +23,33 @@ cut-off or separation.}
 should be cut-off.}
 }
 \value{
-Character string.
+\itemize{
+\item \code{replace_customer_name()} returns a character string.
+\item \code{get_replacements()} returns a \link[tibble:tibble]{tibble::tibble} with columns \code{from} and
+\code{to}.
+}
 }
 \description{
-Although this function takes any character vector, it is useful for a vector
-containing customer names. This is what this function does to it:
 \itemize{
-\item Convert to lower case;
-\item Convert to latin-ascii characters;
-\item Convert ownership types to standard abbreviations.
+\item \code{replace_customer_name()} takes any character vector, usually a vector of
+customer names, and replaces (a) to lower case; (b) to latin-ascii
+characters; and (c) to standard abbreviations of ownership types.
+\item \code{get_replacements()} allows you to access the default replacements table,
+so you can amend it and pass it to \code{replace_customer_name()} via the
+\code{from_to} argument.
 }
 }
 \examples{
+library(tibble)
+
 replace_customer_name("A. and B")
 replace_customer_name("Acuity Brands Inc")
 replace_customer_name(c("3M Company", "Abbott Laboratories", "AbbVie Inc."))
 
-custom_replacement <- tibble::tibble(from = "AAAA", to = "B")
+custom_replacement <- tibble(from = "AAAA", to = "B")
 replace_customer_name("Aa Aaaa", from_to = custom_replacement)
 
-neutral_replacement <- tibble::tibble(from = character(0), to = character(0))
+neutral_replacement <- tibble(from = character(0), to = character(0))
 replace_customer_name("Company Name Owner", from_to = neutral_replacement)
 replace_customer_name(
   "Company Name Owner",
@@ -47,6 +57,18 @@ replace_customer_name(
   ownership = "owner",
   remove_ownership = TRUE
 )
+
+get_replacements()
+
+append_replacements <- get_replacements() \%>\%
+  add_row(
+    .before = 1,
+    from = c("AA", "BB"), to = c("alpha", "beta")
+  )
+append_replacements
+
+# And in combination with `replace_customer_name()`
+replace_customer_name(c("AA", "BB", "1"), from_to = append_replacements)
 }
 \author{
 person(given = "Evgeny",

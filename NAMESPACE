@@ -2,6 +2,7 @@
 
 export("%>%")
 export(bridge_sector)
+export(get_replacements)
 export(id_by_loantaker_sector)
 export(replace_customer_name)
 export(string_similarity)

@@ -1,10 +1,11 @@
-#' Simplify customer name
+#' Replace customer names
 #'
-#' Although this function takes any character vector, it is useful for a vector
-#' containing customer names. This is what this function does to it:
-#'  * Convert to lower case;
-#'  * Convert to latin-ascii characters;
-#'  * Convert ownership types to standard abbreviations.
+#' * `replace_customer_name()` takes any character vector, usually a vector of
+#' customer names, and replaces (a) to lower case; (b) to latin-ascii
+#' characters; and (c) to standard abbreviations of ownership types.
+#' * `get_replacements()` allows you to access the default replacements table,
+#' so you can amend it and pass it to `replace_customer_name()` via the
+#' `from_to` argument.
 #'
 #' @author person(given = "Evgeny",
 #' family = "Petrovsky",
@@ -19,17 +20,25 @@
 #'   should be cut-off.
 #'
 #' @export
-#' @return Character string.
+#' @return
+#' * `replace_customer_name()` returns a character string.
+#' * `get_replacements()` returns a [tibble::tibble] with columns `from` and
+#' `to`.
+#'
+#'
+#'
 #'
 #' @examples
+#' library(tibble)
+#'
 #' replace_customer_name("A. and B")
 #' replace_customer_name("Acuity Brands Inc")
 #' replace_customer_name(c("3M Company", "Abbott Laboratories", "AbbVie Inc."))
 #'
-#' custom_replacement <- tibble::tibble(from = "AAAA", to = "B")
+#' custom_replacement <- tibble(from = "AAAA", to = "B")
 #' replace_customer_name("Aa Aaaa", from_to = custom_replacement)
 #'
-#' neutral_replacement <- tibble::tibble(from = character(0), to = character(0))
+#' neutral_replacement <- tibble(from = character(0), to = character(0))
 #' replace_customer_name("Company Name Owner", from_to = neutral_replacement)
 #' replace_customer_name(
 #'   "Company Name Owner",
@@ -37,6 +46,18 @@
 #'   ownership = "owner",
 #'   remove_ownership = TRUE
 #' )
+#'
+#' get_replacements()
+#'
+#' append_replacements <- get_replacements() %>%
+#'   add_row(
+#'     .before = 1,
+#'     from = c("AA", "BB"), to = c("alpha", "beta")
+#'   )
+#' append_replacements
+#'
+#' # And in combination with `replace_customer_name()`
+#' replace_customer_name(c("AA", "BB", "1"), from_to = append_replacements)
 replace_customer_name <- function(x,
                                   from_to = NULL,
                                   ownership = NULL,
@@ -90,8 +111,11 @@ maybe_remove_ownership <- function(remove_ownership, ownership, .init) {
 }
 
 replace_with_abbreviation <- function(replacement, .init) {
-  replacement <- replacement %||% get_name_replace()
+  replacement <- replacement %||% get_replacements()
   replacement <- rlang::set_names(replacement, tolower)
+
+  check_crucial_names(replacement, c("from", "to"))
+
   abbrev <- purrr::map2(tolower(replacement$from), tolower(replacement$to), c)
 
   reduce(abbrev, replace_abbrev, fixed = TRUE, .init = .init)
@@ -105,7 +129,9 @@ replace_abbrev <- function(text, abr, fixed = FALSE) {
 }
 
 # Source: @jdhoffa https://github.com/2DegreesInvesting/r2dii.dataraw/pull/8
-get_name_replace <- function() {
+#' @export
+#' @rdname replace_customer_name
+get_replacements <- function() {
   tibble::tribble(
     ~from, ~to,
     " and ", " & ",

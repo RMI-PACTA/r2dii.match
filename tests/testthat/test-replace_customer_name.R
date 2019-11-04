@@ -104,24 +104,24 @@ test_that("replace_customer_name with custom ownership types works ok", {
   )
 })
 
-test_that("get_name_replace() is equal to its legacy in pacta", {
+test_that("get_replacements() is equal to its legacy in pacta", {
   expect_equal(
-    setdiff(get_name_replace()$from, pacta::data.name.reductions$From),
+    setdiff(get_replacements()$from, pacta::data.name.reductions$From),
     character(0)
   )
 
   expect_equal(
-    setdiff(pacta::data.name.reductions$From, get_name_replace()$from),
+    setdiff(pacta::data.name.reductions$From, get_replacements()$from),
     character(0)
   )
 
   expect_equal(
-    setdiff(get_name_replace()$to, pacta::data.name.reductions$To),
+    setdiff(get_replacements()$to, pacta::data.name.reductions$To),
     character(0)
   )
 
   expect_equal(
-    setdiff(pacta::data.name.reductions$To, get_name_replace()$to),
+    setdiff(pacta::data.name.reductions$To, get_replacements()$to),
     character(0)
   )
 })
@@ -131,4 +131,21 @@ test_that("get_ownership_type() is equal to its legacy in pacta", {
     setdiff(get_ownership_type(), pacta::data.ownership.types),
     character(0)
   )
+})
+
+test_that("replace_customer_name errors with malformed `from_to`", {
+  expect_error(
+    replace_customer_name("a", from_to = tibble::tibble(bad = "a", to = "b")),
+    "must have all expected names"
+  )
+
+  expect_error(
+    replace_customer_name("a", from_to = tibble::tibble(from = "a", bad = "b")),
+    "must have all expected names"
+  )
+})
+
+test_that("get_replacements outputs the expectes tibble", {
+  expect_is(get_replacements(), "tbl_df")
+  expect_named(get_replacements(), c("from", "to"))
 })
