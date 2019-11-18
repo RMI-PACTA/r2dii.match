@@ -53,7 +53,8 @@ Imports:
     stringdist,
     stringi,
     tibble,
-    usethis
+    usethis,
+    tidyr
 Suggests: 
     pacta (>= 0.0.0.9000),
     r2dii.dataraw (>= 0.0.2.9000),
