@@ -76,6 +76,8 @@ check_crucial_columns_of_loanbook_data <- function(data) {
     "sector"
   )
   r2dii.utils::check_crucial_names(data, crucial_data)
+
+  invisible(data)
 }
 
 check_crucial_columns_of_overwrite <- function(overwrite) {
@@ -87,6 +89,8 @@ check_crucial_columns_of_overwrite <- function(overwrite) {
     "source"
   )
   r2dii.utils::check_crucial_names(overwrite, crucial_overwrite)
+
+  invisible(overwrite)
 }
 
 init_overwrite <- function() {
