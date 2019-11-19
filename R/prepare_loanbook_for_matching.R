@@ -33,13 +33,12 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
 
   # initialize empty overwrite data.frame with necessary columns
   init_overwrite <- function() {
-    data.frame(
+    tibble(
       level = character(),
       id = character(),
       name = character(),
       sector = character(),
-      source = character(),
-      stringsAsFactors = F
+      source = character()
     )
   }
 
@@ -54,12 +53,10 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
     "sector",
     "source"
   )
-
   r2dii.utils::check_crucial_names(overwrite, crucial_overwrite)
 
   # extract all unique id & name pairs, with corresponding level and sector
-  loanbook_match_values <-
-    data %>%
+  loanbook_match_values <- data %>%
     dplyr::select(
       .data$id_direct_loantaker,
       .data$name_direct_loantaker,

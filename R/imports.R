@@ -1,4 +1,4 @@
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate tibble select
 #' @importFrom purrr reduce
 #' @importFrom rlang %||%
 #' @importFrom usethis ui_oops ui_field

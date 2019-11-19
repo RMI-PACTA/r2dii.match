@@ -9,12 +9,14 @@ prepare_loanbook_for_matching(data, overwrite = NULL)
 \arguments{
 \item{data}{A sector bridged loanbook dataframe.}
 
-\item{overwrite}{A dataframe used to overwrite the sector and/or name of a particular loan,
-direct loantaker or ultimate parent. Elements to be overwritten are identified by any one of
-their IDs (loan, direct loantaker or ultimate parent).}
+\item{overwrite}{A dataframe used to overwrite the sector and/or name of a
+particular loan, direct loantaker or ultimate parent. Elements to be
+overwritten are identified by any one of their IDs (loan, direct loantaker
+or ultimate parent).}
 }
 \value{
-A dataframe of all unique name + sector combinations, including all IDs, and with elements already manually overwritten.
+A dataframe of all unique name + sector combinations, including all
+IDs, and with elements already manually overwritten.
 }
 \description{
 This function takes all unique name + sector combinations of a loanbook,
@@ -23,9 +25,7 @@ preparing it for the fuzzy matching process.
 \examples{
 library(r2dii.dataraw)
 
-input_loanbook <- r2dii.dataraw::loanbook_demo
-
-sector_bridged_loanbook <- r2dii.match::bridge_sector(input_loanbook)
-
-prepare_loanbook_for_matching(sector_bridged_loanbook)
+loanbook_demo \%>\%
+  bridge_sector() \%>\%
+  prepare_loanbook_for_matching()
 }
