@@ -48,7 +48,6 @@ test_that("prepare_loanbook_for_matching errors if overwrite lacks key column", 
 })
 
 test_that("prepare_loanbook_for_matching correctly overwrites name", {
-
   data <- loanbook_demo %>%
     bridge_sector()
 
@@ -56,14 +55,12 @@ test_that("prepare_loanbook_for_matching correctly overwrites name", {
 
   out <- prepare_loanbook_for_matching(data, overwrite) %>%
     dplyr::filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    dplyr::left_join(overwrite, by=c("id", "level"), keep=F)
+    dplyr::left_join(overwrite, by = c("id", "level"), keep = F)
 
-  expect_equal(out$name.x,out$name.y)
-
+  expect_equal(out$name.x, out$name.y)
 })
 
 test_that("prepare_loanbook_for_matching correctly overwrites sector", {
-
   data <- loanbook_demo %>%
     bridge_sector()
 
@@ -71,8 +68,7 @@ test_that("prepare_loanbook_for_matching correctly overwrites sector", {
 
   out <- prepare_loanbook_for_matching(data, overwrite) %>%
     dplyr::filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    dplyr::left_join(overwrite, by=c("id", "level"), keep=F)
+    dplyr::left_join(overwrite, by = c("id", "level"), keep = F)
 
-  expect_equal(out$sector.x,out$sector.y)
-
+  expect_equal(out$sector.x, out$sector.y)
 })
