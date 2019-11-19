@@ -42,19 +42,31 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
       values_to = "id"
     ) %>%
     dplyr::mutate(
-      name =
-        ifelse(.data$level == "direct_loantaker", .data$name_direct_loantaker, NA)
+      name = ifelse(
+        .data$level == "direct_loantaker",
+        .data$name_direct_loantaker,
+        NA_character_
+      ),
+      name = ifelse(
+        .data$level == "ultimate_parent",
+        .data$name_ultimate_parent,
+        .data$name
+      ),
+      source = "loanbook"
     ) %>%
-    dplyr::mutate(
-      name =
-        ifelse(.data$level == "ultimate_parent", .data$name_ultimate_parent, .data$name)
+    dplyr::select(
+      .data$level,
+      .data$id,
+      .data$name,
+      .data$sector,
+      .data$source
     ) %>%
-    dplyr::mutate(source = "loanbook") %>%
-    dplyr::select(.data$level, .data$id, .data$name, .data$sector, .data$source) %>%
     dplyr::distinct()
 
   # join in manual values
-  loanbook_match_values_overwrite <- dplyr::left_join(loanbook_match_values, overwrite, by = c("id", "level")) %>%
+  loanbook_match_values_overwrite <- dplyr::left_join(
+    loanbook_match_values, overwrite, by = c("id", "level")
+  ) %>%
     dplyr::mutate(
       name = ifelse(is.na(.data$name.y), .data$name.x, .data$name.y),
       sector = ifelse(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
@@ -64,7 +76,9 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
 
   # simplify name
   loanbook_match_values_overwrite %>%
-    dplyr::mutate(simplified_name = r2dii.match::replace_customer_name(.data$name))
+    dplyr::mutate(
+      simplified_name = r2dii.match::replace_customer_name(.data$name)
+    )
 }
 
 check_crucial_columns_of_loanbook_data <- function(data) {
