@@ -21,64 +21,11 @@
 #'   prepare_loanbook_for_matching()
 prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_crucial_columns_of_loanbook_data(data)
+  check_crucial_columns_of_overwrite(overwrite %||% init_overwrite())
 
-  overwrite <- overwrite %||% init_overwrite()
-  # Must run after init_overwrite
-  check_crucial_columns_of_overwrite(overwrite)
-
-  # extract all unique id & name pairs, with corresponding level and sector
-  loanbook_match_values <- data %>%
-    select(
-      .data$id_direct_loantaker,
-      .data$name_direct_loantaker,
-      .data$id_ultimate_parent,
-      .data$name_ultimate_parent,
-      .data$sector
-    ) %>%
-    tidyr::pivot_longer(
-      cols = tidyr::starts_with("id_"),
-      names_to = "level",
-      names_prefix = "id_",
-      values_to = "id"
-    ) %>%
-    mutate(
-      name = if_else(
-        .data$level == "direct_loantaker",
-        .data$name_direct_loantaker,
-        NA_character_
-      ),
-      name = if_else(
-        .data$level == "ultimate_parent",
-        .data$name_ultimate_parent,
-        .data$name
-      ),
-      source = "loanbook"
-    ) %>%
-    select(
-      .data$level,
-      .data$id,
-      .data$name,
-      .data$sector,
-      .data$source
-    ) %>%
-    dplyr::distinct()
-
-  # join in manual values
-  loanbook_match_values_overwrite <- dplyr::left_join(
-    loanbook_match_values, overwrite, by = c("id", "level")
-  ) %>%
-    mutate(
-      name = .data$name.y %|% .data$name.x,
-      sector = .data$sector.y %|% .data$sector.x
-    ) %>%
-    mutate(source = if_else(is.na(.data$source.y), .data$source.x, "manual")) %>%
-    select(.data$level, .data$id, .data$name, .data$sector, .data$source)
-
-  # simplify name
-  loanbook_match_values_overwrite %>%
-    mutate(
-      simplified_name = r2dii.match::replace_customer_name(.data$name)
-    )
+  data %>%
+    extract_unique_id_and_name_with_level_and_sector() %>%
+    join_in_manual_values(overwrite %||% init_overwrite())
 }
 
 check_crucial_columns_of_loanbook_data <- function(data) {
@@ -115,4 +62,61 @@ init_overwrite <- function() {
     sector = character(),
     source = character()
   )
+}
+
+extract_unique_id_and_name_with_level_and_sector <- function(data) {
+  data %>%
+    select(
+      .data$id_direct_loantaker,
+      .data$name_direct_loantaker,
+      .data$id_ultimate_parent,
+      .data$name_ultimate_parent,
+      .data$sector
+    ) %>%
+    tidyr::pivot_longer(
+      cols = tidyr::starts_with("id_"),
+      names_to = "level",
+      names_prefix = "id_",
+      values_to = "id"
+    ) %>%
+    mutate(
+      name = if_else(
+        .data$level == "direct_loantaker",
+        .data$name_direct_loantaker,
+        NA_character_
+      ),
+      name = if_else(
+        .data$level == "ultimate_parent",
+        .data$name_ultimate_parent,
+        .data$name
+      ),
+      source = "loanbook"
+    ) %>%
+    select(
+      .data$level,
+      .data$id,
+      .data$name,
+      .data$sector,
+      .data$source
+    ) %>%
+    dplyr::distinct()
+}
+
+join_in_manual_values <- function(data, overwrite) {
+  data %>%
+    dplyr::left_join(overwrite, by = c("id", "level")) %>%
+    mutate(
+      source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
+      sector = .data$sector.y %|% .data$sector.x,
+      name = .data$name.y %|% .data$name.x,
+      simplified_name = replace_customer_name(.data$name)
+    ) %>%
+    select(
+      .data$level,
+      .data$id,
+      .data$name,
+      .data$sector,
+      .data$source,
+      .data$simplified_name
+    )
 }
