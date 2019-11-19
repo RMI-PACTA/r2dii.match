@@ -5,8 +5,12 @@
 \alias{get_replacements}
 \title{Replace customer names}
 \usage{
-replace_customer_name(x, from_to = NULL, ownership = NULL,
-  remove_ownership = FALSE)
+replace_customer_name(
+  x,
+  from_to = NULL,
+  ownership = NULL,
+  remove_ownership = FALSE
+)
 
 get_replacements()
 }
