@@ -107,8 +107,8 @@ join_in_manual_values <- function(data, overwrite) {
     dplyr::left_join(overwrite, by = c("id", "level")) %>%
     mutate(
       source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
-      sector = .data$sector.y %|% .data$sector.x,
-      name = .data$name.y %|% .data$name.x,
+      sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
+      name = if_else(is.na(.data$name.y), .data$name.x, .data$name.y),
       simplified_name = replace_customer_name(.data$name)
     ) %>%
     select(
