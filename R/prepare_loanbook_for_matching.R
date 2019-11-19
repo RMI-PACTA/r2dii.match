@@ -20,40 +20,11 @@
 #'   bridge_sector() %>%
 #'   prepare_loanbook_for_matching()
 prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
+  check_crucial_columns_of_loanbook_data(data)
 
-  # check that input data has all pertinent columns
-  crucial_data <- c(
-    "name_direct_loantaker",
-    "name_ultimate_parent",
-    "id_direct_loantaker",
-    "id_ultimate_parent",
-    "sector"
-  )
-  r2dii.utils::check_crucial_names(data, crucial_data)
-
-  # initialize empty overwrite data.frame with necessary columns
-  init_overwrite <- function() {
-    tibble(
-      level = character(),
-      id = character(),
-      name = character(),
-      sector = character(),
-      source = character()
-    )
-  }
-
-  # load manual overwrite file, or initialize with empty overwrite file
   overwrite <- overwrite %||% init_overwrite()
-
-  # check that input overwrite file has pertinent columns (note this comes after init_overwrite)
-  crucial_overwrite <- c(
-    "level",
-    "id",
-    "name",
-    "sector",
-    "source"
-  )
-  r2dii.utils::check_crucial_names(overwrite, crucial_overwrite)
+  # Must run after init_overwrite
+  check_crucial_columns_of_overwrite(overwrite)
 
   # extract all unique id & name pairs, with corresponding level and sector
   loanbook_match_values <- data %>%
@@ -94,4 +65,36 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   # simplify name
   loanbook_match_values_overwrite %>%
     dplyr::mutate(simplified_name = r2dii.match::replace_customer_name(.data$name))
+}
+
+check_crucial_columns_of_loanbook_data <- function(data) {
+  crucial_data <- c(
+    "name_direct_loantaker",
+    "name_ultimate_parent",
+    "id_direct_loantaker",
+    "id_ultimate_parent",
+    "sector"
+  )
+  r2dii.utils::check_crucial_names(data, crucial_data)
+}
+
+check_crucial_columns_of_overwrite <- function(overwrite) {
+  crucial_overwrite <- c(
+    "level",
+    "id",
+    "name",
+    "sector",
+    "source"
+  )
+  r2dii.utils::check_crucial_names(overwrite, crucial_overwrite)
+}
+
+init_overwrite <- function() {
+  tibble(
+    level = character(),
+    id = character(),
+    name = character(),
+    sector = character(),
+    source = character()
+  )
 }

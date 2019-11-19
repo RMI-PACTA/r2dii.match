@@ -24,3 +24,25 @@ test_that("prepare_loanbook_for_matching remains unchanged after refactoring", {
   )
   expect_known_value(out, "ref-prepare_loanbook_for_matching", update = FALSE)
 })
+
+test_that("prepare_loanbook_for_matching errors if data lacks key column", {
+  bad_data <- loanbook_demo %>%
+    bridge_sector() %>%
+    dplyr::select(-sector)
+
+  expect_error(
+    prepare_loanbook_for_matching(bad_data),
+    "data must have all expected names"
+  )
+})
+
+test_that("prepare_loanbook_for_matching errors if overwrite lacks key column", {
+  data <- loanbook_demo %>%
+    bridge_sector()
+  bad_overwrite <- tibble(x = 1)
+
+  expect_error(
+    prepare_loanbook_for_matching(data, bad_overwrite),
+    "data must have all expected names"
+  )
+})
