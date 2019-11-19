@@ -28,7 +28,7 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
 
   # extract all unique id & name pairs, with corresponding level and sector
   loanbook_match_values <- data %>%
-    dplyr::select(
+    select(
       .data$id_direct_loantaker,
       .data$name_direct_loantaker,
       .data$id_ultimate_parent,
@@ -41,20 +41,20 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
       names_prefix = "id_",
       values_to = "id"
     ) %>%
-    dplyr::mutate(
-      name = ifelse(
+    mutate(
+      name = if_else(
         .data$level == "direct_loantaker",
         .data$name_direct_loantaker,
         NA_character_
       ),
-      name = ifelse(
+      name = if_else(
         .data$level == "ultimate_parent",
         .data$name_ultimate_parent,
         .data$name
       ),
       source = "loanbook"
     ) %>%
-    dplyr::select(
+    select(
       .data$level,
       .data$id,
       .data$name,
@@ -67,16 +67,16 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   loanbook_match_values_overwrite <- dplyr::left_join(
     loanbook_match_values, overwrite, by = c("id", "level")
   ) %>%
-    dplyr::mutate(
-      name = ifelse(is.na(.data$name.y), .data$name.x, .data$name.y),
-      sector = ifelse(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
-      source = ifelse(is.na(.data$source.y), .data$source.x, "manual")
+    mutate(
+      name = .data$name.y %|% .data$name.x,
+      sector = .data$sector.y %|% .data$sector.x
     ) %>%
-    dplyr::select(.data$level, .data$id, .data$name, .data$sector, .data$source)
+    mutate(source = if_else(is.na(.data$source.y), .data$source.x, "manual")) %>%
+    select(.data$level, .data$id, .data$name, .data$sector, .data$source)
 
   # simplify name
   loanbook_match_values_overwrite %>%
-    dplyr::mutate(
+    mutate(
       simplified_name = r2dii.match::replace_customer_name(.data$name)
     )
 }
@@ -89,7 +89,7 @@ check_crucial_columns_of_loanbook_data <- function(data) {
     "id_ultimate_parent",
     "sector"
   )
-  r2dii.utils::check_crucial_names(data, crucial_data)
+  check_crucial_names(data, crucial_data)
 
   invisible(data)
 }
@@ -102,7 +102,7 @@ check_crucial_columns_of_overwrite <- function(overwrite) {
     "sector",
     "source"
   )
-  r2dii.utils::check_crucial_names(overwrite, crucial_overwrite)
+  check_crucial_names(overwrite, crucial_overwrite)
 
   invisible(overwrite)
 }
