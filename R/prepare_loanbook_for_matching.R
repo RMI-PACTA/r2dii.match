@@ -19,52 +19,9 @@
 #' loanbook_demo %>%
 #'   bridge_sector() %>%
 #'   prepare_loanbook_for_matching()
-prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
+prepare_loanbook_for_matching <- function(data) {
   check_crucial_columns_of_loanbook_data(data)
-  check_crucial_columns_of_overwrite(overwrite %||% init_overwrite())
 
-  data %>%
-    extract_unique_id_and_name_with_level_and_sector() %>%
-    join_in_manual_values(overwrite %||% init_overwrite())
-}
-
-check_crucial_columns_of_loanbook_data <- function(data) {
-  crucial_data <- c(
-    "name_direct_loantaker",
-    "name_ultimate_parent",
-    "id_direct_loantaker",
-    "id_ultimate_parent",
-    "sector"
-  )
-  check_crucial_names(data, crucial_data)
-
-  invisible(data)
-}
-
-check_crucial_columns_of_overwrite <- function(overwrite) {
-  crucial_overwrite <- c(
-    "level",
-    "id",
-    "name",
-    "sector",
-    "source"
-  )
-  check_crucial_names(overwrite, crucial_overwrite)
-
-  invisible(overwrite)
-}
-
-init_overwrite <- function() {
-  tibble(
-    level = character(),
-    id = character(),
-    name = character(),
-    sector = character(),
-    source = character()
-  )
-}
-
-extract_unique_id_and_name_with_level_and_sector <- function(data) {
   data %>%
     select(
       .data$id_direct_loantaker,
@@ -102,15 +59,80 @@ extract_unique_id_and_name_with_level_and_sector <- function(data) {
     dplyr::distinct()
 }
 
-join_in_manual_values <- function(data, overwrite) {
+#' Overwrite the name and/ or sector of prepared loanbook data
+#'
+#' This function overwrites the name and/ or sector of entities of the perpared
+#' loanbook as specified by manual input. Entities to be overwritten are
+#' identified by level (e.g. `direct_loantaker` or `ultimate_parent`) and ID.
+#'
+#' @param data A matching-prepared loanbook
+#' @param overwrite A dataframe used to overwrite the sector and/or name of a
+#'   particular direct loantaker or ultimate parent. If only name (sector)
+#'   should be overwritten leave sector (name) as `NA`.
+#'
+#' @return A dataframe of all unique name + sector combinations, including all
+#'   IDs, and with elements already manually overwritten.
+#' @export
+#'
+#' #' @seealso [r2dii.dataraw::overwrite_demo] demo overwrite input file.
+#'
+#' @examples
+#' library(r2dii.dataraw)
+#'
+#' loanbook_demo %>%
+#'   bridge_sector() %>%
+#'   prepare_loanbook_for_matching() %>%
+#'   overwrite_name_sector(overwrite_demo)
+overwrite_name_sector <- function(data, overwrite) {
+  check_crucial_columns_of_prepared_loanbook_data(data)
+  check_crucial_columns_of_overwrite(overwrite)
+
   data %>%
     dplyr::left_join(overwrite, by = c("id", "level")) %>%
     mutate(
       source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
       sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
-      name = if_else(is.na(.data$name.y), .data$name.x, .data$name.y),
-      simplified_name = replace_customer_name(.data$name)
+      name = if_else(is.na(.data$name.y), .data$name.x, .data$name.y)
     ) %>%
+    select(
+      .data$level,
+      .data$id,
+      .data$name,
+      .data$sector,
+      .data$source
+    )
+}
+
+#' Wrapper to simplify the name column of the prepared loanbook
+#'
+#' This function is a wrapper for `replace_customer_name` to simplify the name
+#' column of the matching-prepared loanbook or ald file.
+#'
+#' @param data A matching-prepared loanbook or ald file
+#'
+#' @return A matching-prepared file with simplified name.
+#' @export
+#'
+#' #' @seealso [replace_customer_name] name simplification function.
+#'
+#' @examples
+#' library(r2dii.dataraw)
+#'
+#' loanbook_demo %>%
+#'   bridge_sector() %>%
+#'   prepare_loanbook_for_matching() %>%
+#'   simplify_name_column()
+#'
+#' loanbook_demo %>%
+#'   bridge_sector() %>%
+#'   prepare_loanbook_for_matching() %>%
+#'   overwrite_name_sector(overwrite_demo) %>%
+#'   simplify_name_column()
+simplify_name_column <- function(data) {
+  check_crucial_columns_of_prepared_loanbook_data(data)
+
+  data %>%
+    mutate(simplified_name = replace_customer_name(.data$name)) %>%
     select(
       .data$level,
       .data$id,
@@ -119,4 +141,44 @@ join_in_manual_values <- function(data, overwrite) {
       .data$source,
       .data$simplified_name
     )
+
+}
+
+check_crucial_columns_of_loanbook_data <- function(data) {
+  crucial_data <- c(
+    "name_direct_loantaker",
+    "name_ultimate_parent",
+    "id_direct_loantaker",
+    "id_ultimate_parent",
+    "sector"
+  )
+  check_crucial_names(data, crucial_data)
+
+  invisible(data)
+}
+
+check_crucial_columns_of_prepared_loanbook_data <- function(data) {
+  crucial_data <- c(
+    "level",
+    "id",
+    "name",
+    "sector",
+    "source"
+  )
+  check_crucial_names(data, crucial_data)
+
+  invisible(data)
+}
+
+check_crucial_columns_of_overwrite <- function(overwrite) {
+  crucial_overwrite <- c(
+    "level",
+    "id",
+    "name",
+    "sector",
+    "source"
+  )
+  check_crucial_names(overwrite, crucial_overwrite)
+
+  invisible(overwrite)
 }
