@@ -128,7 +128,7 @@ overwrite_name_sector <- function(data, overwrite) {
 #'   overwrite_name_sector(overwrite_demo) %>%
 #'   simplify_name_column()
 simplify_name_column <- function(data) {
-  check_crucial_columns_of_prepared_loanbook_data(data)
+  check_crucial_names(data, get_matching_columns())
 
   data %>%
     mutate(simplified_name = replace_customer_name(.data$name)) %>%
