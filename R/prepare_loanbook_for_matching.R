@@ -155,12 +155,6 @@ check_crucial_columns_of_loanbook_data <- function(data) {
   invisible(data)
 }
 
-check_crucial_columns_of_prepared_loanbook_data <- function(data) {
-  check_crucial_names(data, get_matching_columns())
-
-  invisible(data)
-}
-
 get_matching_columns <- function() {
   c(
     "level",
