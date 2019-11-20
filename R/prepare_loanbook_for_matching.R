@@ -157,7 +157,7 @@ check_crucial_columns_of_loanbook_data <- function(data) {
 
 check_crucial_columns_of_prepared_loanbook_data <- function(data) {
   get_matching_columns <- function() {
-    crucial_data <- c(
+    c(
       "level",
       "id",
       "name",
