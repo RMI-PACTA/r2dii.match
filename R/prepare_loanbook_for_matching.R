@@ -87,7 +87,7 @@ prepare_loanbook_for_matching <- function(data) {
 #'   prepare_loanbook_for_matching() %>%
 #'   overwrite_name_sector(overwrite_demo)
 overwrite_name_sector <- function(data, overwrite) {
-  check_crucial_columns_of_prepared_loanbook_data(data)
+  check_crucial_names(data, get_matching_columns())
   check_crucial_columns_of_overwrite(overwrite)
 
   data %>%
