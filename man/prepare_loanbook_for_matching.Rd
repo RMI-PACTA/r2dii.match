@@ -4,15 +4,10 @@
 \alias{prepare_loanbook_for_matching}
 \title{Prepare the loanbook elements to be matched.}
 \usage{
-prepare_loanbook_for_matching(data, overwrite = NULL)
+prepare_loanbook_for_matching(data)
 }
 \arguments{
 \item{data}{A sector bridged loanbook dataframe.}
-
-\item{overwrite}{A dataframe used to overwrite the sector and/or name of a
-particular loan, direct loantaker or ultimate parent. Elements to be
-overwritten are identified by any one of their IDs (loan, direct loantaker
-or ultimate parent).}
 }
 \value{
 A dataframe of all unique name + sector combinations, including all

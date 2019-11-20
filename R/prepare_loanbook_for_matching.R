@@ -4,10 +4,6 @@
 #' preparing it for the fuzzy matching process.
 #'
 #' @param data A sector bridged loanbook dataframe.
-#' @param overwrite A dataframe used to overwrite the sector and/or name of a
-#'   particular loan, direct loantaker or ultimate parent. Elements to be
-#'   overwritten are identified by any one of their IDs (loan, direct loantaker
-#'   or ultimate parent).
 #'
 #' @return A dataframe of all unique name + sector combinations, including all
 #'   IDs, and with elements already manually overwritten.
@@ -74,7 +70,7 @@ prepare_loanbook_for_matching <- function(data) {
 #'   IDs, and with elements already manually overwritten.
 #' @export
 #'
-#' #' @seealso [r2dii.dataraw::overwrite_demo] demo overwrite input file.
+#' @seealso [r2dii.dataraw::overwrite_demo] demo overwrite input file.
 #'
 #' @examples
 #' library(r2dii.dataraw)
@@ -113,7 +109,7 @@ overwrite_name_sector <- function(data, overwrite) {
 #' @return A matching-prepared file with simplified name.
 #' @export
 #'
-#' #' @seealso [replace_customer_name] name simplification function.
+#' @seealso [replace_customer_name] name simplification function.
 #'
 #' @examples
 #' library(r2dii.dataraw)
