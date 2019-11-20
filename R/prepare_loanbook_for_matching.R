@@ -164,9 +164,3 @@ get_matching_columns <- function() {
     "source"
   )
 }
-
-check_crucial_columns_of_overwrite <- function(overwrite) {
-  check_crucial_names(overwrite, get_matching_columns())
-
-  invisible(overwrite)
-}
