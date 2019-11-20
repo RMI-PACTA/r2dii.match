@@ -88,7 +88,7 @@ prepare_loanbook_for_matching <- function(data) {
 #'   overwrite_name_sector(overwrite_demo)
 overwrite_name_sector <- function(data, overwrite) {
   check_crucial_names(data, get_matching_columns())
-  check_crucial_columns_of_overwrite(overwrite)
+  check_crucial_names(overwrite, get_matching_columns())
 
   data %>%
     dplyr::left_join(overwrite, by = c("id", "level")) %>%
