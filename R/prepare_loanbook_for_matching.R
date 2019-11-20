@@ -156,13 +156,16 @@ check_crucial_columns_of_loanbook_data <- function(data) {
 }
 
 check_crucial_columns_of_prepared_loanbook_data <- function(data) {
-  crucial_data <- c(
-    "level",
-    "id",
-    "name",
-    "sector",
-    "source"
-  )
+  get_matching_columns <- function() {
+    crucial_data <- c(
+      "level",
+      "id",
+      "name",
+      "sector",
+      "source"
+    )
+  }
+  crucial_data <- get_matching_columns()
   check_crucial_names(data, crucial_data)
 
   invisible(data)
