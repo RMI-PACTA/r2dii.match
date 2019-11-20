@@ -156,7 +156,6 @@ check_crucial_columns_of_loanbook_data <- function(data) {
 }
 
 check_crucial_columns_of_prepared_loanbook_data <- function(data) {
-  crucial_data <- get_matching_columns()
   check_crucial_names(data, get_matching_columns())
 
   invisible(data)
@@ -173,7 +172,6 @@ get_matching_columns <- function() {
 }
 
 check_crucial_columns_of_overwrite <- function(overwrite) {
-  crucial_overwrite <- get_matching_columns()
   check_crucial_names(overwrite, get_matching_columns())
 
   invisible(overwrite)
