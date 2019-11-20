@@ -1,100 +1,17 @@
 library(r2dii.dataraw)
 
-test_that("prepare_loanbook_for_matching outputs unique `id` values", {
-  out <- prepare_loanbook_for_matching(
-    bridge_sector(loanbook_demo)
-  )
-
-  expect_false(
-    any(duplicated(out$id))
-  )
-})
-
-test_that("prepare_loanbook_for_matching outputs a tibble", {
-  out <- prepare_loanbook_for_matching(
-    bridge_sector(loanbook_demo)
-  )
-
+test_that("prepare_loanbook_for_matching", {
+  out <- prepare_loanbook_for_matching(r2dii.dataraw::loanbook_demo)
   expect_is(out, "tbl_df")
-})
-
-test_that("prepare_loanbook_for_matching remains unchanged after refactoring", {
-  out <- prepare_loanbook_for_matching(
-    bridge_sector(loanbook_demo)
+  expect_named(
+    out,
+    c("level", "id", "name", "sector", "source", "simpler_name")
   )
-  expect_known_value(out, "ref-prepare_loanbook_for_matching", update = FALSE)
-})
 
-test_that("prepare_loanbook_for_matching errors if data lacks key column", {
-  bad_data <- loanbook_demo %>%
-    bridge_sector() %>%
-    dplyr::select(-sector)
-
-  expect_error(
-    prepare_loanbook_for_matching(bad_data),
-    "data must have all expected names"
+  out2 <- prepare_loanbook_for_matching(loanbook_demo, overwrite_demo)
+  expect_is(out2, "tbl_df")
+  expect_named(
+    out2,
+    c("level", "id", "name", "sector", "source", "simpler_name")
   )
 })
-
-test_that("overwrite_name_sector errors if overwrite lacks key column", {
-  data <- loanbook_demo %>%
-    bridge_sector() %>%
-    prepare_loanbook_for_matching()
-
-  bad_overwrite <- tibble(x = 1)
-
-  expect_error(
-    overwrite_name_sector(data, bad_overwrite),
-    "data must have all expected names"
-  )
-})
-
-test_that("overwrite_name_sector correctly overwrites name", {
-  data <- loanbook_demo %>%
-    bridge_sector() %>%
-    prepare_loanbook_for_matching()
-
-  overwrite <- overwrite_demo
-
-  out <- overwrite_name_sector(data, overwrite) %>%
-    dplyr::filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    dplyr::left_join(overwrite, by = c("id", "level"), keep = F)
-
-  expect_equal(out$name.x, out$name.y)
-})
-
-test_that("overwrite_name_sector correctly overwrites sector", {
-  data <- loanbook_demo %>%
-    bridge_sector() %>%
-    prepare_loanbook_for_matching()
-
-  overwrite <- overwrite_demo
-
-  out <- overwrite_name_sector(data, overwrite) %>%
-    dplyr::filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    dplyr::left_join(overwrite, by = c("id", "level"), keep = F)
-
-  expect_equal(out$sector.x, out$sector.y)
-})
-
-test_that("simplify_name_column outputs a simplified name column on prepared loanbook", {
-  data <- loanbook_demo %>%
-    bridge_sector() %>%
-    prepare_loanbook_for_matching() %>%
-    overwrite_name_sector(overwrite_demo)
-
-  out <- simplify_name_column(data)
-
-  expect_equal(replace_customer_name(data$name), out$simplified_name)
-})
-
-test_that("overwrite_name_sector preserves names in `data`", {
-  data <- loanbook_demo %>%
-    bridge_sector() %>%
-    prepare_loanbook_for_matching()
-
-  expect_equal(
-    names(overwrite_name_sector(data, overwrite_demo)), names(data)
-  )
-})
-

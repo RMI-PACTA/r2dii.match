@@ -2,27 +2,31 @@
 % Please edit documentation in R/prepare_loanbook_for_matching.R
 \name{prepare_loanbook_for_matching}
 \alias{prepare_loanbook_for_matching}
-\title{Prepare the loanbook elements to be matched.}
+\title{A convenient shortcut to prepare loanbook data for matching}
 \usage{
-prepare_loanbook_for_matching(data)
+prepare_loanbook_for_matching(data, overwrite = NULL)
 }
 \arguments{
 \item{data}{A dataframe structured like the output of \code{\link[=bridge_sector]{bridge_sector()}}.}
+
+\item{overwrite}{A dataframe used to overwrite the sector and/or name of a
+particular direct loantaker or ultimate parent. If only name (sector)
+should be overwritten leave sector (name) as \code{NA}.}
 }
 \value{
-A dataframe of all unique name + sector combinations, including all
-IDs, and with elements already manually overwritten.
+A dataframe prepared for matching.
 }
 \description{
-This function takes all unique name + sector combinations of a loanbook,
-preparing it for the fuzzy matching process.
+This function is a convenient shortcut for the most common steps for
+preparing a loanbook dataset for matching.
 }
 \examples{
 library(r2dii.dataraw)
 
+prepare_loanbook_for_matching(loanbook_demo)
+
 loanbook_demo \%>\%
-  bridge_sector() \%>\%
-  prepare_loanbook_for_matching()
+  prepare_loanbook_for_matching(overwrite = overwrite_demo)
 }
 \seealso{
 \link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description}.
@@ -30,6 +34,6 @@ loanbook_demo \%>\%
 Other functions to prepare data for matching.: 
 \code{\link{bridge_sector}()},
 \code{\link{overwrite_name_sector}()},
-\code{\link{simplify_name_column}()}
+\code{\link{pull_unique_name_sector_combinations}()}
 }
 \concept{functions to prepare data for matching.}
