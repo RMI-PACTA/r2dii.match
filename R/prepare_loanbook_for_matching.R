@@ -156,29 +156,24 @@ check_crucial_columns_of_loanbook_data <- function(data) {
 }
 
 check_crucial_columns_of_prepared_loanbook_data <- function(data) {
-  get_matching_columns <- function() {
-    c(
-      "level",
-      "id",
-      "name",
-      "sector",
-      "source"
-    )
-  }
   crucial_data <- get_matching_columns()
   check_crucial_names(data, crucial_data)
 
   invisible(data)
 }
 
-check_crucial_columns_of_overwrite <- function(overwrite) {
-  crucial_overwrite <- c(
+get_matching_columns <- function() {
+  c(
     "level",
     "id",
     "name",
     "sector",
     "source"
   )
+}
+
+check_crucial_columns_of_overwrite <- function(overwrite) {
+  crucial_overwrite <- get_matching_columns()
   check_crucial_names(overwrite, crucial_overwrite)
 
   invisible(overwrite)
