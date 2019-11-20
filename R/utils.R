@@ -32,3 +32,13 @@ check_crucial_names <- function(x, expected_names) {
     Expected: {usethis::ui_field(sort(expected_names))}"
   ))
 }
+
+get_matching_columns <- function() {
+  c(
+    "level",
+    "id",
+    "name",
+    "sector",
+    "source"
+  )
+}

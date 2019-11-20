@@ -53,6 +53,7 @@ Imports:
     stringdist,
     stringi,
     tibble,
+    tidyr,
     usethis
 Suggests: 
     pacta (>= 0.0.0.9000),
@@ -65,4 +66,4 @@ Remotes:
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
