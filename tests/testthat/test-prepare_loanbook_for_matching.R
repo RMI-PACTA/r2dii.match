@@ -87,3 +87,14 @@ test_that("simplify_name_column outputs a simplified name column on prepared loa
 
   expect_equal(replace_customer_name(data$name), out$simplified_name)
 })
+
+test_that("overwrite_name_sector preserves names in `data`", {
+  data <- loanbook_demo %>%
+    bridge_sector() %>%
+    prepare_loanbook_for_matching()
+
+  expect_equal(
+    names(overwrite_name_sector(data, overwrite_demo)), names(data)
+  )
+})
+

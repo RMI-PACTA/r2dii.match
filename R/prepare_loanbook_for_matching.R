@@ -97,13 +97,7 @@ overwrite_name_sector <- function(data, overwrite) {
       sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
       name = if_else(is.na(.data$name.y), .data$name.x, .data$name.y)
     ) %>%
-    select(
-      .data$level,
-      .data$id,
-      .data$name,
-      .data$sector,
-      .data$source
-    )
+    select(names(data))
 }
 
 #' Wrapper to simplify the name column of the prepared loanbook
