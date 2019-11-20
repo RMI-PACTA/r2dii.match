@@ -7,7 +7,8 @@
 simplify_name_column(data)
 }
 \arguments{
-\item{data}{A matching-prepared loanbook or ald file}
+\item{data}{A dataframe structured like the output of
+\code{\link[=prepare_loanbook_for_matching]{prepare_loanbook_for_matching()}} or like an ald file.}
 }
 \value{
 A matching-prepared file with simplified name.
@@ -32,4 +33,10 @@ loanbook_demo \%>\%
 }
 \seealso{
 \link{replace_customer_name} name simplification function.
+
+Other functions to prepare data for matching.: 
+\code{\link{bridge_sector}()},
+\code{\link{overwrite_name_sector}()},
+\code{\link{prepare_loanbook_for_matching}()}
 }
+\concept{functions to prepare data for matching.}

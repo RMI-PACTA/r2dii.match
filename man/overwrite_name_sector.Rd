@@ -7,7 +7,8 @@
 overwrite_name_sector(data, overwrite)
 }
 \arguments{
-\item{data}{A matching-prepared loanbook}
+\item{data}{A dataframe structured like the output of
+\code{\link[=prepare_loanbook_for_matching]{prepare_loanbook_for_matching()}}.}
 
 \item{overwrite}{A dataframe used to overwrite the sector and/or name of a
 particular direct loantaker or ultimate parent. If only name (sector)
@@ -18,7 +19,7 @@ A dataframe of all unique name + sector combinations, including all
 IDs, and with elements already manually overwritten.
 }
 \description{
-This function overwrites the name and/ or sector of entities of the perpared
+This function overwrites the name and/ or sector of entities of the prepared
 loanbook as specified by manual input. Entities to be overwritten are
 identified by level (e.g. \code{direct_loantaker} or \code{ultimate_parent}) and ID.
 }
@@ -31,5 +32,13 @@ loanbook_demo \%>\%
   overwrite_name_sector(overwrite_demo)
 }
 \seealso{
+\link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description}.
+
 \link[r2dii.dataraw:overwrite_demo]{r2dii.dataraw::overwrite_demo} demo overwrite input file.
+
+Other functions to prepare data for matching.: 
+\code{\link{bridge_sector}()},
+\code{\link{prepare_loanbook_for_matching}()},
+\code{\link{simplify_name_column}()}
 }
+\concept{functions to prepare data for matching.}

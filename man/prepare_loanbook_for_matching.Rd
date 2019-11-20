@@ -7,7 +7,7 @@
 prepare_loanbook_for_matching(data)
 }
 \arguments{
-\item{data}{A sector bridged loanbook dataframe.}
+\item{data}{A dataframe structured like the output of \code{\link[=bridge_sector]{bridge_sector()}}.}
 }
 \value{
 A dataframe of all unique name + sector combinations, including all
@@ -24,3 +24,12 @@ loanbook_demo \%>\%
   bridge_sector() \%>\%
   prepare_loanbook_for_matching()
 }
+\seealso{
+\link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description}.
+
+Other functions to prepare data for matching.: 
+\code{\link{bridge_sector}()},
+\code{\link{overwrite_name_sector}()},
+\code{\link{simplify_name_column}()}
+}
+\concept{functions to prepare data for matching.}

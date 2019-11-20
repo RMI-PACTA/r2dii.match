@@ -39,7 +39,7 @@ test_that("prepare_loanbook_for_matching errors if data lacks key column", {
 test_that("overwrite_name_sector errors if overwrite lacks key column", {
   data <- loanbook_demo %>%
     bridge_sector() %>%
-    prepare_loanbook_for_matching
+    prepare_loanbook_for_matching()
 
   bad_overwrite <- tibble(x = 1)
 
@@ -52,7 +52,7 @@ test_that("overwrite_name_sector errors if overwrite lacks key column", {
 test_that("overwrite_name_sector correctly overwrites name", {
   data <- loanbook_demo %>%
     bridge_sector() %>%
-    prepare_loanbook_for_matching
+    prepare_loanbook_for_matching()
 
   overwrite <- overwrite_demo
 

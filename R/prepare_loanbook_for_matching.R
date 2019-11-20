@@ -3,7 +3,10 @@
 #' This function takes all unique name + sector combinations of a loanbook,
 #' preparing it for the fuzzy matching process.
 #'
-#' @param data A sector bridged loanbook dataframe.
+#' @param data A dataframe structured like the output of [bridge_sector()].
+#'
+#' @family functions to prepare data for matching.
+#' @seealso [r2dii.dataraw::loanbook_description].
 #'
 #' @return A dataframe of all unique name + sector combinations, including all
 #'   IDs, and with elements already manually overwritten.
@@ -57,14 +60,18 @@ prepare_loanbook_for_matching <- function(data) {
 
 #' Overwrite the name and/ or sector of prepared loanbook data
 #'
-#' This function overwrites the name and/ or sector of entities of the perpared
+#' This function overwrites the name and/ or sector of entities of the prepared
 #' loanbook as specified by manual input. Entities to be overwritten are
 #' identified by level (e.g. `direct_loantaker` or `ultimate_parent`) and ID.
 #'
-#' @param data A matching-prepared loanbook
+#' @param data A dataframe structured like the output of
+#'   [prepare_loanbook_for_matching()].
 #' @param overwrite A dataframe used to overwrite the sector and/or name of a
 #'   particular direct loantaker or ultimate parent. If only name (sector)
 #'   should be overwritten leave sector (name) as `NA`.
+#'
+#' @seealso [r2dii.dataraw::loanbook_description].
+#' @family functions to prepare data for matching.
 #'
 #' @return A dataframe of all unique name + sector combinations, including all
 #'   IDs, and with elements already manually overwritten.
@@ -104,12 +111,14 @@ overwrite_name_sector <- function(data, overwrite) {
 #' This function is a wrapper for `replace_customer_name` to simplify the name
 #' column of the matching-prepared loanbook or ald file.
 #'
-#' @param data A matching-prepared loanbook or ald file
+#' @param data A dataframe structured like the output of
+#'   [prepare_loanbook_for_matching()] or like an ald file.
+#' @family functions to prepare data for matching.
+#' @seealso [replace_customer_name] name simplification function.
 #'
 #' @return A matching-prepared file with simplified name.
 #' @export
 #'
-#' @seealso [replace_customer_name] name simplification function.
 #'
 #' @examples
 #' library(r2dii.dataraw)
@@ -137,7 +146,6 @@ simplify_name_column <- function(data) {
       .data$source,
       .data$simplified_name
     )
-
 }
 
 check_crucial_columns_of_loanbook_data <- function(data) {
