@@ -29,8 +29,6 @@ bridge_sector(r2dii.dataraw::loanbook_demo)
 }
 \seealso{
 Other functions to prepare data for matching.: 
-\code{\link{overwrite_name_sector}()},
-\code{\link{prepare_loanbook_for_matching}()},
-\code{\link{pull_unique_name_sector_combinations}()}
+\code{\link{prepare_ald_for_matching}()}
 }
 \concept{functions to prepare data for matching.}
