@@ -21,8 +21,11 @@ pull_unique_name_sector_combinations_ald <- function(data){
   check_crucial_columns_of_ald_data(data)
 
   data %>%
+    dplyr::rename(
+      name = .data$name_company
+    ) %>%
     dplyr::select(
-      .data$name_company,
+      .data$name,
       .data$sector
     ) %>%
     dplyr::distinct()

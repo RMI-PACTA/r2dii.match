@@ -38,7 +38,9 @@ loanbook_demo \%>\%
 
 Other functions to prepare data for matching.: 
 \code{\link{bridge_sector}()},
+\code{\link{prepare_ald_for_matching}()},
 \code{\link{prepare_loanbook_for_matching}()},
+\code{\link{pull_unique_name_sector_combinations_ald}()},
 \code{\link{pull_unique_name_sector_combinations}()}
 }
 \concept{functions to prepare data for matching.}
