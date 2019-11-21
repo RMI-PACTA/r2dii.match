@@ -8,6 +8,8 @@
 #'
 #' @param data A loanbook dataframe.
 #'
+#' @family functions to prepare data for matching.
+#'
 #' @return A loanbook dataframe with additional `sector` and `borderline`
 #'   columns.
 #' @export
@@ -22,7 +24,7 @@ bridge_sector <- function(data) {
     "sector_classification_system",
     "sector_classification_direct_loantaker"
   )
-  r2dii.utils::check_crucial_names(data, crucial)
+  check_crucial_names(data, crucial)
 
   pkg <- "package:r2dii.dataraw"
   check_is_attached(pkg)

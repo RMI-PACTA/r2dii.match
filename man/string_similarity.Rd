@@ -23,7 +23,7 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 \value{
 Returns a vector with similarities, which are values between 0 and 1 where
 1 corresponds to perfect similarity (distance 0) and 0 to complete
-dissimilarity. \code{NA} is returned when \code{\link{stringdist}} returns 
+dissimilarity. \code{NA} is returned when \code{\link[stringdist]{stringdist}} returns 
 \code{NA}. Distances equal to \code{Inf} are truncated to a similarity of
 0.
 }
@@ -35,7 +35,7 @@ defaults set to the most common parameters used in 2dii analyses.
 }
 \details{
 The similarity is calculated by first calculating the distance using
-\code{\link{stringdist}}, dividing the distance by the maximum
+\code{\link[stringdist]{stringdist}}, dividing the distance by the maximum
 possible distance, and substracting the result from 1. 
 This results in a score between 0 and 1, with 1
 corresponding to complete similarity and 0 to complete dissimilarity.
