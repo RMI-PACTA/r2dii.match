@@ -61,7 +61,7 @@ test_that("prepare_loanbook_for_matching correctly overwrites sector", {
 test_that("prepare_ald_for_matching outputs the expected tibble", {
   out <- prepare_ald_for_matching(ald_demo)
   expect_is(out, "tbl_df")
-  expect_named(out, c("name", "sector"))
+  expect_named(out, c("name", "sector", "simpler_name"))
 })
 
 test_that("prepare_ald_for_matching errors if data lacks a crucial column", {
