@@ -30,7 +30,8 @@ prepare_ald_for_matching <- function(data) {
   data %>%
     check_crucial_names(c("name_company", "sector")) %>%
     select(name = .data$name_company, .data$sector) %>%
-    dplyr::distinct()
+    dplyr::distinct() %>%
+    add_simpler_name()
 }
 
 #' @rdname prepare_ald_for_matching
@@ -53,8 +54,11 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
       overwrite_name_sector(overwrite = overwrite)
   }
 
-  out %>%
-    mutate(simpler_name = replace_customer_name(.data$name))
+  add_simpler_name(out)
+}
+
+add_simpler_name <- function(data) {
+  mutate(data, simpler_name = replace_customer_name(.data$name))
 }
 
 check_prepare_loanbook_data <- function(data) {
