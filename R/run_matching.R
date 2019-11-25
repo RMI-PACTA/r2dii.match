@@ -7,8 +7,6 @@
 #' @param names_to_match List of names to match.
 #' @param names_to_match_against List of names to be matched against.
 #' @param threshold A threshold matching score to reach
-#'
-#' @inheritParams string_similarity
 #' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #'
 #' @return Returns a tibble of all matching name combinations scoring above
@@ -22,20 +20,21 @@
 #'   prepare_loanbook_for_matching()
 #'
 #' ald_entities <- ald_demo %>%
-#'   prepare_ald_for_matching()
+#'   prepare_ald_for_matching() %>%
+#'   dplyr::mutate(simpler_name = replace_customer_name(.data$name))
 #'
 #' match_all_against_all(loanbook_entities$simpler_name,
 #'              ald_entities$simpler_name)
-
-match_all_against_all <- function(names_to_match, names_to_match_against, ...) {
-  map_dfr(.x = names_to_match,
+match_all_against_all <- function(names_to_match, names_to_match_against, threshold = 0.95, ...) {
+  purrr::map_dfr(.x = names_to_match,
           .f = match_one_name_against_all,
           names_to_match_against = names_to_match_against,
+          threshold = threshold,
           ...
   )
 }
 
-match_one_name_against_all <- function(name_to_match, names_to_match_against, threshold = 0.95, ...){
+match_one_name_against_all <- function(name_to_match, names_to_match_against, threshold, ...){
   result <- string_similarity(name_to_match, names_to_match_against, ...)
 
   tibble::tibble(
@@ -43,5 +42,5 @@ match_one_name_against_all <- function(name_to_match, names_to_match_against, th
     matching_name = names_to_match_against,
     score = result
   ) %>%
-    dplyr::filter(score >= threshold)
+    dplyr::filter(.data$score >= threshold)
 }
