@@ -17,17 +17,19 @@
 #' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
-#' scores <- match_all_against_all(x, y)
-#' scores %>%
-#'   dplyr::filter(score > 0.5)
+#' match_all_against_all(x, y)
+#'
+#' treshold <- 0.5
+#' match_all_against_all(x, y) %>%
+#'   dplyr::filter(score >= treshold)
 #'
 #' match_all_against_all(x, y, by_sector = FALSE)
 match_all_against_all <- function(x,
                                   y,
-                                  ...,
                                   by_sector = TRUE,
                                   method = "jw",
-                                  p = 0.1) {
+                                  p = 0.1,
+                                  ...) {
   ellipsis::check_dots_used()
 
   if (by_sector) {

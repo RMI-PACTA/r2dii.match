@@ -2,21 +2,14 @@
 % Please edit documentation in R/match_all_against_all.R
 \name{match_all_against_all}
 \alias{match_all_against_all}
-\title{Score similarity between \code{simpler_name} values in two dataframes, by sector}
+\title{Score similarity between \code{simpler_name} values in two dataframes}
 \usage{
-match_all_against_all(
-  x,
-  y,
-  group_by_sector = TRUE,
-  method = "jw",
-  p = 0.1,
-  ...
-)
+match_all_against_all(x, y, by_sector = TRUE, method = "jw", p = 0.1, ...)
 }
 \arguments{
 \item{x, y}{Dataframes with \code{simpler_name} and optionally \code{sector} columns.}
 
-\item{group_by_sector}{Should the combinations be done by sector?}
+\item{by_sector}{Should the combinations be done by sector?}
 
 \item{method}{Method for distance calculation. The default is \code{"osa"},
 see \code{\link[stringdist]{stringdist-metrics}}.}
@@ -40,9 +33,11 @@ library(dplyr)
 x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
-scores <- match_all_against_all(x, y)
-scores \%>\%
-  dplyr::filter(score > 0.5)
+match_all_against_all(x, y)
 
-match_all_against_all(x, y, group_by_sector = FALSE)
+treshold <- 0.5
+match_all_against_all(x, y) \%>\%
+  dplyr::filter(score >= treshold)
+
+match_all_against_all(x, y, by_sector = FALSE)
 }
