@@ -1,32 +1,20 @@
 library(tibble)
 
-test_that("match_all_against_all with `group_by_sector = FALSE` outputs
-  all combinations of simpler_name in x and y", {
-  x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-  y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+test_that("match_all_against_all w/group_by_sector errors w/out `sector`", {
+  x <- tibble(simpler_name = "a")
+  y <- tibble(simpler_name = "a")
 
-  actual <- match_all_against_all(x, y, group_by_sector = FALSE)
-  expect <- tribble(
-    ~simpler_name_x, ~simpler_name_y, ~score,
-    "xa", "ya", 0.667,
-    "xa", "yb", 0,
-    "xa", "yc", 0,
-    "xb", "ya", 0,
-    "xb", "yb", 0.667,
-    "xb", "yc", 0,
-    "xc", "ya", 0,
-    "xc", "yb", 0,
-    "xc", "yc", 0.667,
-  )
-
-  expect_equal(actual[1:2], expect[1:2])
-  expect_equal(round(actual$score, 3), round(expect$score, 3))
+  expect_error(match_all_against_all(x, y, group_by_sector = TRUE))
+  expect_error(match_all_against_all(x, y, group_by_sector = FALSE), NA)
 })
 
 test_that("match_all_against_all outputs a tibble", {
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = "a")
-  expect_is(match_all_against_all(x, y), "tbl_df")
+  expect_is(
+    match_all_against_all(x, y),
+    "tbl_df"
+  )
 })
 
 test_that("match_all_against_all scores extreeme cases correctly", {
@@ -35,9 +23,9 @@ test_that("match_all_against_all scores extreeme cases correctly", {
   expect_equal(
     match_all_against_all(x, y),
     tibble::tribble(
-      ~sector, ~simpler_name_x, ~simpler_name_y, ~score,
-      "A", "a", "a", 1,
-      "B", "ab", "cd", 0,
+      ~simpler_name_x, ~simpler_name_y, ~score,
+      "a",             "a",             1,
+      "ab",            "cd",            0,
     )
   )
 })
@@ -66,4 +54,27 @@ test_that("match_all_against_all combines all simpler_name of x and y", {
 
   expect_equal(out$simpler_name_x, c("a", "a", "b", "b"))
   expect_equal(out$simpler_name_y, c("c", "d", "c", "d"))
+})
+
+test_that("match_all_against_all with `group_by_sector = FALSE` outputs
+  all combinations of simpler_name in x and y", {
+  x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
+  y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+
+  actual <- match_all_against_all(x, y, group_by_sector = FALSE)
+  expect <- tribble(
+    ~simpler_name_x, ~simpler_name_y, ~score,
+    "xa", "ya", 0.667,
+    "xa", "yb", 0,
+    "xa", "yc", 0,
+    "xb", "ya", 0,
+    "xb", "yb", 0.667,
+    "xb", "yc", 0,
+    "xc", "ya", 0,
+    "xc", "yb", 0,
+    "xc", "yc", 0.667,
+  )
+
+  expect_equal(actual[1:2], expect[1:2])
+  expect_equal(round(actual$score, 3), round(expect$score, 3))
 })

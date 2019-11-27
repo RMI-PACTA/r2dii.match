@@ -22,38 +22,37 @@
 #' match_all_against_all(x, y, group_by_sector = FALSE)
 match_all_against_all <- function(x, y, group_by_sector = TRUE) {
   if (group_by_sector) {
-    return(expand_and_score_simpler_name_by_sector(x, y))
+    out <- expand_simpler_name_by_sector(x, y)
+  } else {
+    out <- cross_simpler_name(x, y)
   }
 
-  check_crucial_names(x, "simpler_name")
-  check_crucial_names(y, "simpler_name")
-
-  combo <- tidyr::crossing(
-    simpler_name_x = x$simpler_name,
-    simpler_name_y = y$simpler_name
-  )
-
   mutate(
-    combo,
-    score = string_similarity(combo$simpler_name_x, combo$simpler_name_y)
+    out, score = string_similarity(out$simpler_name_x, out$simpler_name_y)
   )
 }
 
-expand_and_score_simpler_name_by_sector <- function(x, y) {
+expand_simpler_name_by_sector <- function(x, y) {
   vars <- c("sector", "simpler_name")
+
   check_crucial_names(x, vars)
   check_crucial_names(y, vars)
 
-  joint <- dplyr::left_join(select(x, vars), select(y, vars), by = "sector")
-  joint <- janitor::clean_names(joint)
-
-  exapnded <- joint %>%
+  dplyr::left_join(
+    select(x, vars), select(y, vars), by = "sector", suffix = c("_x", "_y")
+  ) %>%
     dplyr::group_by(.data$sector) %>%
     tidyr::expand(.data$simpler_name_x, .data$simpler_name_y) %>%
-    dplyr::ungroup()
+    dplyr::ungroup() %>%
+    select(-.data$sector)
+}
 
-  exapnded %>%
-    mutate(
-      score = string_similarity(.data$simpler_name_x, .data$simpler_name_y)
-    )
+cross_simpler_name <- function(x, y) {
+  check_crucial_names(x, "simpler_name")
+  check_crucial_names(y, "simpler_name")
+
+  tidyr::crossing(
+    simpler_name_x = x$simpler_name,
+    simpler_name_y = y$simpler_name
+  )
 }
