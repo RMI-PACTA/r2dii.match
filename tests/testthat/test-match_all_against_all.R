@@ -1,19 +1,24 @@
 library(tibble)
 
-test_that("match_all_against_all w/group_by_sector errors w/out `sector`", {
-  x <- tibble(simpler_name = "a")
-  y <- tibble(simpler_name = "a")
-
-  expect_error(match_all_against_all(x, y, group_by_sector = TRUE))
-  expect_error(match_all_against_all(x, y, group_by_sector = FALSE), NA)
-})
-
 test_that("match_all_against_all outputs a tibble", {
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = "a")
-  expect_is(
+
+  expect_is(match_all_against_all(x, y), "tbl_df")
+})
+
+test_that("match_all_against_all has the expected names", {
+  x <- tibble(sector = "A", simpler_name = "a")
+  y <- tibble(sector = "A", simpler_name = "a")
+
+  expect_named(
     match_all_against_all(x, y),
-    "tbl_df"
+    c("simpler_name_x", "simpler_name_y", "score")
+  )
+
+  expect_named(
+    match_all_against_all(x, y, group_by_sector = FALSE),
+    c("simpler_name_x", "simpler_name_y", "score")
   )
 })
 
@@ -24,8 +29,8 @@ test_that("match_all_against_all scores extreeme cases correctly", {
     match_all_against_all(x, y),
     tibble::tribble(
       ~simpler_name_x, ~simpler_name_y, ~score,
-      "a",             "a",             1,
-      "ab",            "cd",            0,
+      "a", "a", 1,
+      "ab", "cd", 0,
     )
   )
 })
@@ -77,4 +82,30 @@ test_that("match_all_against_all with `group_by_sector = FALSE` outputs
 
   expect_equal(actual[1:2], expect[1:2])
   expect_equal(round(actual$score, 3), round(expect$score, 3))
+})
+
+test_that("match_all_against_all w/group_by_sector errors w/out `sector`", {
+  x <- tibble(simpler_name = "a")
+  y <- tibble(simpler_name = "a")
+
+  expect_error(match_all_against_all(x, y, group_by_sector = TRUE))
+  expect_error(match_all_against_all(x, y, group_by_sector = FALSE), NA)
+})
+
+test_that("match_all_against_all handles NA", {
+  x <- tibble(sector = "A", simpler_name = NA)
+  y <- tibble(sector = "A", simpler_name = "a")
+  expect_equal(match_all_against_all(x, y)$simpler_name_x, NA)
+
+  x <- tibble(sector = "A", simpler_name = "a")
+  y <- tibble(sector = "A", simpler_name = NA)
+  expect_equal(match_all_against_all(x, y)$simpler_name_y, NA)
+
+  x <- tibble(sector = "A", simpler_name = NA)
+  y <- tibble(sector = "A", simpler_name = "a")
+  expect_equal(match_all_against_all(x, y, FALSE)$simpler_name_x, NA)
+
+  x <- tibble(sector = "A", simpler_name = "a")
+  y <- tibble(sector = "A", simpler_name = NA)
+  expect_equal(match_all_against_all(x, y, FALSE)$simpler_name_y, NA)
 })

@@ -28,7 +28,8 @@ match_all_against_all <- function(x, y, group_by_sector = TRUE) {
   }
 
   mutate(
-    out, score = string_similarity(out$simpler_name_x, out$simpler_name_y)
+    out,
+    score = string_similarity(out$simpler_name_x, out$simpler_name_y)
   )
 }
 
@@ -39,7 +40,8 @@ expand_simpler_name_by_sector <- function(x, y) {
   check_crucial_names(y, vars)
 
   dplyr::left_join(
-    select(x, vars), select(y, vars), by = "sector", suffix = c("_x", "_y")
+    select(x, vars), select(y, vars),
+    by = "sector", suffix = c("_x", "_y")
   ) %>%
     dplyr::group_by(.data$sector) %>%
     tidyr::expand(.data$simpler_name_x, .data$simpler_name_y) %>%
