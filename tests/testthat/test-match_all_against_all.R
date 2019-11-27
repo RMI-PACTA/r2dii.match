@@ -35,7 +35,7 @@ test_that("match_all_against_all scores extreeme cases correctly", {
   expect_equal(
     match_all_against_all(x, y),
     tibble::tribble(
-      ~sector, ~simpler_name.x, ~simpler_name.y, ~score,
+      ~sector, ~simpler_name_x, ~simpler_name_y, ~score,
       "A", "a", "a", 1,
       "B", "ab", "cd", 0,
     )
@@ -64,6 +64,6 @@ test_that("match_all_against_all combines all simpler_name of x and y", {
 
   out <- match_all_against_all(x, y)
 
-  expect_equal(out$simpler_name.x, c("a", "a", "b", "b"))
-  expect_equal(out$simpler_name.y, c("c", "d", "c", "d"))
+  expect_equal(out$simpler_name_x, c("a", "a", "b", "b"))
+  expect_equal(out$simpler_name_y, c("c", "d", "c", "d"))
 })

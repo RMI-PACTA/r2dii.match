@@ -45,14 +45,15 @@ expand_and_score_simpler_name_by_sector <- function(x, y) {
   check_crucial_names(y, vars)
 
   joint <- dplyr::left_join(select(x, vars), select(y, vars), by = "sector")
+  joint <- janitor::clean_names(joint)
 
   exapnded <- joint %>%
     dplyr::group_by(.data$sector) %>%
-    tidyr::expand(.data$simpler_name.x, .data$simpler_name.y) %>%
+    tidyr::expand(.data$simpler_name_x, .data$simpler_name_y) %>%
     dplyr::ungroup()
 
   exapnded %>%
     mutate(
-      score = string_similarity(.data$simpler_name.x, .data$simpler_name.y)
+      score = string_similarity(.data$simpler_name_x, .data$simpler_name_y)
     )
 }
