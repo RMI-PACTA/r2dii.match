@@ -2,22 +2,21 @@ library(tibble)
 
 test_that("match_all_against_all with `group_by_sector = FALSE` outputs
   all combinations of simpler_name in x and y", {
-
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
   actual <- match_all_against_all(x, y, group_by_sector = FALSE)
   expect <- tribble(
-    ~simpler_name_x, ~simpler_name_y, ~ score,
-    "xa",            "ya",            0.667,
-    "xa",            "yb",            0,
-    "xa",            "yc",            0,
-    "xb",            "ya",            0,
-    "xb",            "yb",            0.667,
-    "xb",            "yc",            0,
-    "xc",            "ya",            0,
-    "xc",            "yb",            0,
-    "xc",            "yc",            0.667,
+    ~simpler_name_x, ~simpler_name_y, ~score,
+    "xa", "ya", 0.667,
+    "xa", "yb", 0,
+    "xa", "yc", 0,
+    "xb", "ya", 0,
+    "xb", "yb", 0.667,
+    "xb", "yc", 0,
+    "xc", "ya", 0,
+    "xc", "yb", 0,
+    "xc", "yc", 0.667,
   )
 
   expect_equal(actual[1:2], expect[1:2])

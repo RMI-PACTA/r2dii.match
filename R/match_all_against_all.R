@@ -1,9 +1,10 @@
 #' Score similarity between `simpler_name` values in two dataframes, by sector
 #'
-#' Apply `string_similarity()` to all combinations of `simpler_name` values, by
-#' sector, from two dataframes.
+#' Apply `string_similarity()` to all combinations of `simpler_name` values
+#' from two dataframes.
 #'
-#' @param x,y Dataframes
+#' @param x,y Dataframes with `simpler_name` and optionally `sector` columns.
+#' @param group_by_sector Should the combinations be done by sector?
 #'
 #' @return A [tibble::tibble].
 #' @export
@@ -15,10 +16,10 @@
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
 #' scores <- match_all_against_all(x, y)
-#' scores
-#'
 #' scores %>%
 #'   dplyr::filter(score > 0.5)
+#'
+#' match_all_against_all(x, y, group_by_sector = FALSE)
 match_all_against_all <- function(x, y, group_by_sector = TRUE) {
   if (group_by_sector) {
     return(expand_and_score_simpler_name_by_sector(x, y))

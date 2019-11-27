@@ -7,14 +7,16 @@
 match_all_against_all(x, y, group_by_sector = TRUE)
 }
 \arguments{
-\item{x, y}{Dataframes}
+\item{x, y}{Dataframes with \code{simpler_name} and optionally \code{sector} columns.}
+
+\item{group_by_sector}{Should the combinations be done by sector?}
 }
 \value{
 A \link[tibble:tibble]{tibble::tibble}.
 }
 \description{
-Apply \code{string_similarity()} to all combinations of \code{simpler_name} values, by
-sector, from two dataframes.
+Apply \code{string_similarity()} to all combinations of \code{simpler_name} values
+from two dataframes.
 }
 \examples{
 library(dplyr)
@@ -23,8 +25,8 @@ x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
 scores <- match_all_against_all(x, y)
-scores
-
 scores \%>\%
   dplyr::filter(score > 0.5)
+
+match_all_against_all(x, y, group_by_sector = FALSE)
 }
