@@ -103,9 +103,48 @@ test_that("match_all_against_all handles NA", {
 
   x <- tibble(sector = "A", simpler_name = NA)
   y <- tibble(sector = "A", simpler_name = "a")
-  expect_equal(match_all_against_all(x, y, FALSE)$simpler_name_x, NA)
+  s_n_x <- match_all_against_all(x, y, group_by_sector = FALSE)$simpler_name_x
+  expect_equal(s_n_x, NA)
 
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = NA)
-  expect_equal(match_all_against_all(x, y, FALSE)$simpler_name_y, NA)
+
+  s_n_y <- match_all_against_all(x, y, group_by_sector = FALSE)$simpler_name_y
+  expect_equal(s_n_y, NA)
+})
+
+test_that("match_all_agains_all passes arguments to string_similarity", {
+  x <- tibble(sector = "A", simpler_name = "a")
+  y <- tibble(sector = "A", simpler_name = "ab")
+
+  expect_false(
+    identical(
+      match_all_against_all(x, y, p = 0.1),
+      match_all_against_all(x, y, p = 0.2)
+    )
+  )
+})
+
+test_that("match_all_agains_all passes arguments to stringdist::stringdist", {
+  x <- tibble(sector = "A", simpler_name = "a")
+  y <- tibble(sector = "A", simpler_name = "ab")
+
+  expect_false(
+    identical(
+      match_all_against_all(x, y, weight = c(0.1, 0.1, 0.1)),
+      match_all_against_all(x, y, weight = c(0.5, 0.5, 0.5))
+    )
+  )
+})
+
+
+test_that("match_all_against_all checks used dots", {
+  x <- tibble(sector = "A", simpler_name = "a")
+  y <- tibble(sector = "A", simpler_name = "a")
+
+  expect_error(
+    match_all_against_all(x, y, bad_argument = "bad_argument"),
+    "problematic arguments",
+    class = "rlib_error_dots_unused"
+  )
 })

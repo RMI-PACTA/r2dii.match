@@ -4,12 +4,28 @@
 \alias{match_all_against_all}
 \title{Score similarity between \code{simpler_name} values in two dataframes, by sector}
 \usage{
-match_all_against_all(x, y, group_by_sector = TRUE)
+match_all_against_all(
+  x,
+  y,
+  group_by_sector = TRUE,
+  method = "jw",
+  p = 0.1,
+  ...
+)
 }
 \arguments{
 \item{x, y}{Dataframes with \code{simpler_name} and optionally \code{sector} columns.}
 
 \item{group_by_sector}{Should the combinations be done by sector?}
+
+\item{method}{Method for distance calculation. The default is \code{"osa"},
+see \code{\link[stringdist]{stringdist-metrics}}.}
+
+\item{p}{Penalty factor for Jaro-Winkler distance. The valid range for 
+\code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
+Jaro-distance is returned. Applies only to \code{method='jw'}.}
+
+\item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 }
 \value{
 A \link[tibble:tibble]{tibble::tibble}.

@@ -1,10 +1,12 @@
-#' Score similarity between `simpler_name` values in two dataframes, by sector
+#' Score similarity between `simpler_name` values in two dataframes
 #'
 #' Apply `string_similarity()` to all combinations of `simpler_name` values
 #' from two dataframes.
 #'
 #' @param x,y Dataframes with `simpler_name` and optionally `sector` columns.
 #' @param group_by_sector Should the combinations be done by sector?
+#' @inheritParams stringdist::stringdist
+#' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #'
 #' @return A [tibble::tibble].
 #' @export
@@ -20,7 +22,14 @@
 #'   dplyr::filter(score > 0.5)
 #'
 #' match_all_against_all(x, y, group_by_sector = FALSE)
-match_all_against_all <- function(x, y, group_by_sector = TRUE) {
+match_all_against_all <- function(x,
+                                  y,
+                                  ...,
+                                  group_by_sector = TRUE,
+                                  method = "jw",
+                                  p = 0.1) {
+  ellipsis::check_dots_used()
+
   if (group_by_sector) {
     out <- expand_simpler_name_by_sector(x, y)
   } else {
@@ -29,7 +38,9 @@ match_all_against_all <- function(x, y, group_by_sector = TRUE) {
 
   mutate(
     out,
-    score = string_similarity(out$simpler_name_x, out$simpler_name_y)
+    score = string_similarity(
+      out$simpler_name_x, out$simpler_name_y, method = method, p = p, ...
+    )
   )
 }
 
