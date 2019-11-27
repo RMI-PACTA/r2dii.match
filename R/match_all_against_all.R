@@ -4,7 +4,7 @@
 #' from two dataframes.
 #'
 #' @param x,y Dataframes with `simpler_name` and optionally `sector` columns.
-#' @param group_by_sector Should the combinations be done by sector?
+#' @param by_sector Should the combinations be done by sector?
 #' @inheritParams stringdist::stringdist
 #' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #'
@@ -21,16 +21,16 @@
 #' scores %>%
 #'   dplyr::filter(score > 0.5)
 #'
-#' match_all_against_all(x, y, group_by_sector = FALSE)
+#' match_all_against_all(x, y, by_sector = FALSE)
 match_all_against_all <- function(x,
                                   y,
                                   ...,
-                                  group_by_sector = TRUE,
+                                  by_sector = TRUE,
                                   method = "jw",
                                   p = 0.1) {
   ellipsis::check_dots_used()
 
-  if (group_by_sector) {
+  if (by_sector) {
     out <- expand_simpler_name_by_sector(x, y)
   } else {
     out <- cross_simpler_name(x, y)
