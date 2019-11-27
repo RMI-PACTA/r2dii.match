@@ -14,11 +14,15 @@
 #' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
-#' scores <- score_simpler_name_by_sector(x, y)
+#' scores <- match_all_against_all(x, y)
 #' scores
 #'
 #' scores %>%
 #'   dplyr::filter(score > 0.5)
+match_all_against_all <- function(x, y, group_by_sector =  TRUE) {
+  score_simpler_name_by_sector(x, y)
+}
+
 score_simpler_name_by_sector <- function(x, y) {
   vars <- c("sector", "simpler_name")
 
