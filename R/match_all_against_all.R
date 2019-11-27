@@ -23,7 +23,14 @@
 #' match_all_against_all(x, y) %>%
 #'   dplyr::filter(score >= treshold)
 #'
-#' match_all_against_all(x, y, by_sector = FALSE)
+#' out <- match_all_against_all(x, y, by_sector = FALSE)
+#' out
+#'
+#' # Recover sector from x
+#' left_join(out, x, by = c("simpler_name_x" = "simpler_name"))
+#'
+#' # Recover sector from y
+#' left_join(out, y, by = c("simpler_name_y" = "simpler_name"))
 match_all_against_all <- function(x,
                                   y,
                                   by_sector = TRUE,
@@ -41,7 +48,8 @@ match_all_against_all <- function(x,
   mutate(
     out,
     score = string_similarity(
-      out$simpler_name_x, out$simpler_name_y, method = method, p = p, ...
+      out$simpler_name_x, out$simpler_name_y,
+      method = method, p = p, ...
     )
   )
 }
