@@ -19,13 +19,27 @@
 #'
 #' scores %>%
 #'   dplyr::filter(score > 0.5)
-match_all_against_all <- function(x, y, group_by_sector =  TRUE) {
-  score_simpler_name_by_sector(x, y)
+match_all_against_all <- function(x, y, group_by_sector = TRUE) {
+  if (group_by_sector) {
+    return(expand_and_score_simpler_name_by_sector(x, y))
+  }
+
+  check_crucial_names(x, "simpler_name")
+  check_crucial_names(y, "simpler_name")
+
+  combo <- tidyr::crossing(
+    simpler_name_x = x$simpler_name,
+    simpler_name_y = y$simpler_name
+  )
+
+  mutate(
+    combo,
+    score = string_similarity(combo$simpler_name_x, combo$simpler_name_y)
+  )
 }
 
-score_simpler_name_by_sector <- function(x, y) {
+expand_and_score_simpler_name_by_sector <- function(x, y) {
   vars <- c("sector", "simpler_name")
-
   check_crucial_names(x, vars)
   check_crucial_names(y, vars)
 

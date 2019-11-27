@@ -1,23 +1,27 @@
+library(tibble)
+
 test_that("match_all_against_all with `group_by_sector = FALSE` outputs
   all combinations of simpler_name in x and y", {
+
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
   actual <- match_all_against_all(x, y, group_by_sector = FALSE)
-  expect <- tibble::tribble(
-    ~ simpler_name.x, ~ simpler_name.y, ~ sector.x, ~ sector.y, ~ score,
-    "xa",             "ya",             "A",        "A",        "0.667",
-    "xa",             "yb",             "A",        "B",        "0",
-    "xa",             "yc",             "A",        "C",        "0",
-    "xb",             "ya",             "B",        "A",        "0",
-    "xb",             "yb",             "B",        "B",        "0.667",
-    "xb",             "yc",             "B",        "C",        "0",
-    "xc",             "ya",             "B",        "A",        "0",
-    "xc",             "yb",             "B",        "B",        "0",
-    "xc",             "yc",             "B",        "C",        "0.667",
+  expect <- tribble(
+    ~simpler_name_x, ~simpler_name_y, ~ score,
+    "xa",            "ya",            0.667,
+    "xa",            "yb",            0,
+    "xa",            "yc",            0,
+    "xb",            "ya",            0,
+    "xb",            "yb",            0.667,
+    "xb",            "yc",            0,
+    "xc",            "ya",            0,
+    "xc",            "yb",            0,
+    "xc",            "yc",            0.667,
   )
 
-  expect_equal(actual, expect)
+  expect_equal(actual[1:2], expect[1:2])
+  expect_equal(round(actual$score, 3), round(expect$score, 3))
 })
 
 test_that("match_all_against_all outputs a tibble", {
@@ -33,8 +37,8 @@ test_that("match_all_against_all scores extreeme cases correctly", {
     match_all_against_all(x, y),
     tibble::tribble(
       ~sector, ~simpler_name.x, ~simpler_name.y, ~score,
-      "A",     "a",             "a",             1,
-      "B",     "ab",            "cd",            0,
+      "A", "a", "a", 1,
+      "B", "ab", "cd", 0,
     )
   )
 })
@@ -64,4 +68,3 @@ test_that("match_all_against_all combines all simpler_name of x and y", {
   expect_equal(out$simpler_name.x, c("a", "a", "b", "b"))
   expect_equal(out$simpler_name.y, c("c", "d", "c", "d"))
 })
-
