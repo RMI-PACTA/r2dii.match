@@ -30,7 +30,7 @@
 #' )
 #'
 #' string_similarity(c("fewer", "items", "get", "recycled"), "recycled")
-string_similarity <- function(a, b, method = "jw", p = 0.1, ...) {
+string_similarity <- function(a, b, ..., method = "jw", p = 0.1) {
   ellipsis::check_dots_used()
-  stringdist::stringsim(a = a, b = b, method = method, p = p, ...)
+  stringdist::stringsim(a, b, ..., method = method, p = p)
 }

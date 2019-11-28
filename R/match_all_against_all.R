@@ -4,9 +4,9 @@
 #' from two dataframes.
 #'
 #' @param x,y Dataframes with `simpler_name` and optionally `sector` columns.
+#' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #' @param by_sector Should the combinations be done by sector?
 #' @inheritParams stringdist::stringdist
-#' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #'
 #' @return A [tibble::tibble].
 #' @export
@@ -33,10 +33,10 @@
 #' left_join(out, y, by = c("simpler_name_y" = "simpler_name"))
 match_all_against_all <- function(x,
                                   y,
+                                  ...,
                                   by_sector = TRUE,
                                   method = "jw",
-                                  p = 0.1,
-                                  ...) {
+                                  p = 0.1) {
   ellipsis::check_dots_used()
 
   if (by_sector) {
@@ -48,8 +48,7 @@ match_all_against_all <- function(x,
   mutate(
     out,
     score = string_similarity(
-      out$simpler_name_x, out$simpler_name_y,
-      method = method, p = p, ...
+      out$simpler_name_x, out$simpler_name_y, ..., method = method, p = p
     )
   )
 }

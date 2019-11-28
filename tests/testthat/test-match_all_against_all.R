@@ -137,7 +137,6 @@ test_that("match_all_agains_all passes arguments to stringdist::stringdist", {
   )
 })
 
-
 test_that("match_all_against_all checks used dots", {
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = "a")

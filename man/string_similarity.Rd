@@ -4,12 +4,14 @@
 \alias{string_similarity}
 \title{Compute similarity scores between strings}
 \usage{
-string_similarity(a, b, method = "jw", p = 0.1, ...)
+string_similarity(a, b, ..., method = "jw", p = 0.1)
 }
 \arguments{
 \item{a}{R object (target); will be converted by \code{as.character}.}
 
 \item{b}{R object (source); will be converted by \code{as.character}.}
+
+\item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 
 \item{method}{Method for distance calculation. One of \code{c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")}. See
 \link[stringdist:stringdist-metrics]{stringdist::stringdist-metrics}.}
@@ -17,8 +19,6 @@ string_similarity(a, b, method = "jw", p = 0.1, ...)
 \item{p}{Penalty factor for Jaro-Winkler distance. The valid range for 
 \code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
 Jaro-distance is returned. Applies only to \code{method='jw'}.}
-
-\item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 }
 \value{
 Returns a vector with similarities, which are values between 0 and 1 where
