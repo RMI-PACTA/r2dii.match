@@ -59,7 +59,7 @@ expand_simpler_name_by_sector <- function(x, y) {
   check_crucial_names(x, vars)
   check_crucial_names(y, vars)
 
-  dplyr::left_join(
+  dplyr::inner_join(
     select(x, vars), select(y, vars),
     by = "sector", suffix = c("_x", "_y")
   ) %>%

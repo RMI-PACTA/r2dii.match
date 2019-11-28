@@ -147,3 +147,13 @@ test_that("match_all_against_all checks used dots", {
     class = "rlib_error_dots_unused"
   )
 })
+
+test_that("match_all_against_all w/ same `simpler_name` in 2 sectors and
+          by_sector = TRUE outputs no `NA`", {
+  x <- tibble(sector = c("A", "B"), simpler_name = "a")
+  y <- tibble(sector = "A", simpler_name = "a")
+  expect_equal(
+    match_all_against_all(x, y, by_sector = TRUE),
+    tibble(simpler_name_x = "a", simpler_name_y = "a", score = 1)
+  )
+})
