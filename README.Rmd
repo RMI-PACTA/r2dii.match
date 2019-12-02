@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 <!-- badges: end -->
 
-The goal of r2dii.match is to match loanbook data with asset level data.
+The goal of r2dii.match is to match loanbook data with asset level data (ald).
 
 ## Installation
 
@@ -33,47 +33,47 @@ devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
 
 ## Example
 
+This example aims to shows the entire matching process. As usual, we start by using required packages.
+
 ```{r}
 library(r2dii.match)
 library(r2dii.dataraw)
+```
 
-# An example of the entire matching process
-# load up a fake loanbook
-a_loanbook <- r2dii.dataraw::loanbook_demo
+Before matching, both the loanbook and asset level data must be prepared.
 
-# load up a fake asset level dataset
-fake_asset_level_data <- r2dii.dataraw::ald_demo
+```{r}
+# All `r2dii.dataraw::*_demo` are fake datasets for examples
 
-# adjust loanbooks with faulty ids
-loanbook_adjusted_id <- id_by_loantaker_sector(a_loanbook)
+prep_loanbook <- r2dii.dataraw::loanbook_demo %>% 
+  # identifies unique combinations of "loan-takers + sector"
+  id_by_loantaker_sector() %>% 
+  prepare_loanbook_for_matching()
 
-# bridge the loanbook's sector classification codes to our sector classification scheme
-bridged_loanbook <- bridge_sector(loanbook_adjusted_id)
+prep_loanbook
 
-# example of how customer names are simplified
-# see ?r2dii.match::replace_customer_name for examples on how to add further abbreviations/ rules
-some_customer_names <- c("3M Company", "Abbott Laboratories", "AbbVie Inc.")
-replace_customer_name(some_customer_names)
+prep_ald <- r2dii.dataraw::ald_demo %>% 
+  prepare_ald_for_matching()
 
-# manual input to overwrite certain names and sectors in the loanbook, prior to matching
-overwrite_demo <- r2dii.dataraw::overwrite_demo
+prep_ald
+```
 
-# prepare loanbook to be matched
-prepared_loanbook <- prepare_loanbook_for_matching(loanbook_adjusted_id)
+`match_all_against_all()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets.
 
-# prepare ALD to be matched
-prepared_ald <- prepare_ald_for_matching(fake_asset_level_data)
+```{r}
+# Using default `by_sector = TRUE`
+matched <- match_all_against_all(prep_loanbook, prep_ald)
 
-# run matching (by sector)
-match_all_against_all(prepared_loanbook, prepared_ald) %>%
-  dplyr::left_join(out, x, by = c("simpler_name_x" = "simpler_name"))
+matched
+```
 
-# set threshold
-threshold = 0.9
+You may use common dplyr functions to recover all columns from the loanbook dataset and to keep only rows at and above some threshold.
 
-match_all_against_all(prepared_loanbook, prepared_ald) %>%
-  dplyr::left_join(prepared_loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
+```{r}
+threshold <- 0.9
+
+matched %>% 
+  dplyr::left_join(prep_loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
   dplyr::filter(score >= threshold)
-
 ```
 
