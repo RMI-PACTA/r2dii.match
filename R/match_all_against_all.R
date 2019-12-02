@@ -34,7 +34,6 @@
 #'   dplyr::rename(sector_x = sector) %>%
 #'   left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
 #'   dplyr::rename(sector_y = sector)
-
 match_all_against_all <- function(x,
                                   y,
                                   ...,
@@ -52,7 +51,8 @@ match_all_against_all <- function(x,
   mutate(
     out,
     score = string_similarity(
-      out$simpler_name_x, out$simpler_name_y, ..., method = method, p = p
+      out$simpler_name_x, out$simpler_name_y, ...,
+      method = method, p = p
     )
   )
 }
