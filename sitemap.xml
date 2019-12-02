@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//index.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/bridge_sector.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/id_by_loantaker_sector.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/match_all_against_all.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prepare_ald_for_matching.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/r2dii.match-package.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/replace_customer_name.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/string_similarity.html</loc>
+  </url>
+</urlset>
