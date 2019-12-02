@@ -22,7 +22,7 @@ test_that("match_all_against_all has the expected names", {
   )
 })
 
-test_that("match_all_against_all scores extreeme cases correctly", {
+test_that("match_all_against_all scores extreme cases correctly", {
   x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
   y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
   expect_equal(

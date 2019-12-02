@@ -17,20 +17,24 @@
 #' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
-#' match_all_against_all(x, y)
+#' out <- match_all_against_all(x, y)
 #'
-#' treshold <- 0.5
+#' # Recover sector
+#' left_join(out, x, by = c("simpler_name_x" = "simpler_name"))
+#'
+#' threshold <- 0.5
 #' match_all_against_all(x, y) %>%
-#'   dplyr::filter(score >= treshold)
+#'   dplyr::filter(score >= threshold)
 #'
 #' out <- match_all_against_all(x, y, by_sector = FALSE)
 #' out
 #'
-#' # Recover sector from x
-#' left_join(out, x, by = c("simpler_name_x" = "simpler_name"))
-#'
-#' # Recover sector from y
-#' left_join(out, y, by = c("simpler_name_y" = "simpler_name"))
+#' # Recover sectors from x & y
+#' left_join(out, x, by = c("simpler_name_x" = "simpler_name")) %>%
+#'   dplyr::rename(sector_x = sector) %>%
+#'   left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
+#'   dplyr::rename(sector_y = sector)
+
 match_all_against_all <- function(x,
                                   y,
                                   ...,
