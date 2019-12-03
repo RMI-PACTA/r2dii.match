@@ -26,24 +26,30 @@ devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
 
 ## Example
 
-This example aims to shows the entire matching process. As usual, we
-start by using required packages.
+This example aims to show the entire matching process. As usual, we
+start by using required packages. For convenience we’ll also use the
+tidyverse.
 
 ``` r
 library(r2dii.match)
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
+library(tidyverse)
+#> -- Attaching packages -------------------------------------------- tidyverse 1.3.0 --
+#> v ggplot2 3.2.1     v purrr   0.3.3
+#> v tibble  2.1.3     v dplyr   0.8.3
+#> v tidyr   1.0.0     v stringr 1.4.0
+#> v readr   1.3.1     v forcats 0.4.0
+#> -- Conflicts ----------------------------------------------- tidyverse_conflicts() --
+#> x dplyr::filter() masks stats::filter()
+#> x dplyr::lag()    masks stats::lag()
 ```
 
-Before matching, both the loanbook and asset level data must be
-prepared. To this end, there are several mandatory steps, and several
-optional steps.
+We’ll use some fake datasets from the r2dii.dataraw package, which name
+ends with `_demo`, for example:
 
 ``` r
-# All `r2dii.dataraw::*_demo` are fake datasets for examples
-
-# show the sample loanbook demo dataset
-r2dii.dataraw::loanbook_demo
+loanbook_demo
 #> # A tibble: 320 x 19
 #>    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
@@ -65,18 +71,27 @@ r2dii.dataraw::loanbook_demo
 #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
 #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>
+```
 
-# we can then bridge from multiple sector classification codes
-# to 2Dii's sectors: power, oil and gas, coal, automotive, aviation
-# cement, shipping and steel
-loanbook_demo %>% 
+Before matching, both the loanbook and asset level data must be
+prepared. To this end, there are several mandatory steps, and several
+optional steps.
+
+We can bridge from multiple sector classification codes to 2Dii’s
+sectors: automotive, aviation, cement, oil and gas, power, shipping,
+steel.
+
+``` r
+loanbook_demo %>%
   bridge_sector() %>%
-  # for demonstration: only show sector related columns
-  dplyr::select(sector_classification_system, 
-                sector_classification_input_type,
-                sector_classification_direct_loantaker,
-                sector,
-                borderline)
+  # Focusing on columns related to sector
+  select(
+    sector_classification_system,
+    sector_classification_input_type,
+    sector_classification_direct_loantaker,
+    sector,
+    borderline
+  )
 #> # A tibble: 320 x 5
 #>    sector_classificat~ sector_classificat~ sector_classificat~ sector borderline
 #>    <chr>               <chr>                             <dbl> <chr>  <chr>     
@@ -91,9 +106,13 @@ loanbook_demo %>%
 #>  9 NACE                Code                               3511 power  TRUE      
 #> 10 NACE                Code                               3511 power  TRUE      
 #> # ... with 310 more rows
+```
 
-# in case the loanbook has non-unique IDs, can generate name+sector specific IDs
-# (this is especially important if one company is classified in two sectors for two loans)
+In case the loanbook has non-unique IDs, can generate name+sector
+specific IDs (this is especially important if one company is classified
+in two sectors for two loans).
+
+``` r
 loanbook_demo %>%
   id_by_loantaker_sector()
 #> # A tibble: 320 x 19
@@ -128,11 +147,11 @@ replace_customer_name(some_customer_names)
 #> [1] "threem co"          "abbottlaboratories" "abbvie inc"
 
 # replacements can be defined from scratch using:
-custom_replacement <- dplyr::tibble(from = "AAAA", to = "B")
+custom_replacement <- tibble(from = "AAAA", to = "B")
 replace_customer_name("Aa Aaaa", from_to = custom_replacement)
 #> [1] "aab"
 
-# or appended to the existing list of replacements: 
+# or appended to the existing list of replacements:
 get_replacements()
 #> # A tibble: 61 x 2
 #>    from    to   
@@ -150,10 +169,10 @@ get_replacements()
 #> # ... with 51 more rows
 
 appended_replacements <- get_replacements() %>%
- dplyr::add_row(
-   .before = 1,
-   from = c("AA", "BB"), to = c("alpha", "beta")
- )
+  add_row(
+    .before = 1,
+    from = c("AA", "BB"), to = c("alpha", "beta")
+  )
 appended_replacements
 #> # A tibble: 63 x 2
 #>    from    to   
@@ -180,9 +199,6 @@ a list of all unique name and sector combinations at every level,
 including the simplified name, to be used in the matching process:
 
 ``` r
-# the following wrapper, takes a loanbook with valid IDs as input
-# and outputs all unique name+sector elements with a corresponding
-# simplified name: 
 prep_loanbook <- loanbook_demo %>%
   id_by_loantaker_sector() %>%
   prepare_loanbook_for_matching()
@@ -202,9 +218,12 @@ prep_loanbook
 #>  9 direct_lo~ C305  Yukon Energy Corp 1736   power  loanbo~ yukonenergycorpones~
 #> 10 ultimate_~ UP104 Garland Power & Light    power  loanbo~ garlandpowerlight   
 #> # ... with 628 more rows
+```
 
-# and similarly for the ald
-prep_ald <- r2dii.dataraw::ald_demo %>% 
+And similarly for the ald:
+
+``` r
+prep_ald <- r2dii.dataraw::ald_demo %>%
   prepare_ald_for_matching()
 
 prep_ald
@@ -294,9 +313,9 @@ loanbook dataset and to keep only rows at and above some threshold.
 ``` r
 threshold <- 0.9
 
-matched %>% 
-  dplyr::left_join(prep_loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
-  dplyr::filter(score >= threshold)
+matched %>%
+  left_join(prep_loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
+  filter(score >= threshold)
 #> # A tibble: 416 x 8
 #>    simpler_name_x   simpler_name_y   score level   id    name      sector source
 #>    <chr>            <chr>            <dbl> <chr>   <chr> <chr>     <chr>  <chr> 
@@ -317,7 +336,7 @@ This matching data-frame should be saved and manually verified. To do
 so, try something like:
 
 ``` r
-# readr::write_csv(matched, "path/to/save/matches_to_be_verified.csv")
+readr::write_csv(matched, "path/to/save/matches_to_be_verified.csv")
 ```
 
 and open the .csv in excel/ google sheets/ however you want to edit a
@@ -329,9 +348,7 @@ invalidated.)
 
 When you are happy with the match validation:
 
-``` r
-# readr::read_csv("path/to/load/verified_matches.csv")
-```
+    readr::read_csv("path/to/load/verified_matches.csv")
 
 **Work in progress, next step of analysis it to join in validated
 matches in order of priority**.
