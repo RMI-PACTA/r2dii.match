@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 <!-- badges: end -->
 
-The goal of r2dii.match is to match loanbook data with asset level data (ald).
+The goal of r2dii.match is to match generic loanbook data with physical asset level data (ald).
 
 ## Installation
 
@@ -41,24 +41,93 @@ library(r2dii.dataraw)
 ```
 
 Before matching, both the loanbook and asset level data must be prepared.
+To this end, there are several mandatory steps, and several optional steps. 
 
 ```{r}
 # All `r2dii.dataraw::*_demo` are fake datasets for examples
 
-prep_loanbook <- r2dii.dataraw::loanbook_demo %>% 
-  # identifies unique combinations of "loan-takers + sector"
-  id_by_loantaker_sector() %>% 
+# show the sample loanbook demo dataset
+r2dii.dataraw::loanbook_demo
+
+# we can then bridge from multiple sector classification codes
+# to 2Dii's sectors: power, oil and gas, coal, automotive, aviation
+# cement, shipping and steel
+loanbook_demo %>% 
+  bridge_sector() %>%
+  # for demonstration: only show sector related columns
+  dplyr::select(sector_classification_system, 
+                sector_classification_input_type,
+                sector_classification_direct_loantaker,
+                sector,
+                borderline)
+
+# in case the loanbook has non-unique IDs, can generate name+sector specific IDs
+# (this is especially important if one company is classified in two sectors for two loans)
+loanbook_demo %>%
+  id_by_loantaker_sector()
+```
+
+Before we run the fuzzy matching algorithm, we simplify the loanbook and ald names using:
+
+```{r}
+some_customer_names <- c("3M Company", "Abbott Laboratories", "AbbVie Inc.")
+replace_customer_name(some_customer_names)
+
+# replacements can be defined from scratch using:
+custom_replacement <- dplyr::tibble(from = "AAAA", to = "B")
+replace_customer_name("Aa Aaaa", from_to = custom_replacement)
+
+# or appended to the existing list of replacements: 
+get_replacements()
+
+appended_replacements <- get_replacements() %>%
+ dplyr::add_row(
+   .before = 1,
+   from = c("AA", "BB"), to = c("alpha", "beta")
+ )
+appended_replacements
+
+# And in combination with `replace_customer_name()`
+replace_customer_name(c("AA", "BB", "1"), from_to = appended_replacements)
+
+```
+
+The following function takes a loanbook with non-corrupt IDs and outputs a list of all unique name and sector combinations at every level, including the simplified name, to be used in the matching process: 
+
+```{r}
+# the following wrapper, takes a loanbook with valid IDs as input
+# and outputs all unique name+sector elements with a corresponding
+# simplified name: 
+prep_loanbook <- loanbook_demo %>%
+  id_by_loantaker_sector() %>%
   prepare_loanbook_for_matching()
 
 prep_loanbook
 
+# and similarly for the ald
 prep_ald <- r2dii.dataraw::ald_demo %>% 
   prepare_ald_for_matching()
 
 prep_ald
+
 ```
 
-`match_all_against_all()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets.
+For the purpose of manual matching, you can substitute the name and/ or sector of particular loans at the desired level when preparing the loanbook data. To do so, specify the `overwrite` argument in prepare_loanbook_for_matching(). (To substitute only the name, leave sector as `NA` and vice-versa). 
+
+```{r}
+overwrite_demo <- r2dii.dataraw::overwrite_demo
+overwrite_demo
+
+prep_loanbook <- loanbook_demo %>%
+  id_by_loantaker_sector() %>%
+  prepare_loanbook_for_matching(overwrite = overwrite_demo)
+
+prep_loanbook
+
+```
+
+
+`match_all_against_all()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. The `by_sector` argument, flags if names should only be compared against ald names in the same sector. (setting `by_sector = TRUE` reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches). 
 
 ```{r}
 # Using default `by_sector = TRUE`
@@ -77,3 +146,18 @@ matched %>%
   dplyr::filter(score >= threshold)
 ```
 
+This matching data-frame should be saved and manually verified. To do so, try something like: 
+
+```{r}
+# readr::write_csv(matched, "path/to/save/matches_to_be_verified.csv")
+```
+
+and open the .csv in excel/ google sheets/ however you want to edit a spreadsheet. Once open, compare `simpler_name_x` and `simpler_name_y` manually, along with the loanbook sector. If you are happy with the match, set the `score` value to `1` (Note: Only values of exactly `1` will be considered valid, all other potential matches will be considered invalidated.)
+
+When you are happy with the match validation: 
+
+```{r}
+# readr::read_csv("path/to/load/verified_matches.csv")
+```
+
+**Work in progress, next step of analysis it to join in validated matches in order of priority**. 
