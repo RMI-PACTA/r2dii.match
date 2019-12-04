@@ -60,7 +60,7 @@ bridge_sector <- function(data) {
     )
   }
 
-  by <- rlang::set_names(c("code_system", "code"), crucial)
+  by <- stats::setNames(c("code_system", "code"), crucial)
   out <- dplyr::left_join(data2, classification, by = by)
 
   restore_typeof(data, out, crucial)
@@ -70,19 +70,17 @@ exported_data <- function(package) {
   utils::data(package = package)$results[, "Item"]
 }
 
-check_is_attached <- function(package) {
-  is_attached <- any(grepl(package, search()))
+check_is_attached <- function(pkg) {
+  is_attached <- any(grepl(pkg, search()))
+
   if (!is_attached) {
-    code <- ui_code(glue("library({package})"))
-    abort(
-      glue(
-        "{package} must be attached.
-        Run {code}."
-      )
+    stop(
+      sprintf("%s must be attached.\nRun `library(%s)`.", pkg, pkg),
+      call. = FALSE
     )
   }
 
-  invisible(package)
+  invisible(pkg)
 }
 
 enlist_datasets <- function(package, pattern) {

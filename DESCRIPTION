@@ -43,23 +43,19 @@ BugReports:
 Imports: 
     dplyr,
     ellipsis,
-    glue,
-    here,
     magrittr,
     purrr,
     r2dii.utils (>= 0.0.0.9001),
-    readr,
-    rlang,
+    stats,
     stringdist,
     stringi,
     tibble,
-    tidyr,
-    usethis
+    tidyr
 Suggests: 
+    covr,
     pacta (>= 0.0.0.9000),
     r2dii.dataraw (>= 0.0.2.9000),
-    testthat (>= 2.1.0),
-    covr
+    testthat (>= 2.1.0)
 Remotes: 
     2DegreesInvesting/pacta,
     2degreesinvesting/r2dii.dataraw,

@@ -112,7 +112,7 @@ maybe_remove_ownership <- function(remove_ownership, ownership, .init) {
 
 replace_with_abbreviation <- function(replacement, .init) {
   replacement <- replacement %||% get_replacements()
-  replacement <- rlang::set_names(replacement, tolower)
+  replacement <- stats::setNames(replacement, tolower)
 
   check_crucial_names(replacement, c("from", "to"))
 
