@@ -21,7 +21,7 @@ see \code{\link[stringdist]{stringdist-metrics}}.}
 Jaro-distance is returned. Applies only to \code{method='jw'}.}
 }
 \value{
-A \link[tibble:tibble]{tibble::tibble}.
+A \link[dplyr:tibble]{dplyr::tibble}.
 }
 \description{
 Apply \code{string_similarity()} to all combinations of \code{simpler_name} values

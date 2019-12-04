@@ -48,7 +48,7 @@ test_that("replace_customer_name is sensitive to `remove_ownership`", {
 })
 
 test_that("replace_customer_name takes lookup columns in upper/lower case", {
-  upper_cols <- tibble::tibble(From = "AAAA", To = "BBB")
+  upper_cols <- tibble(From = "AAAA", To = "BBB")
   expect_equal(
     replace_customer_name(
       "Aaa Aaaa",
@@ -57,7 +57,7 @@ test_that("replace_customer_name takes lookup columns in upper/lower case", {
     "aaabbb"
   )
 
-  lower_cols <- tibble::tibble(from = "AAAA", to = "BBB")
+  lower_cols <- tibble(from = "AAAA", to = "BBB")
   expect_equal(
     replace_customer_name(
       "Aaa Aaaa",
@@ -68,7 +68,7 @@ test_that("replace_customer_name takes lookup columns in upper/lower case", {
 })
 
 test_that("replace_customer_name with custom replacement rules works ok", {
-  custom_replacement <- tibble::tibble(from = "AAAA", to = "BBB")
+  custom_replacement <- tibble(from = "AAAA", to = "BBB")
 
   expect_equal(
     replace_customer_name("Aaa Aaaa", from_to = custom_replacement),
@@ -81,7 +81,7 @@ test_that("replace_customer_name with custom replacement rules works ok", {
 })
 
 test_that("replace_customer_name with custom ownership types works ok", {
-  neutral_replacement <- tibble::tibble(from = character(0), to = character(0))
+  neutral_replacement <- tibble(from = character(0), to = character(0))
   custom_ownership <- c("a1", "a2")
 
   expect_equal(
@@ -135,12 +135,12 @@ test_that("get_ownership_type() is equal to its legacy in pacta", {
 
 test_that("replace_customer_name errors with malformed `from_to`", {
   expect_error(
-    replace_customer_name("a", from_to = tibble::tibble(bad = "a", to = "b")),
+    replace_customer_name("a", from_to = tibble(bad = "a", to = "b")),
     "must have all expected names"
   )
 
   expect_error(
-    replace_customer_name("a", from_to = tibble::tibble(from = "a", bad = "b")),
+    replace_customer_name("a", from_to = tibble(from = "a", bad = "b")),
     "must have all expected names"
   )
 })

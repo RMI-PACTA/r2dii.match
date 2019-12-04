@@ -22,11 +22,8 @@
 #' @export
 #' @return
 #' * `replace_customer_name()` returns a character string.
-#' * `get_replacements()` returns a [tibble::tibble] with columns `from` and
+#' * `get_replacements()` returns a [dplyr::tibble] with columns `from` and
 #' `to`.
-#'
-#'
-#'
 #'
 #' @examples
 #' library(tibble)
@@ -112,7 +109,7 @@ maybe_remove_ownership <- function(remove_ownership, ownership, .init) {
 
 replace_with_abbreviation <- function(replacement, .init) {
   replacement <- replacement %||% get_replacements()
-  replacement <- stats::setNames(replacement, tolower)
+  replacement <- stats::setNames(replacement, tolower(names(replacement)))
 
   check_crucial_names(replacement, c("from", "to"))
 
@@ -132,7 +129,7 @@ replace_abbrev <- function(text, abr, fixed = FALSE) {
 #' @export
 #' @rdname replace_customer_name
 get_replacements <- function() {
-  tibble::tribble(
+  tribble(
     ~from, ~to,
     " and ", " & ",
     " en ", " & ",

@@ -29,7 +29,7 @@ should be cut-off.}
 \value{
 \itemize{
 \item \code{replace_customer_name()} returns a character string.
-\item \code{get_replacements()} returns a \link[tibble:tibble]{tibble::tibble} with columns \code{from} and
+\item \code{get_replacements()} returns a \link[dplyr:tibble]{dplyr::tibble} with columns \code{from} and
 \code{to}.
 }
 }

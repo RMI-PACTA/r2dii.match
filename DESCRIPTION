@@ -49,7 +49,6 @@ Imports:
     stats,
     stringdist,
     stringi,
-    tibble,
     tidyr
 Suggests: 
     covr,

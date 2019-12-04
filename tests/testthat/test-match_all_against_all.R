@@ -27,7 +27,7 @@ test_that("match_all_against_all scores extreme cases correctly", {
   y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
   expect_equal(
     match_all_against_all(x, y),
-    tibble::tribble(
+    tribble(
       ~simpler_name_x, ~simpler_name_y, ~score,
       "a", "a", 1,
       "ab", "cd", 0,
