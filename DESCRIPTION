@@ -52,13 +52,11 @@ Imports:
     tidyr
 Suggests: 
     covr,
-    highlight (>= 0.5.0.9000),
     r2dii.dataraw (>= 0.0.2.9000),
     testthat (>= 2.1.0)
 Remotes: 
     2degreesinvesting/r2dii.dataraw,
-    2degreesinvesting/r2dii.utils,
-    romainfrancois/highlight
+    2degreesinvesting/r2dii.utils
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
