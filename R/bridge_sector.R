@@ -73,10 +73,13 @@ exported_data <- function(package) {
 check_is_attached <- function(package) {
   is_attached <- any(grepl(package, search()))
   if (!is_attached) {
-    rlang::abort(glue::glue(
-      "r2dii.dataraw must be attached.
-      Run `library(r2dii.dataraw)`."
-    ))
+    code <- ui_code(glue("library({package})"))
+    abort(
+      glue(
+        "{package} must be attached.
+        Run {code}."
+      )
+    )
   }
 
   invisible(package)
