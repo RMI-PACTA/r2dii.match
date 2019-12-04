@@ -83,45 +83,43 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the development version of r2dii.match with something like this:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-
-<span class="co"># To install from a private repo, see ?usethis::browse_github_token()</span>
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"2DegreesInvesting/r2dii.match"</span>, <span class="dt">auth_token =</span> <span class="st">"abc"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># To install from a private repo, see ?usethis::browse_github_token()</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"2DegreesInvesting/r2dii.match"</span>, <span class="dt">auth_token =</span> <span class="st">"abc"</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)
-
-a_loanbook &lt;-<span class="st"> </span>r2dii.dataraw<span class="op">::</span>loanbook_demo
-<span class="kw"><a href="https://rdrr.io/pkg/r2dii.match/man/id_by_loantaker_sector.html">id_by_loantaker_sector</a></span>(a_loanbook)
-<span class="co">#&gt; # A tibble: 320 x 18</span>
-<span class="co">#&gt;    id_loan id_direct_loant~ name_direct_loa~ id_ultimate_par~</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L1      C294             Yuamen Xinneng ~ UP15            </span>
-<span class="co">#&gt;  2 L2      C293             Yuamen Changyua~ UP84            </span>
-<span class="co">#&gt;  3 L3      C292             Yuama Ethanol L~ UP288           </span>
-<span class="co">#&gt;  4 L4      C299             Yudaksel Holdin~ UP54            </span>
-<span class="co">#&gt;  5 L5      C305             Yukon Energy Co~ UP104           </span>
-<span class="co">#&gt;  6 L6      C304             Yukon Developme~ UP83            </span>
-<span class="co">#&gt;  7 L7      C227             Yaugoa-Zapadnay~ UP134           </span>
-<span class="co">#&gt;  8 L8      C303             Yueyang City Co~ UP163           </span>
-<span class="co">#&gt;  9 L9      C301             Yuedxiu Group    UP138           </span>
-<span class="co">#&gt; 10 L10     C302             Yuexi County AA~ UP32            </span>
-<span class="co">#&gt; # ... with 310 more rows, and 14 more variables:</span>
-<span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;,</span>
-<span class="co">#&gt; #   sector_classification_system &lt;chr&gt;,</span>
-<span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_intermediate_parent &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   name_project &lt;lgl&gt;, lei_direct_loantaker &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   isin_direct_loantaker &lt;lgl&gt;</span>
-
-some_customer_names &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"3M Company"</span>, <span class="st">"Abbott Laboratories"</span>, <span class="st">"AbbVie Inc."</span>)
-<span class="kw"><a href="https://rdrr.io/pkg/r2dii.match/man/replace_customer_name.html">replace_customer_name</a></span>(some_customer_names)
-<span class="co">#&gt; [1] "threem co"          "abbottlaboratories" "abbvie inc"</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">a_loanbook &lt;-<span class="st"> </span>r2dii.dataraw<span class="op">::</span>loanbook_demo</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="reference/id_by_loantaker_sector.html">id_by_loantaker_sector</a></span>(a_loanbook)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; # A tibble: 320 x 19</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt;  1 L1      C294             Yuamen Xinneng ~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt;  2 L2      C293             Yuamen Changyua~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt;  3 L3      C292             Yuama Ethanol L~ IP5              Yuama Inc.      </span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt;  4 L4      C299             Yudaksel Holdin~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt;  5 L5      C305             Yukon Energy Co~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt;  6 L6      C304             Yukon Developme~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt;  7 L7      C227             Yaugoa-Zapadnay~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt;  8 L8      C303             Yueyang City Co~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; 10 L10     C302             Yuexi County AA~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; # ... with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">some_customer_names &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"3M Company"</span>, <span class="st">"Abbott Laboratories"</span>, <span class="st">"AbbVie Inc."</span>)</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="kw"><a href="reference/replace_customer_name.html">replace_customer_name</a></span>(some_customer_names)</a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; [1] "threem co"          "abbottlaboratories" "abbvie inc"</span></a></code></pre></div>
 </div>
 </div>
   </div>
@@ -167,6 +165,8 @@ some_customer_names &lt;-<span class="st"> </span><span class="kw"><a href="http
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a></li>
 <li><a href="https://CRAN.R-project.org/package=r2dii.match"><embed src="https://www.r-pkg.org/badges/version/r2dii.match"></embed></a></li>
+<li><a href="https://travis-ci.org/2DegreesInvesting/r2dii.match"><img src="https://travis-ci.org/2DegreesInvesting/r2dii.match.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="https://coveralls.io/r/2DegreesInvesting/r2dii.match?branch=master"><img src="https://coveralls.io/repos/github/2DegreesInvesting/r2dii.match/badge.svg" alt="Coveralls test coverage"></a></li>
 </ul>
 </div>
 </div>

@@ -176,41 +176,59 @@ should be cut-off.</p></td>
     
 <ul>
 <li><p><code>replace_customer_name()</code> returns a character string.</p></li>
-<li><p><code>get_replacements()</code> returns a <a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble</a> with columns <code>from</code> and
+<li><p><code>get_replacements()</code> returns a <a href='https://dplyr.tidyverse.org/reference/reexports.html'>dplyr::tibble</a> with columns <code>from</code> and
 <code>to</code>.</p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tibble</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='fu'>replace_customer_name</span>(<span class='st'>"A. and B"</span>)
-<span class='fu'>replace_customer_name</span>(<span class='st'>"Acuity Brands Inc"</span>)
-<span class='fu'>replace_customer_name</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"3M Company"</span>, <span class='st'>"Abbott Laboratories"</span>, <span class='st'>"AbbVie Inc."</span>))
-
-<span class='no'>custom_replacement</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(<span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"AAAA"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"B"</span>)
-<span class='fu'>replace_customer_name</span>(<span class='st'>"Aa Aaaa"</span>, <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>custom_replacement</span>)
-
-<span class='no'>neutral_replacement</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(<span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>), <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>))
-<span class='fu'>replace_customer_name</span>(<span class='st'>"Company Name Owner"</span>, <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>neutral_replacement</span>)
-<span class='fu'>replace_customer_name</span>(
+<span class='fu'>replace_customer_name</span>(<span class='st'>"A. and B"</span>)</div><div class='output co'>#&gt; [1] "ab"</div><div class='input'><span class='fu'>replace_customer_name</span>(<span class='st'>"Acuity Brands Inc"</span>)</div><div class='output co'>#&gt; [1] "acuitybrands inc"</div><div class='input'><span class='fu'>replace_customer_name</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"3M Company"</span>, <span class='st'>"Abbott Laboratories"</span>, <span class='st'>"AbbVie Inc."</span>))</div><div class='output co'>#&gt; [1] "threem co"          "abbottlaboratories" "abbvie inc"        </div><div class='input'>
+<span class='no'>custom_replacement</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>from</span> <span class='kw'>=</span> <span class='st'>"AAAA"</span>, <span class='kw'>to</span> <span class='kw'>=</span> <span class='st'>"B"</span>)
+<span class='fu'>replace_customer_name</span>(<span class='st'>"Aa Aaaa"</span>, <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>custom_replacement</span>)</div><div class='output co'>#&gt; [1] "aab"</div><div class='input'>
+<span class='no'>neutral_replacement</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tibble</a></span>(<span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>), <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>))
+<span class='fu'>replace_customer_name</span>(<span class='st'>"Company Name Owner"</span>, <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>neutral_replacement</span>)</div><div class='output co'>#&gt; [1] "companynameowner"</div><div class='input'><span class='fu'>replace_customer_name</span>(
   <span class='st'>"Company Name Owner"</span>,
   <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>neutral_replacement</span>,
   <span class='kw'>ownership</span> <span class='kw'>=</span> <span class='st'>"owner"</span>,
   <span class='kw'>remove_ownership</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
-
-<span class='fu'>get_replacements</span>()
-
+)</div><div class='output co'>#&gt; [1] "companyname"</div><div class='input'>
+<span class='fu'>get_replacements</span>()</div><div class='output co'>#&gt; # A tibble: 61 x 2
+#&gt;    from    to   
+#&gt;    &lt;chr&gt;   &lt;chr&gt;
+#&gt;  1 " and " " &amp; "
+#&gt;  2 " en "  " &amp; "
+#&gt;  3 " och " " &amp; "
+#&gt;  4 " und " " &amp; "
+#&gt;  5 (pjsc)  ""   
+#&gt;  6 (pte)   ""   
+#&gt;  7 (pvt)   ""   
+#&gt;  8 0       null 
+#&gt;  9 1       one  
+#&gt; 10 2       two  
+#&gt; # … with 51 more rows</div><div class='input'>
 <span class='no'>append_replacements</span> <span class='kw'>&lt;-</span> <span class='fu'>get_replacements</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://tibble.tidyverse.org/reference/add_row.html'>add_row</a></span>(
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>add_row</a></span>(
     <span class='kw'>.before</span> <span class='kw'>=</span> <span class='fl'>1</span>,
     <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA"</span>, <span class='st'>"BB"</span>), <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"alpha"</span>, <span class='st'>"beta"</span>)
   )
-<span class='no'>append_replacements</span>
-
+<span class='no'>append_replacements</span></div><div class='output co'>#&gt; # A tibble: 63 x 2
+#&gt;    from    to   
+#&gt;    &lt;chr&gt;   &lt;chr&gt;
+#&gt;  1 AA      alpha
+#&gt;  2 BB      beta 
+#&gt;  3 " and " " &amp; "
+#&gt;  4 " en "  " &amp; "
+#&gt;  5 " och " " &amp; "
+#&gt;  6 " und " " &amp; "
+#&gt;  7 (pjsc)  ""   
+#&gt;  8 (pte)   ""   
+#&gt;  9 (pvt)   ""   
+#&gt; 10 0       null 
+#&gt; # … with 53 more rows</div><div class='input'>
 <span class='co'># And in combination with `replace_customer_name()`</span>
-<span class='fu'>replace_customer_name</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA"</span>, <span class='st'>"BB"</span>, <span class='st'>"1"</span>), <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>append_replacements</span>)</pre>
+<span class='fu'>replace_customer_name</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA"</span>, <span class='st'>"BB"</span>, <span class='st'>"1"</span>), <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>append_replacements</span>)</div><div class='output co'>#&gt; [1] "alpha" "beta"  "one"  </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

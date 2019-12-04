@@ -144,13 +144,33 @@ before you call <code>bridge_sector()</code>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other functions to prepare data for matching.: 
-<code>prepare_ald_for_matching()</code></p></div>
+<code><a href='prepare_ald_for_matching.html'>prepare_ald_for_matching</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># Must be attached</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
-
-<span class='fu'>bridge_sector</span>(<span class='kw pkg'>r2dii.dataraw</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>loanbook_demo</a></span>)</pre>
+    <pre class="examples"><div class='input'><span class='co'># Must be attached</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: r2dii.utils</span></div><div class='input'>
+<span class='fu'>bridge_sector</span>(<span class='kw pkg'>r2dii.dataraw</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>loanbook_demo</a></span>)</div><div class='output co'>#&gt; # A tibble: 320 x 21
+#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  2 L2      C293             Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
+#&gt;  4 L4      C299             Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  7 L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
+#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            
+#&gt; # … with 310 more rows, and 16 more variables: id_ultimate_parent &lt;chr&gt;,
+#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
+#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
+#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
+#&gt; #   sector_classification_input_type &lt;chr&gt;,
+#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
+#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
+#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, sector &lt;chr&gt;,
+#&gt; #   borderline &lt;chr&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
