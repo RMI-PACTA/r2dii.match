@@ -104,35 +104,6 @@ test_that("replace_customer_name with custom ownership types works ok", {
   )
 })
 
-test_that("get_replacements() is equal to its legacy in pacta", {
-  expect_equal(
-    setdiff(get_replacements()$from, pacta::data.name.reductions$From),
-    character(0)
-  )
-
-  expect_equal(
-    setdiff(pacta::data.name.reductions$From, get_replacements()$from),
-    character(0)
-  )
-
-  expect_equal(
-    setdiff(get_replacements()$to, pacta::data.name.reductions$To),
-    character(0)
-  )
-
-  expect_equal(
-    setdiff(pacta::data.name.reductions$To, get_replacements()$to),
-    character(0)
-  )
-})
-
-test_that("get_ownership_type() is equal to its legacy in pacta", {
-  expect_equal(
-    setdiff(get_ownership_type(), pacta::data.ownership.types),
-    character(0)
-  )
-})
-
 test_that("replace_customer_name errors with malformed `from_to`", {
   expect_error(
     replace_customer_name("a", from_to = tibble(bad = "a", to = "b")),
@@ -149,3 +120,138 @@ test_that("get_replacements outputs the expectes tibble", {
   expect_is(get_replacements(), "tbl_df")
   expect_named(get_replacements(), c("from", "to"))
 })
+
+# pacta_data_name_reductions ----------------------------------------------
+# datapasta::tribble_paste(pacta::data.name.reductions)
+pacta_data_name_reductions <- dplyr::tribble(
+  ~From,               ~To,
+  " and ",             " & ",
+  " och ",             " & ",
+  " en ",             " & ",
+  " und ",             " & ",
+  "(pte)",                "",
+  "(pvt)",                "",
+  "(pjsc)",                "",
+  "development",             "dev",
+  "group",             "grp",
+  "financing",            "fing",
+  "financial",            "fina",
+  "finance",            "fine",
+  "designated activity company",             "dac",
+  "limited partnership",              "lp",
+  "generation",             "gen",
+  "investment",          "invest",
+  "limited",             "ltd",
+  "company",              "co",
+  "public ltd co",             "plc",
+  "public co ltd",             "pcl",
+  "corporation",            "corp",
+  "ltd liability co",             "llc",
+  "aktg",              "ag",
+  "incorporated",             "inc",
+  "holdings",           "hldgs",
+  "holding",           "hldgs",
+  "international",            "intl",
+  "government",            "govt",
+  "berhad",             "bhd",
+  "golden",             "gld",
+  "resources",             "res",
+  "resource",             "res",
+  "shipping",             "shp",
+  "partners",             "prt",
+  "partner",             "prt",
+  "associates",           "assoc",
+  "associate",           "assoc",
+  "groep",             "grp",
+  "generation",             "gen",
+  "investment",          "invest",
+  "financial",             "fin",
+  "spolka z ",           "sp z ",
+  "ograniczona odpowiedzialnoscia",              "oo",
+  "sp z oo",           "spzoo",
+  "sp z o o",           "spzoo",
+  "sanayi ve ticaret",  "sanayi ticaret",
+  "sanayi",             "san",
+  "ticaret",             "tic",
+  "sirketi",             "sti",
+  "san tic ltd sti",    "santicltdsti",
+  "san tic anonim sti", "santicanonimsti",
+  "1",             "one",
+  "2",             "two",
+  "3",           "three",
+  "4",            "four",
+  "5",            "five",
+  "6",             "six",
+  "7",           "seven",
+  "8",           "eight",
+  "9",            "nine",
+  "0",            "null"
+)
+
+test_that("get_replacements() is equal to its legacy in pacta", {
+  expect_equal(
+    setdiff(get_replacements()$from, pacta_data_name_reductions$From),
+    character(0)
+  )
+
+  expect_equal(
+    setdiff(pacta_data_name_reductions$From, get_replacements()$from),
+    character(0)
+  )
+
+  expect_equal(
+    setdiff(get_replacements()$to, pacta_data_name_reductions$To),
+    character(0)
+  )
+
+  expect_equal(
+    setdiff(pacta_data_name_reductions$To, get_replacements()$to),
+    character(0)
+  )
+})
+
+# pacta_data_ownership_types ----------------------------------------------
+# datapasta::dpasta(pacta_data_ownership_types)
+pacta_data_ownership_types <- c(
+  "dac",
+  "sas",
+  "asa",
+  "spa",
+  "pte",
+  "srl",
+  "ltd",
+  "plc",
+  "pcl",
+  "bsc",
+  "sarl",
+  "as",
+  "nv",
+  "bv",
+  "cv",
+  "pt",
+  "sa",
+  "se",
+  "lp",
+  "corp",
+  "co",
+  "llc",
+  "ag",
+  "ab",
+  "inc",
+  "hldgs",
+  "intl",
+  "govt",
+  "bhd",
+  "jsc",
+  "pjsc",
+  "gmbh",
+  "spzoo"
+)
+
+test_that("get_ownership_type() is equal to its legacy in pacta", {
+  expect_equal(
+    setdiff(get_ownership_type(), pacta_data_ownership_types),
+    character(0)
+  )
+})
+

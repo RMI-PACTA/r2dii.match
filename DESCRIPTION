@@ -52,11 +52,9 @@ Imports:
     tidyr
 Suggests: 
     covr,
-    pacta (>= 0.0.0.9000),
     r2dii.dataraw (>= 0.0.2.9000),
     testthat (>= 2.1.0)
 Remotes: 
-    2DegreesInvesting/pacta,
     2degreesinvesting/r2dii.dataraw,
     2degreesinvesting/r2dii.utils
 Encoding: UTF-8

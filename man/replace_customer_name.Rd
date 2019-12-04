@@ -44,7 +44,7 @@ so you can amend it and pass it to \code{replace_customer_name()} via the
 }
 }
 \examples{
-library(tibble)
+library(dplyr)
 
 replace_customer_name("A. and B")
 replace_customer_name("Acuity Brands Inc")

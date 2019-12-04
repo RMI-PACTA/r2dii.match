@@ -1,4 +1,4 @@
-library(tibble)
+library(dplyr)
 
 test_that("match_all_against_all outputs a tibble", {
   x <- tibble(sector = "A", simpler_name = "a")
