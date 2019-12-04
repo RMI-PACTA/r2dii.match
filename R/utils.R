@@ -26,9 +26,11 @@ check_crucial_names <- function(x, expected_names) {
     return(invisible(x))
   }
 
-  rlang::abort(glue::glue(
-    "The data must have all expected names:
-    Actual: {usethis::ui_field(sort(names(x)))}
-    Expected: {usethis::ui_field(sort(expected_names))}"
-  ))
+  abort(
+    glue(
+      "The data must have all expected names:
+      Actual: {usethis::ui_field(sort(names(x)))}
+      Expected: {usethis::ui_field(sort(expected_names))}"
+    )
+  )
 }
