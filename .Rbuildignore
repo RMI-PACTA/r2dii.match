@@ -6,3 +6,4 @@
 ^\.github/workflows$
 ^\.travis\.yml$
 ^vignettes/articles$
+^vignettes$
