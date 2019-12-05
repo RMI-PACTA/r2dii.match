@@ -30,22 +30,22 @@ devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
 
 ## Example
 
-As usual, we start by using required packages. For convenience we’ll
-also use the tidyverse.
+As usual, we start by using required packages. For general purpose
+functions we’ll also use dplyr.
 
 ``` r
 library(r2dii.match)
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
-library(tidyverse)
-#> -- Attaching packages ------------------------------------------------ tidyverse 1.3.0 --
-#> v ggplot2 3.2.1     v purrr   0.3.3
-#> v tibble  2.1.3     v dplyr   0.8.3
-#> v tidyr   1.0.0     v stringr 1.4.0
-#> v readr   1.3.1     v forcats 0.4.0
-#> -- Conflicts --------------------------------------------------- tidyverse_conflicts() --
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 ```
 
 We’ll use some fake datasets from the r2dii.dataraw package, which name

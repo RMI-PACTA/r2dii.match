@@ -35,12 +35,12 @@ devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
 
 ## Example
 
-As usual, we start by using required packages. For convenience we'll also use the tidyverse.
+As usual, we start by using required packages. For general purpose functions we'll also use dplyr.
 
 ```{r}
 library(r2dii.match)
 library(r2dii.dataraw)
-library(tidyverse)
+library(dplyr)
 ```
 
 We'll use some fake datasets from the r2dii.dataraw package, which name ends with `_demo`, for example:

@@ -9,12 +9,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-This example aims to show the entire matching process. As usual, we start by using required packages. For convenience we'll also use the tidyverse.
+This example aims to show the entire matching process. As usual, we start by using required packages. For convenience we'll also use dplyr.
 
 ```{r}
 library(r2dii.match)
 library(r2dii.dataraw)
-library(tidyverse)
+library(dplyr)
 ```
 
 We'll use some fake datasets from the r2dii.dataraw package, which name ends with `_demo`, for example:
