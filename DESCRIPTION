@@ -40,6 +40,8 @@ License: file LICENSE
 URL: https://github.com/2DegreesInvesting/r2dii.match
 BugReports: 
     https://github.com/2DegreesInvesting/r2dii.match/issues
+Depends: 
+    R (>= 3.5)
 Imports: 
     dplyr,
     ellipsis,
@@ -53,12 +55,12 @@ Imports:
 Suggests: 
     covr,
     r2dii.dataraw (>= 0.0.2.9000),
-    testthat (>= 2.1.0),
-    rmarkdown
+    rmarkdown,
+    testthat (>= 2.1.0)
 Remotes: 
     2degreesinvesting/r2dii.dataraw,
     2degreesinvesting/r2dii.utils
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
