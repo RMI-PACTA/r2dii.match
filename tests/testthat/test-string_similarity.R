@@ -48,8 +48,6 @@ test_that("string_similariry passes arguments to stringdist via `...`", {
 })
 
 test_that("string_similariry errors with misspelled argument passed to `...`", {
-  skip_if_not(grepl("3.6|3.5", R.version$version.string), "Errs on TravisCI")
-
   x <- y <- letters[1:10]
   weights <- seq(0.1, 0.3, by = 0.1)
 
@@ -67,8 +65,6 @@ test_that("string_similariry errors with misspelled argument passed to `...`", {
 })
 
 test_that("string_similariry errors with misspelled `method`", {
-  skip_if_not(grepl("3.6|3.5", R.version$version.string), "Errs on TravisCI")
-
   expect_error(string_similarity("a", "a", method = "jw"), NA)
   expect_error(
     string_similarity("a", "a", metod = "jw"),

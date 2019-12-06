@@ -138,8 +138,6 @@ test_that("match_all_agains_all passes arguments to stringdist::stringdist", {
 })
 
 test_that("match_all_against_all checks used dots", {
-  skip_if_not(grepl("3.6|3.5", R.version$version.string), "Errs on TravisCI")
-
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = "a")
 
