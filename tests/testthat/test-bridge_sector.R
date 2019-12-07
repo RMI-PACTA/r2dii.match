@@ -34,8 +34,8 @@ test_that("bridge_sector with wrong input errs gracefully", {
 
 test_that("bridge_sector adds two columns: `sector` and `borderline`", {
   input <- r2dii.dataraw::loanbook_demo
-  expect_false(hasName(input, "sector"))
-  expect_false(hasName(input, "borderline"))
+  expect_false(has_name(input, "sector"))
+  expect_false(has_name(input, "borderline"))
 
   output <- bridge_sector(input)
   new_columns <- sort(setdiff(names(output), names(input)))
