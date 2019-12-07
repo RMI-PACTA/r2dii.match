@@ -143,7 +143,6 @@ test_that("match_all_against_all checks used dots", {
 
   expect_error(
     match_all_against_all(x, y, bad_argument = "bad_argument"),
-    "problematic.*bad_argument",
     class = "rlib_error_dots_unused"
   )
 })

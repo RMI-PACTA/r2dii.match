@@ -59,7 +59,6 @@ test_that("string_similariry errors with misspelled argument passed to `...`", {
   # Misspelled weight as weig(th)
   expect_error(
     string_similarity(x, y, method = "jw", p = 0.1, weigth = weights),
-    "problematic.*weigth",
     class = "rlib_error_dots_unused"
   )
 })
@@ -68,7 +67,6 @@ test_that("string_similariry errors with misspelled `method`", {
   expect_error(string_similarity("a", "a", method = "jw"), NA)
   expect_error(
     string_similarity("a", "a", metod = "jw"),
-    "problematic.*metod",
     class = "rlib_error_dots_unused"
   )
 })
