@@ -138,15 +138,12 @@ test_that("match_all_agains_all passes arguments to stringdist::stringdist", {
 })
 
 test_that("match_all_against_all checks used dots", {
-  skip_if(grepl("3.7", R.version$version.string), "Errs on TravisCI")
-
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = "a")
 
-  expect_error(
-    match_all_against_all(x, y, bad_argument = "bad_argument"),
-    class = "rlib_error_dots_unused"
-  )
+  # Not checking `class` because it caused unexpected error on TravisCI when
+  # R version was other than release and oldrel
+  expect_error(match_all_against_all(x, y, bad_argument = "bad_argument"))
 })
 
 test_that("match_all_against_all w/ same `simpler_name` in 2 sectors and
