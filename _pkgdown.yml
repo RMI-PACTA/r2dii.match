@@ -29,3 +29,12 @@ navbar:
 
     - icon: fa-github
       href: https://github.com/2DegreesInvesting/r2dii.match
+
+reference:
+  - title: High level, user oriented functions
+    contents:
+      - has_concept("user-oriented")
+
+  - title: Low level, internal-ish functions
+    contents:
+      - has_concept("internal-ish")

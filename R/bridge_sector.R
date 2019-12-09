@@ -8,11 +8,12 @@
 #'
 #' @param data A loanbook dataframe.
 #'
-#' @family functions to prepare data for matching.
+#' @family internal-ish
 #'
 #' @return A loanbook dataframe with additional `sector` and `borderline`
 #'   columns.
 #' @export
+#'
 #'
 #' @examples
 #' # Must be attached

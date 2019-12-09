@@ -39,7 +39,7 @@ ald_demo \%>\%
 \seealso{
 \link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description}, \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.
 
-Other functions to prepare data for matching.: 
-\code{\link{bridge_sector}()}
+Other user-oriented: 
+\code{\link{match_all_against_all}()}
 }
-\concept{functions to prepare data for matching.}
+\concept{user-oriented}

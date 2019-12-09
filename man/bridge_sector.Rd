@@ -28,7 +28,9 @@ library(r2dii.dataraw)
 bridge_sector(r2dii.dataraw::loanbook_demo)
 }
 \seealso{
-Other functions to prepare data for matching.: 
-\code{\link{prepare_ald_for_matching}()}
+Other internal-ish: 
+\code{\link{id_by_loantaker_sector}()},
+\code{\link{replace_customer_name}()},
+\code{\link{string_similarity}()}
 }
-\concept{functions to prepare data for matching.}
+\concept{internal-ish}

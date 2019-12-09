@@ -23,4 +23,10 @@ id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
 \seealso{
 \link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description},
 \link[r2dii.dataraw:loanbook_demo]{r2dii.dataraw::loanbook_demo}.
+
+Other internal-ish: 
+\code{\link{bridge_sector}()},
+\code{\link{replace_customer_name}()},
+\code{\link{string_similarity}()}
 }
+\concept{internal-ish}

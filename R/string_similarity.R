@@ -13,6 +13,7 @@
 #' @inheritParams stringdist::stringdist
 #' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #'
+#' @family internal-ish
 #' @seealso [stringdist::stringsim], [stringdist::stringdist].
 #'
 #' @export

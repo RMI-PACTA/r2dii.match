@@ -62,4 +62,10 @@ string_similarity(c("fewer", "items", "get", "recycled"), "recycled")
 }
 \seealso{
 \link[stringdist:stringsim]{stringdist::stringsim}, \link[stringdist:stringdist]{stringdist::stringdist}.
+
+Other internal-ish: 
+\code{\link{bridge_sector}()},
+\code{\link{id_by_loantaker_sector}()},
+\code{\link{replace_customer_name}()}
 }
+\concept{internal-ish}

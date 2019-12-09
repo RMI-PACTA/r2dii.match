@@ -6,6 +6,7 @@
 #'
 #' @param data A loanbook dataframe.
 #'
+#' @family internal-ish
 #' @seealso [r2dii.dataraw::loanbook_description],
 #'   [r2dii.dataraw::loanbook_demo].
 #'
