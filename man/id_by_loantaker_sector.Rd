@@ -16,7 +16,8 @@ A loanbook dataframe with adjusted ids.
 Given a loanbook dataframe, this function overwrites columns
 \code{id_direct_loantaker} and \code{id_ultimate_parent} of a loanbook dataframe to
 generate values that are unique by every combination of the columns
-\code{name_direct_loantaker} and \code{sector_classification_direct_loantaker}.
+\code{name_ultimate_parent}, \code{name_direct_loantaker} and
+\code{sector_classification_direct_loantaker}.
 }
 \examples{
 id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
