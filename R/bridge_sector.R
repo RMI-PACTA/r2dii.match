@@ -43,6 +43,7 @@ bridge_sector <- function(data) {
     purrr::map(~ purrr::modify(.x, as.character)) %>%
     # Collapse the list of dataframes to a single, row-bind dataframe
     purrr::reduce(dplyr::bind_rows) %>%
+    purrr::modify_at("borderline", as.logical) %>%
     # Avoid duplicates
     unique() %>%
     # Reformat code_system

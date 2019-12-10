@@ -1,6 +1,11 @@
 # bridge_sector() needs r2dii.dataraw in the search() path
 library(r2dii.dataraw)
 
+test_that("bridge_sector()$borderline is of type logical", {
+  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+  expect_is(out$borderline, "logical")
+})
+
 test_that("bridge_sector outputs known output", {
   out <- bridge_sector(r2dii.dataraw::loanbook_demo)
   expect_known_output(out, "ref-bridge_sector", update = FALSE)
