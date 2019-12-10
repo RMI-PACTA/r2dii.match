@@ -3,7 +3,8 @@
 #' Given a loanbook dataframe, this function overwrites columns
 #' `id_direct_loantaker` and `id_ultimate_parent` of a loanbook dataframe to
 #' generate values that are unique by every combination of the columns
-#' `name_direct_loantaker` and `sector_classification_direct_loantaker`.
+#' `name_ultimate_parent`, `name_direct_loantaker` and
+#' `sector_classification_direct_loantaker`.
 #'
 #' @param data A loanbook dataframe.
 #'
@@ -17,30 +18,32 @@
 #' @examples
 #' id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
 id_by_loantaker_sector <- function(data) {
+  data %>%
+    overwrite_id_var_w_uniques(id_var = "id_direct_loantaker", prefix = "C") %>%
+    overwrite_id_var_w_uniques(id_var = "id_ultimate_parent", prefix = "UP")
+}
+
+overwrite_id_var_w_uniques <- function(data, id_var, prefix) {
   crucial <- c(
-    "name_direct_loantaker",
     "sector_classification_direct_loantaker",
-    "name_ultimate_parent",
-    "id_direct_loantaker",
-    "id_ultimate_parent"
+    get_name_var(id_var),
+    id_var
   )
   check_crucial_names(data, crucial)
 
-  data %>%
-    mutate(
-      id_direct_loantaker = dplyr::group_indices(
-        .,
-        .data$name_direct_loantaker,
-        .data$sector_classification_direct_loantaker
-      ),
-      id_ultimate_parent = dplyr::group_indices(
-        .,
-        .data$name_ultimate_parent,
-        .data$sector_classification_direct_loantaker
-      )
-    ) %>%
-    mutate(
-      id_direct_loantaker = paste0("C", .data$id_direct_loantaker),
-      id_ultimate_parent = paste0("UP", .data$id_ultimate_parent)
-    )
+  out <- data
+  out[id_var] <- paste0(prefix, id_var_group_indices(out, id_var))
+  out
+}
+
+get_name_var <- function(id_var) {
+  sub("^id_(.*)$", "name_\\1", id_var)
+}
+
+# Unique combination of `id_var` and `sector_classification_direct_loantaker`
+id_var_group_indices <- function(data, id_var) {
+  id_var <- rlang::sym(get_name_var(id_var))
+  dplyr::group_indices(
+    data, !! id_var, .data$sector_classification_direct_loantaker
+  )
 }

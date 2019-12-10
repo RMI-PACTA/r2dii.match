@@ -2,13 +2,13 @@ test_that("id_by_loantaker_sector prints its output (fix not returned result)", 
   # https://github.com/2DegreesInvesting/r2dii.match/pull/
   # 6#pullrequestreview-301599396
   out <- capture.output(
-    id_by_loantaker_sector(id_by_loantaker_sector(r2dii.dataraw::loanbook_demo))
+    id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
   )
   expect_false(identical(out, character(0)))
 })
 
 test_that("id_by_loantaker_sector returns a tibble dataframe", {
-  out <- id_by_loantaker_sector(id_by_loantaker_sector(r2dii.dataraw::loanbook_demo))
+  out <- id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
   expect_is(out, "tbl_df")
 })
 
