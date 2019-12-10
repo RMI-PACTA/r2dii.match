@@ -19,6 +19,8 @@
 #' @param remove_ownership Flag that defines whether ownership type (like llc)
 #'   should be cut-off.
 #'
+#' @family internal-ish
+#'
 #' @export
 #' @return
 #' * `replace_customer_name()` returns a character string.

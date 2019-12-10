@@ -1,11 +1,13 @@
-#' In loanbook data, identify unique combinations of "loan-takers + sector"
+#' Overwrite `id_direct_loantaker` and `id_ultimate_parent` with unique values
 #'
-#' This function generates identifiers for `id_direct_loantaker` and
-#' `id_ultimate_parent` that are unique by every combination of the columns
+#' Given a loanbook dataframe, this function overwrites columns
+#' `id_direct_loantaker` and `id_ultimate_parent` of a loanbook dataframe to
+#' generate values that are unique by every combination of the columns
 #' `name_direct_loantaker` and `sector_classification_direct_loantaker`.
 #'
 #' @param data A loanbook dataframe.
 #'
+#' @family internal-ish
 #' @seealso [r2dii.dataraw::loanbook_description],
 #'   [r2dii.dataraw::loanbook_demo].
 #'

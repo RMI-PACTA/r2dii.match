@@ -1,18 +1,20 @@
-#' Bridge classification between portfolio's system and 2dii's standard
+#' Add the column `sector` (as classified by 2dii) and `borderline`
 #'
-#' This function adds two columns, `sector` and `borderline` to the input
-#' portfolio, corresponding to the bridged sector classification.
+#' This function adds two columns, `sector` and `borderline`:
+#' * `sector`: gives the sector as classified by 2dii.
+#' * `borderline`: Indicates if the classification is borderline or not.
 #'
 #' The r2dii.dataraw package must be attached (i.e. run `library(r2dii.dataraw)`
 #' before you call `bridge_sector()`).
 #'
 #' @param data A loanbook dataframe.
 #'
-#' @family functions to prepare data for matching.
+#' @family internal-ish
 #'
 #' @return A loanbook dataframe with additional `sector` and `borderline`
 #'   columns.
 #' @export
+#'
 #'
 #' @examples
 #' # Must be attached
@@ -33,7 +35,6 @@ bridge_sector <- function(data) {
     purrr::imap(~ dplyr::mutate(.x, code_system = toupper(.y))) %>%
     purrr::map(~ dplyr::select(
       .,
-      # Documented  in @return (by @jdhoffa)
       .data$sector, .data$borderline,
       # Required in `by` below
       .data$code, .data$code_system

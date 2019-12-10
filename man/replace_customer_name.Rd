@@ -74,8 +74,15 @@ append_replacements
 # And in combination with `replace_customer_name()`
 replace_customer_name(c("AA", "BB", "1"), from_to = append_replacements)
 }
+\seealso{
+Other internal-ish: 
+\code{\link{bridge_sector}()},
+\code{\link{id_by_loantaker_sector}()},
+\code{\link{string_similarity}()}
+}
 \author{
 person(given = "Evgeny",
 family = "Petrovsky",
 role = c("aut", "ctr"))
 }
+\concept{internal-ish}

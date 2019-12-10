@@ -8,12 +8,13 @@
 #'   particular direct loantaker or ultimate parent. If only name (sector)
 #'   should be overwritten leave sector (name) as `NA`.
 #'
-#' @family functions to prepare data for matching.
+#' @family user-oriented
 #' @seealso [r2dii.dataraw::loanbook_description], [r2dii.dataraw::ald_demo].
 #'
 #' @return A dataframe of all unique name + sector combinations, including all
 #'   IDs, and with elements already manually overwritten.
 #' @export
+#'
 #'
 #' @examples
 #' library(r2dii.dataraw)

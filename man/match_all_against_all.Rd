@@ -51,3 +51,8 @@ left_join(out, x, by = c("simpler_name_x" = "simpler_name")) \%>\%
   left_join(y, by = c("simpler_name_y" = "simpler_name")) \%>\%
   dplyr::rename(sector_y = sector)
 }
+\seealso{
+Other user-oriented: 
+\code{\link{prepare_ald_for_matching}()}
+}
+\concept{user-oriented}

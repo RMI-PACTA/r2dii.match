@@ -2,7 +2,7 @@
 % Please edit documentation in R/id_by_loantaker_sector.R
 \name{id_by_loantaker_sector}
 \alias{id_by_loantaker_sector}
-\title{In loanbook data, identify unique combinations of "loan-takers + sector"}
+\title{Overwrite \code{id_direct_loantaker} and \code{id_ultimate_parent} with unique values}
 \usage{
 id_by_loantaker_sector(data)
 }
@@ -13,8 +13,9 @@ id_by_loantaker_sector(data)
 A loanbook dataframe with adjusted ids.
 }
 \description{
-This function generates identifiers for \code{id_direct_loantaker} and
-\code{id_ultimate_parent} that are unique by every combination of the columns
+Given a loanbook dataframe, this function overwrites columns
+\code{id_direct_loantaker} and \code{id_ultimate_parent} of a loanbook dataframe to
+generate values that are unique by every combination of the columns
 \code{name_direct_loantaker} and \code{sector_classification_direct_loantaker}.
 }
 \examples{
@@ -23,4 +24,10 @@ id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
 \seealso{
 \link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description},
 \link[r2dii.dataraw:loanbook_demo]{r2dii.dataraw::loanbook_demo}.
+
+Other internal-ish: 
+\code{\link{bridge_sector}()},
+\code{\link{replace_customer_name}()},
+\code{\link{string_similarity}()}
 }
+\concept{internal-ish}

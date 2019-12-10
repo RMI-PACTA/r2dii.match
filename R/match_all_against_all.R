@@ -8,6 +8,8 @@
 #' @param by_sector Should the combinations be done by sector?
 #' @inheritParams stringdist::stringdist
 #'
+#' @family user-oriented
+#'
 #' @return A [dplyr::tibble].
 #' @export
 #'
