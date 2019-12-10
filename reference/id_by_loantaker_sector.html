@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>In loanbook data, identify unique combinations of "loan-takers + sector" — id_by_loantaker_sector • r2dii.match</title>
+<title>Overwrite <code>id_direct_loantaker</code> and <code>id_ultimate_parent</code> with unique values — id_by_loantaker_sector • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,10 @@
 
 
 
-<meta property="og:title" content="In loanbook data, identify unique combinations of "loan-takers + sector" — id_by_loantaker_sector" />
-<meta property="og:description" content="This function generates identifiers for id_direct_loantaker and
-id_ultimate_parent that are unique by every combination of the columns
+<meta property="og:title" content="Overwrite <code>id_direct_loantaker</code> and <code>id_ultimate_parent</code> with unique values — id_by_loantaker_sector" />
+<meta property="og:description" content="Given a loanbook dataframe, this function overwrites columns
+id_direct_loantaker and id_ultimate_parent of a loanbook dataframe to
+generate values that are unique by every combination of the columns
 name_direct_loantaker and sector_classification_direct_loantaker." />
 <meta name="twitter:card" content="summary" />
 
@@ -116,14 +117,15 @@ name_direct_loantaker and sector_classification_direct_loantaker." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>In loanbook data, identify unique combinations of "loan-takers + sector"</h1>
+    <h1>Overwrite <code>id_direct_loantaker</code> and <code>id_ultimate_parent</code> with unique values</h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/id_by_loantaker_sector.R'><code>R/id_by_loantaker_sector.R</code></a></small>
     <div class="hidden name"><code>id_by_loantaker_sector.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function generates identifiers for <code>id_direct_loantaker</code> and
-<code>id_ultimate_parent</code> that are unique by every combination of the columns
+    <p>Given a loanbook dataframe, this function overwrites columns
+<code>id_direct_loantaker</code> and <code>id_ultimate_parent</code> of a loanbook dataframe to
+generate values that are unique by every combination of the columns
 <code>name_direct_loantaker</code> and <code>sector_classification_direct_loantaker</code>.</p>
     </div>
 
@@ -144,7 +146,11 @@ name_direct_loantaker and sector_classification_direct_loantaker." />
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_description.html'>r2dii.dataraw::loanbook_description</a>,
-<a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>r2dii.dataraw::loanbook_demo</a>.</p></div>
+<a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>r2dii.dataraw::loanbook_demo</a>.</p>
+<p>Other internal-ish: 
+<code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
+<code><a href='replace_customer_name.html'>replace_customer_name</a>()</code>,
+<code><a href='string_similarity.html'>string_similarity</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>id_by_loantaker_sector</span>(<span class='kw pkg'>r2dii.dataraw</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>loanbook_demo</a></span>)</div><div class='output co'>#&gt; # A tibble: 320 x 19

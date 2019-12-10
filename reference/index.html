@@ -126,23 +126,11 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-high-level-user-oriented-functions" class="hasAnchor"><a href="#section-high-level-user-oriented-functions" class="anchor"></a>High level, user oriented functions</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
-        
-        <td>
-          <p><code><a href="bridge_sector.html">bridge_sector()</a></code> </p>
-        </td>
-        <td><p>Bridge classification between portfolio's system and 2dii's standard</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="id_by_loantaker_sector.html">id_by_loantaker_sector()</a></code> </p>
-        </td>
-        <td><p>In loanbook data, identify unique combinations of "loan-takers + sector"</p></td>
-      </tr><tr>
         
         <td>
           <p><code><a href="match_all_against_all.html">match_all_against_all()</a></code> </p>
@@ -154,6 +142,26 @@
           <p><code><a href="prepare_ald_for_matching.html">prepare_ald_for_matching()</a></code> <code><a href="prepare_ald_for_matching.html">prepare_loanbook_for_matching()</a></code> </p>
         </td>
         <td><p>Prepare loanbook and asset level data (ald) for matching</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-low-level-internal-ish-functions" class="hasAnchor"><a href="#section-low-level-internal-ish-functions" class="anchor"></a>Low level, internal-ish functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="bridge_sector.html">bridge_sector()</a></code> </p>
+        </td>
+        <td><p>Add the column <code>sector</code> (as classified by 2dii) and <code>borderline</code></p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="id_by_loantaker_sector.html">id_by_loantaker_sector()</a></code> </p>
+        </td>
+        <td><p>Overwrite <code>id_direct_loantaker</code> and <code>id_ultimate_parent</code> with unique values</p></td>
       </tr><tr>
         
         <td>
@@ -174,7 +182,8 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-high-level-user-oriented-functions">High level, user oriented functions</a></li>
+      <li><a href="#section-low-level-internal-ish-functions">Low level, internal-ish functions</a></li>
     </ul>
   </div>
 </div>

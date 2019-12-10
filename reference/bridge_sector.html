@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bridge classification between portfolio's system and 2dii's standard — bridge_sector • r2dii.match</title>
+<title>Add the column <code>sector</code> (as classified by 2dii) and <code>borderline</code> — bridge_sector • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,12 @@
 
 
 
-<meta property="og:title" content="Bridge classification between portfolio's system and 2dii's standard — bridge_sector" />
-<meta property="og:description" content="This function adds two columns, sector and borderline to the input
-portfolio, corresponding to the bridged sector classification." />
+<meta property="og:title" content="Add the column <code>sector</code> (as classified by 2dii) and <code>borderline</code> — bridge_sector" />
+<meta property="og:description" content="This function adds two columns, sector and borderline:
+sector: gives the sector as classified by 2dii.
+borderline: Indicates if the classification is borderline or not.
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,14 +118,17 @@ portfolio, corresponding to the bridged sector classification." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Bridge classification between portfolio's system and 2dii's standard</h1>
+    <h1>Add the column <code>sector</code> (as classified by 2dii) and <code>borderline</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/bridge_sector.R'><code>R/bridge_sector.R</code></a></small>
     <div class="hidden name"><code>bridge_sector.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function adds two columns, <code>sector</code> and <code>borderline</code> to the input
-portfolio, corresponding to the bridged sector classification.</p>
+    <p>This function adds two columns, <code>sector</code> and <code>borderline</code>:</p><ul>
+<li><p><code>sector</code>: gives the sector as classified by 2dii.</p></li>
+<li><p><code>borderline</code>: Indicates if the classification is borderline or not.</p></li>
+</ul>
+
     </div>
 
     <pre class="usage"><span class='fu'>bridge_sector</span>(<span class='no'>data</span>)</pre>
@@ -146,8 +152,10 @@ columns.</p>
 before you call <code>bridge_sector()</code>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other functions to prepare data for matching.: 
-<code><a href='prepare_ald_for_matching.html'>prepare_ald_for_matching</a>()</code></p></div>
+    <div class='dont-index'><p>Other internal-ish: 
+<code><a href='id_by_loantaker_sector.html'>id_by_loantaker_sector</a>()</code>,
+<code><a href='replace_customer_name.html'>replace_customer_name</a>()</code>,
+<code><a href='string_similarity.html'>string_similarity</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Must be attached</span>
