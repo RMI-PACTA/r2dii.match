@@ -2,7 +2,7 @@
 % Please edit documentation in R/bridge_sector.R
 \name{bridge_sector}
 \alias{bridge_sector}
-\title{Bridge classification between portfolio's system and 2dii's standard}
+\title{Add the column \code{sector} (as classified by 2dii) and \code{borderline}}
 \usage{
 bridge_sector(data)
 }
@@ -14,8 +14,11 @@ A loanbook dataframe with additional \code{sector} and \code{borderline}
 columns.
 }
 \description{
-This function adds two columns, \code{sector} and \code{borderline} to the input
-portfolio, corresponding to the bridged sector classification.
+This function adds two columns, \code{sector} and \code{borderline}:
+\itemize{
+\item \code{sector}: gives the sector as classified by 2dii.
+\item \code{borderline}: Indicates if the classification is borderline or not.
+}
 }
 \details{
 The r2dii.dataraw package must be attached (i.e. run \code{library(r2dii.dataraw)}
