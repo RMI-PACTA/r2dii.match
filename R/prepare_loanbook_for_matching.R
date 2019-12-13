@@ -55,8 +55,8 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_data(data)
 
   data %>%
-    overwrite_id_var_w_uniques(id_var = "id_direct_loantaker", prefix = "C") %>%
-    overwrite_id_var_w_uniques(id_var = "id_ultimate_parent", prefix = "UP") %>%
+    uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
+    uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
 
     may_add_sector_and_borderline() %>%
     select(input_cols_for_prepare_loanbook(), .data$sector) %>%

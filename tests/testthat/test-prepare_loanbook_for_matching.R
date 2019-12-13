@@ -12,10 +12,15 @@ test_that("prepare_loanbook_for_matching warns overwriting id_ vars", {
   )
 })
 
-test_that("prepare_loanbook_for_matching may input id_by_loantaker_sector(.)", {
+test_that("prepare_loanbook_for_matching cals uniquify_id_column()", {
   expect_equal(
     prepare_loanbook_for_matching(loanbook_demo),
-    prepare_loanbook_for_matching(id_by_loantaker_sector(loanbook_demo))
+    {
+      loanbook_demo %>%
+        uniquify_id_column(id_column = "id_direct_loantaker", prefix = "UP") %>%
+        uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
+        prepare_loanbook_for_matching()
+    }
   )
 })
 
