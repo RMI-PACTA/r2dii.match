@@ -31,7 +31,7 @@ prepare_ald_for_matching <- function(data) {
   data %>%
     check_crucial_names(c("name_company", "sector")) %>%
     select(name = .data$name_company, .data$sector) %>%
-    dplyr::distinct() %>%
+    distinct() %>%
     add_simpler_name()
 }
 
