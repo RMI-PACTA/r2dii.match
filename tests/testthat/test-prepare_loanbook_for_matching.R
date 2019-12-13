@@ -1,5 +1,16 @@
 library(r2dii.dataraw)
 
+test_that("prepare_loanbook_for_matching doesn't drop columns", {
+  setdiff(
+    names(loanbook_demo),
+    names(prepare_loanbook_for_matching(loanbook_demo))
+  )
+  setdiff(
+    names(prepare_loanbook_for_matching(loanbook_demo)),
+    names(loanbook_demo)
+  )
+})
+
 test_that("prepare_loanbook_for_matching may input bridge_sector(data)", {
   expect_warning(
     prepare_loanbook_for_matching(bridge_sector(loanbook_demo)),
