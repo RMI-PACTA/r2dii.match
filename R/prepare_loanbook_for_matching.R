@@ -1,20 +1,46 @@
-#' Prepare loanbook and asset level data (ald) for matching
+#' Prepares asset-level data (ald) for the fuzzy matching process
 #'
-#' These functions take all unique `name` + `sector` combinations of a loanbook
-#' or asset level data, preparing it for the fuzzy matching process.
+#' This function prepares asset-level data (ald) for the fuzzy matching process.
 #'
-#' @param data A dataframe. Should be a loanbook or asset level dataset.
-#' @param overwrite A dataframe used to overwrite the sector and/or name of a
-#'   particular direct loantaker or ultimate parent. If only name (sector)
-#'   should be overwritten leave sector (name) as `NA`.
+#' @param data A dataframe. Should be an asset-level dataset.
 #'
 #' @family user-oriented
-#' @seealso [r2dii.dataraw::loanbook_description], [r2dii.dataraw::ald_demo].
+#' @seealso [r2dii.dataraw::ald_demo].
 #'
-#' @return A dataframe of all unique name + sector combinations, including all
-#'   IDs, and with elements already manually overwritten.
+#' @return A dataframe with unique combinations of `name` + `sector`, including
+#'   all IDs, and with elements already manually overwritten.
+#'
 #' @export
 #'
+#' @examples
+#' library(r2dii.dataraw)
+#'
+#' ald_demo %>%
+#'   prepare_ald_for_matching()
+prepare_ald_for_matching <- function(data) {
+  data %>%
+    check_crucial_names(c("name_company", "sector")) %>%
+    select(name = .data$name_company, .data$sector) %>%
+    distinct() %>%
+    add_simpler_name()
+}
+
+#' Prepare a loanbook dataset for the fuzzy matching process
+#'
+#' This function prepares a loanbook dataset for the fuzzy matching process.
+#'
+#' @param data A dataframe. Should be a loanbook.
+#' @param overwrite A dataframe used to overwrite the `sector` and/or `name`
+#'   columns of a particular direct loantaker or ultimate parent. To overwrite
+#'   only `sector`, the value in the `name` column should be `NA`.
+#'
+#' @family user-oriented
+#' @seealso [r2dii.dataraw::loanbook_description]
+#'
+#' @return A dataframe with unique combinations of `name` + `sector`, including
+#'   all IDs, and with elements already manually overwritten.
+#'
+#' @export
 #'
 #' @examples
 #' library(r2dii.dataraw)
@@ -24,38 +50,60 @@
 #'
 #' loanbook_demo %>%
 #'   prepare_loanbook_for_matching(overwrite = overwrite_demo)
-#'
-#' ald_demo %>%
-#'   prepare_ald_for_matching()
-prepare_ald_for_matching <- function(data) {
+prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
+  check_prepare_loanbook_overwrite(overwrite)
+  check_prepare_loanbook_data(data)
+
+  warning(
+    "Uniquifying `id_direct_loantaker` & `id_ultimate_parent`.",
+    call. = FALSE
+  )
   data %>%
-    check_crucial_names(c("name_company", "sector")) %>%
-    select(name = .data$name_company, .data$sector) %>%
-    dplyr::distinct() %>%
+    uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
+    uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
+
+    may_add_sector_and_borderline() %>%
+    select(input_cols_for_prepare_loanbook(), .data$sector) %>%
+    identify_loans_by_sector_and_level() %>%
+    identify_loans_by_name_and_source() %>%
+    select(output_cols_for_prepare_loanbook()) %>%
+    distinct() %>%
+    may_overwrite_name_and_sector(overwrite = overwrite) %>%
     add_simpler_name()
 }
 
-#' @rdname prepare_ald_for_matching
-#' @export
-prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
-  # Before potentially expensive computation
-  check_prepare_loanbook_overwrite(overwrite)
+may_add_sector_and_borderline <- function(data) {
+  if (already_has_sector_and_borderline(data)) {
+    warning("Using existing columns `sector` and `borderline`.", call. = FALSE)
+    data2 <- data
+  } else {
+    message("Adding new columns `sector` and `borderline`.")
+    data2 <- bridge_sector(data)
+  }
+}
 
-  out <- data %>%
-    check_prepare_loanbook_data() %>%
-    bridge_sector() %>%
-    select(get_prepare_loanbook_input_columns(), .data$sector) %>%
-    identify_loans_by_sector_and_level() %>%
-    identify_loans_by_name_and_source() %>%
-    select(get_prepare_loanbook_output_columns()) %>%
-    dplyr::distinct()
-
+may_overwrite_name_and_sector <- function(out, overwrite) {
   if (!is.null(overwrite)) {
     out <- out %>%
-      overwrite_name_sector(overwrite = overwrite)
+      overwrite_name_and_sector(overwrite = overwrite)
   }
 
-  add_simpler_name(out)
+  out
+}
+
+overwrite_name_and_sector <- function(data, overwrite) {
+  data %>%
+    dplyr::left_join(overwrite, by = c("id", "level")) %>%
+    mutate(
+      source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
+      sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
+      name = if_else(is.na(.data$name.y), .data$name.x, .data$name.y)
+    ) %>%
+    select(names(data))
+}
+
+already_has_sector_and_borderline <- function(data) {
+  has_name(data, "sector") & has_name(data, "borderline")
 }
 
 add_simpler_name <- function(data) {
@@ -64,11 +112,11 @@ add_simpler_name <- function(data) {
 
 check_prepare_loanbook_data <- function(data) {
   stopifnot(is.data.frame(data))
-  check_crucial_names(data, get_prepare_loanbook_input_columns())
+  check_crucial_names(data, input_cols_for_prepare_loanbook())
   invisible(data)
 }
 
-get_prepare_loanbook_input_columns <- function() {
+input_cols_for_prepare_loanbook <- function() {
   c(
     "id_direct_loantaker",
     "name_direct_loantaker",
@@ -83,12 +131,12 @@ check_prepare_loanbook_overwrite <- function(overwrite) {
   }
 
   stopifnot(is.data.frame(overwrite))
-  check_crucial_names(overwrite, get_prepare_loanbook_output_columns())
+  check_crucial_names(overwrite, output_cols_for_prepare_loanbook())
 
   invisible(overwrite)
 }
 
-get_prepare_loanbook_output_columns <- function() {
+output_cols_for_prepare_loanbook <- function() {
   c(
     "level",
     "id",
@@ -123,15 +171,4 @@ identify_loans_by_name_and_source <- function(data) {
       ),
       source = "loanbook"
     )
-}
-
-overwrite_name_sector <- function(data, overwrite) {
-  data %>%
-    dplyr::left_join(overwrite, by = c("id", "level")) %>%
-    mutate(
-      source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
-      sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
-      name = if_else(is.na(.data$name.y), .data$name.x, .data$name.y)
-    ) %>%
-    select(names(data))
 }

@@ -53,6 +53,7 @@ left_join(out, x, by = c("simpler_name_x" = "simpler_name")) \%>\%
 }
 \seealso{
 Other user-oriented: 
-\code{\link{prepare_ald_for_matching}()}
+\code{\link{prepare_ald_for_matching}()},
+\code{\link{prepare_loanbook_for_matching}()}
 }
 \concept{user-oriented}

@@ -7,6 +7,8 @@
 #' `sector_classification_direct_loantaker`.
 #'
 #' @param data A loanbook dataframe.
+#' @param id_column A String giving the name of an `id_` column.
+#' @param prefix A string giving a prefix for the values of the `id_column`.
 #'
 #' @family internal-ish
 #' @seealso [r2dii.dataraw::loanbook_description],
@@ -16,23 +18,21 @@
 #' @export
 #'
 #' @examples
-#' id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
-id_by_loantaker_sector <- function(data) {
-  data %>%
-    overwrite_id_var_w_uniques(id_var = "id_direct_loantaker", prefix = "C") %>%
-    overwrite_id_var_w_uniques(id_var = "id_ultimate_parent", prefix = "UP")
-}
-
-overwrite_id_var_w_uniques <- function(data, id_var, prefix) {
+#' r2dii.dataraw::loanbook_demo %>%
+#'   uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C")
+#'
+#' r2dii.dataraw::loanbook_demo %>%
+#'   uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP")
+uniquify_id_column <- function(data, id_column, prefix) {
   crucial <- c(
     "sector_classification_direct_loantaker",
-    get_name_var(id_var),
-    id_var
+    get_name_var(id_column),
+    id_column
   )
   check_crucial_names(data, crucial)
 
   out <- data
-  out[id_var] <- paste0(prefix, id_var_group_indices(out, id_var))
+  out[id_column] <- paste0(prefix, id_var_group_indices(out, id_column))
   out
 }
 

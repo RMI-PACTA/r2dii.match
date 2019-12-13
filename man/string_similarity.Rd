@@ -65,7 +65,7 @@ string_similarity(c("fewer", "items", "get", "recycled"), "recycled")
 
 Other internal-ish: 
 \code{\link{bridge_sector}()},
-\code{\link{id_by_loantaker_sector}()},
-\code{\link{replace_customer_name}()}
+\code{\link{replace_customer_name}()},
+\code{\link{uniquify_id_column}()}
 }
 \concept{internal-ish}

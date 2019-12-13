@@ -46,7 +46,10 @@ In case the loanbook has non-unique IDs, can generate name+sector specific IDs
 
 ```{r}
 loanbook_demo %>%
-  id_by_loantaker_sector()
+ uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C")
+
+loanbook_demo %>%
+ uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP")
 ```
 
 Before we run the fuzzy matching algorithm, we simplify the loanbook and ald names using:
@@ -77,7 +80,6 @@ The following function takes a loanbook with non-corrupt IDs and outputs a list 
 
 ```{r}
 prep_loanbook <- loanbook_demo %>%
-  id_by_loantaker_sector() %>%
   prepare_loanbook_for_matching()
 
 prep_loanbook
@@ -99,7 +101,6 @@ overwrite_demo <- r2dii.dataraw::overwrite_demo
 overwrite_demo
 
 prep_loanbook <- loanbook_demo %>%
-  id_by_loantaker_sector() %>%
   prepare_loanbook_for_matching(overwrite = overwrite_demo)
 
 prep_loanbook
