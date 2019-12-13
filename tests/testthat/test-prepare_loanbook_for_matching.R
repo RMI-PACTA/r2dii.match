@@ -1,5 +1,17 @@
 library(r2dii.dataraw)
 
+test_that("prepare_loanbook_for_matching warns overwriting id_ vars", {
+  expect_warning(
+    prepare_loanbook_for_matching(loanbook_demo),
+    "Overwritting.*id_direct_loantaker"
+  )
+
+  expect_warning(
+    prepare_loanbook_for_matching(loanbook_demo),
+    "Overwritting.*id_ultimate_parent"
+  )
+})
+
 test_that("prepare_loanbook_for_matching may input id_by_loantaker_sector(.)", {
   expect_equal(
     prepare_loanbook_for_matching(loanbook_demo),

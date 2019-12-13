@@ -1,3 +1,29 @@
+library(r2dii.dataraw)
+
+test_that("id_by_loantaker_sector overwrites id_ultimate_parent", {
+  lbk <- loanbook_demo
+  lbk$id_ultimate_parent <- "bla"
+
+  expect_false(
+    identical(
+      id_by_loantaker_sector(lbk)$id_ultimate_parent,
+      lbk$id_ultimate_parent
+    )
+  )
+})
+
+test_that("id_by_loantaker_sector overwrites id_direct_loantaker", {
+  lbk <- loanbook_demo
+  lbk$id_ultimate_parent <- "bla"
+
+  expect_false(
+    identical(
+      id_by_loantaker_sector(lbk)$id_direct_loantaker,
+      lbk$id_direct_loantaker
+    )
+  )
+})
+
 test_that("id_by_loantaker_sector prints its output (fix not returned result)", {
   # https://github.com/2DegreesInvesting/r2dii.match/pull/
   # 6#pullrequestreview-301599396

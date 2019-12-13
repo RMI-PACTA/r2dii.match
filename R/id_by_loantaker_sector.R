@@ -19,11 +19,15 @@
 #' id_by_loantaker_sector(r2dii.dataraw::loanbook_demo)
 id_by_loantaker_sector <- function(data) {
   data %>%
-    overwrite_id_var_w_uniques(id_var = "id_direct_loantaker", prefix = "C") %>%
-    overwrite_id_var_w_uniques(id_var = "id_ultimate_parent", prefix = "UP")
+    overwrite_id_var_w_uniques(id_var = "id_ultimate_parent", prefix = "UP") %>%
+    overwrite_id_var_w_uniques(id_var = "id_direct_loantaker", prefix = "C")
 }
 
 overwrite_id_var_w_uniques <- function(data, id_var, prefix) {
+  warning(
+    "Overwritting `", id_var, "`.", call. = FALSE
+  )
+
   crucial <- c(
     "sector_classification_direct_loantaker",
     get_name_var(id_var),
