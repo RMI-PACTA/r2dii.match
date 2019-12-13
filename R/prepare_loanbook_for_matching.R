@@ -56,6 +56,7 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
 
   data %>%
     may_add_sector_and_borderline() %>%
+    id_by_loantaker_sector() %>%
     select(input_cols_for_prepare_loanbook(), .data$sector) %>%
     identify_loans_by_sector_and_level() %>%
     identify_loans_by_name_and_source() %>%

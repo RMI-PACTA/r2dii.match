@@ -1,5 +1,12 @@
 library(r2dii.dataraw)
 
+test_that("prepare_loanbook_for_matching may input id_by_loantaker_sector(.)", {
+  expect_equal(
+    prepare_loanbook_for_matching(loanbook_demo),
+    prepare_loanbook_for_matching(id_by_loantaker_sector(loanbook_demo))
+  )
+})
+
 test_that("prepare_loanbook_for_matching doesn't drop columns", {
   setdiff(
     names(loanbook_demo),
