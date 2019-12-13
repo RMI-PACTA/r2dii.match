@@ -46,8 +46,9 @@ library(dplyr)
 #>     intersect, setdiff, setequal, union
 ```
 
-We’ll use some fake datasets from the r2dii.dataraw package, which name
-ends with `_demo`, for example:
+Before matching, you must first prepare both a loanbook and asset-level
+dataset, structured just like the example datasets `loanbook_demo` and
+`ald_demo`.
 
 ``` r
 loanbook_demo
@@ -72,24 +73,110 @@ loanbook_demo
 #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
 #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>
+
+ald_demo
+#> # A tibble: 17,368 x 13
+#>    name_company sector technology production_unit  year production
+#>    <chr>        <chr>  <chr>      <chr>           <dbl>      <dbl>
+#>  1 aba hydropo… power  hydrocap   MW               2013    133340.
+#>  2 aba hydropo… power  hydrocap   MW               2014    131582.
+#>  3 aba hydropo… power  hydrocap   MW               2015    129824.
+#>  4 aba hydropo… power  hydrocap   MW               2016    128065.
+#>  5 aba hydropo… power  hydrocap   MW               2017    126307.
+#>  6 aba hydropo… power  hydrocap   MW               2018    124549.
+#>  7 aba hydropo… power  hydrocap   MW               2019    122790.
+#>  8 aba hydropo… power  hydrocap   MW               2020    121032.
+#>  9 aba hydropo… power  hydrocap   MW               2021    119274.
+#> 10 aba hydropo… power  hydrocap   MW               2022    117515.
+#> # … with 17,358 more rows, and 7 more variables: emission_factor <dbl>,
+#> #   country_of_domicile <chr>, plant_location <chr>, number_of_assets <dbl>,
+#> #   is_ultimate_owner <lgl>, is_ultimate_listed_owner <lgl>,
+#> #   ald_timestamp <chr>
 ```
 
-Before matching, both the loanbook and asset level data must be
-prepared.
+You may write our example datasets into a .csv file and use them as a
+template to prepare your own data.
 
 ``` r
-loanbook <- prepare_loanbook_for_matching(loanbook_demo)
+loanbook_demo %>% 
+  readr::write_csv(path = "loanbook_template.csv")
+
+ald_demo %>% 
+  readr::write_csv(path = "ald_template.csv")
+```
+
+If you edit *loanbook\_template.csv* and *ald\_template.csv*, and save
+them into the files *your\_loanbook.csv* and *your\_ald.csv*, you can
+then read them back into R with:
+
+``` r
+your_loanbook <- readr::read_csv("your_loanbook.csv")
+your_ald <- readr::read_csv("your_ald.csv")
+```
+
+Here we’ll continue to work with the `_demo` datasets.
+
+`prepare_loanbook_for_matching()` does a lot of things. For example, it
+adds the column `simpler_name`, a modified version of the `name` column
+after applying best practices commonly used in name matching algorithms,
+such as:
+
+  - Remove special characters.
+  - Replace language specific characters.
+  - Abbreviate certain names to reduce their importance in the matching.
+  - Spell out numbers to increase their importance.
+
+<!-- end list -->
+
+``` r
+loanbook <- loanbook_demo %>% 
+  prepare_loanbook_for_matching() %>% 
+  # `simpler_name` and `name` move to the left, for clarity
+  select(simpler_name, name, everything())
 #> Warning: Overwritting `id_direct_loantaker`.
 #> Warning: Overwritting `id_ultimate_parent`.
 #> Adding new columns `sector` and `borderline`.
-asset_level_data <- prepare_ald_for_matching(ald_demo)
+loanbook
+#> # A tibble: 638 x 6
+#>    simpler_name          name                     level      id    sector source
+#>    <chr>                 <chr>                    <chr>      <chr> <chr>  <chr> 
+#>  1 yuamenxinnengthermal… Yuamen Xinneng Thermal … direct_lo… C294  power  loanb…
+#>  2 alpineknitsindiapvt … Alpine Knits India Pvt.… ultimate_… UP15  power  loanb…
+#>  3 yuamenchangyuanhydro… Yuamen Changyuan Hydrop… direct_lo… C293  power  loanb…
+#>  4 ecowavepower          Eco Wave Power           ultimate_… UP84  power  loanb…
+#>  5 yuamaethanol llc      Yuama Ethanol Llc        direct_lo… C292  power  loanb…
+#>  6 universityofiowa      University Of Iowa       ultimate_… UP288 power  loanb…
+#>  7 yudakselhldgs as      Yudaksel Holding A.S     direct_lo… C299  power  loanb…
+#>  8 chinaelectricpowerfu… China Electric Power (F… ultimate_… UP54  power  loanb…
+#>  9 yukonenergycorponese… Yukon Energy Corp 1736   direct_lo… C305  power  loanb…
+#> 10 garlandpowerlight     Garland Power & Light    ultimate_… UP104 power  loanb…
+#> # … with 628 more rows
+
+ald <- ald_demo %>% 
+  prepare_ald_for_matching() %>% 
+  select(simpler_name, name, everything())
+ald
+#> # A tibble: 591 x 3
+#>    simpler_name                  name                             sector  
+#>    <chr>                         <chr>                            <chr>   
+#>  1 abahydropowergenco ltd        aba hydropower generation co ltd power   
+#>  2 achinskyglinoziemskijkombinat achinsky glinoziemskij kombinat  cement  
+#>  3 affinityrenewables inc        affinity renewables inc.         power   
+#>  4 africaoil corp                africa oil corp                  oil&gas 
+#>  5 africonshp sa                 africon shipping sa              shipping
+#>  6 agnisteelsprivate ltd         agni steels private limited      power   
+#>  7 agrenewables                  agrenewables                     power   
+#>  8 airasiaxbhd                   airasia x bhd                    aviation
+#>  9 airbaltic                     airbaltic                        aviation
+#> 10 airblue                       airblue                          aviation
+#> # … with 581 more rows
 ```
 
 `match_all_against_all()` scores the similarity between `simpler_name`
 values in the prepared loanbook and ald datasets.
 
 ``` r
-matched_by_sector <- match_all_against_all(loanbook, asset_level_data)
+matched_by_sector <- match_all_against_all(loanbook, ald)
 
 matched_by_sector
 #> # A tibble: 64,457 x 3
@@ -114,7 +201,7 @@ and the amount of nonsensical matches.
 
 ``` r
 match_all_against_all(
-  loanbook, asset_level_data, 
+  loanbook, ald, 
   by_sector = FALSE
 )
 #> # A tibble: 308,228 x 3
@@ -140,18 +227,18 @@ dataset with `dplyr::left_join()`:
 matched_by_sector %>% 
   left_join(loanbook, by = c("simpler_name_x" = "simpler_name"))
 #> # A tibble: 66,156 x 8
-#>    simpler_name_x simpler_name_y     score level    id    name    sector  source
-#>    <chr>          <chr>              <dbl> <chr>    <chr> <chr>   <chr>   <chr> 
-#>  1 astonmartin    astonmartin        1     ultimat… UP23  Aston … automo… loanb…
-#>  2 astonmartin    avtozaz            0.681 ultimat… UP23  Aston … automo… loanb…
-#>  3 astonmartin    bogdan             0.480 ultimat… UP23  Aston … automo… loanb…
-#>  4 astonmartin    chauto             0.591 ultimat… UP23  Aston … automo… loanb…
-#>  5 astonmartin    chehejia           0.311 ultimat… UP23  Aston … automo… loanb…
-#>  6 astonmartin    chtcauto           0.455 ultimat… UP23  Aston … automo… loanb…
-#>  7 astonmartin    dongfenghonda      0.501 ultimat… UP23  Aston … automo… loanb…
-#>  8 astonmartin    dongfengluxgen     0.496 ultimat… UP23  Aston … automo… loanb…
-#>  9 astonmartin    electricmobilitys… 0.456 ultimat… UP23  Aston … automo… loanb…
-#> 10 astonmartin    faradayfuture      0.474 ultimat… UP23  Aston … automo… loanb…
+#>    simpler_name_x simpler_name_y     score name     level   id    sector  source
+#>    <chr>          <chr>              <dbl> <chr>    <chr>   <chr> <chr>   <chr> 
+#>  1 astonmartin    astonmartin        1     Aston M… ultima… UP23  automo… loanb…
+#>  2 astonmartin    avtozaz            0.681 Aston M… ultima… UP23  automo… loanb…
+#>  3 astonmartin    bogdan             0.480 Aston M… ultima… UP23  automo… loanb…
+#>  4 astonmartin    chauto             0.591 Aston M… ultima… UP23  automo… loanb…
+#>  5 astonmartin    chehejia           0.311 Aston M… ultima… UP23  automo… loanb…
+#>  6 astonmartin    chtcauto           0.455 Aston M… ultima… UP23  automo… loanb…
+#>  7 astonmartin    dongfenghonda      0.501 Aston M… ultima… UP23  automo… loanb…
+#>  8 astonmartin    dongfengluxgen     0.496 Aston M… ultima… UP23  automo… loanb…
+#>  9 astonmartin    electricmobilitys… 0.456 Aston M… ultima… UP23  automo… loanb…
+#> 10 astonmartin    faradayfuture      0.474 Aston M… ultima… UP23  automo… loanb…
 #> # … with 66,146 more rows
 ```
 
@@ -162,21 +249,21 @@ similar strategy:
 matched_by_sector %>% 
   left_join(loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
   dplyr::rename(sector_x = sector) %>%
-  left_join(asset_level_data, by = c("simpler_name_y" = "simpler_name")) %>%
+  left_join(ald, by = c("simpler_name_y" = "simpler_name")) %>%
   dplyr::rename(sector_y = sector)
 #> # A tibble: 89,093 x 10
-#>    simpler_name_x simpler_name_y score level id    name.x sector_x source name.y
-#>    <chr>          <chr>          <dbl> <chr> <chr> <chr>  <chr>    <chr>  <chr> 
-#>  1 astonmartin    astonmartin    1     ulti… UP23  Aston… automot… loanb… aston…
-#>  2 astonmartin    avtozaz        0.681 ulti… UP23  Aston… automot… loanb… avtoz…
-#>  3 astonmartin    bogdan         0.480 ulti… UP23  Aston… automot… loanb… bogdan
-#>  4 astonmartin    chauto         0.591 ulti… UP23  Aston… automot… loanb… ch au…
-#>  5 astonmartin    chehejia       0.311 ulti… UP23  Aston… automot… loanb… chehe…
-#>  6 astonmartin    chtcauto       0.455 ulti… UP23  Aston… automot… loanb… chtc …
-#>  7 astonmartin    dongfenghonda  0.501 ulti… UP23  Aston… automot… loanb… dongf…
-#>  8 astonmartin    dongfengluxgen 0.496 ulti… UP23  Aston… automot… loanb… dongf…
-#>  9 astonmartin    electricmobil… 0.456 ulti… UP23  Aston… automot… loanb… elect…
-#> 10 astonmartin    faradayfuture  0.474 ulti… UP23  Aston… automot… loanb… farad…
+#>    simpler_name_x simpler_name_y score name.x level id    sector_x source name.y
+#>    <chr>          <chr>          <dbl> <chr>  <chr> <chr> <chr>    <chr>  <chr> 
+#>  1 astonmartin    astonmartin    1     Aston… ulti… UP23  automot… loanb… aston…
+#>  2 astonmartin    avtozaz        0.681 Aston… ulti… UP23  automot… loanb… avtoz…
+#>  3 astonmartin    bogdan         0.480 Aston… ulti… UP23  automot… loanb… bogdan
+#>  4 astonmartin    chauto         0.591 Aston… ulti… UP23  automot… loanb… ch au…
+#>  5 astonmartin    chehejia       0.311 Aston… ulti… UP23  automot… loanb… chehe…
+#>  6 astonmartin    chtcauto       0.455 Aston… ulti… UP23  automot… loanb… chtc …
+#>  7 astonmartin    dongfenghonda  0.501 Aston… ulti… UP23  automot… loanb… dongf…
+#>  8 astonmartin    dongfengluxgen 0.496 Aston… ulti… UP23  automot… loanb… dongf…
+#>  9 astonmartin    electricmobil… 0.456 Aston… ulti… UP23  automot… loanb… elect…
+#> 10 astonmartin    faradayfuture  0.474 Aston… ulti… UP23  automot… loanb… farad…
 #> # … with 89,083 more rows, and 1 more variable: sector_y <chr>
 ```
 

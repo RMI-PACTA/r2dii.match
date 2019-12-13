@@ -41,23 +41,57 @@ library(r2dii.dataraw)
 library(dplyr)
 ```
 
-We'll use some fake datasets from the r2dii.dataraw package, which name ends with `_demo`, for example:
+Before matching, you must first prepare both a loanbook and asset-level dataset, structured just like the example datasets `loanbook_demo` and `ald_demo`.
 
 ```{r}
 loanbook_demo
+
+ald_demo
 ```
 
-Before matching, both the loanbook and asset level data must be prepared.
+You may write our example datasets into a .csv file and use them as a template to prepare your own data.
+
+```r
+loanbook_demo %>% 
+  readr::write_csv(path = "loanbook_template.csv")
+
+ald_demo %>% 
+  readr::write_csv(path = "ald_template.csv")
+```
+
+If you edit _loanbook_template.csv_ and _ald_template.csv_, and save them into the files _your_loanbook.csv_ and _your_ald.csv_, you can then read them back into R with:
+
+```r
+your_loanbook <- readr::read_csv("your_loanbook.csv")
+your_ald <- readr::read_csv("your_ald.csv")
+```
+
+Here we'll continue to work with the `_demo` datasets.
+
+`prepare_loanbook_for_matching()` does a lot of things. For example, it adds the column `simpler_name`, a modified version of the `name` column after applying best practices commonly used in name matching algorithms, such as:
+
+* Remove special characters.
+* Replace language specific characters.
+* Abbreviate certain names to reduce their importance in the matching.
+* Spell out numbers to increase their importance.
 
 ```{r}
-loanbook <- prepare_loanbook_for_matching(loanbook_demo)
-asset_level_data <- prepare_ald_for_matching(ald_demo)
+loanbook <- loanbook_demo %>% 
+  prepare_loanbook_for_matching() %>% 
+  # `simpler_name` and `name` move to the left, for clarity
+  select(simpler_name, name, everything())
+loanbook
+
+ald <- ald_demo %>% 
+  prepare_ald_for_matching() %>% 
+  select(simpler_name, name, everything())
+ald
 ```
 
 `match_all_against_all()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
 
 ```{r}
-matched_by_sector <- match_all_against_all(loanbook, asset_level_data)
+matched_by_sector <- match_all_against_all(loanbook, ald)
 
 matched_by_sector
 ```
@@ -66,7 +100,7 @@ By default, names are compared against ald names in the same sector. `by_sector 
 
 ```{r}
 match_all_against_all(
-  loanbook, asset_level_data, 
+  loanbook, ald, 
   by_sector = FALSE
 )
 ```
@@ -84,7 +118,7 @@ You can also recover the `sector` column from the `ald` dataset with a similar s
 matched_by_sector %>% 
   left_join(loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
   dplyr::rename(sector_x = sector) %>%
-  left_join(asset_level_data, by = c("simpler_name_y" = "simpler_name")) %>%
+  left_join(ald, by = c("simpler_name_y" = "simpler_name")) %>%
   dplyr::rename(sector_y = sector)
 ```
 
