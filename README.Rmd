@@ -24,13 +24,11 @@ The goal of r2dii.match is to match generic loanbook data with physical asset le
 
 ## Installation
 
-Install the development version of r2dii.match with something like this:
+Install the development version of r2dii.match from GitHub with:
 
 ```r
 # install.packages("devtools")
-
-# To install from a private repo, see ?usethis::browse_github_token()
-devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
+devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
 ## Example

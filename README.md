@@ -19,13 +19,11 @@ asset level data (ald).
 
 ## Installation
 
-Install the development version of r2dii.match with something like this:
+Install the development version of r2dii.match from GitHub with:
 
 ``` r
 # install.packages("devtools")
-
-# To install from a private repo, see ?usethis::browse_github_token()
-devtools::install_github("2DegreesInvesting/r2dii.match", auth_token = "abc")
+devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
 ## Example
@@ -54,19 +52,19 @@ ends with `_demo`, for example:
 ``` r
 loanbook_demo
 #> # A tibble: 320 x 19
-#>    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~
+#>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
-#>  1 L1      C294             Yuamen Xinneng ~ <NA>             <NA>            
-#>  2 L2      C293             Yuamen Changyua~ <NA>             <NA>            
-#>  3 L3      C292             Yuama Ethanol L~ IP5              Yuama Inc.      
-#>  4 L4      C299             Yudaksel Holdin~ <NA>             <NA>            
-#>  5 L5      C305             Yukon Energy Co~ <NA>             <NA>            
-#>  6 L6      C304             Yukon Developme~ <NA>             <NA>            
-#>  7 L7      C227             Yaugoa-Zapadnay~ <NA>             <NA>            
-#>  8 L8      C303             Yueyang City Co~ <NA>             <NA>            
+#>  1 L1      C294             Yuamen Xinneng … <NA>             <NA>            
+#>  2 L2      C293             Yuamen Changyua… <NA>             <NA>            
+#>  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
+#>  4 L4      C299             Yudaksel Holdin… <NA>             <NA>            
+#>  5 L5      C305             Yukon Energy Co… <NA>             <NA>            
+#>  6 L6      C304             Yukon Developme… <NA>             <NA>            
+#>  7 L7      C227             Yaugoa-Zapadnay… <NA>             <NA>            
+#>  8 L8      C303             Yueyang City Co… <NA>             <NA>            
 #>  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
-#> 10 L10     C302             Yuexi County AA~ <NA>             <NA>            
-#> # ... with 310 more rows, and 14 more variables: id_ultimate_parent <chr>,
+#> 10 L10     C302             Yuexi County AA… <NA>             <NA>            
+#> # … with 310 more rows, and 14 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -81,6 +79,9 @@ prepared.
 
 ``` r
 loanbook <- prepare_loanbook_for_matching(loanbook_demo)
+#> Warning: Overwritting `id_direct_loantaker`.
+#> Warning: Overwritting `id_ultimate_parent`.
+#> Adding new columns `sector` and `borderline`.
 asset_level_data <- prepare_ald_for_matching(ald_demo)
 ```
 
@@ -104,7 +105,7 @@ matched_by_sector
 #>  8 astonmartin    dongfengluxgen            0.496
 #>  9 astonmartin    electricmobilitysolutions 0.456
 #> 10 astonmartin    faradayfuture             0.474
-#> # ... with 64,447 more rows
+#> # … with 64,447 more rows
 ```
 
 By default, names are compared against ald names in the same sector.
@@ -129,7 +130,7 @@ match_all_against_all(
 #>  8 abahydropowergenco ltd airasiaxbhd                   0.545
 #>  9 abahydropowergenco ltd airbaltic                     0.545
 #> 10 abahydropowergenco ltd airblue                       0.551
-#> # ... with 308,218 more rows
+#> # … with 308,218 more rows
 ```
 
 You can recover the `sector` column from the `loanbook` and `ald`
@@ -141,17 +142,17 @@ matched_by_sector %>%
 #> # A tibble: 66,156 x 8
 #>    simpler_name_x simpler_name_y     score level    id    name    sector  source
 #>    <chr>          <chr>              <dbl> <chr>    <chr> <chr>   <chr>   <chr> 
-#>  1 astonmartin    astonmartin        1     ultimat~ UP23  Aston ~ automo~ loanb~
-#>  2 astonmartin    avtozaz            0.681 ultimat~ UP23  Aston ~ automo~ loanb~
-#>  3 astonmartin    bogdan             0.480 ultimat~ UP23  Aston ~ automo~ loanb~
-#>  4 astonmartin    chauto             0.591 ultimat~ UP23  Aston ~ automo~ loanb~
-#>  5 astonmartin    chehejia           0.311 ultimat~ UP23  Aston ~ automo~ loanb~
-#>  6 astonmartin    chtcauto           0.455 ultimat~ UP23  Aston ~ automo~ loanb~
-#>  7 astonmartin    dongfenghonda      0.501 ultimat~ UP23  Aston ~ automo~ loanb~
-#>  8 astonmartin    dongfengluxgen     0.496 ultimat~ UP23  Aston ~ automo~ loanb~
-#>  9 astonmartin    electricmobilitys~ 0.456 ultimat~ UP23  Aston ~ automo~ loanb~
-#> 10 astonmartin    faradayfuture      0.474 ultimat~ UP23  Aston ~ automo~ loanb~
-#> # ... with 66,146 more rows
+#>  1 astonmartin    astonmartin        1     ultimat… UP23  Aston … automo… loanb…
+#>  2 astonmartin    avtozaz            0.681 ultimat… UP23  Aston … automo… loanb…
+#>  3 astonmartin    bogdan             0.480 ultimat… UP23  Aston … automo… loanb…
+#>  4 astonmartin    chauto             0.591 ultimat… UP23  Aston … automo… loanb…
+#>  5 astonmartin    chehejia           0.311 ultimat… UP23  Aston … automo… loanb…
+#>  6 astonmartin    chtcauto           0.455 ultimat… UP23  Aston … automo… loanb…
+#>  7 astonmartin    dongfenghonda      0.501 ultimat… UP23  Aston … automo… loanb…
+#>  8 astonmartin    dongfengluxgen     0.496 ultimat… UP23  Aston … automo… loanb…
+#>  9 astonmartin    electricmobilitys… 0.456 ultimat… UP23  Aston … automo… loanb…
+#> 10 astonmartin    faradayfuture      0.474 ultimat… UP23  Aston … automo… loanb…
+#> # … with 66,146 more rows
 ```
 
 You can also recover the `sector` column from the `ald` dataset with a
@@ -166,17 +167,17 @@ matched_by_sector %>%
 #> # A tibble: 89,093 x 10
 #>    simpler_name_x simpler_name_y score level id    name.x sector_x source name.y
 #>    <chr>          <chr>          <dbl> <chr> <chr> <chr>  <chr>    <chr>  <chr> 
-#>  1 astonmartin    astonmartin    1     ulti~ UP23  Aston~ automot~ loanb~ aston~
-#>  2 astonmartin    avtozaz        0.681 ulti~ UP23  Aston~ automot~ loanb~ avtoz~
-#>  3 astonmartin    bogdan         0.480 ulti~ UP23  Aston~ automot~ loanb~ bogdan
-#>  4 astonmartin    chauto         0.591 ulti~ UP23  Aston~ automot~ loanb~ ch au~
-#>  5 astonmartin    chehejia       0.311 ulti~ UP23  Aston~ automot~ loanb~ chehe~
-#>  6 astonmartin    chtcauto       0.455 ulti~ UP23  Aston~ automot~ loanb~ chtc ~
-#>  7 astonmartin    dongfenghonda  0.501 ulti~ UP23  Aston~ automot~ loanb~ dongf~
-#>  8 astonmartin    dongfengluxgen 0.496 ulti~ UP23  Aston~ automot~ loanb~ dongf~
-#>  9 astonmartin    electricmobil~ 0.456 ulti~ UP23  Aston~ automot~ loanb~ elect~
-#> 10 astonmartin    faradayfuture  0.474 ulti~ UP23  Aston~ automot~ loanb~ farad~
-#> # ... with 89,083 more rows, and 1 more variable: sector_y <chr>
+#>  1 astonmartin    astonmartin    1     ulti… UP23  Aston… automot… loanb… aston…
+#>  2 astonmartin    avtozaz        0.681 ulti… UP23  Aston… automot… loanb… avtoz…
+#>  3 astonmartin    bogdan         0.480 ulti… UP23  Aston… automot… loanb… bogdan
+#>  4 astonmartin    chauto         0.591 ulti… UP23  Aston… automot… loanb… ch au…
+#>  5 astonmartin    chehejia       0.311 ulti… UP23  Aston… automot… loanb… chehe…
+#>  6 astonmartin    chtcauto       0.455 ulti… UP23  Aston… automot… loanb… chtc …
+#>  7 astonmartin    dongfenghonda  0.501 ulti… UP23  Aston… automot… loanb… dongf…
+#>  8 astonmartin    dongfengluxgen 0.496 ulti… UP23  Aston… automot… loanb… dongf…
+#>  9 astonmartin    electricmobil… 0.456 ulti… UP23  Aston… automot… loanb… elect…
+#> 10 astonmartin    faradayfuture  0.474 ulti… UP23  Aston… automot… loanb… farad…
+#> # … with 89,083 more rows, and 1 more variable: sector_y <chr>
 ```
 
 You may pick rows at and above some score with `dplyr::fileter()`:
@@ -198,7 +199,7 @@ matched_by_sector %>%
 #>  8 astonmartin    jiangsujoylong  0.504
 #>  9 astonmartin    jilintongtian   0.606
 #> 10 astonmartin    master          0.677
-#> # ... with 35,673 more rows
+#> # … with 35,673 more rows
 ```
 
 You may save the matched dataset with something like:
