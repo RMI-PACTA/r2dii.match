@@ -41,9 +41,10 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   # Before potentially expensive computation
   check_prepare_loanbook_overwrite(overwrite)
 
-  out <- data %>%
-    check_prepare_loanbook_data() %>%
-    bridge_sector() %>%
+  check_prepare_loanbook_data(data)
+
+  out <-   data %>%
+    may_add_sector_and_borderline() %>%
     select(get_prepare_loanbook_input_columns(), .data$sector) %>%
     identify_loans_by_sector_and_level() %>%
     identify_loans_by_name_and_source() %>%
@@ -56,6 +57,20 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   }
 
   add_simpler_name(out)
+}
+
+may_add_sector_and_borderline <- function(data) {
+  if (already_has_sector_and_borderline(data)) {
+    warning("Using existing columns `sector` and `borderline`.", call. = FALSE)
+    data2 <- data
+  } else {
+    message("Adding new columns `sector` and `borderline`.")
+    data2 <- bridge_sector(data)
+  }
+}
+
+already_has_sector_and_borderline <- function(data) {
+  has_name(data, "sector") & has_name(data, "borderline")
 }
 
 add_simpler_name <- function(data) {

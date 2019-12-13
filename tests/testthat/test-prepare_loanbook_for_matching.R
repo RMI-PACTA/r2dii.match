@@ -1,5 +1,12 @@
 library(r2dii.dataraw)
 
+test_that("prepare_loanbook_for_matching takes the output of bridge_sector()", {
+  expect_warning(
+    prepare_loanbook_for_matching(bridge_sector(r2dii.dataraw::loanbook_demo)),
+    "Using existing columns `sector` and `borderline`."
+  )
+})
+
 test_that("prepare_loanbook_for_matching errors gracefully with bad input", {
   expect_error(
     prepare_loanbook_for_matching("bad"),
