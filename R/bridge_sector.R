@@ -1,11 +1,20 @@
 #' Add the column `sector` (as classified by 2dii) and `borderline`
 #'
 #' This function adds two columns, `sector` and `borderline`:
-#' * `sector`: gives the sector as classified by 2dii.
+#' * `sector`: `sector` gives climate-relevant sectors looked up from standard
+#' sector classifications in production databases.
 #' * `borderline`: Indicates if the classification is borderline or not.
 #'
-#' The r2dii.dataraw package must be attached (i.e. run `library(r2dii.dataraw)`
-#' before you call `bridge_sector()`).
+#' A company acts in a climate-relevant sector if it meets two conditions:
+#' 1. It is classified in one of the sectors that translate 1 to 1 from a a
+#' standard sector classification to a climate-relevant sector covered by the
+#' PACTA analysis (e.g. utilities to power).
+#' 2. It is classified in a sector that can but does not necessarily map to a
+#' climate-relevant sector covered by the PACTA analysis (e.g. power
+#' grid/network to Power, general mining to coal mining).
+#'
+#' For a list of sector classification systems see
+#' [r2dii.dataraw::classification_bridge].
 #'
 #' @param data A loanbook dataframe.
 #'

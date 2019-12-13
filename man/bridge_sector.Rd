@@ -16,13 +16,24 @@ columns.
 \description{
 This function adds two columns, \code{sector} and \code{borderline}:
 \itemize{
-\item \code{sector}: gives the sector as classified by 2dii.
+\item \code{sector}: \code{sector} gives climate-relevant sectors looked up from standard
+sector classifications in production databases.
 \item \code{borderline}: Indicates if the classification is borderline or not.
 }
 }
 \details{
-The r2dii.dataraw package must be attached (i.e. run \code{library(r2dii.dataraw)}
-before you call \code{bridge_sector()}).
+A company acts in a climate-relevant sector if it meets two conditions:
+\enumerate{
+\item It is classified in one of the sectors that translate 1 to 1 from a a
+standard sector classification to a climate-relevant sector covered by the
+PACTA analysis (e.g. utilities to power).
+\item It is classified in a sector that can but does not necessarily map to a
+climate-relevant sector covered by the PACTA analysis (e.g. power
+grid/network to Power, general mining to coal mining).
+}
+
+For a list of sector classification systems see
+\link[r2dii.dataraw:classification_bridge]{r2dii.dataraw::classification_bridge}.
 }
 \examples{
 # Must be attached
