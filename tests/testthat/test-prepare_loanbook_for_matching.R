@@ -1,9 +1,16 @@
 library(r2dii.dataraw)
 
-test_that("prepare_loanbook_for_matching takes the output of bridge_sector()", {
+test_that("prepare_loanbook_for_matching may input bridge_sector(data)", {
   expect_warning(
-    prepare_loanbook_for_matching(bridge_sector(r2dii.dataraw::loanbook_demo)),
+    prepare_loanbook_for_matching(bridge_sector(loanbook_demo)),
     "Using existing columns `sector` and `borderline`."
+  )
+
+  expect_equal(
+    suppressWarnings(
+      prepare_loanbook_for_matching(bridge_sector(loanbook_demo))
+    ),
+    prepare_loanbook_for_matching(loanbook_demo)
   )
 })
 
@@ -25,7 +32,7 @@ test_that("prepare_loanbook_for_matching", {
 })
 
 test_that("prepare_loanbook_for_matching outputs a tibble with expected names", {
-  out <- prepare_loanbook_for_matching(r2dii.dataraw::loanbook_demo)
+  out <- prepare_loanbook_for_matching(loanbook_demo)
   expect_is(out, "tbl_df")
   expect_named(
     out,

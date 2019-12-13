@@ -82,9 +82,6 @@ overwrite_name_and_sector <- function(data, overwrite) {
     select(names(data))
 }
 
-
-
-
 already_has_sector_and_borderline <- function(data) {
   has_name(data, "sector") & has_name(data, "borderline")
 }
