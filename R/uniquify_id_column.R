@@ -24,10 +24,6 @@
 #' r2dii.dataraw::loanbook_demo %>%
 #'   uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP")
 uniquify_id_column <- function(data, id_column, prefix) {
-  warning(
-    "Overwritting `", id_column, "`.", call. = FALSE
-  )
-
   crucial <- c(
     "sector_classification_direct_loantaker",
     get_name_var(id_column),
