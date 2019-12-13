@@ -7,9 +7,6 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/bridge_sector.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/id_by_loantaker_sector.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/match_all_against_all.html</loc>
   </url>
   <url>
@@ -19,6 +16,9 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prepare_ald_for_matching.html</loc>
   </url>
   <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prepare_loanbook_for_matching.html</loc>
+  </url>
+  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/r2dii.match-package.html</loc>
   </url>
   <url>
@@ -26,6 +26,9 @@
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/string_similarity.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/uniquify_id_column.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//articles/r2dii.match.html</loc>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepares asset-level data (ald) for the fuzzy matching process — prepare_ald_for_matching • r2dii.match</title>
+<title>Prepare a loanbook dataset for the fuzzy matching process — prepare_loanbook_for_matching • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Prepares asset-level data (ald) for the fuzzy matching process — prepare_ald_for_matching" />
-<meta property="og:description" content="This function prepares asset-level data (ald) for the fuzzy matching process." />
+<meta property="og:title" content="Prepare a loanbook dataset for the fuzzy matching process — prepare_loanbook_for_matching" />
+<meta property="og:description" content="This function prepares a loanbook dataset for the fuzzy matching process." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,23 +114,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepares asset-level data (ald) for the fuzzy matching process</h1>
+    <h1>Prepare a loanbook dataset for the fuzzy matching process</h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/prepare_loanbook_for_matching.R'><code>R/prepare_loanbook_for_matching.R</code></a></small>
-    <div class="hidden name"><code>prepare_ald_for_matching.Rd</code></div>
+    <div class="hidden name"><code>prepare_loanbook_for_matching.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function prepares asset-level data (ald) for the fuzzy matching process.</p>
+    <p>This function prepares a loanbook dataset for the fuzzy matching process.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prepare_ald_for_matching</span>(<span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>prepare_loanbook_for_matching</span>(<span class='no'>data</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A dataframe. Should be an asset-level dataset.</p></td>
+      <td><p>A dataframe. Should be a loanbook.</p></td>
+    </tr>
+    <tr>
+      <th>overwrite</th>
+      <td><p>A dataframe used to overwrite the <code>sector</code> and/or <code>name</code>
+columns of a particular direct loantaker or ultimate parent. To overwrite
+only <code>sector</code>, the value in the <code>name</code> column should be <code>NA</code>.</p></td>
     </tr>
     </table>
 
@@ -140,29 +146,44 @@
 all IDs, and with elements already manually overwritten.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://rdrr.io/pkg/r2dii.dataraw/man/ald_demo.html'>r2dii.dataraw::ald_demo</a>.</p>
+    <div class='dont-index'><p><a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_description.html'>r2dii.dataraw::loanbook_description</a></p>
 <p>Other user-oriented: 
 <code><a href='match_all_against_all.html'>match_all_against_all</a>()</code>,
-<code><a href='prepare_loanbook_for_matching.html'>prepare_loanbook_for_matching</a>()</code></p></div>
+<code><a href='prepare_ald_for_matching.html'>prepare_ald_for_matching</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
 
-<span class='no'>ald_demo</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>prepare_ald_for_matching</span>()</div><div class='output co'>#&gt; # A tibble: 591 x 3
-#&gt;    name                             sector   simpler_name                 
-#&gt;    &lt;chr&gt;                            &lt;chr&gt;    &lt;chr&gt;                        
-#&gt;  1 aba hydropower generation co ltd power    abahydropowergenco ltd       
-#&gt;  2 achinsky glinoziemskij kombinat  cement   achinskyglinoziemskijkombinat
-#&gt;  3 affinity renewables inc.         power    affinityrenewables inc       
-#&gt;  4 africa oil corp                  oil&amp;gas  africaoil corp               
-#&gt;  5 africon shipping sa              shipping africonshp sa                
-#&gt;  6 agni steels private limited      power    agnisteelsprivate ltd        
-#&gt;  7 agrenewables                     power    agrenewables                 
-#&gt;  8 airasia x bhd                    aviation airasiaxbhd                  
-#&gt;  9 airbaltic                        aviation airbaltic                    
-#&gt; 10 airblue                          aviation airblue                      
-#&gt; # … with 581 more rows</div></pre>
+<span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>prepare_loanbook_for_matching</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
+#&gt;    level      id    name                     sector source  simpler_name        
+#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;               
+#&gt;  1 direct_lo… C294  Yuamen Xinneng Thermal … power  loanbo… yuamenxinnengtherma…
+#&gt;  2 ultimate_… UP15  Alpine Knits India Pvt.… power  loanbo… alpineknitsindiapvt…
+#&gt;  3 direct_lo… C293  Yuamen Changyuan Hydrop… power  loanbo… yuamenchangyuanhydr…
+#&gt;  4 ultimate_… UP84  Eco Wave Power           power  loanbo… ecowavepower        
+#&gt;  5 direct_lo… C292  Yuama Ethanol Llc        power  loanbo… yuamaethanol llc    
+#&gt;  6 ultimate_… UP288 University Of Iowa       power  loanbo… universityofiowa    
+#&gt;  7 direct_lo… C299  Yudaksel Holding A.S     power  loanbo… yudakselhldgs as    
+#&gt;  8 ultimate_… UP54  China Electric Power (F… power  loanbo… chinaelectricpowerf…
+#&gt;  9 direct_lo… C305  Yukon Energy Corp 1736   power  loanbo… yukonenergycorpones…
+#&gt; 10 ultimate_… UP104 Garland Power &amp; Light    power  loanbo… garlandpowerlight   
+#&gt; # … with 628 more rows</div><div class='input'>
+<span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>prepare_loanbook_for_matching</span>(<span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='no'>overwrite_demo</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
+#&gt;    level      id    name                     sector source  simpler_name        
+#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;               
+#&gt;  1 direct_lo… C294  yuamen power company     coal   manual  yuamenpower co      
+#&gt;  2 ultimate_… UP15  alpine india             power  manual  alpineindia         
+#&gt;  3 direct_lo… C293  Yuamen Changyuan Hydrop… power  loanbo… yuamenchangyuanhydr…
+#&gt;  4 ultimate_… UP84  Eco Wave Power           power  loanbo… ecowavepower        
+#&gt;  5 direct_lo… C292  Yuama Ethanol Llc        power  loanbo… yuamaethanol llc    
+#&gt;  6 ultimate_… UP288 University Of Iowa       power  loanbo… universityofiowa    
+#&gt;  7 direct_lo… C299  Yudaksel Holding A.S     power  loanbo… yudakselhldgs as    
+#&gt;  8 ultimate_… UP54  China Electric Power (F… power  loanbo… chinaelectricpowerf…
+#&gt;  9 direct_lo… C305  Yukon Energy Corp 1736   power  loanbo… yukonenergycorpones…
+#&gt; 10 ultimate_… UP104 Garland Power &amp; Light    power  loanbo… garlandpowerlight   
+#&gt; # … with 628 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
