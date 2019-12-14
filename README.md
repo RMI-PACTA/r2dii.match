@@ -29,26 +29,34 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 ## Example
 
 As usual, we start by using required packages. For general purpose
-functions we’ll also use dplyr.
+functions we’ll also use tidyverse.
 
 ``` r
 library(r2dii.match)
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
+library(tidyverse)
+#> -- Attaching packages ---------------------------- tidyverse 1.3.0 --
+#> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
+#> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
+#> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
+#> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
+#> -- Conflicts ------------------------------- tidyverse_conflicts() --
+#> x dplyr::filter() masks stats::filter()
+#> x dplyr::lag()    masks stats::lag()
 ```
 
-Before matching, you must first prepare both a loanbook and asset-level
-dataset, structured just like the example datasets `loanbook_demo` and
-`ald_demo`.
+The following sections show the steps involved in the process.
+
+### 1\. Create two datasets: [loanbook](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_description.html)
+
+This step is up to you. You must structure your data like the example
+datasets
+[`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_demo.html)
+and
+[`ald_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_demo.html)
+(from the [r2dii.dataraw
+package](https://2degreesinvesting.github.io/r2dii.dataraw)).
 
 ``` r
 loanbook_demo
@@ -94,27 +102,38 @@ ald_demo
 #> #   ald_timestamp <chr>
 ```
 
-You may write our example datasets into a .csv file and use them as a
-template to prepare your own data.
+You may write *your-loanbook-template.csv* and *your-ald-template.csv*
+with:
 
 ``` r
+# Writting to current working directory 
 loanbook_demo %>% 
-  readr::write_csv(path = "loanbook_template.csv")
+  write_csv(path = "your-loanbook-template.csv")
 
 ald_demo %>% 
-  readr::write_csv(path = "ald_template.csv")
+  write_csv(path = "your-ald-template.csv")
 ```
 
-If you edit *loanbook\_template.csv* and *ald\_template.csv*, and save
-them into the files *your\_loanbook.csv* and *your\_ald.csv*, you can
-then read them back into R with:
+You may then edit those files, save them as *your-loanbook.csv* and
+*your-ald.csv*, and then read them back into R with:
 
 ``` r
-your_loanbook <- readr::read_csv("your_loanbook.csv")
-your_ald <- readr::read_csv("your_ald.csv")
+# Reading from current working directory 
+your_loanbook <- read_csv("your-loanbook.csv")
+your_ald <- read_csv("your-ald.csv")
 ```
 
-Here we’ll continue to work with the `_demo` datasets.
+But here we’ll continue to use the `*_demo` datasets.
+
+``` r
+your_loanbook <- loanbook_demo
+your_ald <- ald_demo
+```
+
+(If you are following this code, be sure to skip the code chunk above,
+so it doesn’t overwrite `your_loanbook` and `your_ald` datasets.)
+
+### 2\. Prepare each dataset for matching
 
 `prepare_loanbook_for_matching()` does a lot of things. For example, it
 adds the column `simpler_name`, a modified version of the `name` column
@@ -172,6 +191,8 @@ ald
 #> # … with 581 more rows
 ```
 
+### 3\. Score the goodness of the match between the loanbook and ald datasets
+
 `match_all_against_all()` scores the similarity between `simpler_name`
 values in the prepared loanbook and ald datasets.
 
@@ -196,7 +217,7 @@ matched_by_sector
 ```
 
 By default, names are compared against ald names in the same sector.
-`by_sector = FALSE` increases the matching runtime on large datasets,
+`by_sector = FALSE` increases the matching run time on large datasets,
 and the amount of nonsensical matches.
 
 ``` r
@@ -270,43 +291,60 @@ matched_by_sector %>%
 You may pick rows at and above some score with `dplyr::fileter()`:
 
 ``` r
-threshold <- 0.5
-matched_by_sector %>%
+threshold <- 0.9
+matching_scores <- matched_by_sector %>%
   dplyr::filter(score >= threshold)
-#> # A tibble: 35,683 x 3
-#>    simpler_name_x simpler_name_y  score
-#>    <chr>          <chr>           <dbl>
-#>  1 astonmartin    astonmartin     1    
-#>  2 astonmartin    avtozaz         0.681
-#>  3 astonmartin    chauto          0.591
-#>  4 astonmartin    dongfenghonda   0.501
-#>  5 astonmartin    huanghaimotors  0.641
-#>  6 astonmartin    jianghuaivw     0.576
-#>  7 astonmartin    jianglingjingma 0.543
-#>  8 astonmartin    jiangsujoylong  0.504
-#>  9 astonmartin    jilintongtian   0.606
-#> 10 astonmartin    master          0.677
-#> # … with 35,673 more rows
+
+matching_scores %>% 
+  arrange(score)
+#> # A tibble: 393 x 3
+#>    simpler_name_x              simpler_name_y              score
+#>    <chr>                       <chr>                       <dbl>
+#>  1 hanjinoverseasbulk ltd      hanjinoverseastankerpte ltd 0.903
+#>  2 hanjinoverseastankerpte ltd hanjinoverseasbulk ltd      0.903
+#>  3 yingjianghongfuinvestco ltd yingjianglonghuico ltd      0.904
+#>  4 yingjianglonghuico ltd      yingjianghongfuinvestco ltd 0.904
+#>  5 bhushanenergy ltd           bhagwanenergy ltd           0.906
+#>  6 handong                     handongmarine               0.908
+#>  7 handongmarine               handong                     0.908
+#>  8 hanaroshpcoltdbusan         hanaroshpcoltdseoul         0.924
+#>  9 hanaroshpcoltdseoul         hanaroshpcoltdbusan         0.924
+#> 10 hamaurakaiun                hamayukaiun                 0.928
+#> # … with 383 more rows
 ```
 
-You may save the matched dataset with something like:
+### 3\. Write the output of the previous step into a .csv file
 
 ``` r
-readr::write_csv(matched, "path/to/save/matches_to_be_verified.csv")
+# Writting to current working directory 
+matching_scores %>%
+  write_csv("matching-scores.csv")
 ```
 
-You should verify and edit the data manually, e.g. with MS Excel or
-Google Sheets:
+### 4\. Compare, edit, and save the data manually
 
-Compare `simpler_name_x` and `simpler_name_y` manually, along with the
-loanbook sector. If you are happy with the match, set the `score` value
-to `1` (only values of exactly `1` will be considered valid).
+  - Open *matching-scores.csv* with MS Excel, Google Sheets, or any
+    spreadsheet editor.
 
-You may then re-read the validated data with:
+  - Visually compare `simpler_name_x` and `simpler_name_y`, along with
+    the loanbook sector.
+
+  - Edit the data manually:
+    
+      - If you are happy with the match, set the `score` value to `1`.
+      - Otherwise set or leave the `score` value to anything other than
+        `1`.
+
+  - Save the edited file as, say, *matching-scores-edited.csv*.
+
+### 5\. Re-read the data from the previous step
 
 ``` r
-readr::read_csv("path/to/load/verified_matches.csv")
+# Reading from current working directory 
+matching_scores %>%
+  write_csv("matching-scores.csv")
 ```
 
-**Work in progress, next step of analysis it to join in validated
-matches in order of priority**.
+### 6\. Join in validated matches in order of priority
+
+TODO
