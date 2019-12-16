@@ -1,9 +1,5 @@
 library(dplyr)
 
-test_that("match_loanbook_with_ald exists", {
-  expect_true(exists("match_loanbook_with_ald"))
-})
-
 test_that("match_loanbook_with_ald wraps match_all_against_all", {
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
@@ -13,6 +9,8 @@ test_that("match_loanbook_with_ald wraps match_all_against_all", {
     match_loanbook_with_ald(x, y)
   )
 })
+
+
 
 # test_that("match_loanbook_with_ald wraps match_all_against_all", {
 #   library(dplyr)
