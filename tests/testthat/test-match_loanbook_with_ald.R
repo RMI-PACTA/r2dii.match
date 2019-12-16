@@ -27,6 +27,13 @@ test_that("match_loanbook_with_ald takes `by_sector`", {
   out2<- match_all_against_all(x, y, by_sector = FALSE)
   expect_false(identical(out1, out2))
 })
+
+test_that("match_loanbook_with_ald has all formls in match_all_against_all", {
+  actual <- names(formals("match_loanbook_with_ald"))
+  expected <- names(formals("match_all_against_all"))
+  expect_equal(setdiff(expected, actual), character(0))
+})
+
 #
 # test_that("match_loanbook_with_ald recovers `sector`", {
 #   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))

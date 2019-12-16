@@ -1,4 +1,10 @@
-match_loanbook_with_ald <- function(x, y, ..., threshold = 0.8) {
+match_loanbook_with_ald <- function(x,
+                                    y,
+                                    ...,
+                                    by_sector = TRUE,
+                                    threshold = 0.8,
+                                    method = "jw",
+                                    p = 0.1) {
   out <- dplyr::left_join(
     x = match_all_against_all(x, y, ...),
     y = x,
