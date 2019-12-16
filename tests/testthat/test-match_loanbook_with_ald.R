@@ -1,18 +1,18 @@
 library(dplyr)
 
-test_that("match_loanbook_with_ald wraps match_all_against_all", {
+test_that("match_loanbook_with_ald recovers `sector`", {
+  library(dplyr)
+
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
-  expect_equal(
-    match_all_against_all(x, y),
-    match_loanbook_with_ald(x, y)
-  )
+  # Recover sector
+  out <- match_loanbook_with_ald(x, y)
+
+  expect_true(rlang::has_name(out, "sector"))
 })
 
-
-
-# test_that("match_loanbook_with_ald wraps match_all_against_all", {
+# test_that("match_loanbook_with_ald recovers `sector`", {
 #   library(dplyr)
 #
 #   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
