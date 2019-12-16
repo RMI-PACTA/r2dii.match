@@ -41,8 +41,8 @@ bridge_sector <- function(data) {
   check_is_attached(pkg)
 
   classification <- enlist_datasets(pkg, pattern = "_classification$") %>%
-    purrr::imap(~ dplyr::mutate(.x, code_system = toupper(.y))) %>%
-    purrr::map(~ dplyr::select(
+    purrr::imap(~ mutate(.x, code_system = toupper(.y))) %>%
+    purrr::map(~ select(
       .,
       .data$sector, .data$borderline,
       # Required in `by` below
@@ -56,7 +56,7 @@ bridge_sector <- function(data) {
     # Avoid duplicates
     unique() %>%
     # Reformat code_system
-    dplyr::mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
+    mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
 
   # Coerce crucial columns to character for more robust join()
   data2 <- data %>% purrr::modify_at(crucial, as.character)
@@ -72,7 +72,7 @@ bridge_sector <- function(data) {
   }
 
   by <- stats::setNames(c("code_system", "code"), crucial)
-  out <- dplyr::left_join(data2, classification, by = by)
+  out <- left_join(data2, classification, by = by)
 
   restore_typeof(data, out, crucial)
 }

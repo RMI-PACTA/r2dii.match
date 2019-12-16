@@ -93,7 +93,7 @@ may_overwrite_name_and_sector <- function(out, overwrite) {
 
 overwrite_name_and_sector <- function(data, overwrite) {
   data %>%
-    dplyr::left_join(overwrite, by = c("id", "level")) %>%
+    left_join(overwrite, by = c("id", "level")) %>%
     mutate(
       source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
       sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),

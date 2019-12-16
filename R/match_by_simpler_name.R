@@ -41,7 +41,7 @@ match_by_simpler_name <- function(x,
   with_sector_xy <- with_sector_x %>%
     left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
     dplyr::rename(sector_y = .data$sector)
-  out <- dplyr::filter(with_sector_xy, .data$score >= min_score)
+  out <- filter(with_sector_xy, .data$score >= min_score)
 
   out
 }

@@ -81,8 +81,8 @@ test_that("prepare_loanbook_for_matching errors with bad overwrite columns", {
 test_that("prepare_loanbook_for_matching correctly overwrites name", {
   overwrite <- overwrite_demo
   out <- warnot(prepare_loanbook_for_matching(loanbook_demo, overwrite_demo)) %>%
-    dplyr::filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    dplyr::left_join(overwrite, by = c("id", "level"))
+    filter(id %in% overwrite$id & level %in% overwrite$level) %>%
+    left_join(overwrite, by = c("id", "level"))
 
   expect_equal(out$name.x, out$name.y)
 })
@@ -90,8 +90,8 @@ test_that("prepare_loanbook_for_matching correctly overwrites name", {
 test_that("prepare_loanbook_for_matching correctly overwrites sector", {
   overwrite <- overwrite_demo
   out <- warnot(prepare_loanbook_for_matching(loanbook_demo, overwrite_demo)) %>%
-    dplyr::filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    dplyr::left_join(overwrite, by = c("id", "level"))
+    filter(id %in% overwrite$id & level %in% overwrite$level) %>%
+    left_join(overwrite, by = c("id", "level"))
 
   expect_equal(out$sector.x, out$sector.y)
 })
@@ -104,7 +104,7 @@ test_that("prepare_ald_for_matching outputs the expected tibble", {
 
 test_that("prepare_ald_for_matching errors if data lacks a crucial column", {
   bad_data <- ald_demo %>%
-    dplyr::select(-sector)
+    select(-sector)
 
   expect_error(
     prepare_ald_for_matching(bad_data),
