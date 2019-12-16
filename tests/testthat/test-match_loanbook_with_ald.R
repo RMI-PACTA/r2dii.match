@@ -12,6 +12,18 @@ test_that("match_loanbook_with_ald recovers `sector`", {
   expect_true(rlang::has_name(out, "sector"))
 })
 
+test_that("match_loanbook_with_ald takes `threshold`", {
+  library(dplyr)
+
+  x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
+  y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+
+  expect_error(
+    match_loanbook_with_ald(x, y, threshold = 0.5),
+    NA
+  )
+})
+
 # test_that("match_loanbook_with_ald recovers `sector`", {
 #   library(dplyr)
 #
