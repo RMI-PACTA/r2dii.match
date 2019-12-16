@@ -1,11 +1,11 @@
 library(dplyr)
 
-test_that("match_by_simpler_name takes `threshold`", {
+test_that("match_by_simpler_name takes `min_score`", {
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
   expect_error(
-    match_by_simpler_name(x, y, threshold = 0.5),
+    match_by_simpler_name(x, y, min_score = 0.5),
     NA
   )
 })
@@ -52,7 +52,7 @@ test_that("match_by_simpler_name has all columns in loanbook and ald", {
   )
 
   expect_true(
-    rlang::has_name(match_by_simpler_name(x, y, threshold = 0), "ald_column")
+    rlang::has_name(match_by_simpler_name(x, y, min_score = 0), "ald_column")
   )
 })
 

@@ -9,7 +9,7 @@ match_by_simpler_name(
   y,
   ...,
   by_sector = TRUE,
-  threshold = 0.8,
+  min_score = 0.8,
   method = "jw",
   p = 0.1
 )
@@ -23,8 +23,8 @@ match_by_simpler_name(
 
 \item{by_sector}{Should the combinations be done by sector?}
 
-\item{threshold}{A length-1 numeric vector giving a \code{score} to filter the
-result, so that it only contains values above \code{threshold}.}
+\item{min_score}{A number (length-1) to set the minimum \code{score} values you
+want to pick.}
 
 \item{method}{Method for distance calculation. The default is \code{"osa"},
 see \code{\link[stringdist]{stringdist-metrics}}.}
@@ -47,11 +47,11 @@ library(dplyr)
 x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
-match_by_simpler_name(x, y, threshold = 0)
+match_by_simpler_name(x, y, min_score = 0)
 
-match_by_simpler_name(x, y, threshold = 0.5, by_sector = FALSE)
+match_by_simpler_name(x, y, min_score = 0.5, by_sector = FALSE)
 
-match_by_simpler_name(x, y, threshold = 0.5, by_sector = TRUE)
+match_by_simpler_name(x, y, min_score = 0.5, by_sector = TRUE)
 }
 \seealso{
 Other user-oriented: 

@@ -2,8 +2,8 @@
 #'
 #' @inherit match_all_against_all
 #'
-#' @param threshold A length-1 numeric vector giving a `score` to filter the
-#'   result, so that it only contains values above `threshold`.
+#' @param min_score A number (length-1) to set the minimum `score` values you
+#'   want to pick.
 #'
 #' @export
 #'
@@ -14,16 +14,16 @@
 #' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
-#' match_by_simpler_name(x, y, threshold = 0)
+#' match_by_simpler_name(x, y, min_score = 0)
 #'
-#' match_by_simpler_name(x, y, threshold = 0.5, by_sector = FALSE)
+#' match_by_simpler_name(x, y, min_score = 0.5, by_sector = FALSE)
 #'
-#' match_by_simpler_name(x, y, threshold = 0.5, by_sector = TRUE)
+#' match_by_simpler_name(x, y, min_score = 0.5, by_sector = TRUE)
 match_by_simpler_name <- function(x,
                                   y,
                                   ...,
                                   by_sector = TRUE,
-                                  threshold = 0.8,
+                                  min_score = 0.8,
                                   method = "jw",
                                   p = 0.1) {
   matched <- match_all_against_all(
@@ -41,7 +41,7 @@ match_by_simpler_name <- function(x,
   with_sector_xy <- with_sector_x %>%
     left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
     dplyr::rename(sector_y = .data$sector)
-  out <- dplyr::filter(with_sector_xy, .data$score >= threshold)
+  out <- dplyr::filter(with_sector_xy, .data$score >= min_score)
 
   out
 }

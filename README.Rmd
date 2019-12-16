@@ -95,11 +95,13 @@ loanbook <- loanbook_demo %>%
   prepare_loanbook_for_matching() %>% 
   # `simpler_name` and `name` move to the left, for clarity
   select(simpler_name, name, everything())
+
 loanbook
 
 ald <- ald_demo %>% 
   prepare_ald_for_matching() %>% 
   select(simpler_name, name, everything())
+
 ald
 ```
 
@@ -108,32 +110,21 @@ ald
 `match_by_simpler_name()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
 
 ```{r}
-matched_by_sector <- match_by_simpler_name(loanbook, ald, threshold = 0)
-
-matched_by_sector
+match_by_simpler_name(loanbook, ald)
 ```
 
-By default, names are compared against ald names in the same sector. `by_sector = FALSE` increases the matching run time on large datasets, and the amount of nonsensical matches. 
+By default, names are compared against ald names in the same sector (i.e. `by_sector = TRUE`). Use `by_sector = FALSE` removes this limitation, but it increases the matching run time on large datasets, and the amount of nonsensical matches. 
 
 ```{r}
-match_by_simpler_name(
-  loanbook, ald, 
-  by_sector = FALSE,
-   threshold = 0
-)
+match_by_simpler_name(loanbook, ald, by_sector = FALSE)
 ```
 
-Use `threshold` to pick rows above some score.
+`min_score` allows you to pick rows at and above some `score`.
 
 ```{r}
-matching_scores <- match_by_simpler_name(
-  loanbook, ald, 
-  by_sector = FALSE,
-  threshold = 0.9
-)
+matching_scores <- match_by_simpler_name(loanbook, ald, min_score = 0.9)
 
-matching_scores %>% 
-  arrange(score)
+matching_scores
 ```
 
 ### 3. Write the output of the previous step into a .csv file
