@@ -1,14 +1,5 @@
 library(dplyr)
 
-test_that("match_loanbook_with_ald recovers `sector`", {
-  x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-  y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
-
-  expect_true(
-    rlang::has_name(match_loanbook_with_ald(x, y), "sector")
-  )
-})
-
 test_that("match_loanbook_with_ald takes `threshold`", {
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
@@ -34,41 +25,20 @@ test_that("match_loanbook_with_ald has all formals in match_all_against_all", {
   expect_equal(setdiff(expected, actual), character(0))
 })
 
-#
-# test_that("match_loanbook_with_ald recovers `sector`", {
-#   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-#   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
-#
-#   out <- match_all_against_all(x, y, by_sector = FALSE)
-#   out
-#
-#   # Recover sectors from x & y
-#   left_join(out, x, by = c("simpler_name_x" = "simpler_name")) %>%
-#     dplyr::rename(sector_x = sector) %>%
-#     left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
-#     dplyr::rename(sector_y = sector)
-#
-# })
-# test_that("match_loanbook_with_ald recovers `sector`", {
-#   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-#   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
-#
-#   out <- match_all_against_all(x, y)
-#
-#   # Recover sector
-#   left_join(out, x, by = c("simpler_name_x" = "simpler_name"))
-#
-#   threshold <- 0.5
-#   match_all_against_all(x, y) %>%
-#     dplyr::filter(score >= threshold)
-#
-#   out <- match_all_against_all(x, y, by_sector = FALSE)
-#   out
-#
-#   # Recover sectors from x & y
-#   left_join(out, x, by = c("simpler_name_x" = "simpler_name")) %>%
-#     dplyr::rename(sector_x = sector) %>%
-#     left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
-#     dplyr::rename(sector_y = sector)
-#
-# })
+test_that("match_loanbook_with_ald recovers `sector_x`", {
+  x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
+  y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+
+  expect_true(
+    rlang::has_name(match_loanbook_with_ald(x, y), "sector_x")
+  )
+})
+
+test_that("match_loanbook_with_ald recovers `sector_y`", {
+  x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
+  y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+
+  expect_true(
+    rlang::has_name(match_loanbook_with_ald(x, y), "sector_y")
+  )
+})
