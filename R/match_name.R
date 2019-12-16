@@ -20,15 +20,19 @@
 #'
 #' match_name(x, y, min_score = 0.5, by_sector = TRUE)
 match_name <- function(x,
-                                  y,
-                                  ...,
-                                  by_sector = TRUE,
-                                  min_score = 0.8,
-                                  method = "jw",
-                                  p = 0.1) {
+                       y,
+                       ...,
+                       by_sector = TRUE,
+                       min_score = 0.8,
+                       method = "jw",
+                       p = 0.1,
+                       overwrite = NULL) {
+  prep_lbk <- prepare_loanbook_for_matching(data = x, overwrite = overwrite)
+  prep_ald <- prepare_ald_for_matching(data = y)
+
   matched <- match_all_against_all(
-    x = x,
-    y = y,
+    x = prep_lbk,
+    y = prep_ald,
     ...,
     by_sector = by_sector,
     method = method,
@@ -36,10 +40,10 @@ match_name <- function(x,
   )
 
   with_sector_x <- matched %>%
-    left_join(x, by = c("simpler_name_x" = "simpler_name")) %>%
+    left_join(prep_lbk, by = c("simpler_name_x" = "simpler_name")) %>%
     dplyr::rename(sector_x = .data$sector)
   with_sector_xy <- with_sector_x %>%
-    left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
+    left_join(prep_ald, by = c("simpler_name_y" = "simpler_name")) %>%
     dplyr::rename(sector_y = .data$sector)
   out <- filter(with_sector_xy, .data$score >= min_score)
 
