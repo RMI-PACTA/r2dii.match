@@ -1,20 +1,15 @@
 library(dplyr)
 
 test_that("match_loanbook_with_ald recovers `sector`", {
-  library(dplyr)
-
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
-  # Recover sector
-  out <- match_loanbook_with_ald(x, y)
-
-  expect_true(rlang::has_name(out, "sector"))
+  expect_true(
+    rlang::has_name(match_loanbook_with_ald(x, y), "sector")
+  )
 })
 
 test_that("match_loanbook_with_ald takes `threshold`", {
-  library(dplyr)
-
   x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
   y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 
