@@ -105,10 +105,10 @@ ald
 
 ### 3. Score the goodness of the match between the loanbook and ald datasets
 
-`match_all_against_all()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
+`match_by_simpler_name()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
 
 ```{r}
-matched_by_sector <- match_all_against_all(loanbook, ald)
+matched_by_sector <- match_by_simpler_name(loanbook, ald, threshold = 0)
 
 matched_by_sector
 ```
@@ -116,35 +116,21 @@ matched_by_sector
 By default, names are compared against ald names in the same sector. `by_sector = FALSE` increases the matching run time on large datasets, and the amount of nonsensical matches. 
 
 ```{r}
-match_all_against_all(
+match_by_simpler_name(
   loanbook, ald, 
-  by_sector = FALSE
+  by_sector = FALSE,
+   threshold = 0
 )
 ```
 
-You can recover the `sector` column from the `loanbook` and `ald` dataset with `dplyr::left_join()`:
+Use `threshold` to pick rows above some score.
 
 ```{r}
-matched_by_sector %>% 
-  left_join(loanbook, by = c("simpler_name_x" = "simpler_name"))
-```
-
-You can also recover the `sector` column from the `ald` dataset with a similar strategy:
-
-```{r}
-matched_by_sector %>% 
-  left_join(loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
-  dplyr::rename(sector_x = sector) %>%
-  left_join(ald, by = c("simpler_name_y" = "simpler_name")) %>%
-  dplyr::rename(sector_y = sector)
-```
-
-You may pick rows at and above some score with `dplyr::fileter()`:
-
-```{r}
-threshold <- 0.9
-matching_scores <- matched_by_sector %>%
-  dplyr::filter(score >= threshold)
+matching_scores <- match_by_simpler_name(
+  loanbook, ald, 
+  by_sector = FALSE,
+  threshold = 0.9
+)
 
 matching_scores %>% 
   arrange(score)

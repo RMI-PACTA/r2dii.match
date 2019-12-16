@@ -36,12 +36,12 @@ library(r2dii.match)
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
 library(tidyverse)
-#> -- Attaching packages ---------------------------- tidyverse 1.3.0 --
+#> -- Attaching packages ----------------------------------- tidyverse 1.3.0 --
 #> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
 #> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
 #> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
 #> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
-#> -- Conflicts ------------------------------- tidyverse_conflicts() --
+#> -- Conflicts -------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ```
@@ -152,8 +152,7 @@ loanbook <- loanbook_demo %>%
   prepare_loanbook_for_matching() %>% 
   # `simpler_name` and `name` move to the left, for clarity
   select(simpler_name, name, everything())
-#> Warning: Overwritting `id_direct_loantaker`.
-#> Warning: Overwritting `id_ultimate_parent`.
+#> Warning: Uniquifying `id_direct_loantaker` & `id_ultimate_parent`.
 #> Adding new columns `sector` and `borderline`.
 loanbook
 #> # A tibble: 638 x 6
@@ -193,27 +192,27 @@ ald
 
 ### 3\. Score the goodness of the match between the loanbook and ald datasets
 
-`match_all_against_all()` scores the similarity between `simpler_name`
+`match_by_simpler_name()` scores the similarity between `simpler_name`
 values in the prepared loanbook and ald datasets.
 
 ``` r
-matched_by_sector <- match_all_against_all(loanbook, ald)
+matched_by_sector <- match_by_simpler_name(loanbook, ald, threshold = 0)
 
 matched_by_sector
-#> # A tibble: 64,457 x 3
-#>    simpler_name_x simpler_name_y            score
-#>    <chr>          <chr>                     <dbl>
-#>  1 astonmartin    astonmartin               1    
-#>  2 astonmartin    avtozaz                   0.681
-#>  3 astonmartin    bogdan                    0.480
-#>  4 astonmartin    chauto                    0.591
-#>  5 astonmartin    chehejia                  0.311
-#>  6 astonmartin    chtcauto                  0.455
-#>  7 astonmartin    dongfenghonda             0.501
-#>  8 astonmartin    dongfengluxgen            0.496
-#>  9 astonmartin    electricmobilitysolutions 0.456
-#> 10 astonmartin    faradayfuture             0.474
-#> # … with 64,447 more rows
+#> # A tibble: 377,058 x 10
+#>    simpler_name_x simpler_name_y score name.x level id    sector_x source name.y
+#>    <chr>          <chr>          <dbl> <chr>  <chr> <chr> <chr>    <chr>  <chr> 
+#>  1 abahydropower… abahydropower… 1     Aba H… ulti… UP1   power    loanb… aba h…
+#>  2 abahydropower… achinskyglino… 0.535 Aba H… ulti… UP1   power    loanb… achin…
+#>  3 abahydropower… affinityrenew… 0.598 Aba H… ulti… UP1   power    loanb… affin…
+#>  4 abahydropower… africaoil corp 0.599 Aba H… ulti… UP1   power    loanb… afric…
+#>  5 abahydropower… africonshp sa  0.581 Aba H… ulti… UP1   power    loanb… afric…
+#>  6 abahydropower… agnisteelspri… 0.535 Aba H… ulti… UP1   power    loanb… agni …
+#>  7 abahydropower… agrenewables   0.615 Aba H… ulti… UP1   power    loanb… agren…
+#>  8 abahydropower… airasiaxbhd    0.545 Aba H… ulti… UP1   power    loanb… airas…
+#>  9 abahydropower… airbaltic      0.545 Aba H… ulti… UP1   power    loanb… airba…
+#> 10 abahydropower… airblue        0.551 Aba H… ulti… UP1   power    loanb… airbl…
+#> # … with 377,048 more rows, and 1 more variable: sector_y <chr>
 ```
 
 By default, names are compared against ald names in the same sector.
@@ -221,96 +220,52 @@ By default, names are compared against ald names in the same sector.
 and the amount of nonsensical matches.
 
 ``` r
-match_all_against_all(
+match_by_simpler_name(
   loanbook, ald, 
-  by_sector = FALSE
+  by_sector = FALSE,
+   threshold = 0
 )
-#> # A tibble: 308,228 x 3
-#>    simpler_name_x         simpler_name_y                score
-#>    <chr>                  <chr>                         <dbl>
-#>  1 abahydropowergenco ltd abahydropowergenco ltd        1    
-#>  2 abahydropowergenco ltd achinskyglinoziemskijkombinat 0.535
-#>  3 abahydropowergenco ltd affinityrenewables inc        0.598
-#>  4 abahydropowergenco ltd africaoil corp                0.599
-#>  5 abahydropowergenco ltd africonshp sa                 0.581
-#>  6 abahydropowergenco ltd agnisteelsprivate ltd         0.535
-#>  7 abahydropowergenco ltd agrenewables                  0.615
-#>  8 abahydropowergenco ltd airasiaxbhd                   0.545
-#>  9 abahydropowergenco ltd airbaltic                     0.545
-#> 10 abahydropowergenco ltd airblue                       0.551
-#> # … with 308,218 more rows
-```
-
-You can recover the `sector` column from the `loanbook` and `ald`
-dataset with `dplyr::left_join()`:
-
-``` r
-matched_by_sector %>% 
-  left_join(loanbook, by = c("simpler_name_x" = "simpler_name"))
-#> # A tibble: 66,156 x 8
-#>    simpler_name_x simpler_name_y     score name     level   id    sector  source
-#>    <chr>          <chr>              <dbl> <chr>    <chr>   <chr> <chr>   <chr> 
-#>  1 astonmartin    astonmartin        1     Aston M… ultima… UP23  automo… loanb…
-#>  2 astonmartin    avtozaz            0.681 Aston M… ultima… UP23  automo… loanb…
-#>  3 astonmartin    bogdan             0.480 Aston M… ultima… UP23  automo… loanb…
-#>  4 astonmartin    chauto             0.591 Aston M… ultima… UP23  automo… loanb…
-#>  5 astonmartin    chehejia           0.311 Aston M… ultima… UP23  automo… loanb…
-#>  6 astonmartin    chtcauto           0.455 Aston M… ultima… UP23  automo… loanb…
-#>  7 astonmartin    dongfenghonda      0.501 Aston M… ultima… UP23  automo… loanb…
-#>  8 astonmartin    dongfengluxgen     0.496 Aston M… ultima… UP23  automo… loanb…
-#>  9 astonmartin    electricmobilitys… 0.456 Aston M… ultima… UP23  automo… loanb…
-#> 10 astonmartin    faradayfuture      0.474 Aston M… ultima… UP23  automo… loanb…
-#> # … with 66,146 more rows
-```
-
-You can also recover the `sector` column from the `ald` dataset with a
-similar strategy:
-
-``` r
-matched_by_sector %>% 
-  left_join(loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
-  dplyr::rename(sector_x = sector) %>%
-  left_join(ald, by = c("simpler_name_y" = "simpler_name")) %>%
-  dplyr::rename(sector_y = sector)
-#> # A tibble: 89,093 x 10
+#> # A tibble: 377,058 x 10
 #>    simpler_name_x simpler_name_y score name.x level id    sector_x source name.y
 #>    <chr>          <chr>          <dbl> <chr>  <chr> <chr> <chr>    <chr>  <chr> 
-#>  1 astonmartin    astonmartin    1     Aston… ulti… UP23  automot… loanb… aston…
-#>  2 astonmartin    avtozaz        0.681 Aston… ulti… UP23  automot… loanb… avtoz…
-#>  3 astonmartin    bogdan         0.480 Aston… ulti… UP23  automot… loanb… bogdan
-#>  4 astonmartin    chauto         0.591 Aston… ulti… UP23  automot… loanb… ch au…
-#>  5 astonmartin    chehejia       0.311 Aston… ulti… UP23  automot… loanb… chehe…
-#>  6 astonmartin    chtcauto       0.455 Aston… ulti… UP23  automot… loanb… chtc …
-#>  7 astonmartin    dongfenghonda  0.501 Aston… ulti… UP23  automot… loanb… dongf…
-#>  8 astonmartin    dongfengluxgen 0.496 Aston… ulti… UP23  automot… loanb… dongf…
-#>  9 astonmartin    electricmobil… 0.456 Aston… ulti… UP23  automot… loanb… elect…
-#> 10 astonmartin    faradayfuture  0.474 Aston… ulti… UP23  automot… loanb… farad…
-#> # … with 89,083 more rows, and 1 more variable: sector_y <chr>
+#>  1 abahydropower… abahydropower… 1     Aba H… ulti… UP1   power    loanb… aba h…
+#>  2 abahydropower… achinskyglino… 0.535 Aba H… ulti… UP1   power    loanb… achin…
+#>  3 abahydropower… affinityrenew… 0.598 Aba H… ulti… UP1   power    loanb… affin…
+#>  4 abahydropower… africaoil corp 0.599 Aba H… ulti… UP1   power    loanb… afric…
+#>  5 abahydropower… africonshp sa  0.581 Aba H… ulti… UP1   power    loanb… afric…
+#>  6 abahydropower… agnisteelspri… 0.535 Aba H… ulti… UP1   power    loanb… agni …
+#>  7 abahydropower… agrenewables   0.615 Aba H… ulti… UP1   power    loanb… agren…
+#>  8 abahydropower… airasiaxbhd    0.545 Aba H… ulti… UP1   power    loanb… airas…
+#>  9 abahydropower… airbaltic      0.545 Aba H… ulti… UP1   power    loanb… airba…
+#> 10 abahydropower… airblue        0.551 Aba H… ulti… UP1   power    loanb… airbl…
+#> # … with 377,048 more rows, and 1 more variable: sector_y <chr>
 ```
 
-You may pick rows at and above some score with `dplyr::fileter()`:
+Use `threshold` to pick rows above some score.
 
 ``` r
-threshold <- 0.9
-matching_scores <- matched_by_sector %>%
-  dplyr::filter(score >= threshold)
+matching_scores <- match_by_simpler_name(
+  loanbook, ald, 
+  by_sector = FALSE,
+  threshold = 0.9
+)
 
 matching_scores %>% 
   arrange(score)
-#> # A tibble: 393 x 3
-#>    simpler_name_x              simpler_name_y              score
-#>    <chr>                       <chr>                       <dbl>
-#>  1 hanjinoverseasbulk ltd      hanjinoverseastankerpte ltd 0.903
-#>  2 hanjinoverseastankerpte ltd hanjinoverseasbulk ltd      0.903
-#>  3 yingjianghongfuinvestco ltd yingjianglonghuico ltd      0.904
-#>  4 yingjianglonghuico ltd      yingjianghongfuinvestco ltd 0.904
-#>  5 bhushanenergy ltd           bhagwanenergy ltd           0.906
-#>  6 handong                     handongmarine               0.908
-#>  7 handongmarine               handong                     0.908
-#>  8 hanaroshpcoltdbusan         hanaroshpcoltdseoul         0.924
-#>  9 hanaroshpcoltdseoul         hanaroshpcoltdbusan         0.924
-#> 10 hamaurakaiun                hamayukaiun                 0.928
-#> # … with 383 more rows
+#> # A tibble: 630 x 10
+#>    simpler_name_x simpler_name_y score name.x level id    sector_x source name.y
+#>    <chr>          <chr>          <dbl> <chr>  <chr> <chr> <chr>    <chr>  <chr> 
+#>  1 hanjinoversea… hanjinoversea… 0.903 Hanji… dire… C91   shipping loanb… hanji…
+#>  2 hanjinoversea… hanjinoversea… 0.903 Hanji… dire… C92   shipping loanb… hanji…
+#>  3 yingjianghong… yingjianglong… 0.904 Yingj… dire… C239  power    loanb… yingj…
+#>  4 yingjianglong… yingjianghong… 0.904 Yingj… dire… C240  power    loanb… yingj…
+#>  5 bhushanenergy… bhagwanenergy… 0.906 Bhush… ulti… UP33  power    loanb… bhagw…
+#>  6 handong        handongmarine  0.908 Han D… dire… C70   shipping loanb… hando…
+#>  7 handongmarine  handong        0.908 Hando… dire… C81   shipping loanb… han d…
+#>  8 hanaroshpcolt… hanaroshpcolt… 0.924 Hanar… dire… C78   shipping loanb… hanar…
+#>  9 hanaroshpcolt… hanaroshpcolt… 0.924 Hanar… dire… C79   shipping loanb… hanar…
+#> 10 hamaurakaiun   hamayukaiun    0.928 Hamau… dire… C58   shipping loanb… hamay…
+#> # … with 620 more rows, and 1 more variable: sector_y <chr>
 ```
 
 ### 3\. Write the output of the previous step into a .csv file
