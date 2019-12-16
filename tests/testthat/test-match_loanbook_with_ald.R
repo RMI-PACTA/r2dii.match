@@ -42,3 +42,16 @@ test_that("match_loanbook_with_ald recovers `sector_y`", {
     rlang::has_name(match_loanbook_with_ald(x, y), "sector_y")
   )
 })
+
+test_that("match_loanbook_with_ald has all columns in loanbook and ald", {
+  x <- tibble(lbk_column = "col",  sector = "a", simpler_name = "xa")
+  y <- tibble(ald_column = "col",  sector = "a", simpler_name = "ya")
+
+  expect_true(
+    rlang::has_name(match_loanbook_with_ald(x, y), "lbk_column")
+  )
+
+  expect_true(
+    rlang::has_name(match_loanbook_with_ald(x, y, threshold = 0), "ald_column")
+  )
+})
