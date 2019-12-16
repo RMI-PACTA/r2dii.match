@@ -1,3 +1,17 @@
+#' Match two datasets, commonly a loanbook and ald, by the `simpler_name` column
+#'
+#' @inherit match_all_against_all
+#'
+#' @param threshold A length-1 numeric vector giving a `score` to filter the
+#'   result, so that it only contains values above `threshold`.
+#'
+#' @export
+#'
+#' @examples
+#' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
+#' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+#'
+#' match_by_simpler_name(x, y, treshold = 0)
 match_by_simpler_name <- function(x,
                                   y,
                                   ...,
