@@ -55,3 +55,15 @@ test_that("match_by_simpler_name has all columns in loanbook and ald", {
     rlang::has_name(match_by_simpler_name(x, y, threshold = 0), "ald_column")
   )
 })
+
+test_that("match_by_simpler_name is sensitive to by_sector", {
+  x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
+  y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
+
+  expect_false(
+    identical(
+      match_by_simpler_name(x, y, by_sector = TRUE),
+      match_by_simpler_name(x, y, by_sector = FALSE)
+    )
+  )
+})

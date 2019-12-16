@@ -22,6 +22,18 @@ test_that("match_all_against_all has the expected names", {
   )
 })
 
+test_that("match_all_against_all is sensitive to by_sector", {
+  x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
+  y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
+
+  expect_false(
+    identical(
+      match_all_against_all(x, y, by_sector = TRUE),
+      match_all_against_all(x, y, by_sector = FALSE)
+    )
+  )
+})
+
 test_that("match_all_against_all scores extreme cases correctly", {
   x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
   y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))

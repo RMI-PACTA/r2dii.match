@@ -14,10 +14,11 @@
 #' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
-#' match_by_simpler_name(x, y, threshold = 0.5)
+#' match_by_simpler_name(x, y, threshold = 0)
 #'
-#' # FIXME: Bug in `by_sector`?
 #' match_by_simpler_name(x, y, threshold = 0.5, by_sector = FALSE)
+#'
+#' match_by_simpler_name(x, y, threshold = 0.5, by_sector = TRUE)
 match_by_simpler_name <- function(x,
                                   y,
                                   ...,
@@ -25,7 +26,14 @@ match_by_simpler_name <- function(x,
                                   threshold = 0.8,
                                   method = "jw",
                                   p = 0.1) {
-  matched <- match_all_against_all(x, y, by_sector = FALSE)
+  matched <- match_all_against_all(
+    x = x,
+    y = y,
+    ...,
+    by_sector = by_sector,
+    method = method,
+    p = p
+  )
 
   with_sector_x <- matched %>%
     left_join(x, by = c("simpler_name_x" = "simpler_name")) %>%
