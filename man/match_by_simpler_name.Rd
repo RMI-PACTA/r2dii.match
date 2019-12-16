@@ -41,6 +41,9 @@ Apply \code{string_similarity()} to all combinations of \code{simpler_name} valu
 from two dataframes.
 }
 \examples{
+# Use tibble()
+library(dplyr)
+
 x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 

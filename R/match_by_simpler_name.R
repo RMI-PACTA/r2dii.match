@@ -8,6 +8,9 @@
 #' @export
 #'
 #' @examples
+#' # Use tibble()
+#' library(dplyr)
+#'
 #' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
@@ -26,11 +29,11 @@ match_by_simpler_name <- function(x,
 
   with_sector_x <- matched %>%
     left_join(x, by = c("simpler_name_x" = "simpler_name")) %>%
-    dplyr::rename(sector_x = sector)
+    dplyr::rename(sector_x = .data$sector)
   with_sector_xy <- with_sector_x %>%
     left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
-    dplyr::rename(sector_y = sector)
-  out <- dplyr::filter(with_sector_xy, score >= threshold)
+    dplyr::rename(sector_y = .data$sector)
+  out <- dplyr::filter(with_sector_xy, .data$score >= threshold)
 
   out
 }
