@@ -194,11 +194,11 @@ ald
 
 ### 3\. Score the goodness of the match between the loanbook and ald datasets
 
-`match_by_simpler_name()` scores the similarity between `simpler_name`
-values in the prepared loanbook and ald datasets.
+`match_name()` scores the similarity between `simpler_name` values in
+the prepared loanbook and ald datasets.
 
 ``` r
-match_by_simpler_name(loanbook, ald)
+match_name(loanbook, ald)
 #> # A tibble: 833 x 10
 #>    simpler_name_x simpler_name_y score name.x level id    sector_x source name.y
 #>    <chr>          <chr>          <dbl> <chr>  <chr> <chr> <chr>    <chr>  <chr> 
@@ -221,7 +221,7 @@ limitation, but it increases the matching run time on large datasets,
 and the amount of nonsensical matches.
 
 ``` r
-match_by_simpler_name(loanbook, ald, by_sector = FALSE)
+match_name(loanbook, ald, by_sector = FALSE)
 #> # A tibble: 1,101 x 10
 #>    simpler_name_x simpler_name_y score name.x level id    sector_x source name.y
 #>    <chr>          <chr>          <dbl> <chr>  <chr> <chr> <chr>    <chr>  <chr> 
@@ -241,7 +241,7 @@ match_by_simpler_name(loanbook, ald, by_sector = FALSE)
 `min_score` allows you to pick rows at and above some `score`.
 
 ``` r
-matching_scores <- match_by_simpler_name(loanbook, ald, min_score = 0.9)
+matching_scores <- match_name(loanbook, ald, min_score = 0.9)
 
 matching_scores
 #> # A tibble: 438 x 10

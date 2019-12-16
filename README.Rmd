@@ -107,22 +107,22 @@ ald
 
 ### 3. Score the goodness of the match between the loanbook and ald datasets
 
-`match_by_simpler_name()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
+`match_name()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
 
 ```{r}
-match_by_simpler_name(loanbook, ald)
+match_name(loanbook, ald)
 ```
 
 By default, names are compared against ald names in the same sector (i.e. `by_sector = TRUE`). Use `by_sector = FALSE` removes this limitation, but it increases the matching run time on large datasets, and the amount of nonsensical matches. 
 
 ```{r}
-match_by_simpler_name(loanbook, ald, by_sector = FALSE)
+match_name(loanbook, ald, by_sector = FALSE)
 ```
 
 `min_score` allows you to pick rows at and above some `score`.
 
 ```{r}
-matching_scores <- match_by_simpler_name(loanbook, ald, min_score = 0.9)
+matching_scores <- match_name(loanbook, ald, min_score = 0.9)
 
 matching_scores
 ```

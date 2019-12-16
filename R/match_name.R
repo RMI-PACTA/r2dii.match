@@ -14,12 +14,12 @@
 #' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
 #' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
 #'
-#' match_by_simpler_name(x, y, min_score = 0)
+#' match_name(x, y, min_score = 0)
 #'
-#' match_by_simpler_name(x, y, min_score = 0.5, by_sector = FALSE)
+#' match_name(x, y, min_score = 0.5, by_sector = FALSE)
 #'
-#' match_by_simpler_name(x, y, min_score = 0.5, by_sector = TRUE)
-match_by_simpler_name <- function(x,
+#' match_name(x, y, min_score = 0.5, by_sector = TRUE)
+match_name <- function(x,
                                   y,
                                   ...,
                                   by_sector = TRUE,
