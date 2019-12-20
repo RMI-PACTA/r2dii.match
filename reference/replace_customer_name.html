@@ -204,18 +204,18 @@ should be cut-off.</p></td>
   <span class='kw'>remove_ownership</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</div><div class='output co'>#&gt; [1] "companyname"</div><div class='input'>
 <span class='fu'>get_replacements</span>()</div><div class='output co'>#&gt; # A tibble: 61 x 2
-#&gt;    from    to   
-#&gt;    &lt;chr&gt;   &lt;chr&gt;
-#&gt;  1 " and " " &amp; "
-#&gt;  2 " en "  " &amp; "
-#&gt;  3 " och " " &amp; "
-#&gt;  4 " und " " &amp; "
-#&gt;  5 (pjsc)  ""   
-#&gt;  6 (pte)   ""   
-#&gt;  7 (pvt)   ""   
-#&gt;  8 0       null 
-#&gt;  9 1       one  
-#&gt; 10 2       two  
+#&gt;    from     to    
+#&gt;    &lt;chr&gt;    &lt;chr&gt; 
+#&gt;  1 " and "  " &amp; " 
+#&gt;  2 " en "   " &amp; " 
+#&gt;  3 " och "  " &amp; " 
+#&gt;  4 " und "  " &amp; " 
+#&gt;  5 "(pjsc)" ""    
+#&gt;  6 "(pte)"  ""    
+#&gt;  7 "(pvt)"  ""    
+#&gt;  8 "0"      "null"
+#&gt;  9 "1"      "one" 
+#&gt; 10 "2"      "two" 
 #&gt; # … with 51 more rows</div><div class='input'>
 <span class='no'>append_replacements</span> <span class='kw'>&lt;-</span> <span class='fu'>get_replacements</span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>add_row</a></span>(
@@ -223,18 +223,18 @@ should be cut-off.</p></td>
     <span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA"</span>, <span class='st'>"BB"</span>), <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"alpha"</span>, <span class='st'>"beta"</span>)
   )
 <span class='no'>append_replacements</span></div><div class='output co'>#&gt; # A tibble: 63 x 2
-#&gt;    from    to   
-#&gt;    &lt;chr&gt;   &lt;chr&gt;
-#&gt;  1 AA      alpha
-#&gt;  2 BB      beta 
-#&gt;  3 " and " " &amp; "
-#&gt;  4 " en "  " &amp; "
-#&gt;  5 " och " " &amp; "
-#&gt;  6 " und " " &amp; "
-#&gt;  7 (pjsc)  ""   
-#&gt;  8 (pte)   ""   
-#&gt;  9 (pvt)   ""   
-#&gt; 10 0       null 
+#&gt;    from     to     
+#&gt;    &lt;chr&gt;    &lt;chr&gt;  
+#&gt;  1 "AA"     "alpha"
+#&gt;  2 "BB"     "beta" 
+#&gt;  3 " and "  " &amp; "  
+#&gt;  4 " en "   " &amp; "  
+#&gt;  5 " och "  " &amp; "  
+#&gt;  6 " und "  " &amp; "  
+#&gt;  7 "(pjsc)" ""     
+#&gt;  8 "(pte)"  ""     
+#&gt;  9 "(pvt)"  ""     
+#&gt; 10 "0"      "null" 
 #&gt; # … with 53 more rows</div><div class='input'>
 <span class='co'># And in combination with `replace_customer_name()`</span>
 <span class='fu'>replace_customer_name</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"AA"</span>, <span class='st'>"BB"</span>, <span class='st'>"1"</span>), <span class='kw'>from_to</span> <span class='kw'>=</span> <span class='no'>append_replacements</span>)</div><div class='output co'>#&gt; [1] "alpha" "beta"  "one"  </div></pre>

@@ -209,18 +209,18 @@
 <a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># or appended to the existing list of replacements:</span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw"><a href="../reference/replace_customer_name.html">get_replacements</a></span>()</a>
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; # A tibble: 61 x 2</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;    from    to   </span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;  1 " and " " &amp; "</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt;  2 " en "  " &amp; "</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt;  3 " och " " &amp; "</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt;  4 " und " " &amp; "</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt;  5 (pjsc)  ""   </span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt;  6 (pte)   ""   </span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt;  7 (pvt)   ""   </span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt;  8 0       null </span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt;  9 1       one  </span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; 10 2       two  </span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;    from     to    </span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;  1 " and "  " &amp; " </span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt;  2 " en "   " &amp; " </span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt;  3 " och "  " &amp; " </span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt;  4 " und "  " &amp; " </span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt;  5 "(pjsc)" ""    </span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt;  6 "(pte)"  ""    </span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt;  7 "(pvt)"  ""    </span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt;  8 "0"      "null"</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt;  9 "1"      "one" </span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; 10 "2"      "two" </span></a>
 <a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; # … with 51 more rows</span></a>
 <a class="sourceLine" id="cb5-26" data-line-number="26"></a>
 <a class="sourceLine" id="cb5-27" data-line-number="27">appended_replacements &lt;-<span class="st"> </span><span class="kw"><a href="../reference/replace_customer_name.html">get_replacements</a></span>() <span class="op">%&gt;%</span></a>
@@ -230,18 +230,18 @@
 <a class="sourceLine" id="cb5-31" data-line-number="31">  )</a>
 <a class="sourceLine" id="cb5-32" data-line-number="32">appended_replacements</a>
 <a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt; # A tibble: 63 x 2</span></a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt;    from    to   </span></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt;  1 AA      alpha</span></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt;  2 BB      beta </span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt;  3 " and " " &amp; "</span></a>
-<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">#&gt;  4 " en "  " &amp; "</span></a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">#&gt;  5 " och " " &amp; "</span></a>
-<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">#&gt;  6 " und " " &amp; "</span></a>
-<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">#&gt;  7 (pjsc)  ""   </span></a>
-<a class="sourceLine" id="cb5-43" data-line-number="43"><span class="co">#&gt;  8 (pte)   ""   </span></a>
-<a class="sourceLine" id="cb5-44" data-line-number="44"><span class="co">#&gt;  9 (pvt)   ""   </span></a>
-<a class="sourceLine" id="cb5-45" data-line-number="45"><span class="co">#&gt; 10 0       null </span></a>
+<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt;    from     to     </span></a>
+<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;  </span></a>
+<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt;  1 "AA"     "alpha"</span></a>
+<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt;  2 "BB"     "beta" </span></a>
+<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt;  3 " and "  " &amp; "  </span></a>
+<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">#&gt;  4 " en "   " &amp; "  </span></a>
+<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">#&gt;  5 " och "  " &amp; "  </span></a>
+<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">#&gt;  6 " und "  " &amp; "  </span></a>
+<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">#&gt;  7 "(pjsc)" ""     </span></a>
+<a class="sourceLine" id="cb5-43" data-line-number="43"><span class="co">#&gt;  8 "(pte)"  ""     </span></a>
+<a class="sourceLine" id="cb5-44" data-line-number="44"><span class="co">#&gt;  9 "(pvt)"  ""     </span></a>
+<a class="sourceLine" id="cb5-45" data-line-number="45"><span class="co">#&gt; 10 "0"      "null" </span></a>
 <a class="sourceLine" id="cb5-46" data-line-number="46"><span class="co">#&gt; # … with 53 more rows</span></a>
 <a class="sourceLine" id="cb5-47" data-line-number="47"></a>
 <a class="sourceLine" id="cb5-48" data-line-number="48"><span class="co"># And in combination with `replace_customer_name()`</span></a>
