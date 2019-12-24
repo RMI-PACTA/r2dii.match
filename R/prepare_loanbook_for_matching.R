@@ -80,6 +80,8 @@ may_add_sector_and_borderline <- function(data) {
     message("Adding new columns `sector` and `borderline`.")
     data2 <- bridge_sector(data)
   }
+
+  data2
 }
 
 may_overwrite_name_and_sector <- function(out, overwrite) {
