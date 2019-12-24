@@ -2,7 +2,7 @@
 #' @importFrom dplyr tibble tribble if_else rename distinct
 #' @importFrom dplyr filter select mutate left_join
 #' @importFrom purrr reduce
-#' @importFrom rlang has_name
+#' @importFrom rlang has_name set_names
 NULL
 
 globalVariables(c(".data", "."))

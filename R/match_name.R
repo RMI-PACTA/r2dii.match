@@ -2,6 +2,7 @@
 #'
 #' @inherit match_all_against_all
 #'
+#' @inheritParams prepare_loanbook_for_matching
 #' @param min_score A number (length-1) to set the minimum `score` values you
 #'   want to pick.
 #'
@@ -10,15 +11,13 @@
 #' @examples
 #' # Use tibble()
 #' library(dplyr)
+#' library(r2dii.dataraw)
 #'
-#' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-#' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+#' match_name(loanbook_demo, ald_demo, min_score = 0)
 #'
-#' match_name(x, y, min_score = 0)
+#' match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = FALSE)
 #'
-#' match_name(x, y, min_score = 0.5, by_sector = FALSE)
-#'
-#' match_name(x, y, min_score = 0.5, by_sector = TRUE)
+#' match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = TRUE)
 match_name <- function(x,
                        y,
                        ...,
@@ -30,6 +29,9 @@ match_name <- function(x,
   prep_lbk <- prepare_loanbook_for_matching(data = x, overwrite = overwrite)
   prep_ald <- prepare_ald_for_matching(data = y)
 
+  nms  <- c("simpler_name", "sector", "name")
+
+  loanbook_x <- suffix_names(prep_lbk, nms, "_x")
   matched <- match_all_against_all(
     x = prep_lbk,
     y = prep_ald,
@@ -38,14 +40,15 @@ match_name <- function(x,
     method = method,
     p = p
   )
+  with_sector_x <- left_join(loanbook_x, matched, by = "simpler_name_x")
 
-  with_sector_x <- matched %>%
-    left_join(prep_lbk, by = c("simpler_name_x" = "simpler_name")) %>%
-    dplyr::rename(sector_x = .data$sector)
-  with_sector_xy <- with_sector_x %>%
-    left_join(prep_ald, by = c("simpler_name_y" = "simpler_name")) %>%
-    dplyr::rename(sector_y = .data$sector)
-  out <- filter(with_sector_xy, .data$score >= min_score)
+  ald_y <- suffix_names(prep_ald, nms, "_y")
+  with_sector_xy <- left_join(with_sector_x, ald_y, by = "simpler_name_y")
 
-  out
+  filter(with_sector_xy, .data$score >= min_score)
+}
+
+suffix_names <- function(data, names, suffix) {
+  nms_suffix <- set_names(names, paste0, suffix)
+  rename(data, !! nms_suffix)
 }

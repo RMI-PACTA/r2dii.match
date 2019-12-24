@@ -33,6 +33,10 @@ see \code{\link[stringdist]{stringdist-metrics}}.}
 \item{p}{Penalty factor for Jaro-Winkler distance. The valid range for 
 \code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
 Jaro-distance is returned. Applies only to \code{method='jw'}.}
+
+\item{overwrite}{A dataframe used to overwrite the \code{sector} and/or \code{name}
+columns of a particular direct loantaker or ultimate parent. To overwrite
+only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 }
 \value{
 A \link[dplyr:tibble]{dplyr::tibble}.
@@ -44,15 +48,13 @@ from two dataframes.
 \examples{
 # Use tibble()
 library(dplyr)
+library(r2dii.dataraw)
 
-x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+match_name(loanbook_demo, ald_demo, min_score = 0)
 
-match_name(x, y, min_score = 0)
+match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = FALSE)
 
-match_name(x, y, min_score = 0.5, by_sector = FALSE)
-
-match_name(x, y, min_score = 0.5, by_sector = TRUE)
+match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = TRUE)
 }
 \seealso{
 Other user-oriented: 

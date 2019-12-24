@@ -42,8 +42,8 @@ test_that("match_name recovers `sector_y`", {
   )
 })
 
-# FIXME: Do this once I rework the internal function so they preserve input cols
-# test_that("match_name has all names in loanbook", {
-#   out <- match_name(loanbook_demo, ald_demo)
-#   expect_equal(setdiff(names(loanbook_demo), names(out)), character(0))
-#  })
+test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
+  out <- match_name(loanbook_demo, ald_demo)
+  expect_false(has_name(out, "name.y"))
+})
+

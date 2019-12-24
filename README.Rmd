@@ -81,48 +81,31 @@ your_ald <- ald_demo
 
 (If you are following this code, be sure to skip the code chunk above, so it doesn't overwrite `your_loanbook` and `your_ald` datasets.)
 
-### 2. Prepare each dataset for matching
+### 2. Score the goodness of the match between the loanbook and ald datasets
 
-`prepare_loanbook_for_matching()` does a lot of things. For example, it adds the column `simpler_name`, a modified version of the `name` column after applying best practices commonly used in name matching algorithms, such as:
+`match_name()` first adds the column `simpler_name`, a modified version of the `name` column after applying best practices commonly used in name matching algorithms, such as:
 
 * Remove special characters.
 * Replace language specific characters.
 * Abbreviate certain names to reduce their importance in the matching.
 * Spell out numbers to increase their importance.
 
-```{r}
-loanbook <- loanbook_demo %>% 
-  prepare_loanbook_for_matching() %>% 
-  # `simpler_name` and `name` move to the left, for clarity
-  select(simpler_name, name, everything())
-
-loanbook
-
-ald <- ald_demo %>% 
-  prepare_ald_for_matching() %>% 
-  select(simpler_name, name, everything())
-
-ald
-```
-
-### 3. Score the goodness of the match between the loanbook and ald datasets
-
-`match_name()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
+It then scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
 
 ```{r}
-match_name(loanbook, ald)
+match_name(your_loanbook, your_ald)
 ```
 
 By default, names are compared against ald names in the same sector (i.e. `by_sector = TRUE`). Use `by_sector = FALSE` removes this limitation, but it increases the matching run time on large datasets, and the amount of nonsensical matches. 
 
 ```{r}
-match_name(loanbook, ald, by_sector = FALSE)
+match_name(your_loanbook, your_ald, by_sector = FALSE)
 ```
 
 `min_score` allows you to pick rows at and above some `score`.
 
 ```{r}
-matching_scores <- match_name(loanbook, ald, min_score = 0.9)
+matching_scores <- match_name(your_loanbook, your_ald, min_score = 0.9)
 
 matching_scores
 ```
