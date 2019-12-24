@@ -54,7 +54,7 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
-  warning(
+  message(
     "Uniquifying `id_direct_loantaker` & `id_ultimate_parent`.",
     call. = FALSE
   )
