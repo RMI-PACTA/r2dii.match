@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_name.R
 \name{match_name}
 \alias{match_name}
-\title{Match two datasets, commonly a loanbook and ald, by the \code{simpler_name} column}
+\title{Match a loanbook and asset-level datasets by the \verb{name_*} columns}
 \usage{
 match_name(
   x,
@@ -39,11 +39,27 @@ columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 }
 \value{
-A \link[dplyr:tibble]{dplyr::tibble}.
+A dataframe with the same columns as the loanbook data with
+additional columns: \code{id}, \code{sector_x}, \code{source}, \code{simpler_name_x},
+\code{simpler_name_y}, \code{score}, \code{name_y}, \code{sector_y}.
 }
 \description{
-Apply \code{string_similarity()} to all combinations of \code{simpler_name} values
-from two dataframes.
+\code{match_name()} scores the match between names in a loanbook dataset (columns
+\code{name_direct_loantaker} and \code{name_ultimate_parent}) with names in an
+asset-level dataset (colum n \code{name_company}). The raw names are first
+transformed and stored in a \code{simple_name} column, then the similarity between
+the \code{simple_name} columns in each of the loanbook and ald datasets is scored
+using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
+}
+\details{
+The process to create the \code{simple_name} columns applies best practices
+commonly used in name matching algorithms, such as:
+\itemize{
+\item Remove special characters.
+\item Replace language specific characters.
+\item Abbreviate certain names to reduce their importance in the matching.
+\item Spell out numbers to increase their importance.
+}
 }
 \examples{
 # Use tibble()

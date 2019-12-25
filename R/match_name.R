@@ -1,10 +1,27 @@
-#' Match two datasets, commonly a loanbook and ald, by the `simpler_name` column
+#' Match a loanbook and asset-level datasets by the `name_*` columns
+#'
+#' `match_name()` scores the match between names in a loanbook dataset (columns
+#' `name_direct_loantaker` and `name_ultimate_parent`) with names in an
+#' asset-level dataset (colum n `name_company`). The raw names are first
+#' transformed and stored in a `simple_name` column, then the similarity between
+#' the `simple_name` columns in each of the loanbook and ald datasets is scored
+#' using [stringdist::stringsim()].
+#'
+#' The process to create the `simple_name` columns applies best practices
+#' commonly used in name matching algorithms, such as:
+#' * Remove special characters.
+#' * Replace language specific characters.
+#' * Abbreviate certain names to reduce their importance in the matching.
+#' * Spell out numbers to increase their importance.
 #'
 #' @inherit match_all_against_all
-#'
 #' @inheritParams prepare_loanbook_for_matching
 #' @param min_score A number (length-1) to set the minimum `score` values you
 #'   want to pick.
+#'
+#' @return A dataframe with the same columns as the loanbook data with
+#'   additional columns: `id`, `sector_x`, `source`, `simpler_name_x`,
+#'   `simpler_name_y`, `score`, `name_y`, `sector_y`.
 #'
 #' @export
 #'
@@ -26,7 +43,9 @@ match_name <- function(x,
                        method = "jw",
                        p = 0.1,
                        overwrite = NULL) {
-  prep_lbk <- prepare_loanbook_for_matching(data = x, overwrite = overwrite)
+  prep_lbk <- suppressMessages(
+    prepare_loanbook_for_matching(data = x, overwrite = overwrite)
+  )
   prep_ald <- prepare_ald_for_matching(data = y)
 
   nms  <- c("simpler_name", "sector", "name")
@@ -45,10 +64,27 @@ match_name <- function(x,
   ald_y <- suffix_names(prep_ald, nms, "_y")
   with_sector_xy <- left_join(with_sector_x, ald_y, by = "simpler_name_y")
 
-  filter(with_sector_xy, .data$score >= min_score)
+  with_sector_xy %>%
+    filter(.data$score >= min_score) %>%
+    unique() %>%
+    restore_loanbook_columns(x)
 }
 
 suffix_names <- function(data, names, suffix) {
   nms_suffix <- set_names(names, paste0, suffix)
   rename(data, !! nms_suffix)
+}
+
+restore_loanbook_columns <- function(matched, loanbook) {
+  with_name_prefix <- matched %>%
+    tidyr::pivot_wider(
+      names_from = "level",
+      values_from = "name_x",
+      names_prefix = "name_"
+    )
+
+  left_join(
+    with_name_prefix, loanbook,
+    by = c("name_ultimate_parent", "name_direct_loantaker")
+  )
 }

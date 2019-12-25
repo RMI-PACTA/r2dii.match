@@ -47,3 +47,12 @@ test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
   expect_false(has_name(out, "name.y"))
 })
 
+test_that("match_name outputs original columns", {
+  out <- match_name(loanbook_demo, ald_demo)
+  expect_length(setdiff(names(loanbook_demo), names(out)), 0L)
+  setdiff(names(out), names(loanbook_demo))
+})
+
+test_that("match_name works with `min_score = 0` (bug fix)", {
+  expect_error(match_name(loanbook_demo, ald_demo, min_score = 0), NA)
+})
