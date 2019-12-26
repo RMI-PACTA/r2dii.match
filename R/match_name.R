@@ -52,7 +52,7 @@ match_name <- function(x,
 
   nms <- c("simpler_name", "sector", "name")
 
-  loanbook_x <- suffix_names(prep_lbk, nms, "_x")
+  prep_lbk_x <- suffix_names(prep_lbk, nms, "_x")
   matched <- match_all_against_all(
     x = prep_lbk,
     y = prep_ald,
@@ -61,10 +61,10 @@ match_name <- function(x,
     method = method,
     p = p
   )
-  with_sector_x <- left_join(loanbook_x, matched, by = "simpler_name_x")
+  with_sector_x <- left_join(prep_lbk_x, matched, by = "simpler_name_x")
 
-  ald_y <- suffix_names(prep_ald, nms, "_y")
-  with_sector_xy <- left_join(with_sector_x, ald_y, by = "simpler_name_y")
+  prep_ald_y <- suffix_names(prep_ald, nms, "_y")
+  with_sector_xy <- left_join(with_sector_x, prep_ald_y, by = "simpler_name_y")
 
   with_sector_xy %>%
     filter(.data$score >= min_score) %>%
