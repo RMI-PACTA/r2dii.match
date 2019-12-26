@@ -44,6 +44,6 @@ get_name_var <- function(id_var) {
 id_var_group_indices <- function(data, id_var) {
   id_var <- rlang::sym(get_name_var(id_var))
   dplyr::group_indices(
-    data, !! id_var, .data$sector_classification_direct_loantaker
+    data, !!id_var, .data$sector_classification_direct_loantaker
   )
 }

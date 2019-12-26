@@ -56,3 +56,4 @@ test_that("match_name outputs original columns", {
 test_that("match_name works with `min_score = 0` (bug fix)", {
   expect_error(match_name(loanbook_demo, ald_demo, min_score = 0), NA)
 })
+

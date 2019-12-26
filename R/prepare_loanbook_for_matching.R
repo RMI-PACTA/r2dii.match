@@ -61,7 +61,6 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   data %>%
     uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
     uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
-
     may_add_sector_and_borderline() %>%
     select(input_cols_for_prepare_loanbook(), .data$sector) %>%
     identify_loans_by_sector_and_level() %>%

@@ -30,11 +30,13 @@
 #' library(dplyr)
 #' library(r2dii.dataraw)
 #'
-#' match_name(loanbook_demo, ald_demo, min_score = 0)
+#' match_name(loanbook_demo, ald_demo)
 #'
-#' match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = FALSE)
-#'
-#' match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = TRUE)
+#' match_name(
+#'   loanbook_demo, ald_demo,
+#'   min_score = 0.5,
+#'   by_sector = FALSE
+#' )
 match_name <- function(x,
                        y,
                        ...,
@@ -48,7 +50,7 @@ match_name <- function(x,
   )
   prep_ald <- prepare_ald_for_matching(data = y)
 
-  nms  <- c("simpler_name", "sector", "name")
+  nms <- c("simpler_name", "sector", "name")
 
   loanbook_x <- suffix_names(prep_lbk, nms, "_x")
   matched <- match_all_against_all(
@@ -72,7 +74,7 @@ match_name <- function(x,
 
 suffix_names <- function(data, names, suffix) {
   nms_suffix <- set_names(names, paste0, suffix)
-  rename(data, !! nms_suffix)
+  rename(data, !!nms_suffix)
 }
 
 restore_loanbook_columns <- function(matched, loanbook) {

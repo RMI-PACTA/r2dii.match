@@ -66,11 +66,13 @@ commonly used in name matching algorithms, such as:
 library(dplyr)
 library(r2dii.dataraw)
 
-match_name(loanbook_demo, ald_demo, min_score = 0)
+match_name(loanbook_demo, ald_demo)
 
-match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = FALSE)
-
-match_name(loanbook_demo, ald_demo, min_score = 0.5, by_sector = TRUE)
+match_name(
+  loanbook_demo, ald_demo,
+  min_score = 0.5,
+  by_sector = FALSE
+)
 }
 \seealso{
 Other user-oriented: 
