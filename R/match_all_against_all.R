@@ -50,11 +50,13 @@ match_all_against_all <- function(x,
     out <- cross_simpler_name(x, y)
   }
 
-  mutate(
-    out,
-    score = string_similarity(
-      out$simpler_name_x, out$simpler_name_y, ...,
-      method = method, p = p
+  unique(
+    mutate(
+      out,
+      score = string_similarity(
+        out$simpler_name_x, out$simpler_name_y, ...,
+        method = method, p = p
+      )
     )
   )
 }
