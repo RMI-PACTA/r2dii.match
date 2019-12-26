@@ -57,3 +57,19 @@ test_that("match_name works with `min_score = 0` (bug fix)", {
   expect_error(match_name(loanbook_demo, ald_demo, min_score = 0), NA)
 })
 
+test_that("match_name outputs a reasonable number of rows", {
+  out <- match_name(loanbook_demo, ald_demo)
+
+  expected <- match_all_against_all(
+    prepare_loanbook_for_matching(loanbook_demo),
+    prepare_ald_for_matching(ald_demo)
+  ) %>%
+    filter(score >= 0.8)
+
+  nrows_out <- out %>%
+    select(names(expected)) %>%
+    unique() %>%
+    nrow()
+
+  expect_equal(nrows_out, nrow(expected))
+})
