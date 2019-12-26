@@ -48,27 +48,30 @@ match_name <- function(x,
   prep_lbk <- suppressMessages(
     prepare_loanbook_for_matching(data = x, overwrite = overwrite)
   )
-  prep_ald <- prepare_ald_for_matching(data = y)
+  prep_ald <-
+    prepare_ald_for_matching(data = y)
 
   nms <- c("simpler_name", "sector", "name")
-
   prep_lbk_x <- suffix_names(prep_lbk, nms, "_x")
+  prep_ald_y <- suffix_names(prep_ald, nms, "_y")
+
   matched <- match_all_against_all(
-    x = prep_lbk,
-    y = prep_ald,
+    x = prep_lbk, y = prep_ald,
     ...,
     by_sector = by_sector,
     method = method,
     p = p
   )
-  with_sector_x <- left_join(prep_lbk_x, matched, by = "simpler_name_x")
 
-  prep_ald_y <- suffix_names(prep_ald, nms, "_y")
-  with_sector_xy <- left_join(with_sector_x, prep_ald_y, by = "simpler_name_y")
+  with_sector_xy <- matched %>%
+    left_join(prep_lbk_x, by = "simpler_name_x") %>%
+    left_join(prep_ald_y, by = "simpler_name_y")
 
-  with_sector_xy %>%
+  picked <- with_sector_xy %>%
     filter(.data$score >= min_score) %>%
-    unique() %>%
+    unique()
+
+  picked %>%
     restore_loanbook_columns(x)
 }
 
