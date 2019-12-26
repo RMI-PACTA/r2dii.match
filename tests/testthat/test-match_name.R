@@ -73,3 +73,7 @@ test_that("match_name outputs a reasonable number of rows", {
 
   expect_equal(nrows_out, nrow(expected))
 })
+
+test_that("match_name outputs known value", {
+  expect_known_value(match_name(loanbook_demo, ald_demo), "ref-match_name")
+})
