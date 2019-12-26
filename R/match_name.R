@@ -51,10 +51,6 @@ match_name <- function(x,
   prep_ald <-
     prepare_ald_for_matching(data = y)
 
-  nms <- c("simpler_name", "sector", "name")
-  prep_lbk_x <- suffix_names(prep_lbk, nms, "_x")
-  prep_ald_y <- suffix_names(prep_ald, nms, "_y")
-
   matched <- match_all_against_all(
     x = prep_lbk, y = prep_ald,
     ...,
@@ -63,21 +59,31 @@ match_name <- function(x,
     p = p
   )
 
-  with_sector_xy <- matched %>%
-    left_join(prep_lbk_x, by = "simpler_name_x") %>%
-    left_join(prep_ald_y, by = "simpler_name_y")
-
-  picked <- with_sector_xy %>%
-    filter(.data$score >= min_score) %>%
-    unique()
-
-  picked %>%
+  matched %>%
+    pick_min_score(min_score) %>%
+    restore_sector_name_and_other_columns(prep_lbk, prep_ald) %>%
     restore_loanbook_columns(x)
 }
 
 suffix_names <- function(data, names, suffix) {
   nms_suffix <- set_names(names, paste0, suffix)
   rename(data, !!nms_suffix)
+}
+
+restore_sector_name_and_other_columns <- function(matched, prep_lbk, prep_ald) {
+  nms <- c("simpler_name", "sector", "name")
+  prep_lbk_x <- suffix_names(prep_lbk, nms, "_x")
+  prep_ald_y <- suffix_names(prep_ald, nms, "_y")
+
+  matched %>%
+    left_join(prep_lbk_x, by = "simpler_name_x") %>%
+    left_join(prep_ald_y, by = "simpler_name_y")
+}
+
+pick_min_score <- function(data, min_score) {
+  data %>%
+    filter(.data$score >= min_score) %>%
+    unique()
 }
 
 restore_loanbook_columns <- function(matched, loanbook) {
