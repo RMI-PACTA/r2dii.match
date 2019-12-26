@@ -122,8 +122,15 @@ test_that("get_replacements outputs the expectes tibble", {
 })
 
 # pacta_data_name_reductions ----------------------------------------------
-# datapasta::tribble_paste(pacta::data.name.reductions)
 
+# WARNING
+# If using datapaste, replace `NA` with "" so that
+#    ~From,               ~To,
+#  "(pte)",                NA,
+# becomes
+#    ~From,               ~To,
+#  "(pte)",                "",
+#
 # styler: off
 pacta_data_name_reductions <- dplyr::tribble(
                              ~From,               ~To,
@@ -131,9 +138,9 @@ pacta_data_name_reductions <- dplyr::tribble(
                            " och ",             " & ",
                             " en ",             " & ",
                            " und ",             " & ",
-                           "(pte)",                NA,
-                           "(pvt)",                NA,
-                          "(pjsc)",                NA,
+                           "(pte)",                "",
+                           "(pvt)",                "",
+                          "(pjsc)",                "",
                      "development",             "dev",
                            "group",             "grp",
                        "financing",            "fing",
