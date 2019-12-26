@@ -5,8 +5,8 @@
 \title{Match a loanbook and asset-level datasets by the \verb{name_*} columns}
 \usage{
 match_name(
-  x,
-  y,
+  loanbook,
+  ald,
   ...,
   by_sector = TRUE,
   min_score = 0.8,
@@ -16,9 +16,11 @@ match_name(
 )
 }
 \arguments{
-\item{x}{Dataframes with \code{simpler_name} and optionally \code{sector} columns.}
+\item{loanbook}{Dataframes with \code{simpler_name} and optionally \code{sector}
+columns.}
 
-\item{y}{Dataframes with \code{simpler_name} and optionally \code{sector} columns.}
+\item{ald}{Dataframes with \code{simpler_name} and optionally \code{sector}
+columns.}
 
 \item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 

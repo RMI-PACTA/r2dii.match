@@ -24,12 +24,6 @@ test_that("match_name takes `by_sector`", {
   )
 })
 
-test_that("match_name has all formals in match_all_against_all", {
-  actual <- names(formals("match_name"))
-  expected <- names(formals("match_all_against_all"))
-  expect_equal(setdiff(expected, actual), character(0))
-})
-
 test_that("match_name recovers `sector_x`", {
   expect_true(
     rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_x")
@@ -47,7 +41,7 @@ test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
   expect_false(has_name(out, "name.y"))
 })
 
-test_that("match_name outputs original columns", {
+test_that("match_name columns in input loanbook", {
   out <- match_name(loanbook_demo, ald_demo)
   expect_length(setdiff(names(loanbook_demo), names(out)), 0L)
   setdiff(names(out), names(loanbook_demo))

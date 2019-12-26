@@ -37,8 +37,8 @@
 #'   min_score = 0.5,
 #'   by_sector = FALSE
 #' )
-match_name <- function(x,
-                       y,
+match_name <- function(loanbook,
+                       ald,
                        ...,
                        by_sector = TRUE,
                        min_score = 0.8,
@@ -46,13 +46,12 @@ match_name <- function(x,
                        p = 0.1,
                        overwrite = NULL) {
   prep_lbk <- suppressMessages(
-    prepare_loanbook_for_matching(data = x, overwrite = overwrite)
+    prepare_loanbook_for_matching(loanbook, overwrite = overwrite)
   )
-  prep_ald <-
-    prepare_ald_for_matching(data = y)
+  prep_ald <- prepare_ald_for_matching(ald)
 
   matched <- match_all_against_all(
-    x = prep_lbk, y = prep_ald,
+    prep_lbk, prep_ald,
     ...,
     by_sector = by_sector,
     method = method,
@@ -60,9 +59,12 @@ match_name <- function(x,
   )
 
   matched %>%
-    pick_min_score(min_score) %>%
-    restore_sector_name_and_other_columns(prep_lbk, prep_ald) %>%
-    restore_loanbook_columns(x)
+    pick_min_score(min_score = min_score) %>%
+    restore_sector_name_and_other_columns(
+      prep_lbk = prep_lbk,
+      prep_ald = prep_ald
+    ) %>%
+    restore_loanbook_columns(loanbook)
 }
 
 suffix_names <- function(data, names, suffix) {
