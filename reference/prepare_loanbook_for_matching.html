@@ -155,7 +155,7 @@ all IDs, and with elements already manually overwritten.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
 
 <span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>prepare_loanbook_for_matching</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
+  <span class='fu'>prepare_loanbook_for_matching</span>()</div><div class='output co'>#&gt; <span class='message'>Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
 #&gt;    level      id    name                     sector source  simpler_name        
 #&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;               
 #&gt;  1 direct_lo… C294  Yuamen Xinneng Thermal … power  loanbo… yuamenxinnengtherma…
@@ -170,7 +170,7 @@ all IDs, and with elements already manually overwritten.</p>
 #&gt; 10 ultimate_… UP104 Garland Power &amp; Light    power  loanbo… garlandpowerlight   
 #&gt; # … with 628 more rows</div><div class='input'>
 <span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>prepare_loanbook_for_matching</span>(<span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='no'>overwrite_demo</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
+  <span class='fu'>prepare_loanbook_for_matching</span>(<span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='no'>overwrite_demo</span>)</div><div class='output co'>#&gt; <span class='message'>Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
 #&gt;    level      id    name                     sector source  simpler_name        
 #&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;               
 #&gt;  1 direct_lo… C294  yuamen power company     coal   manual  yuamenpower co      

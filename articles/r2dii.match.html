@@ -250,7 +250,7 @@
 <p>The following function takes a loanbook with non-corrupt IDs and outputs a list of all unique name and sector combinations at every level, including the simplified name, to be used in the matching process:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">prep_loanbook &lt;-<span class="st"> </span>loanbook_demo <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/prepare_loanbook_for_matching.html">prepare_loanbook_for_matching</a></span>()</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; Warning: Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; Adding new columns `sector` and `borderline`.</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">prep_loanbook</a>
@@ -298,7 +298,7 @@
 <a class="sourceLine" id="cb8-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9">prep_loanbook &lt;-<span class="st"> </span>loanbook_demo <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/prepare_loanbook_for_matching.html">prepare_loanbook_for_matching</a></span>(<span class="dt">overwrite =</span> overwrite_demo)</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; Warning: Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; Adding new columns `sector` and `borderline`.</span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb8-14" data-line-number="14">prep_loanbook</a>
@@ -321,7 +321,7 @@
 <a class="sourceLine" id="cb9-2" data-line-number="2">matched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/match_all_against_all.html">match_all_against_all</a></span>(prep_loanbook, prep_ald)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">matched</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; # A tibble: 64,303 x 3</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; # A tibble: 64,302 x 3</span></a>
 <a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;    simpler_name_x simpler_name_y            score</span></a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;                     &lt;dbl&gt;</span></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  1 astonmartin    astonmartin               1    </span></a>
@@ -334,7 +334,7 @@
 <a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  8 astonmartin    dongfengluxgen            0.496</span></a>
 <a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;  9 astonmartin    electricmobilitysolutions 0.456</span></a>
 <a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; 10 astonmartin    faradayfuture             0.474</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; # … with 64,293 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; # … with 64,292 more rows</span></a></code></pre></div>
 <p>You may use common dplyr functions to recover all columns from the loanbook dataset and to keep only rows at and above some threshold.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">threshold &lt;-<span class="st"> </span><span class="fl">0.9</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"></a>
