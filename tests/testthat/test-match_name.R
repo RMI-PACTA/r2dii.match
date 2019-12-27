@@ -24,6 +24,33 @@ test_that("match_name takes `by_sector`", {
   )
 })
 
+test_that("match_name takes `method`", {
+  expect_false(
+    identical(
+      match_name(loanbook_demo, ald_demo, method = "jw"),
+      match_name(loanbook_demo, ald_demo, method = "osa")
+    )
+  )
+})
+
+test_that("match_name takes `p`", {
+  expect_false(
+    identical(
+      match_name(loanbook_demo, ald_demo, p = 0.1),
+      match_name(loanbook_demo, ald_demo, p = 0.2)
+    )
+  )
+})
+
+test_that("match_name takes `overwrite`", {
+  expect_false(
+    identical(
+      match_name(loanbook_demo, ald_demo, overwrite = NULL),
+      match_name(loanbook_demo, ald_demo, overwrite = overwrite_demo)
+    )
+  )
+})
+
 test_that("match_name recovers `sector_x`", {
   expect_true(
     rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_x")
