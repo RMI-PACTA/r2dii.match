@@ -54,14 +54,13 @@ prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
-  warning(
+  message(
     "Uniquifying `id_direct_loantaker` & `id_ultimate_parent`.",
     call. = FALSE
   )
   data %>%
     uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
     uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
-
     may_add_sector_and_borderline() %>%
     select(input_cols_for_prepare_loanbook(), .data$sector) %>%
     identify_loans_by_sector_and_level() %>%
@@ -80,6 +79,8 @@ may_add_sector_and_borderline <- function(data) {
     message("Adding new columns `sector` and `borderline`.")
     data2 <- bridge_sector(data)
   }
+
+  data2
 }
 
 may_overwrite_name_and_sector <- function(out, overwrite) {
@@ -93,7 +94,7 @@ may_overwrite_name_and_sector <- function(out, overwrite) {
 
 overwrite_name_and_sector <- function(data, overwrite) {
   data %>%
-    dplyr::left_join(overwrite, by = c("id", "level")) %>%
+    left_join(overwrite, by = c("id", "level")) %>%
     mutate(
       source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
       sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),

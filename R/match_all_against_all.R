@@ -3,7 +3,8 @@
 #' Apply `string_similarity()` to all combinations of `simpler_name` values
 #' from two dataframes.
 #'
-#' @param x,y Dataframes with `simpler_name` and optionally `sector` columns.
+#' @param loanbook,ald Dataframes with `simpler_name` and optionally `sector`
+#'   columns.
 #' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #' @param by_sector Should the combinations be done by sector?
 #' @inheritParams stringdist::stringdist
@@ -16,28 +17,35 @@
 #' @examples
 #' library(dplyr)
 #'
-#' x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-#' y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+#' loanbook <- tibble(
+#'   sector = c("A", "B", "B"),
+#'   simpler_name = c("xa", "xb", "xc")
+#' )
 #'
-#' out <- match_all_against_all(x, y)
+#' ald <- tibble(
+#'   sector = c("A", "B", "C"),
+#'   simpler_name = c("ya", "yb", "yc")
+#' )
+#'
+#' out <- match_all_against_all(loanbook, ald)
 #'
 #' # Recover sector
-#' left_join(out, x, by = c("simpler_name_x" = "simpler_name"))
+#' left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name"))
 #'
 #' threshold <- 0.5
-#' match_all_against_all(x, y) %>%
-#'   dplyr::filter(score >= threshold)
+#' match_all_against_all(loanbook, ald) %>%
+#'   filter(score >= threshold)
 #'
-#' out <- match_all_against_all(x, y, by_sector = FALSE)
+#' out <- match_all_against_all(loanbook, ald, by_sector = FALSE)
 #' out
 #'
 #' # Recover sectors from x & y
-#' left_join(out, x, by = c("simpler_name_x" = "simpler_name")) %>%
-#'   dplyr::rename(sector_x = sector) %>%
-#'   left_join(y, by = c("simpler_name_y" = "simpler_name")) %>%
-#'   dplyr::rename(sector_y = sector)
-match_all_against_all <- function(x,
-                                  y,
+#' left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
+#'   rename(sector_x = sector) %>%
+#'   left_join(ald, by = c("simpler_name_y" = "simpler_name")) %>%
+#'   rename(sector_y = sector)
+match_all_against_all <- function(loanbook,
+                                  ald,
                                   ...,
                                   by_sector = TRUE,
                                   method = "jw",
@@ -45,16 +53,18 @@ match_all_against_all <- function(x,
   ellipsis::check_dots_used()
 
   if (by_sector) {
-    out <- expand_simpler_name_by_sector(x, y)
+    out <- expand_simpler_name_by_sector(loanbook, ald)
   } else {
-    out <- cross_simpler_name(x, y)
+    out <- cross_simpler_name(loanbook, ald)
   }
 
-  mutate(
-    out,
-    score = string_similarity(
-      out$simpler_name_x, out$simpler_name_y, ...,
-      method = method, p = p
+  unique(
+    mutate(
+      out,
+      score = string_similarity(
+        out$simpler_name_x, out$simpler_name_y, ...,
+        method = method, p = p
+      )
     )
   )
 }

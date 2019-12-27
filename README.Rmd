@@ -81,73 +81,33 @@ your_ald <- ald_demo
 
 (If you are following this code, be sure to skip the code chunk above, so it doesn't overwrite `your_loanbook` and `your_ald` datasets.)
 
-### 2. Prepare each dataset for matching
+### 2. Score the goodness of the match between the loanbook and ald datasets
 
-`prepare_loanbook_for_matching()` does a lot of things. For example, it adds the column `simpler_name`, a modified version of the `name` column after applying best practices commonly used in name matching algorithms, such as:
+`match_name()` first adds the column `simpler_name`, a modified version of the `name` column after applying best practices commonly used in name matching algorithms, such as:
 
 * Remove special characters.
 * Replace language specific characters.
 * Abbreviate certain names to reduce their importance in the matching.
 * Spell out numbers to increase their importance.
 
-```{r}
-loanbook <- loanbook_demo %>% 
-  prepare_loanbook_for_matching() %>% 
-  # `simpler_name` and `name` move to the left, for clarity
-  select(simpler_name, name, everything())
-loanbook
+It then scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
 
-ald <- ald_demo %>% 
-  prepare_ald_for_matching() %>% 
-  select(simpler_name, name, everything())
-ald
+```{r}
+match_name(your_loanbook, your_ald)
 ```
 
-### 3. Score the goodness of the match between the loanbook and ald datasets
-
-`match_all_against_all()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. 
+By default, names are compared against ald names in the same sector (i.e. `by_sector = TRUE`). Use `by_sector = FALSE` removes this limitation, but it increases the matching run time on large datasets, and the amount of nonsensical matches. 
 
 ```{r}
-matched_by_sector <- match_all_against_all(loanbook, ald)
-
-matched_by_sector
+match_name(your_loanbook, your_ald, by_sector = FALSE)
 ```
 
-By default, names are compared against ald names in the same sector. `by_sector = FALSE` increases the matching run time on large datasets, and the amount of nonsensical matches. 
+`min_score` allows you to pick rows at and above some `score`.
 
 ```{r}
-match_all_against_all(
-  loanbook, ald, 
-  by_sector = FALSE
-)
-```
+matching_scores <- match_name(your_loanbook, your_ald, min_score = 0.9)
 
-You can recover the `sector` column from the `loanbook` and `ald` dataset with `dplyr::left_join()`:
-
-```{r}
-matched_by_sector %>% 
-  left_join(loanbook, by = c("simpler_name_x" = "simpler_name"))
-```
-
-You can also recover the `sector` column from the `ald` dataset with a similar strategy:
-
-```{r}
-matched_by_sector %>% 
-  left_join(loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
-  dplyr::rename(sector_x = sector) %>%
-  left_join(ald, by = c("simpler_name_y" = "simpler_name")) %>%
-  dplyr::rename(sector_y = sector)
-```
-
-You may pick rows at and above some score with `dplyr::fileter()`:
-
-```{r}
-threshold <- 0.9
-matching_scores <- matched_by_sector %>%
-  dplyr::filter(score >= threshold)
-
-matching_scores %>% 
-  arrange(score)
+matching_scores
 ```
 
 ### 3. Write the output of the previous step into a .csv file
@@ -181,4 +141,5 @@ matching_scores %>%
 ### 6. Join in validated matches in order of priority
 
 TODO
+
 

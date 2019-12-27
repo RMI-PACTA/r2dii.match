@@ -5,7 +5,8 @@ test_that("uniquify_id_column overwrites id_ultimate_parent", {
   lbk$id_ultimate_parent <- "bla"
 
   out <- uniquify_id_column(
-    lbk, id_column = "id_ultimate_parent", prefix = "UP"
+    lbk,
+    id_column = "id_ultimate_parent", prefix = "UP"
   )
 
   expect_false(
@@ -21,7 +22,8 @@ test_that("uniquify_id_column overwrites id_direct_loantaker", {
   lbk$id_direct_loantaker <- "bla"
 
   out <- uniquify_id_column(
-    lbk, id_column = "id_direct_loantaker", prefix = "UP"
+    lbk,
+    id_column = "id_direct_loantaker", prefix = "UP"
   )
 
   expect_false(
@@ -37,7 +39,8 @@ test_that("uniquify_id_column prints its output (fix not returned result)", {
   # 6#pullrequestreview-301599396
   out <- capture.output(
     uniquify_id_column(
-      loanbook_demo, id_column = "id_ultimate_parent", prefix = "UP"
+      loanbook_demo,
+      id_column = "id_ultimate_parent", prefix = "UP"
     )
   )
   expect_false(identical(out, character(0)))
@@ -45,7 +48,8 @@ test_that("uniquify_id_column prints its output (fix not returned result)", {
 
 test_that("uniquify_id_column returns a tibble dataframe", {
   out <- uniquify_id_column(
-    loanbook_demo, id_column = "id_ultimate_parent", prefix = "UP"
+    loanbook_demo,
+    id_column = "id_ultimate_parent", prefix = "UP"
   )
   expect_is(out, "tbl_df")
 })
@@ -66,33 +70,33 @@ test_that("uniquify_id_column errs gracefully with wrong input", {
     )
   }
 
-    expect_error_must_have_column(
-      loanbook_demo,
-      id_col = "id_direct_loantaker",
-      invalid_col = "id_direct_loantaker"
-    )
+  expect_error_must_have_column(
+    loanbook_demo,
+    id_col = "id_direct_loantaker",
+    invalid_col = "id_direct_loantaker"
+  )
 
-    expect_error_must_have_column(
-      loanbook_demo,
-      id_col = "id_ultimate_parent",
-      invalid_col = "id_ultimate_parent"
-    )
+  expect_error_must_have_column(
+    loanbook_demo,
+    id_col = "id_ultimate_parent",
+    invalid_col = "id_ultimate_parent"
+  )
 
-    expect_error_must_have_column(
-      loanbook_demo,
-      id_col = "id_direct_loantaker",
-      invalid_col = "name_direct_loantaker"
-    )
+  expect_error_must_have_column(
+    loanbook_demo,
+    id_col = "id_direct_loantaker",
+    invalid_col = "name_direct_loantaker"
+  )
 
-    expect_error_must_have_column(
-      loanbook_demo,
-      id_col = "id_ultimate_parent",
-      invalid_col = "name_ultimate_parent"
-    )
+  expect_error_must_have_column(
+    loanbook_demo,
+    id_col = "id_ultimate_parent",
+    invalid_col = "name_ultimate_parent"
+  )
 
-    expect_error_must_have_column(
-      loanbook_demo,
-      id_col = "id_direct_loantaker",
-      invalid_col = "sector_classification_direct_loantaker"
-    )
+  expect_error_must_have_column(
+    loanbook_demo,
+    id_col = "id_direct_loantaker",
+    invalid_col = "sector_classification_direct_loantaker"
+  )
 })

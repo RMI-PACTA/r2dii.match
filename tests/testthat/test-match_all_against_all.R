@@ -22,6 +22,18 @@ test_that("match_all_against_all has the expected names", {
   )
 })
 
+test_that("match_all_against_all is sensitive to by_sector", {
+  x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
+  y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
+
+  expect_false(
+    identical(
+      match_all_against_all(x, y, by_sector = TRUE),
+      match_all_against_all(x, y, by_sector = FALSE)
+    )
+  )
+})
+
 test_that("match_all_against_all scores extreme cases correctly", {
   x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
   y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
@@ -155,3 +167,17 @@ test_that("match_all_against_all w/ same `simpler_name` in 2 sectors and
     tibble(simpler_name_x = "a", simpler_name_y = "a", score = 1)
   )
 })
+
+test_that("match_all_against_all outputs unique rows", {
+  # Known problematic data
+  lbk <- loanbook_demo %>%
+    filter(name_direct_loantaker == "Tata Group")
+
+  out <- match_all_against_all(
+    prepare_loanbook_for_matching(lbk),
+    prepare_ald_for_matching(ald_demo)
+  )
+
+  expect_equal(nrow(out), nrow(unique(out)))
+})
+

@@ -93,7 +93,7 @@ test_that("bridge_sector outputs no missing value of `borderline`", {
 
 test_that("bridge_sector with bad sector code system errs gracefully", {
   bad_classification <- r2dii.dataraw::loanbook_demo %>%
-    dplyr::mutate(sector_classification_system = "BAD_CLASSIFICATION")
+    mutate(sector_classification_system = "BAD_CLASSIFICATION")
 
   expect_error(
     bridge_sector(bad_classification),

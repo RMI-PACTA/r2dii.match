@@ -4,10 +4,18 @@
 \alias{match_all_against_all}
 \title{Score similarity between \code{simpler_name} values in two dataframes}
 \usage{
-match_all_against_all(x, y, ..., by_sector = TRUE, method = "jw", p = 0.1)
+match_all_against_all(
+  loanbook,
+  ald,
+  ...,
+  by_sector = TRUE,
+  method = "jw",
+  p = 0.1
+)
 }
 \arguments{
-\item{x, y}{Dataframes with \code{simpler_name} and optionally \code{sector} columns.}
+\item{loanbook, ald}{Dataframes with \code{simpler_name} and optionally \code{sector}
+columns.}
 
 \item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 
@@ -30,26 +38,33 @@ from two dataframes.
 \examples{
 library(dplyr)
 
-x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+loanbook <- tibble(
+  sector = c("A", "B", "B"),
+  simpler_name = c("xa", "xb", "xc")
+)
 
-out <- match_all_against_all(x, y)
+ald <- tibble(
+  sector = c("A", "B", "C"),
+  simpler_name = c("ya", "yb", "yc")
+)
+
+out <- match_all_against_all(loanbook, ald)
 
 # Recover sector
-left_join(out, x, by = c("simpler_name_x" = "simpler_name"))
+left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name"))
 
 threshold <- 0.5
-match_all_against_all(x, y) \%>\%
-  dplyr::filter(score >= threshold)
+match_all_against_all(loanbook, ald) \%>\%
+  filter(score >= threshold)
 
-out <- match_all_against_all(x, y, by_sector = FALSE)
+out <- match_all_against_all(loanbook, ald, by_sector = FALSE)
 out
 
 # Recover sectors from x & y
-left_join(out, x, by = c("simpler_name_x" = "simpler_name")) \%>\%
-  dplyr::rename(sector_x = sector) \%>\%
-  left_join(y, by = c("simpler_name_y" = "simpler_name")) \%>\%
-  dplyr::rename(sector_y = sector)
+left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name")) \%>\%
+  rename(sector_x = sector) \%>\%
+  left_join(ald, by = c("simpler_name_y" = "simpler_name")) \%>\%
+  rename(sector_y = sector)
 }
 \seealso{
 Other user-oriented: 
