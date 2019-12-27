@@ -39,7 +39,6 @@
 #' )
 match_name <- function(loanbook,
                        ald,
-                       ...,
                        by_sector = TRUE,
                        min_score = 0.8,
                        method = "jw",
@@ -52,7 +51,6 @@ match_name <- function(loanbook,
 
   matched <- match_all_against_all(
     prep_lbk, prep_ald,
-    ...,
     by_sector = by_sector,
     method = method,
     p = p
