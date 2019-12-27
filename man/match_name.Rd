@@ -7,7 +7,6 @@
 match_name(
   loanbook,
   ald,
-  ...,
   by_sector = TRUE,
   min_score = 0.8,
   method = "jw",
@@ -21,8 +20,6 @@ columns.}
 
 \item{ald}{Dataframes with \code{simpler_name} and optionally \code{sector}
 columns.}
-
-\item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 
 \item{by_sector}{Should the combinations be done by sector?}
 
