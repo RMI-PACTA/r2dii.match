@@ -20,7 +20,7 @@
 #'   want to pick.
 #'
 #' @return A dataframe with the same columns as the loanbook data with
-#'   additional columns: `id`, `sector_x`, `source`, `simpler_name_x`,
+#'   additional columns: `id`, `sector_x`, `source`, `simpler_name_lbk`,
 #'   `simpler_name_y`, `score`, `name_y`, `sector_y`.
 #'
 #' @export
@@ -54,31 +54,35 @@ match_name <- function(loanbook,
     by_sector = by_sector,
     method = method,
     p = p
-  )
+  ) %>%
+    rename(
+      simpler_name_lbk = .data$simpler_name_x,
+      simpler_name_ald = .data$simpler_name_y,
+    )
 
   matched %>%
-    pick_min_score(min_score = min_score) %>%
-    restore_sector_name_and_other_columns(
-      prep_lbk = prep_lbk,
-      prep_ald = prep_ald
-    ) %>%
-    restore_loanbook_columns(loanbook)
+    pick_min_score(min_score) %>%
+    restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
+    restore_cols_from_loanbook(loanbook)
 }
 
-suffix_names <- function(data, names, suffix) {
-  nms_suffix <- set_names(names, paste0, suffix)
-  rename(data, !!nms_suffix)
+suffix_names <- function(data, suffix, names = NULL) {
+  if (is.null(names)) {
+    return(suffix_all_names(data, suffix))
+  } else {
+    suffix_some_names(data, suffix, names)
+  }
 }
 
-restore_sector_name_and_other_columns <- function(matched, prep_lbk, prep_ald) {
-  nms <- c("simpler_name", "sector", "name")
-  prep_lbk_x <- suffix_names(prep_lbk, nms, "_x")
-  prep_ald_y <- suffix_names(prep_ald, nms, "_y")
-
-  matched %>%
-    left_join(prep_lbk_x, by = "simpler_name_x") %>%
-    left_join(prep_ald_y, by = "simpler_name_y")
+suffix_all_names <- function(data, suffix) {
+  set_names(data, paste0, suffix)
 }
+
+suffix_some_names <- function(data, suffix, names) {
+  newnames_oldnames <- set_names(names, paste0, suffix)
+  rename(data, !!newnames_oldnames)
+}
+
 
 pick_min_score <- function(data, min_score) {
   data %>%
@@ -86,16 +90,25 @@ pick_min_score <- function(data, min_score) {
     unique()
 }
 
-restore_loanbook_columns <- function(matched, loanbook) {
-  with_name_prefix <- matched %>%
+restore_cols_sector_name_and_others <- function(matched, prep_lbk, prep_ald) {
+  matched %>%
+    left_join(suffix_names(prep_lbk, "_lbk"), by = "simpler_name_lbk") %>%
+    left_join(suffix_names(prep_ald, "_ald"), by = "simpler_name_ald")
+}
+
+restore_cols_from_loanbook <- function(matched, loanbook) {
+  level_cols <- c("name_ultimate_parent", "name_direct_loantaker")
+
+  with_level_cols <- matched %>%
     tidyr::pivot_wider(
-      names_from = "level",
-      values_from = "name_x",
+      names_from = "level_lbk",
+      values_from = "name_lbk",
       names_prefix = "name_"
     )
 
   left_join(
-    with_name_prefix, loanbook,
-    by = c("name_ultimate_parent", "name_direct_loantaker")
+    suffix_names(with_level_cols, "_lbk", level_cols),
+    suffix_names(loanbook, "_lbk"),
+    by = paste0(level_cols, "_lbk")
   )
 }

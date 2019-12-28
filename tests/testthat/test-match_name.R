@@ -51,15 +51,15 @@ test_that("match_name takes `overwrite`", {
   )
 })
 
-test_that("match_name recovers `sector_x`", {
+test_that("match_name recovers `sector_lbk`", {
   expect_true(
-    rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_x")
+    rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_lbk")
   )
 })
 
 test_that("match_name recovers `sector_y`", {
   expect_true(
-    rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_y")
+    rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_ald")
   )
 })
 
@@ -68,10 +68,17 @@ test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
   expect_false(has_name(out, "name.y"))
 })
 
-test_that("match_name columns in input loanbook", {
+test_that("match_name columns in input loanbook (after stripping _lbk suffix", {
+  strip_lbk <- function(x) sub("_lbk$", "", x)
   out <- match_name(loanbook_demo, ald_demo)
-  expect_length(setdiff(names(loanbook_demo), names(out)), 0L)
-  setdiff(names(out), names(loanbook_demo))
+
+  expect_length(
+    setdiff(
+      names(set_names(loanbook_demo, strip_lbk)),
+      names(set_names(out, strip_lbk))
+    ),
+    0L
+  )
 })
 
 test_that("match_name works with `min_score = 0` (bug fix)", {
@@ -85,7 +92,12 @@ test_that("match_name outputs a reasonable number of rows", {
     prepare_loanbook_for_matching(loanbook_demo),
     prepare_ald_for_matching(ald_demo)
   ) %>%
-    filter(score >= 0.8)
+    filter(score >= 0.8) %>%
+    # FIXME: This is a temoprary patch
+    rename(
+      simpler_name_lbk = .data$simpler_name_x,
+      simpler_name_ald = .data$simpler_name_y
+    )
 
   nrows_out <- out %>%
     select(names(expected)) %>%
@@ -100,3 +112,13 @@ test_that("match_name outputs known value", {
   expect_known_value(match_name(loanbook_demo, ald_demo), "ref-match_name")
 })
 
+test_that("match_name names end with _lbk or _ald, except `score`", {
+  out <- match_name(loanbook_demo, ald_demo)
+  nms <- names(out)
+  names_not_ending_with_lbk_or_ald <- nms[!grepl("_lbk$|_ald$", nms)]
+
+  expect_equal(
+    names_not_ending_with_lbk_or_ald,
+    "score"
+  )
+})

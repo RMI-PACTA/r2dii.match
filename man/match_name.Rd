@@ -39,7 +39,7 @@ only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 }
 \value{
 A dataframe with the same columns as the loanbook data with
-additional columns: \code{id}, \code{sector_x}, \code{source}, \code{simpler_name_x},
+additional columns: \code{id}, \code{sector_x}, \code{source}, \code{simpler_name_lbk},
 \code{simpler_name_y}, \code{score}, \code{name_y}, \code{sector_y}.
 }
 \description{
