@@ -1,13 +1,13 @@
-#' Match a loanbook and asset-level datasets by the `name_*` columns
+#' Match a loanbook (lbk) and asset-level datasets (ald) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' `name_direct_loantaker` and `name_ultimate_parent`) with names in an
 #' asset-level dataset (colum n `name_company`). The raw names are first
-#' transformed and stored in a `simple_name` column, then the similarity between
-#' the `simple_name` columns in each of the loanbook and ald datasets is scored
+#' transformed and stored in a `simpler_name` column, then the similarity between
+#' the `simpler_name` columns in each of the loanbook and ald datasets is scored
 #' using [stringdist::stringsim()].
 #'
-#' The process to create the `simple_name` columns applies best practices
+#' The process to create the `simpler_name` columns applies best practices
 #' commonly used in name matching algorithms, such as:
 #' * Remove special characters.
 #' * Replace language specific characters.
@@ -20,13 +20,12 @@
 #'   want to pick.
 #'
 #' @return A dataframe with the same columns as the loanbook data with
-#'   additional columns: `id`, `sector_x`, `source`, `simpler_name_lbk`,
-#'   `simpler_name_ald`, `score`, `name_y`, `sector_y`.
+#'   additional columns: `id_lkb`, `sector_lbk`, `sector_ald`, `source_lbk`,
+#'   `simpler_name_lbk`, `simpler_name_ald`, `score`, `name_ald`.
 #'
 #' @export
 #'
 #' @examples
-#' # Use tibble()
 #' library(dplyr)
 #' library(r2dii.dataraw)
 #'
@@ -34,7 +33,7 @@
 #'
 #' match_name(
 #'   loanbook_demo, ald_demo,
-#'   min_score = 0.5,
+#'   min_score = 0.9,
 #'   by_sector = FALSE
 #' )
 match_name <- function(loanbook,
