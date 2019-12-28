@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
+# Match loanbook with asset level data
 
 <!-- badges: start -->
 
@@ -150,28 +150,30 @@ prepared loanbook and ald datasets.
 ``` r
 match_name(your_loanbook, your_ald)
 #> # A tibble: 833 x 27
-#>    id    sector_x source simpler_name_x simpler_name_y score name_y sector_y
-#>    <chr> <chr>    <chr>  <chr>          <chr>          <dbl> <chr>  <chr>   
-#>  1 UP15  power    loanb… alpineknitsin… alpineknitsin… 1     alpin… power   
-#>  2 UP288 power    loanb… universityofi… universityofi… 1     unive… power   
-#>  3 C305  power    loanb… yukonenergyco… yukondev corp  0.813 yukon… power   
-#>  4 UP104 power    loanb… garlandpowerl… garlandpowerl… 1     garla… power   
-#>  5 C304  power    loanb… yukondev corp  yukondev corp  1     yukon… power   
-#>  6 UP83  power    loanb… earthpowertec… earthpowertec… 1     earth… power   
-#>  7 UP163 power    loanb… kraftwerkmehr… kraftwerkmehr… 1     kraft… power   
-#>  8 UP138 power    loanb… jaibharatgumc… jaibharatgumc… 1     jai b… power   
-#>  9 UP32  power    loanb… bhagwanenergy… bhagwanenergy… 1     bhagw… power   
-#> 10 UP81  power    loanb… dynegymidwest… dynegymidwest… 1     dyneg… power   
-#> # … with 823 more rows, and 19 more variables: name_ultimate_parent <chr>,
-#> #   name_direct_loantaker <chr>, id_loan <chr>, id_direct_loantaker <chr>,
-#> #   id_intermediate_parent_1 <chr>, name_intermediate_parent_1 <chr>,
-#> #   id_ultimate_parent <chr>, loan_size_outstanding <dbl>,
-#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
-#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
-#> #   sector_classification_input_type <chr>,
-#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>
+#>    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
+#>    <chr>            <chr>            <dbl> <chr>  <chr>      <chr>      <chr>   
+#>  1 astonmartin      astonmartin      1     UP23   automotive loanbook   aston m…
+#>  2 avtozaz          avtozaz          1     UP25   automotive loanbook   avtozaz 
+#>  3 bogdan           bogdan           1     UP36   automotive loanbook   bogdan  
+#>  4 chauto           chauto           1     UP52   automotive loanbook   ch auto 
+#>  5 chauto           chtcauto         0.867 UP52   automotive loanbook   chtc au…
+#>  6 chehejia         chehejia         1     UP53   automotive loanbook   chehejia
+#>  7 chtcauto         chauto           0.867 UP58   automotive loanbook   ch auto 
+#>  8 chtcauto         chtcauto         1     UP58   automotive loanbook   chtc au…
+#>  9 dongfenghonda    dongfenghonda    1     UP80   automotive loanbook   dongfen…
+#> 10 dongfenghonda    dongfengluxgen   0.867 UP80   automotive loanbook   dongfen…
+#> # … with 823 more rows, and 20 more variables: sector_ald <chr>,
+#> #   name_ultimate_parent_lbk <chr>, name_direct_loantaker_lbk <chr>,
+#> #   id_loan_lbk <chr>, id_direct_loantaker_lbk <chr>,
+#> #   id_intermediate_parent_1_lbk <chr>, name_intermediate_parent_1_lbk <chr>,
+#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
+#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
+#> #   loan_size_credit_limit_currency_lbk <chr>,
+#> #   sector_classification_system_lbk <chr>,
+#> #   sector_classification_input_type_lbk <chr>,
+#> #   sector_classification_direct_loantaker_lbk <dbl>, fi_type_lbk <chr>,
+#> #   flag_project_finance_loan_lbk <chr>, name_project_lbk <lgl>,
+#> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>
 ```
 
 By default, names are compared against ald names in the same sector
@@ -182,28 +184,30 @@ and the amount of nonsensical matches.
 ``` r
 match_name(your_loanbook, your_ald, by_sector = FALSE)
 #> # A tibble: 1,101 x 27
-#>    id    sector_x source simpler_name_x simpler_name_y score name_y sector_y
-#>    <chr> <chr>    <chr>  <chr>          <chr>          <dbl> <chr>  <chr>   
-#>  1 UP15  power    loanb… alpineknitsin… alpineknitsin… 1     alpin… power   
-#>  2 UP288 power    loanb… universityofi… universityofi… 1     unive… power   
-#>  3 C305  power    loanb… yukonenergyco… yukondev corp  0.813 yukon… power   
-#>  4 UP104 power    loanb… garlandpowerl… garlandpowerl… 1     garla… power   
-#>  5 C304  power    loanb… yukondev corp  yukondev corp  1     yukon… power   
-#>  6 UP83  power    loanb… earthpowertec… earthpowertec… 1     earth… power   
-#>  7 UP134 power    loanb… ineos ag       ineos ag       1     ineos… oil&gas 
-#>  8 UP163 power    loanb… kraftwerkmehr… kraftwerkmehr… 1     kraft… power   
-#>  9 UP138 power    loanb… jaibharatgumc… jaibharatgumc… 1     jai b… power   
-#> 10 UP32  power    loanb… bhagwanenergy… bengalenergy … 0.845 benga… oil&gas 
-#> # … with 1,091 more rows, and 19 more variables: name_ultimate_parent <chr>,
-#> #   name_direct_loantaker <chr>, id_loan <chr>, id_direct_loantaker <chr>,
-#> #   id_intermediate_parent_1 <chr>, name_intermediate_parent_1 <chr>,
-#> #   id_ultimate_parent <chr>, loan_size_outstanding <dbl>,
-#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
-#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
-#> #   sector_classification_input_type <chr>,
-#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>
+#>    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
+#>    <chr>            <chr>            <dbl> <chr>  <chr>      <chr>      <chr>   
+#>  1 abahydropowerge… abahydropowerge… 1     UP1    power      loanbook   aba hyd…
+#>  2 achinskyglinozi… achinskyglinozi… 1     UP2    cement     loanbook   achinsk…
+#>  3 affinityrenewab… affinityrenewab… 1     UP3    power      loanbook   affinit…
+#>  4 africaoil corp   africaoil corp   1     C2     oil and g… loanbook   africa …
+#>  5 africaoil corp   africonshp sa    0.812 C2     oil and g… loanbook   africon…
+#>  6 africonshp sa    africaoil corp   0.812 UP4    shipping   loanbook   africa …
+#>  7 africonshp sa    africonshp sa    1     UP4    shipping   loanbook   africon…
+#>  8 agnisteelspriva… agnisteelspriva… 1     UP5    power      loanbook   agni st…
+#>  9 agrenewables     agrenewables     1     UP6    power      loanbook   agrenew…
+#> 10 airasiaxbhd      airasiaxbhd      1     C3     aviation   loanbook   airasia…
+#> # … with 1,091 more rows, and 20 more variables: sector_ald <chr>,
+#> #   name_ultimate_parent_lbk <chr>, name_direct_loantaker_lbk <chr>,
+#> #   id_loan_lbk <chr>, id_direct_loantaker_lbk <chr>,
+#> #   id_intermediate_parent_1_lbk <chr>, name_intermediate_parent_1_lbk <chr>,
+#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
+#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
+#> #   loan_size_credit_limit_currency_lbk <chr>,
+#> #   sector_classification_system_lbk <chr>,
+#> #   sector_classification_input_type_lbk <chr>,
+#> #   sector_classification_direct_loantaker_lbk <dbl>, fi_type_lbk <chr>,
+#> #   flag_project_finance_loan_lbk <chr>, name_project_lbk <lgl>,
+#> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>
 ```
 
 `min_score` allows you to pick rows at and above some `score`.
@@ -213,28 +217,30 @@ matching_scores <- match_name(your_loanbook, your_ald, min_score = 0.9)
 
 matching_scores
 #> # A tibble: 438 x 27
-#>    id    sector_x source simpler_name_x simpler_name_y score name_y sector_y
-#>    <chr> <chr>    <chr>  <chr>          <chr>          <dbl> <chr>  <chr>   
-#>  1 UP15  power    loanb… alpineknitsin… alpineknitsin…     1 alpin… power   
-#>  2 UP288 power    loanb… universityofi… universityofi…     1 unive… power   
-#>  3 UP104 power    loanb… garlandpowerl… garlandpowerl…     1 garla… power   
-#>  4 C304  power    loanb… yukondev corp  yukondev corp      1 yukon… power   
-#>  5 UP83  power    loanb… earthpowertec… earthpowertec…     1 earth… power   
-#>  6 UP163 power    loanb… kraftwerkmehr… kraftwerkmehr…     1 kraft… power   
-#>  7 UP138 power    loanb… jaibharatgumc… jaibharatgumc…     1 jai b… power   
-#>  8 UP32  power    loanb… bhagwanenergy… bhagwanenergy…     1 bhagw… power   
-#>  9 UP81  power    loanb… dynegymidwest… dynegymidwest…     1 dyneg… power   
-#> 10 UP269 power    loanb… summitmeghnag… summitmeghnag…     1 summi… power   
-#> # … with 428 more rows, and 19 more variables: name_ultimate_parent <chr>,
-#> #   name_direct_loantaker <chr>, id_loan <chr>, id_direct_loantaker <chr>,
-#> #   id_intermediate_parent_1 <chr>, name_intermediate_parent_1 <chr>,
-#> #   id_ultimate_parent <chr>, loan_size_outstanding <dbl>,
-#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
-#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
-#> #   sector_classification_input_type <chr>,
-#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>
+#>    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
+#>    <chr>            <chr>            <dbl> <chr>  <chr>      <chr>      <chr>   
+#>  1 astonmartin      astonmartin          1 UP23   automotive loanbook   aston m…
+#>  2 avtozaz          avtozaz              1 UP25   automotive loanbook   avtozaz 
+#>  3 bogdan           bogdan               1 UP36   automotive loanbook   bogdan  
+#>  4 chauto           chauto               1 UP52   automotive loanbook   ch auto 
+#>  5 chehejia         chehejia             1 UP53   automotive loanbook   chehejia
+#>  6 chtcauto         chtcauto             1 UP58   automotive loanbook   chtc au…
+#>  7 dongfenghonda    dongfenghonda        1 UP80   automotive loanbook   dongfen…
+#>  8 dongfengluxgen   dongfengluxgen       1 UP79   automotive loanbook   dongfen…
+#>  9 electricmobilit… electricmobilit…     1 UP89   automotive loanbook   electri…
+#> 10 faradayfuture    faradayfuture        1 UP94   automotive loanbook   faraday…
+#> # … with 428 more rows, and 20 more variables: sector_ald <chr>,
+#> #   name_ultimate_parent_lbk <chr>, name_direct_loantaker_lbk <chr>,
+#> #   id_loan_lbk <chr>, id_direct_loantaker_lbk <chr>,
+#> #   id_intermediate_parent_1_lbk <chr>, name_intermediate_parent_1_lbk <chr>,
+#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
+#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
+#> #   loan_size_credit_limit_currency_lbk <chr>,
+#> #   sector_classification_system_lbk <chr>,
+#> #   sector_classification_input_type_lbk <chr>,
+#> #   sector_classification_direct_loantaker_lbk <dbl>, fi_type_lbk <chr>,
+#> #   flag_project_finance_loan_lbk <chr>, name_project_lbk <lgl>,
+#> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>
 ```
 
 ### 3\. Write the output of the previous step into a .csv file
@@ -250,8 +256,8 @@ matching_scores %>%
   - Open *matching-scores.csv* with MS Excel, Google Sheets, or any
     spreadsheet editor.
 
-  - Visually compare `simpler_name_x` and `simpler_name_y`, along with
-    the loanbook sector.
+  - Visually compare `simpler_name_lbk` and `simpler_name_ald`, along
+    with the loanbook sector.
 
   - Edit the data manually:
     

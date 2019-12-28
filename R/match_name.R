@@ -21,7 +21,7 @@
 #'
 #' @return A dataframe with the same columns as the loanbook data with
 #'   additional columns: `id`, `sector_x`, `source`, `simpler_name_lbk`,
-#'   `simpler_name_y`, `score`, `name_y`, `sector_y`.
+#'   `simpler_name_ald`, `score`, `name_y`, `sector_y`.
 #'
 #' @export
 #'
@@ -54,11 +54,7 @@ match_name <- function(loanbook,
     by_sector = by_sector,
     method = method,
     p = p
-  ) %>%
-    rename(
-      simpler_name_lbk = .data$simpler_name_x,
-      simpler_name_ald = .data$simpler_name_y,
-    )
+  )
 
   matched %>%
     pick_min_score(min_score) %>%

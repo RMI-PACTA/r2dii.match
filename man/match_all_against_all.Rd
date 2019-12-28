@@ -51,7 +51,7 @@ ald <- tibble(
 out <- match_all_against_all(loanbook, ald)
 
 # Recover sector
-left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name"))
+left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name"))
 
 threshold <- 0.5
 match_all_against_all(loanbook, ald) \%>\%
@@ -61,9 +61,9 @@ out <- match_all_against_all(loanbook, ald, by_sector = FALSE)
 out
 
 # Recover sectors from x & y
-left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name")) \%>\%
+left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name")) \%>\%
   rename(sector_x = sector) \%>\%
-  left_join(ald, by = c("simpler_name_y" = "simpler_name")) \%>\%
+  left_join(ald, by = c("simpler_name_ald" = "simpler_name")) \%>\%
   rename(sector_y = sector)
 }
 \seealso{

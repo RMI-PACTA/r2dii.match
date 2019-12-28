@@ -122,7 +122,7 @@ matching_scores %>%
 
 * Open _matching-scores.csv_ with MS Excel, Google Sheets, or any spreadsheet editor.
 
-* Visually compare `simpler_name_x` and `simpler_name_y`, along with the loanbook sector.
+* Visually compare `simpler_name_lbk` and `simpler_name_ald`, along with the loanbook sector.
 
 * Edit the data manually:
     * If you are happy with the match, set the `score` value to `1`.

@@ -92,12 +92,7 @@ test_that("match_name outputs a reasonable number of rows", {
     prepare_loanbook_for_matching(loanbook_demo),
     prepare_ald_for_matching(ald_demo)
   ) %>%
-    filter(score >= 0.8) %>%
-    # FIXME: This is a temoprary patch
-    rename(
-      simpler_name_lbk = .data$simpler_name_x,
-      simpler_name_ald = .data$simpler_name_y
-    )
+    filter(score >= 0.8)
 
   nrows_out <- out %>%
     select(names(expected)) %>%

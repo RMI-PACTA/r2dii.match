@@ -30,7 +30,7 @@
 #' out <- match_all_against_all(loanbook, ald)
 #'
 #' # Recover sector
-#' left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name"))
+#' left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name"))
 #'
 #' threshold <- 0.5
 #' match_all_against_all(loanbook, ald) %>%
@@ -40,9 +40,9 @@
 #' out
 #'
 #' # Recover sectors from x & y
-#' left_join(out, loanbook, by = c("simpler_name_x" = "simpler_name")) %>%
+#' left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name")) %>%
 #'   rename(sector_x = sector) %>%
-#'   left_join(ald, by = c("simpler_name_y" = "simpler_name")) %>%
+#'   left_join(ald, by = c("simpler_name_ald" = "simpler_name")) %>%
 #'   rename(sector_y = sector)
 match_all_against_all <- function(loanbook,
                                   ald,
@@ -62,35 +62,35 @@ match_all_against_all <- function(loanbook,
     mutate(
       out,
       score = string_similarity(
-        out$simpler_name_x, out$simpler_name_y, ...,
+        out$simpler_name_lbk, out$simpler_name_ald, ...,
         method = method, p = p
       )
     )
   )
 }
 
-expand_simpler_name_by_sector <- function(x, y) {
+expand_simpler_name_by_sector <- function(loanbook, ald) {
   vars <- c("sector", "simpler_name")
 
-  check_crucial_names(x, vars)
-  check_crucial_names(y, vars)
+  check_crucial_names(loanbook, vars)
+  check_crucial_names(ald, vars)
 
   dplyr::inner_join(
-    select(x, vars), select(y, vars),
-    by = "sector", suffix = c("_x", "_y")
+    select(loanbook, vars), select(ald, vars),
+    by = "sector", suffix = c("_lbk", "_ald")
   ) %>%
     dplyr::group_by(.data$sector) %>%
-    tidyr::expand(.data$simpler_name_x, .data$simpler_name_y) %>%
+    tidyr::expand(.data$simpler_name_lbk, .data$simpler_name_ald) %>%
     dplyr::ungroup() %>%
     select(-.data$sector)
 }
 
-cross_simpler_name <- function(x, y) {
-  check_crucial_names(x, "simpler_name")
-  check_crucial_names(y, "simpler_name")
+cross_simpler_name <- function(loanbook, ald) {
+  check_crucial_names(loanbook, "simpler_name")
+  check_crucial_names(ald, "simpler_name")
 
   tidyr::crossing(
-    simpler_name_x = x$simpler_name,
-    simpler_name_y = y$simpler_name
+    simpler_name_lbk = loanbook$simpler_name,
+    simpler_name_ald = ald$simpler_name
   )
 }
