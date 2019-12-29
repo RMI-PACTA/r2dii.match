@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Match loanbook with asset level data
+# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
 
 <!-- badges: start -->
 
@@ -28,8 +28,8 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 
 ## Example
 
-As usual, we start by using required packages. For general purpose
-functions we’ll also use tidyverse.
+We’ll use required packages from r2dii, and some convenient packages
+from the tidyverse.
 
 ``` r
 library(r2dii.match)
@@ -46,12 +46,11 @@ library(tidyverse)
 #> x dplyr::lag()    masks stats::lag()
 ```
 
-The following sections show the steps involved in the process.
+The process for matching loanbook and ald datasets has multiple steps:
 
 ### 1\. Create two datasets: [loanbook](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_description.html)
 
-This step is up to you. You must structure your data like the example
-datasets
+Start by creating datasets like
 [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_demo.html)
 and
 [`ald_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_demo.html)
@@ -102,20 +101,20 @@ ald_demo
 #> #   ald_timestamp <chr>
 ```
 
-You may write *your-loanbook-template.csv* and *your-ald-template.csv*
+You may write *your\_loanbook\_template.csv* and *your-ald-template.csv*
 with:
 
 ``` r
 # Writting to current working directory 
 loanbook_demo %>% 
-  write_csv(path = "your-loanbook-template.csv")
+  write_csv(path = "your_loanbook_template.csv")
 
 ald_demo %>% 
   write_csv(path = "your-ald-template.csv")
 ```
 
 You may then edit those files, save them as *your-loanbook.csv* and
-*your-ald.csv*, and then read them back into R with:
+*your-ald.csv*, and read them back into R with:
 
 ``` r
 # Reading from current working directory 
@@ -123,29 +122,34 @@ your_loanbook <- read_csv("your-loanbook.csv")
 your_ald <- read_csv("your-ald.csv")
 ```
 
-But here we’ll continue to use the `*_demo` datasets.
+Here we’ll continue to use the `*_demo` datasets.
 
 ``` r
 your_loanbook <- loanbook_demo
 your_ald <- ald_demo
 ```
 
-(If you are following this code, be sure to skip the code chunk above,
-so it doesn’t overwrite `your_loanbook` and `your_ald` datasets.)
+(WARNING: If you are following this code, be sure to skip the code chunk
+above, so it doesn’t overwrite `your_loanbook` and `your_ald` datasets.)
 
 ### 2\. Score the goodness of the match between the loanbook and ald datasets
 
-`match_name()` first adds the column `simpler_name`, a modified version
-of the `name` column after applying best practices commonly used in name
-matching algorithms, such as:
+`match_name()` scores the match between names in a loanbook dataset
+(lbk; columns `name_direct_loantaker` and `name_ultimate_parent`) with
+names in an asset-level dataset (ald; column `name_company`). The raw
+names are first transformed and stored in the columns `simpler_name_lbk`
+and `simpler_name_ald`, then the similarity between them is scored using
+`stringdist::stringsim()`.
+
+The process to create the `simpler_name_*` columns applies
+best-practices commonly used in name matching algorithms, such as:
 
   - Remove special characters.
   - Replace language specific characters.
   - Abbreviate certain names to reduce their importance in the matching.
   - Spell out numbers to increase their importance.
 
-It then scores the similarity between `simpler_name` values in the
-prepared loanbook and ald datasets.
+<!-- end list -->
 
 ``` r
 match_name(your_loanbook, your_ald)
@@ -176,10 +180,9 @@ match_name(your_loanbook, your_ald)
 #> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>
 ```
 
-By default, names are compared against ald names in the same sector
-(i.e. `by_sector = TRUE`). Use `by_sector = FALSE` removes this
-limitation, but it increases the matching run time on large datasets,
-and the amount of nonsensical matches.
+By default, `simpler_name_lbk` and `simpler_name_ald` are scored only by
+sector. `by_sector = FALSE` removes this limitation, increasing
+computation time, and the number of nonsensical matches.
 
 ``` r
 match_name(your_loanbook, your_ald, by_sector = FALSE)
@@ -210,7 +213,7 @@ match_name(your_loanbook, your_ald, by_sector = FALSE)
 #> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>
 ```
 
-`min_score` allows you to pick rows at and above some `score`.
+`min_score` allows you to pick rows of a minimum `score` and above.
 
 ``` r
 matching_scores <- match_name(your_loanbook, your_ald, min_score = 0.9)
@@ -245,16 +248,18 @@ matching_scores
 
 ### 3\. Write the output of the previous step into a .csv file
 
+Write the output of the previous step into a .csv file with:
+
 ``` r
 # Writting to current working directory 
 matching_scores %>%
-  write_csv("matching-scores.csv")
+  write_csv("matching_scores.csv")
 ```
 
 ### 4\. Compare, edit, and save the data manually
 
-  - Open *matching-scores.csv* with MS Excel, Google Sheets, or any
-    spreadsheet editor.
+  - Open *matching\_scores.csv* with any spreadsheet editor (e.g. MS
+    Excel, Google Sheets).
 
   - Visually compare `simpler_name_lbk` and `simpler_name_ald`, along
     with the loanbook sector.
@@ -265,14 +270,16 @@ matching_scores %>%
       - Otherwise set or leave the `score` value to anything other than
         `1`.
 
-  - Save the edited file as, say, *matching-scores-edited.csv*.
+  - Save the edited file as, say, *matching\_scores\_edited.csv*.
 
 ### 5\. Re-read the data from the previous step
+
+Re-read the data from the previous step with:
 
 ``` r
 # Reading from current working directory 
 matching_scores %>%
-  write_csv("matching-scores.csv")
+  write_csv("matching_scores_edited.csv")
 ```
 
 ### 6\. Join in validated matches in order of priority
