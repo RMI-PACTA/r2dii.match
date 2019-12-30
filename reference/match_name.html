@@ -74,7 +74,7 @@ using stringdist::stringsim()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -209,20 +209,20 @@ commonly used in name matching algorithms, such as:</p><ul>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
 
-<span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 833 x 27
+<span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 450 x 27
 #&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
 #&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   
-#&gt;  1 astonmartin      astonmartin      1     UP23   automotive loanbook   aston m…
-#&gt;  2 avtozaz          avtozaz          1     UP25   automotive loanbook   avtozaz 
-#&gt;  3 bogdan           bogdan           1     UP36   automotive loanbook   bogdan  
-#&gt;  4 chauto           chauto           1     UP52   automotive loanbook   ch auto 
-#&gt;  5 chauto           chtcauto         0.867 UP52   automotive loanbook   chtc au…
-#&gt;  6 chehejia         chehejia         1     UP53   automotive loanbook   chehejia
-#&gt;  7 chtcauto         chauto           0.867 UP58   automotive loanbook   ch auto 
-#&gt;  8 chtcauto         chtcauto         1     UP58   automotive loanbook   chtc au…
-#&gt;  9 dongfenghonda    dongfenghonda    1     UP79   automotive loanbook   dongfen…
-#&gt; 10 dongfenghonda    dongfengluxgen   0.867 UP79   automotive loanbook   dongfen…
-#&gt; # … with 823 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
+#&gt;  1 astonmartin      astonmartin          1 UP23   automotive loanbook   aston m…
+#&gt;  2 avtozaz          avtozaz              1 UP25   automotive loanbook   avtozaz 
+#&gt;  3 bogdan           bogdan               1 UP36   automotive loanbook   bogdan  
+#&gt;  4 chauto           chauto               1 UP52   automotive loanbook   ch auto 
+#&gt;  5 chehejia         chehejia             1 UP53   automotive loanbook   chehejia
+#&gt;  6 chtcauto         chtcauto             1 UP58   automotive loanbook   chtc au…
+#&gt;  7 dongfenghonda    dongfenghonda        1 UP79   automotive loanbook   dongfen…
+#&gt;  8 dongfengluxgen   dongfengluxgen       1 UP80   automotive loanbook   dongfen…
+#&gt;  9 electricmobilit… electricmobilit…     1 UP89   automotive loanbook   electri…
+#&gt; 10 faradayfuture    faradayfuture        1 UP94   automotive loanbook   faraday…
+#&gt; # … with 440 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
 #&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,
 #&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,
 #&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,
@@ -238,7 +238,7 @@ commonly used in name matching algorithms, such as:</p><ul>
   <span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>,
   <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='output co'>#&gt; # A tibble: 630 x 27
+)</div><div class='output co'>#&gt; # A tibble: 616 x 27
 #&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
 #&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   
 #&gt;  1 abahydropowerge… abahydropowerge…     1 UP1    power      loanbook   aba hyd…
@@ -251,7 +251,7 @@ commonly used in name matching algorithms, such as:</p><ul>
 #&gt;  8 airasiaxbhd      airasiaxbhd          1 C3     aviation   loanbook   airasia…
 #&gt;  9 airasiaxbhd      airasiaxbhd          1 UP7    aviation   loanbook   airasia…
 #&gt; 10 airbaltic        airbaltic            1 C4     aviation   loanbook   airbalt…
-#&gt; # … with 620 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
+#&gt; # … with 606 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
 #&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,
 #&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,
 #&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,
