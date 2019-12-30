@@ -101,36 +101,44 @@ ald_demo
 #> #   ald_timestamp <chr>
 ```
 
-You may write *your\_loanbook\_template.csv* and *your-ald-template.csv*
-with:
+You may use these datasets as a template:
+
+  - Write *loanbook\_demo.csv* and *ald\_demo.csv* with:
+
+<!-- end list -->
 
 ``` r
 # Writting to current working directory 
 loanbook_demo %>% 
-  write_csv(path = "your_loanbook_template.csv")
+  write_csv(path = "loanbook_demo.csv")
 
 ald_demo %>% 
-  write_csv(path = "your-ald-template.csv")
+  write_csv(path = "ald_demo.csv")
 ```
 
-You may then edit those files, save them as *your-loanbook.csv* and
-*your-ald.csv*, and read them back into R with:
+  - In each dataset, replace out demo data with your data.
+
+  - Save save each dataset as, say, *your\_loanbook.csv* and
+    *your\_ald.csv*.
+
+  - Read your datasets back into R with:
+
+<!-- end list -->
 
 ``` r
 # Reading from current working directory 
-your_loanbook <- read_csv("your-loanbook.csv")
-your_ald <- read_csv("your-ald.csv")
+your_loanbook <- read_csv("your_loanbook.csv")
+your_ald <- read_csv("your_ald.csv")
 ```
 
 Here we’ll continue to use the `*_demo` datasets.
 
 ``` r
+warning("Skip this chunk to avoid overwriting your data with our demo data.")
+#> Warning: Skip this chunk to avoid overwriting your data with our demo data.
 your_loanbook <- loanbook_demo
 your_ald <- ald_demo
 ```
-
-(WARNING: If you are following this code, be sure to skip the code chunk
-above, so it doesn’t overwrite `your_loanbook` and `your_ald` datasets.)
 
 ### 2\. Score the goodness of the match between the loanbook and ald datasets
 

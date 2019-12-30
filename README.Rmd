@@ -53,33 +53,38 @@ loanbook_demo
 ald_demo
 ```
 
-You may write _your_loanbook_template.csv_ and _your-ald-template.csv_ with:
+You may use these datasets as a template:
+
+* Write _loanbook\_demo.csv_ and _ald\_demo.csv_ with:
 
 ```r
 # Writting to current working directory 
 loanbook_demo %>% 
-  write_csv(path = "your_loanbook_template.csv")
+  write_csv(path = "loanbook_demo.csv")
 
 ald_demo %>% 
-  write_csv(path = "your-ald-template.csv")
+  write_csv(path = "ald_demo.csv")
 ```
 
-You may then edit those files, save them as _your-loanbook.csv_ and _your-ald.csv_, and read them back into R with:
+* In each dataset, replace out demo data with your data.
+
+* Save save each dataset as, say, _your\_loanbook.csv_ and _your\_ald.csv_.
+
+* Read your datasets back into R with:
 
 ```r
 # Reading from current working directory 
-your_loanbook <- read_csv("your-loanbook.csv")
-your_ald <- read_csv("your-ald.csv")
+your_loanbook <- read_csv("your_loanbook.csv")
+your_ald <- read_csv("your_ald.csv")
 ```
 
 Here we'll continue to use the `*_demo` datasets.
 
 ```{r}
+warning("Skip this chunk to avoid overwriting your data with our demo data.")
 your_loanbook <- loanbook_demo
 your_ald <- ald_demo
 ```
-
-(WARNING: If you are following this code, be sure to skip the code chunk above, so it doesn't overwrite `your_loanbook` and `your_ald` datasets.)
 
 ### 2. Score the goodness of the match between the loanbook and ald datasets
 
