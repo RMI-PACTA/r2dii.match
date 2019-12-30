@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -322,42 +322,42 @@
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">matched</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; # A tibble: 64,302 x 3</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;    simpler_name_x simpler_name_y            score</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;    &lt;chr&gt;          &lt;chr&gt;                     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  1 astonmartin    astonmartin               1    </span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  2 astonmartin    avtozaz                   0.681</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  3 astonmartin    bogdan                    0.480</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  4 astonmartin    chauto                    0.591</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  5 astonmartin    chehejia                  0.311</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  6 astonmartin    chtcauto                  0.455</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  7 astonmartin    dongfenghonda             0.501</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  8 astonmartin    dongfengluxgen            0.496</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;  9 astonmartin    electricmobilitysolutions 0.456</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; 10 astonmartin    faradayfuture             0.474</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;    simpler_name_lbk simpler_name_ald          score</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;                     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  1 astonmartin      astonmartin               1    </span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  2 astonmartin      avtozaz                   0.681</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  3 astonmartin      bogdan                    0.480</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  4 astonmartin      chauto                    0.591</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  5 astonmartin      chehejia                  0.311</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  6 astonmartin      chtcauto                  0.455</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  7 astonmartin      dongfenghonda             0.501</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  8 astonmartin      dongfengluxgen            0.496</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;  9 astonmartin      electricmobilitysolutions 0.456</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; 10 astonmartin      faradayfuture             0.474</span></a>
 <a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; # … with 64,292 more rows</span></a></code></pre></div>
 <p>You may use common dplyr functions to recover all columns from the loanbook dataset and to keep only rows at and above some threshold.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">threshold &lt;-<span class="st"> </span><span class="fl">0.9</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">matched <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(prep_loanbook, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"simpler_name_x"</span> =<span class="st"> "simpler_name"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(prep_loanbook, <span class="dt">by =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"simpler_name_lbk"</span> =<span class="st"> "simpler_name"</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(score <span class="op">&gt;=</span><span class="st"> </span>threshold)</a>
 <a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; # A tibble: 416 x 8</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;    simpler_name_x   simpler_name_y   score level   id    name      sector source</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt; </span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt;  1 astonmartin      astonmartin          1 ultima… UP23  Aston Ma… autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;  2 avtozaz          avtozaz              1 ultima… UP25  Avtozaz   autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt;  3 bogdan           bogdan               1 ultima… UP36  Bogdan    autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt;  4 chauto           chauto               1 ultima… UP52  Ch Auto   autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt;  5 chehejia         chehejia             1 ultima… UP53  Chehejia  autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt;  6 chtcauto         chtcauto             1 ultima… UP58  Chtc Auto autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt;  7 dongfenghonda    dongfenghonda        1 ultima… UP79  Dongfeng… autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt;  8 dongfengluxgen   dongfengluxgen       1 ultima… UP80  Dongfeng… autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt;  9 electricmobilit… electricmobilit…     1 ultima… UP89  Electric… autom… loanb…</span></a>
-<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; 10 faradayfuture    faradayfuture        1 ultima… UP94  Faraday … autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;    simpler_name_lbk  simpler_name_ald  score level   id    name    sector source</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;             &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; </span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt;  1 astonmartin       astonmartin           1 ultima… UP23  Aston … autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;  2 avtozaz           avtozaz               1 ultima… UP25  Avtozaz autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt;  3 bogdan            bogdan                1 ultima… UP36  Bogdan  autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt;  4 chauto            chauto                1 ultima… UP52  Ch Auto autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt;  5 chehejia          chehejia              1 ultima… UP53  Chehej… autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt;  6 chtcauto          chtcauto              1 ultima… UP58  Chtc A… autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt;  7 dongfenghonda     dongfenghonda         1 ultima… UP79  Dongfe… autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co">#&gt;  8 dongfengluxgen    dongfengluxgen        1 ultima… UP80  Dongfe… autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co">#&gt;  9 electricmobility… electricmobility…     1 ultima… UP89  Electr… autom… loanb…</span></a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="co">#&gt; 10 faradayfuture     faradayfuture         1 ultima… UP94  Farada… autom… loanb…</span></a>
 <a class="sourceLine" id="cb10-19" data-line-number="19"><span class="co">#&gt; # … with 406 more rows</span></a></code></pre></div>
 <p>This matching data-frame should be saved and manually verified. To do so, try something like:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span>(matched, <span class="st">"path/to/save/matches_to_be_verified.csv"</span>)</a></code></pre></div>
-<p>and open the .csv in excel/ google sheets/ however you want to edit a spreadsheet. Once open, compare <code>simpler_name_x</code> and <code>simpler_name_y</code> manually, along with the loanbook sector. If you are happy with the match, set the <code>score</code> value to <code>1</code> (Note: Only values of exactly <code>1</code> will be considered valid, all other potential matches will be considered invalidated.)</p>
+<p>and open the .csv in excel/ google sheets/ however you want to edit a spreadsheet. Once open, compare <code>simpler_name_lbk</code> and <code>simpler_name_ald</code> manually, along with the loanbook sector. If you are happy with the match, set the <code>score</code> value to <code>1</code> (Note: Only values of exactly <code>1</code> will be considered valid, all other potential matches will be considered invalidated.)</p>
 <p>When you are happy with the match validation:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="st">"path/to/load/verified_matches.csv"</span>)</a></code></pre></div>
 <p><strong>Work in progress, next step of analysis it to join in validated matches in order of priority</strong>.</p>

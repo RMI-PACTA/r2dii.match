@@ -70,7 +70,7 @@ from two dataframes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -192,48 +192,48 @@ Jaro-distance is returned. Applies only to <code>method='jw'</code>.</p></td>
 <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>match_all_against_all</span>(<span class='no'>loanbook</span>, <span class='no'>ald</span>)
 
 <span class='co'># Recover sector</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>out</span>, <span class='no'>loanbook</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"simpler_name_x"</span> <span class='kw'>=</span> <span class='st'>"simpler_name"</span>))</div><div class='output co'>#&gt; # A tibble: 3 x 4
-#&gt;   simpler_name_x simpler_name_y score sector
-#&gt;   &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; 
-#&gt; 1 xa             ya             0.667 A     
-#&gt; 2 xb             yb             0.667 B     
-#&gt; 3 xc             yb             0     B     </div><div class='input'>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>out</span>, <span class='no'>loanbook</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"simpler_name_lbk"</span> <span class='kw'>=</span> <span class='st'>"simpler_name"</span>))</div><div class='output co'>#&gt; # A tibble: 3 x 4
+#&gt;   simpler_name_lbk simpler_name_ald score sector
+#&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt; 
+#&gt; 1 xa               ya               0.667 A     
+#&gt; 2 xb               yb               0.667 B     
+#&gt; 3 xc               yb               0     B     </div><div class='input'>
 <span class='no'>threshold</span> <span class='kw'>&lt;-</span> <span class='fl'>0.5</span>
 <span class='fu'>match_all_against_all</span>(<span class='no'>loanbook</span>, <span class='no'>ald</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>score</span> <span class='kw'>&gt;=</span> <span class='no'>threshold</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   simpler_name_x simpler_name_y score
-#&gt;   &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt;
-#&gt; 1 xa             ya             0.667
-#&gt; 2 xb             yb             0.667</div><div class='input'>
+#&gt;   simpler_name_lbk simpler_name_ald score
+#&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;
+#&gt; 1 xa               ya               0.667
+#&gt; 2 xb               yb               0.667</div><div class='input'>
 <span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>match_all_against_all</span>(<span class='no'>loanbook</span>, <span class='no'>ald</span>, <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>out</span></div><div class='output co'>#&gt; # A tibble: 9 x 3
-#&gt;   simpler_name_x simpler_name_y score
-#&gt;   &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt;
-#&gt; 1 xa             ya             0.667
-#&gt; 2 xa             yb             0    
-#&gt; 3 xa             yc             0    
-#&gt; 4 xb             ya             0    
-#&gt; 5 xb             yb             0.667
-#&gt; 6 xb             yc             0    
-#&gt; 7 xc             ya             0    
-#&gt; 8 xc             yb             0    
-#&gt; 9 xc             yc             0.667</div><div class='input'>
+#&gt;   simpler_name_lbk simpler_name_ald score
+#&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt;
+#&gt; 1 xa               ya               0.667
+#&gt; 2 xa               yb               0    
+#&gt; 3 xa               yc               0    
+#&gt; 4 xb               ya               0    
+#&gt; 5 xb               yb               0.667
+#&gt; 6 xb               yc               0    
+#&gt; 7 xc               ya               0    
+#&gt; 8 xc               yb               0    
+#&gt; 9 xc               yc               0.667</div><div class='input'>
 <span class='co'># Recover sectors from x &amp; y</span>
-<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>out</span>, <span class='no'>loanbook</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"simpler_name_x"</span> <span class='kw'>=</span> <span class='st'>"simpler_name"</span>)) <span class='kw'>%&gt;%</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>out</span>, <span class='no'>loanbook</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"simpler_name_lbk"</span> <span class='kw'>=</span> <span class='st'>"simpler_name"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>sector_x</span> <span class='kw'>=</span> <span class='no'>sector</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>ald</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"simpler_name_y"</span> <span class='kw'>=</span> <span class='st'>"simpler_name"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/join.html'>left_join</a></span>(<span class='no'>ald</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"simpler_name_ald"</span> <span class='kw'>=</span> <span class='st'>"simpler_name"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>rename</a></span>(<span class='kw'>sector_y</span> <span class='kw'>=</span> <span class='no'>sector</span>)</div><div class='output co'>#&gt; # A tibble: 9 x 5
-#&gt;   simpler_name_x simpler_name_y score sector_x sector_y
-#&gt;   &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1 xa             ya             0.667 A        A       
-#&gt; 2 xa             yb             0     A        B       
-#&gt; 3 xa             yc             0     A        C       
-#&gt; 4 xb             ya             0     B        A       
-#&gt; 5 xb             yb             0.667 B        B       
-#&gt; 6 xb             yc             0     B        C       
-#&gt; 7 xc             ya             0     B        A       
-#&gt; 8 xc             yb             0     B        B       
-#&gt; 9 xc             yc             0.667 B        C       </div></pre>
+#&gt;   simpler_name_lbk simpler_name_ald score sector_x sector_y
+#&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1 xa               ya               0.667 A        A       
+#&gt; 2 xa               yb               0     A        B       
+#&gt; 3 xa               yc               0     A        C       
+#&gt; 4 xb               ya               0     B        A       
+#&gt; 5 xb               yb               0.667 B        B       
+#&gt; 6 xb               yc               0     B        C       
+#&gt; 7 xc               ya               0     B        A       
+#&gt; 8 xc               yb               0     B        B       
+#&gt; 9 xc               yc               0.667 B        C       </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

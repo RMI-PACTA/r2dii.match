@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Match a loanbook and asset-level datasets by the <code>name_*</code> columns — match_name • r2dii.match</title>
+<title>Match a loanbook (lbk) and asset-level datasets (ald) by the <code>name_*</code> columns — match_name • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,12 +35,12 @@
 
 
 
-<meta property="og:title" content="Match a loanbook and asset-level datasets by the <code>name_*</code> columns — match_name" />
+<meta property="og:title" content="Match a loanbook (lbk) and asset-level datasets (ald) by the <code>name_*</code> columns — match_name" />
 <meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
 name_direct_loantaker and name_ultimate_parent) with names in an
 asset-level dataset (colum n name_company). The raw names are first
-transformed and stored in a simple_name column, then the similarity between
-the simple_name columns in each of the loanbook and ald datasets is scored
+transformed and stored in a simpler_name column, then the similarity between
+the simpler_name columns in each of the loanbook and ald datasets is scored
 using stringdist::stringsim()." />
 <meta name="twitter:card" content="summary" />
 
@@ -74,7 +74,7 @@ using stringdist::stringsim()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@ using stringdist::stringsim()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Match a loanbook and asset-level datasets by the <code>name_*</code> columns</h1>
+    <h1>Match a loanbook (lbk) and asset-level datasets (ald) by the <code>name_*</code> columns</h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/match_name.R'><code>R/match_name.R</code></a></small>
     <div class="hidden name"><code>match_name.Rd</code></div>
     </div>
@@ -128,8 +128,8 @@ using stringdist::stringsim()." />
     <p><code>match_name()</code> scores the match between names in a loanbook dataset (columns
 <code>name_direct_loantaker</code> and <code>name_ultimate_parent</code>) with names in an
 asset-level dataset (colum n <code>name_company</code>). The raw names are first
-transformed and stored in a <code>simple_name</code> column, then the similarity between
-the <code>simple_name</code> columns in each of the loanbook and ald datasets is scored
+transformed and stored in a <code>simpler_name</code> column, then the similarity between
+the <code>simpler_name</code> columns in each of the loanbook and ald datasets is scored
 using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim()</a></code>.</p>
     </div>
 
@@ -187,11 +187,11 @@ only <code>sector</code>, the value in the <code>name</code> column should be <c
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A dataframe with the same columns as the loanbook data with
-additional columns: <code>id</code>, <code>sector_x</code>, <code>source</code>, <code>simpler_name_x</code>,
-<code>simpler_name_y</code>, <code>score</code>, <code>name_y</code>, <code>sector_y</code>.</p>
+additional columns: <code>id_lkb</code>, <code>sector_lbk</code>, <code>sector_ald</code>, <code>source_lbk</code>,
+<code>simpler_name_lbk</code>, <code>simpler_name_ald</code>, <code>score</code>, <code>name_ald</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The process to create the <code>simple_name</code> columns applies best practices
+    <p>The process to create the <code>simpler_name</code> columns applies best practices
 commonly used in name matching algorithms, such as:</p><ul>
 <li><p>Remove special characters.</p></li>
 <li><p>Replace language specific characters.</p></li>
@@ -206,60 +206,63 @@ commonly used in name matching algorithms, such as:</p><ul>
 <code><a href='prepare_loanbook_for_matching.html'>prepare_loanbook_for_matching</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Use tibble()</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
 
 <span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 833 x 27
-#&gt;    simpler_name_x simpler_name_y score id    sector_x source name_y sector_y
-#&gt;    &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   
-#&gt;  1 astonmartin    astonmartin    1     UP23  automot… loanb… aston… automot…
-#&gt;  2 avtozaz        avtozaz        1     UP25  automot… loanb… avtoz… automot…
-#&gt;  3 bogdan         bogdan         1     UP36  automot… loanb… bogdan automot…
-#&gt;  4 chauto         chauto         1     UP52  automot… loanb… ch au… automot…
-#&gt;  5 chauto         chtcauto       0.867 UP52  automot… loanb… chtc … automot…
-#&gt;  6 chehejia       chehejia       1     UP53  automot… loanb… chehe… automot…
-#&gt;  7 chtcauto       chauto         0.867 UP58  automot… loanb… ch au… automot…
-#&gt;  8 chtcauto       chtcauto       1     UP58  automot… loanb… chtc … automot…
-#&gt;  9 dongfenghonda  dongfenghonda  1     UP79  automot… loanb… dongf… automot…
-#&gt; 10 dongfenghonda  dongfengluxgen 0.867 UP79  automot… loanb… dongf… automot…
-#&gt; # … with 823 more rows, and 19 more variables: name_ultimate_parent &lt;chr&gt;,
-#&gt; #   name_direct_loantaker &lt;chr&gt;, id_loan &lt;chr&gt;, id_direct_loantaker &lt;chr&gt;,
-#&gt; #   id_intermediate_parent_1 &lt;chr&gt;, name_intermediate_parent_1 &lt;chr&gt;,
-#&gt; #   id_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
-#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
-#&gt; #   sector_classification_input_type &lt;chr&gt;,
-#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
-#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</div><div class='input'>
+#&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
+#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   
+#&gt;  1 astonmartin      astonmartin      1     UP23   automotive loanbook   aston m…
+#&gt;  2 avtozaz          avtozaz          1     UP25   automotive loanbook   avtozaz 
+#&gt;  3 bogdan           bogdan           1     UP36   automotive loanbook   bogdan  
+#&gt;  4 chauto           chauto           1     UP52   automotive loanbook   ch auto 
+#&gt;  5 chauto           chtcauto         0.867 UP52   automotive loanbook   chtc au…
+#&gt;  6 chehejia         chehejia         1     UP53   automotive loanbook   chehejia
+#&gt;  7 chtcauto         chauto           0.867 UP58   automotive loanbook   ch auto 
+#&gt;  8 chtcauto         chtcauto         1     UP58   automotive loanbook   chtc au…
+#&gt;  9 dongfenghonda    dongfenghonda    1     UP79   automotive loanbook   dongfen…
+#&gt; 10 dongfenghonda    dongfengluxgen   0.867 UP79   automotive loanbook   dongfen…
+#&gt; # … with 823 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
+#&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,
+#&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,
+#&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,
+#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,
+#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,
+#&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,
+#&gt; #   sector_classification_system_lbk &lt;chr&gt;,
+#&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,
+#&gt; #   sector_classification_direct_loantaker_lbk &lt;dbl&gt;, fi_type_lbk &lt;chr&gt;,
+#&gt; #   flag_project_finance_loan_lbk &lt;chr&gt;, name_project_lbk &lt;lgl&gt;,
+#&gt; #   lei_direct_loantaker_lbk &lt;lgl&gt;, isin_direct_loantaker_lbk &lt;lgl&gt;</div><div class='input'>
 <span class='fu'>match_name</span>(
   <span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>,
-  <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='output co'>#&gt; # A tibble: 174,575 x 27
-#&gt;    simpler_name_x simpler_name_y score id    sector_x source name_y sector_y
-#&gt;    &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   
-#&gt;  1 abahydropower… abahydropower… 1     UP1   power    loanb… aba h… power   
-#&gt;  2 abahydropower… achinskyglino… 0.535 UP1   power    loanb… achin… cement  
-#&gt;  3 abahydropower… affinityrenew… 0.598 UP1   power    loanb… affin… power   
-#&gt;  4 abahydropower… africaoil corp 0.599 UP1   power    loanb… afric… oil&amp;gas 
-#&gt;  5 abahydropower… africonshp sa  0.581 UP1   power    loanb… afric… shipping
-#&gt;  6 abahydropower… agnisteelspri… 0.535 UP1   power    loanb… agni … power   
-#&gt;  7 abahydropower… agrenewables   0.615 UP1   power    loanb… agren… power   
-#&gt;  8 abahydropower… airasiaxbhd    0.545 UP1   power    loanb… airas… aviation
-#&gt;  9 abahydropower… airbaltic      0.545 UP1   power    loanb… airba… aviation
-#&gt; 10 abahydropower… airblue        0.551 UP1   power    loanb… airbl… aviation
-#&gt; # … with 174,565 more rows, and 19 more variables: name_ultimate_parent &lt;chr&gt;,
-#&gt; #   name_direct_loantaker &lt;chr&gt;, id_loan &lt;chr&gt;, id_direct_loantaker &lt;chr&gt;,
-#&gt; #   id_intermediate_parent_1 &lt;chr&gt;, name_intermediate_parent_1 &lt;chr&gt;,
-#&gt; #   id_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
-#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
-#&gt; #   sector_classification_input_type &lt;chr&gt;,
-#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
-#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</div></pre>
+)</div><div class='output co'>#&gt; # A tibble: 630 x 27
+#&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
+#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   
+#&gt;  1 abahydropowerge… abahydropowerge…     1 UP1    power      loanbook   aba hyd…
+#&gt;  2 achinskyglinozi… achinskyglinozi…     1 UP2    cement     loanbook   achinsk…
+#&gt;  3 affinityrenewab… affinityrenewab…     1 UP3    power      loanbook   affinit…
+#&gt;  4 africaoil corp   africaoil corp       1 C2     oil and g… loanbook   africa …
+#&gt;  5 africonshp sa    africonshp sa        1 UP4    shipping   loanbook   africon…
+#&gt;  6 agnisteelspriva… agnisteelspriva…     1 UP5    power      loanbook   agni st…
+#&gt;  7 agrenewables     agrenewables         1 UP6    power      loanbook   agrenew…
+#&gt;  8 airasiaxbhd      airasiaxbhd          1 C3     aviation   loanbook   airasia…
+#&gt;  9 airasiaxbhd      airasiaxbhd          1 UP7    aviation   loanbook   airasia…
+#&gt; 10 airbaltic        airbaltic            1 C4     aviation   loanbook   airbalt…
+#&gt; # … with 620 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
+#&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,
+#&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,
+#&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,
+#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,
+#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,
+#&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,
+#&gt; #   sector_classification_system_lbk &lt;chr&gt;,
+#&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,
+#&gt; #   sector_classification_direct_loantaker_lbk &lt;dbl&gt;, fi_type_lbk &lt;chr&gt;,
+#&gt; #   flag_project_finance_loan_lbk &lt;chr&gt;, name_project_lbk &lt;lgl&gt;,
+#&gt; #   lei_direct_loantaker_lbk &lt;lgl&gt;, isin_direct_loantaker_lbk &lt;lgl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
