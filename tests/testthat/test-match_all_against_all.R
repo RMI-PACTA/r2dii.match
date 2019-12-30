@@ -125,7 +125,7 @@ test_that("match_all_against_all handles NA", {
   expect_equal(s_n_y, NA)
 })
 
-test_that("match_all_agains_all passes arguments to string_similarity", {
+test_that("match_all_agains_all passes arguments to score_similarity", {
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = "ab")
 

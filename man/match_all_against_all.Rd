@@ -32,7 +32,7 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 A \link[dplyr:tibble]{dplyr::tibble}.
 }
 \description{
-Apply \code{string_similarity()} to all combinations of \code{simpler_name} values
+Apply \code{score_similarity()} to all combinations of \code{simpler_name} values
 from two dataframes.
 }
 \examples{
