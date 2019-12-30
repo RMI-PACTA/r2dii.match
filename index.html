@@ -152,21 +152,29 @@
 <a class="sourceLine" id="cb3-39" data-line-number="39"><span class="co">#&gt; #   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, number_of_assets &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb3-40" data-line-number="40"><span class="co">#&gt; #   is_ultimate_owner &lt;lgl&gt;, is_ultimate_listed_owner &lt;lgl&gt;,</span></a>
 <a class="sourceLine" id="cb3-41" data-line-number="41"><span class="co">#&gt; #   ald_timestamp &lt;chr&gt;</span></a></code></pre></div>
-<p>You may write <em>your_loanbook_template.csv</em> and <em>your-ald-template.csv</em> with:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Writting to current working directory </span></a>
+<p>You may use these datasets as a template:</p>
+<ul>
+<li>Write <em>loanbook_demo.csv</em> and <em>ald_demo.csv</em> with:</li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Writting to current working directory </span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">loanbook_demo <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">write_csv</span>(<span class="dt">path =</span> <span class="st">"your_loanbook_template.csv"</span>)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">write_csv</span>(<span class="dt">path =</span> <span class="st">"loanbook_demo.csv"</span>)</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">ald_demo <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="kw">write_csv</span>(<span class="dt">path =</span> <span class="st">"your-ald-template.csv"</span>)</a></code></pre></div>
-<p>You may then edit those files, save them as <em>your-loanbook.csv</em> and <em>your-ald.csv</em>, and read them back into R with:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Reading from current working directory </span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">your_loanbook &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"your-loanbook.csv"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">your_ald &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"your-ald.csv"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="kw">write_csv</span>(<span class="dt">path =</span> <span class="st">"ald_demo.csv"</span>)</a></code></pre></div>
+<ul>
+<li><p>In each dataset, replace out demo data with your data.</p></li>
+<li><p>Save save each dataset as, say, <em>your_loanbook.csv</em> and <em>your_ald.csv</em>.</p></li>
+<li><p>Read your datasets back into R with:</p></li>
+</ul>
+<!-- end list --><div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Reading from current working directory </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">your_loanbook &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"your_loanbook.csv"</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">your_ald &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">"your_ald.csv"</span>)</a></code></pre></div>
 <p>Here we’ll continue to use the <code>*_demo</code> datasets.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">your_loanbook &lt;-<span class="st"> </span>loanbook_demo</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">your_ald &lt;-<span class="st"> </span>ald_demo</a></code></pre></div>
-<p>(WARNING: If you are following this code, be sure to skip the code chunk above, so it doesn’t overwrite <code>your_loanbook</code> and <code>your_ald</code> datasets.)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/warning.html">warning</a></span>(<span class="st">"Skip this chunk to avoid overwriting your data with our demo data."</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; Warning: Skip this chunk to avoid overwriting your data with our demo data.</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">your_loanbook &lt;-<span class="st"> </span>loanbook_demo</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">your_ald &lt;-<span class="st"> </span>ald_demo</a></code></pre></div>
 </div>
 <div id="score-the-goodness-of-the-match-between-the-loanbook-and-ald-datasets" class="section level3">
 <h3 class="hasAnchor">
