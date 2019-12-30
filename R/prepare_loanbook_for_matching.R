@@ -83,13 +83,12 @@ may_add_sector_and_borderline <- function(data) {
   data2
 }
 
-may_overwrite_name_and_sector <- function(out, overwrite) {
-  if (!is.null(overwrite)) {
-    out <- out %>%
-      overwrite_name_and_sector(overwrite = overwrite)
+may_overwrite_name_and_sector <- function(data, overwrite) {
+  if (is.null(overwrite)) {
+    return(data)
   }
 
-  out
+  overwrite_name_and_sector(data, overwrite = overwrite)
 }
 
 overwrite_name_and_sector <- function(data, overwrite) {

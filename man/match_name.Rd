@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_name.R
 \name{match_name}
 \alias{match_name}
-\title{Match a loanbook and asset-level datasets by the \verb{name_*} columns}
+\title{Match a loanbook (lbk) and asset-level datasets (ald) by the \verb{name_*} columns}
 \usage{
 match_name(
   loanbook,
@@ -39,19 +39,19 @@ only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 }
 \value{
 A dataframe with the same columns as the loanbook data with
-additional columns: \code{id}, \code{sector_x}, \code{source}, \code{simpler_name_x},
-\code{simpler_name_y}, \code{score}, \code{name_y}, \code{sector_y}.
+additional columns: \code{id_lkb}, \code{sector_lbk}, \code{sector_ald}, \code{source_lbk},
+\code{simpler_name_lbk}, \code{simpler_name_ald}, \code{score}, \code{name_ald}.
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns
 \code{name_direct_loantaker} and \code{name_ultimate_parent}) with names in an
 asset-level dataset (colum n \code{name_company}). The raw names are first
-transformed and stored in a \code{simple_name} column, then the similarity between
-the \code{simple_name} columns in each of the loanbook and ald datasets is scored
+transformed and stored in a \code{simpler_name} column, then the similarity between
+the \code{simpler_name} columns in each of the loanbook and ald datasets is scored
 using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
 \details{
-The process to create the \code{simple_name} columns applies best practices
+The process to create the \code{simpler_name} columns applies best practices
 commonly used in name matching algorithms, such as:
 \itemize{
 \item Remove special characters.
@@ -61,7 +61,6 @@ commonly used in name matching algorithms, such as:
 }
 }
 \examples{
-# Use tibble()
 library(dplyr)
 library(r2dii.dataraw)
 
@@ -69,7 +68,7 @@ match_name(loanbook_demo, ald_demo)
 
 match_name(
   loanbook_demo, ald_demo,
-  min_score = 0.5,
+  min_score = 0.9,
   by_sector = FALSE
 )
 }

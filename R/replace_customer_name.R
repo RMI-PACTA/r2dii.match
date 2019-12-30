@@ -82,7 +82,7 @@ replace_customer_name <- function(x,
   # ?
   out <- gsub("(?<=\\s[a-z]{1}) (?=[a-z]{1})", "", out, perl = TRUE)
 
-  out <- maybe_remove_ownership(remove_ownership, ownership, .init = out)
+  out <- may_remove_ownership(remove_ownership, ownership, .init = out)
 
   # final adjustments
   out <- gsub("-", " ", out)
@@ -93,7 +93,7 @@ replace_customer_name <- function(x,
   out
 }
 
-maybe_remove_ownership <- function(remove_ownership, ownership, .init) {
+may_remove_ownership <- function(remove_ownership, ownership, .init) {
   ownership <- ownership %||% get_ownership_type()
 
   # ownership type distinguished (with $ sign) in company name

@@ -13,12 +13,12 @@ test_that("match_all_against_all has the expected names", {
 
   expect_named(
     match_all_against_all(x, y),
-    c("simpler_name_x", "simpler_name_y", "score")
+    c("simpler_name_lbk", "simpler_name_ald", "score")
   )
 
   expect_named(
     match_all_against_all(x, y, by_sector = FALSE),
-    c("simpler_name_x", "simpler_name_y", "score")
+    c("simpler_name_lbk", "simpler_name_ald", "score")
   )
 })
 
@@ -40,7 +40,7 @@ test_that("match_all_against_all scores extreme cases correctly", {
   expect_equal(
     match_all_against_all(x, y),
     tribble(
-      ~simpler_name_x, ~simpler_name_y, ~score,
+      ~simpler_name_lbk, ~simpler_name_ald, ~score,
       "a", "a", 1,
       "ab", "cd", 0,
     )
@@ -69,8 +69,8 @@ test_that("match_all_against_all combines all simpler_name of x and y", {
 
   out <- match_all_against_all(x, y)
 
-  expect_equal(out$simpler_name_x, c("a", "a", "b", "b"))
-  expect_equal(out$simpler_name_y, c("c", "d", "c", "d"))
+  expect_equal(out$simpler_name_lbk, c("a", "a", "b", "b"))
+  expect_equal(out$simpler_name_ald, c("c", "d", "c", "d"))
 })
 
 test_that("match_all_against_all with `by_sector = FALSE` outputs
@@ -80,7 +80,7 @@ test_that("match_all_against_all with `by_sector = FALSE` outputs
 
   actual <- match_all_against_all(x, y, by_sector = FALSE)
   expect <- tribble(
-    ~simpler_name_x, ~simpler_name_y, ~score,
+    ~simpler_name_lbk, ~simpler_name_ald, ~score,
     "xa", "ya", 0.667,
     "xa", "yb", 0,
     "xa", "yc", 0,
@@ -107,21 +107,21 @@ test_that("match_all_against_all w/by_sector errors w/out `sector`", {
 test_that("match_all_against_all handles NA", {
   x <- tibble(sector = "A", simpler_name = NA)
   y <- tibble(sector = "A", simpler_name = "a")
-  expect_equal(match_all_against_all(x, y)$simpler_name_x, NA)
+  expect_equal(match_all_against_all(x, y)$simpler_name_lbk, NA)
 
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = NA)
-  expect_equal(match_all_against_all(x, y)$simpler_name_y, NA)
+  expect_equal(match_all_against_all(x, y)$simpler_name_ald, NA)
 
   x <- tibble(sector = "A", simpler_name = NA)
   y <- tibble(sector = "A", simpler_name = "a")
-  s_n_x <- match_all_against_all(x, y, by_sector = FALSE)$simpler_name_x
+  s_n_x <- match_all_against_all(x, y, by_sector = FALSE)$simpler_name_lbk
   expect_equal(s_n_x, NA)
 
   x <- tibble(sector = "A", simpler_name = "a")
   y <- tibble(sector = "A", simpler_name = NA)
 
-  s_n_y <- match_all_against_all(x, y, by_sector = FALSE)$simpler_name_y
+  s_n_y <- match_all_against_all(x, y, by_sector = FALSE)$simpler_name_ald
   expect_equal(s_n_y, NA)
 })
 
@@ -164,7 +164,7 @@ test_that("match_all_against_all w/ same `simpler_name` in 2 sectors and
   y <- tibble(sector = "A", simpler_name = "a")
   expect_equal(
     match_all_against_all(x, y, by_sector = TRUE),
-    tibble(simpler_name_x = "a", simpler_name_y = "a", score = 1)
+    tibble(simpler_name_lbk = "a", simpler_name_ald = "a", score = 1)
   )
 })
 
