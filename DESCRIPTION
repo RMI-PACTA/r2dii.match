@@ -52,7 +52,10 @@ Imports:
     stringdist,
     stringi,
     tidyr,
-    rlang
+    rlang,
+    glue,
+    readr,
+    tibble
 Suggests: 
     covr,
     r2dii.dataraw (>= 0.0.2.9000),

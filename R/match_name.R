@@ -96,6 +96,7 @@ restore_cols_from_loanbook <- function(matched, loanbook) {
     tidyr::pivot_wider(
       names_from = "level_lbk",
       values_from = "name_lbk",
+      # FIXME: Do we really need this?
       names_prefix = "name_"
     )
 

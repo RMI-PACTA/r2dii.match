@@ -40,26 +40,23 @@
 #'   select(id_ultimate_parent, everything()) %>%
 #'   uniquify_id_column(id_column = "id_ultimate_parent", prefix = "C")
 uniquify_id_column <- function(data, id_column, prefix) {
-  crucial <- c(
-    "sector_classification_direct_loantaker",
-    get_name_var(id_column),
-    id_column
-  )
+  name_column <- replace_prefix(id_column, to = "name")
+  crucial <- c("sector_classification_direct_loantaker", name_column, id_column)
   check_crucial_names(data, crucial)
 
   out <- data
-  out[id_column] <- paste0(prefix, id_var_group_indices(out, id_column))
+  out[id_column] <- paste0(prefix, group_indices_of(out, id_column))
   out
 }
 
-get_name_var <- function(id_var) {
-  sub("^id_(.*)$", "name_\\1", id_var)
+replace_prefix <- function(x, to) {
+  sub("^([^_]+)_(.*)$", glue("{to}_\\2"), x)
 }
 
 # Unique combination of `id_var` and `sector_classification_direct_loantaker`
-id_var_group_indices <- function(data, id_var) {
-  id_var <- rlang::sym(get_name_var(id_var))
+group_indices_of <- function(data, column_name) {
+  col_name <- replace_prefix(column_name, to = "name")
   dplyr::group_indices(
-    data, !!id_var, .data$sector_classification_direct_loantaker
+    data, !!rlang::sym(col_name), .data$sector_classification_direct_loantaker
   )
 }
