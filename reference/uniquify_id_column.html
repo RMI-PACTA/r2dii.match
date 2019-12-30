@@ -163,20 +163,25 @@ generate values that are unique by every combination of the columns
 <code><a href='string_similarity.html'>string_similarity</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw pkg'>r2dii.dataraw</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>loanbook_demo</a></span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>uniquify_id_column</span>(<span class='kw'>id_column</span> <span class='kw'>=</span> <span class='st'>"id_direct_loantaker"</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"C"</span>)</div><div class='output co'>#&gt; # A tibble: 320 x 19
-#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
-#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  2 L2      C293             Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
-#&gt;  4 L4      C299             Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  7 L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
-#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
+
+<span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>id_direct_loantaker</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='co'># To more clearly show the effect of uniquify_id_column()</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>id_ultimate_parent</span> <span class='kw'>=</span> <span class='st'>"anything"</span>)</div><div class='output co'>#&gt; # A tibble: 320 x 19
+#&gt;    id_direct_loant… id_loan name_direct_loa… id_intermediate… name_intermedia…
+#&gt;    &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 C294             L1      Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  2 C293             L2      Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  3 C292             L3      Yuama Ethanol L… IP5              Yuama Inc.      
+#&gt;  4 C299             L4      Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  5 C305             L5      Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  6 C304             L6      Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  7 C227             L7      Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  8 C303             L8      Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  9 C301             L9      Yuedxiu Corp One IP10             Yuedxiu Group   
+#&gt; 10 C302             L10     Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            
 #&gt; # … with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,
 #&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
 #&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
@@ -185,25 +190,74 @@ generate values that are unique by every combination of the columns
 #&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
 #&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
 #&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</div><div class='input'>
-<span class='kw pkg'>r2dii.dataraw</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>loanbook_demo</a></span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>uniquify_id_column</span>(<span class='kw'>id_column</span> <span class='kw'>=</span> <span class='st'>"id_ultimate_parent"</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"UP"</span>)</div><div class='output co'>#&gt; # A tibble: 320 x 19
-#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
-#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  2 L2      C293             Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
-#&gt;  4 L4      C299             Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  7 L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
-#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            
+<span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>id_direct_loantaker</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>uniquify_id_column</span>(<span class='kw'>id_column</span> <span class='kw'>=</span> <span class='st'>"id_direct_loantaker"</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"C"</span>)</div><div class='output co'>#&gt; # A tibble: 320 x 19
+#&gt;    id_direct_loant… id_loan name_direct_loa… id_intermediate… name_intermedia…
+#&gt;    &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 C294             L1      Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  2 C293             L2      Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  3 C292             L3      Yuama Ethanol L… IP5              Yuama Inc.      
+#&gt;  4 C299             L4      Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  5 C305             L5      Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  6 C304             L6      Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  7 C227             L7      Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  8 C303             L8      Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  9 C301             L9      Yuedxiu Corp One IP10             Yuedxiu Group   
+#&gt; 10 C302             L10     Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            
 #&gt; # … with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,
 #&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
 #&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
 #&gt; #   sector_classification_input_type &lt;chr&gt;,
+#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
+#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
+#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</div><div class='input'>
+<span class='co'># Same</span>
+<span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>id_ultimate_parent</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='co'># To more clearly show the effect of uniquify_id_column()</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>id_ultimate_parent</span> <span class='kw'>=</span> <span class='st'>"anything"</span>)</div><div class='output co'>#&gt; # A tibble: 320 x 19
+#&gt;    id_ultimate_par… id_loan id_direct_loant… name_direct_loa… id_intermediate…
+#&gt;    &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 anything         L1      C294             Yuamen Xinneng … &lt;NA&gt;            
+#&gt;  2 anything         L2      C293             Yuamen Changyua… &lt;NA&gt;            
+#&gt;  3 anything         L3      C292             Yuama Ethanol L… IP5             
+#&gt;  4 anything         L4      C299             Yudaksel Holdin… &lt;NA&gt;            
+#&gt;  5 anything         L5      C305             Yukon Energy Co… &lt;NA&gt;            
+#&gt;  6 anything         L6      C304             Yukon Developme… &lt;NA&gt;            
+#&gt;  7 anything         L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;            
+#&gt;  8 anything         L8      C303             Yueyang City Co… &lt;NA&gt;            
+#&gt;  9 anything         L9      C301             Yuedxiu Corp One IP10            
+#&gt; 10 anything         L10     C302             Yuexi County AA… &lt;NA&gt;            
+#&gt; # … with 310 more rows, and 14 more variables:
+#&gt; #   name_intermediate_parent_1 &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,
+#&gt; #   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,
+#&gt; #   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,
+#&gt; #   sector_classification_system &lt;chr&gt;, sector_classification_input_type &lt;chr&gt;,
+#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
+#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
+#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</div><div class='input'>
+<span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>id_ultimate_parent</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>()) <span class='kw'>%&gt;%</span>
+  <span class='fu'>uniquify_id_column</span>(<span class='kw'>id_column</span> <span class='kw'>=</span> <span class='st'>"id_ultimate_parent"</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"C"</span>)</div><div class='output co'>#&gt; # A tibble: 320 x 19
+#&gt;    id_ultimate_par… id_loan id_direct_loant… name_direct_loa… id_intermediate…
+#&gt;    &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 C15              L1      C294             Yuamen Xinneng … &lt;NA&gt;            
+#&gt;  2 C84              L2      C293             Yuamen Changyua… &lt;NA&gt;            
+#&gt;  3 C288             L3      C292             Yuama Ethanol L… IP5             
+#&gt;  4 C54              L4      C299             Yudaksel Holdin… &lt;NA&gt;            
+#&gt;  5 C104             L5      C305             Yukon Energy Co… &lt;NA&gt;            
+#&gt;  6 C83              L6      C304             Yukon Developme… &lt;NA&gt;            
+#&gt;  7 C134             L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;            
+#&gt;  8 C163             L8      C303             Yueyang City Co… &lt;NA&gt;            
+#&gt;  9 C138             L9      C301             Yuedxiu Corp One IP10            
+#&gt; 10 C32              L10     C302             Yuexi County AA… &lt;NA&gt;            
+#&gt; # … with 310 more rows, and 14 more variables:
+#&gt; #   name_intermediate_parent_1 &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,
+#&gt; #   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,
+#&gt; #   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,
+#&gt; #   sector_classification_system &lt;chr&gt;, sector_classification_input_type &lt;chr&gt;,
 #&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
 #&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
 #&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</div></pre>
