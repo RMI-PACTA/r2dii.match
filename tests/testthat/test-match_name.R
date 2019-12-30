@@ -92,7 +92,8 @@ test_that("match_name outputs a reasonable number of rows", {
     prepare_loanbook_for_matching(loanbook_demo),
     prepare_ald_for_matching(ald_demo)
   ) %>%
-    filter(score >= 0.8)
+    filter(score >= 0.8) %>%
+    prefer_perfect_match_by(.data$simpler_name_lbk)
 
   nrows_out <- out %>%
     select(names(expected)) %>%
@@ -115,5 +116,41 @@ test_that("match_name names end with _lbk or _ald, except `score`", {
   expect_equal(
     names_not_ending_with_lbk_or_ald,
     "score"
+  )
+})
+
+test_that("match name outputs only perfect matches if any (#40 @2diiKlaus)", {
+  this_name <- "Nanaimo Forest Products Ltd."
+  this_simpler_name <- replace_customer_name(this_name)
+  this_lbk <- loanbook_demo %>%
+    filter(name_direct_loantaker == this_name)
+
+  nanimo_scores <- this_lbk %>%
+    match_name(ald_demo) %>%
+    filter(simpler_name_lbk == this_simpler_name) %>%
+    pull(score)
+
+  expect_true(
+    any(nanimo_scores == 1)
+  )
+  expect_true(
+    all(nanimo_scores == 1)
+  )
+})
+
+test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
+# styler: off
+  data <- tribble(
+    ~var, ~score,
+        1,      1,
+        2,      1,
+        2,   0.99,
+        3,   0.99,
+  )
+# styler: on
+
+  expect_equal(
+    prefer_perfect_match_by(data, var),
+    tibble(var = c(1, 2, 3), score = c(1, 1, 0.99))
   )
 })

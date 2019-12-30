@@ -58,7 +58,8 @@ match_name <- function(loanbook,
   matched %>%
     pick_min_score(min_score) %>%
     restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
-    restore_cols_from_loanbook(loanbook)
+    restore_cols_from_loanbook(loanbook) %>%
+    prefer_perfect_match_by(.data$simpler_name_lbk)
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
@@ -107,3 +108,19 @@ restore_cols_from_loanbook <- function(matched, loanbook) {
     by = paste0(level_cols, "_lbk")
   )
 }
+
+prefer_perfect_match_by <- function(data, ...) {
+  data %>%
+    group_by(...) %>%
+    filter(none_is_one(.data$score) | some_is_one(.data$score)) %>%
+    ungroup()
+}
+
+none_is_one <- function(x) {
+  all(x != 1L)
+}
+
+some_is_one <- function(x) {
+  any(x == 1L) & x == 1L
+}
+
