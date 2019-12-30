@@ -36,10 +36,15 @@ For a list of sector classification systems see
 \link[r2dii.dataraw:classification_bridge]{r2dii.dataraw::classification_bridge}.
 }
 \examples{
+library(dplyr)
 # Must be attached
 library(r2dii.dataraw)
 
-bridge_sector(r2dii.dataraw::loanbook_demo)
+out <- bridge_sector(loanbook_demo)
+new_columns <- setdiff(names(out), names(loanbook_demo))
+
+out \%>\%
+  select(new_columns, everything())
 }
 \seealso{
 Other internal-ish: 

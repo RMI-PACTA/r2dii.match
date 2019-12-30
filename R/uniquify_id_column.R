@@ -18,11 +18,27 @@
 #' @export
 #'
 #' @examples
-#' r2dii.dataraw::loanbook_demo %>%
+#' library(dplyr)
+#' library(r2dii.dataraw)
+#'
+#' loanbook_demo %>%
+#'   select(id_direct_loantaker, everything()) %>%
+#'   # To more clearly show the effect of uniquify_id_column()
+#'   mutate(id_ultimate_parent = "anything")
+#'
+#' loanbook_demo %>%
+#'   select(id_direct_loantaker, everything()) %>%
 #'   uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C")
 #'
-#' r2dii.dataraw::loanbook_demo %>%
-#'   uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP")
+#' # Same
+#' loanbook_demo %>%
+#'   select(id_ultimate_parent, everything()) %>%
+#'   # To more clearly show the effect of uniquify_id_column()
+#'   mutate(id_ultimate_parent = "anything")
+#'
+#' loanbook_demo %>%
+#'   select(id_ultimate_parent, everything()) %>%
+#'   uniquify_id_column(id_column = "id_ultimate_parent", prefix = "C")
 uniquify_id_column <- function(data, id_column, prefix) {
   crucial <- c(
     "sector_classification_direct_loantaker",
