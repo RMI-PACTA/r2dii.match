@@ -1,6 +1,6 @@
 #' Score similarity between `simpler_name` values in two dataframes
 #'
-#' Apply `string_similarity()` to all combinations of `simpler_name` values
+#' Apply `score_similarity()` to all combinations of `simpler_name` values
 #' from two dataframes.
 #'
 #' @param loanbook,ald Dataframes with `simpler_name` and optionally `sector`
@@ -61,7 +61,7 @@ match_all_against_all <- function(loanbook,
   unique(
     mutate(
       out,
-      score = string_similarity(
+      score = score_similarity(
         out$simpler_name_lbk, out$simpler_name_ald, ...,
         method = method, p = p
       )

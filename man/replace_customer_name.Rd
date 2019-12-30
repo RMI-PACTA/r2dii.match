@@ -77,7 +77,7 @@ replace_customer_name(c("AA", "BB", "1"), from_to = append_replacements)
 \seealso{
 Other internal-ish: 
 \code{\link{bridge_sector}()},
-\code{\link{string_similarity}()},
+\code{\link{score_similarity}()},
 \code{\link{uniquify_id_column}()}
 }
 \author{
