@@ -89,8 +89,8 @@ test_that("match_name outputs a reasonable number of rows", {
   out <- match_name(loanbook_demo, ald_demo)
 
   expected <- match_all_against_all(
-    prepare_loanbook_for_matching(loanbook_demo),
-    prepare_ald_for_matching(ald_demo)
+    restructure_loanbook_for_matching(loanbook_demo),
+    restructure_ald_for_matching(ald_demo)
   ) %>%
     filter(score >= 0.8) %>%
     prefer_perfect_match_by(.data$simpler_name_lbk)

@@ -174,8 +174,8 @@ test_that("match_all_against_all outputs unique rows", {
     filter(name_direct_loantaker == "Tata Group")
 
   out <- match_all_against_all(
-    prepare_loanbook_for_matching(lbk),
-    prepare_ald_for_matching(ald_demo)
+    restructure_loanbook_for_matching(lbk),
+    restructure_ald_for_matching(ald_demo)
   )
 
   expect_equal(nrow(out), nrow(unique(out)))
