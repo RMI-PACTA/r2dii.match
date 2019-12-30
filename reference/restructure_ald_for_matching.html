@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • r2dii.match</title>
+<title>Prepares asset-level data (ald) for the fuzzy matching process — restructure_ald_for_matching • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Prepares asset-level data (ald) for the fuzzy matching process — restructure_ald_for_matching" />
+<meta property="og:description" content="This function prepares asset-level data (ald) for the fuzzy matching process." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -110,87 +112,67 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Prepares asset-level data (ald) for the fuzzy matching process</h1>
+    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/prepare_loanbook_for_matching.R'><code>R/prepare_loanbook_for_matching.R</code></a></small>
+    <div class="hidden name"><code>restructure_ald_for_matching.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>This function prepares asset-level data (ald) for the fuzzy matching process.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>restructure_ald_for_matching</span>(<span class='no'>data</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-high-level-user-oriented-functions" class="hasAnchor"><a href="#section-high-level-user-oriented-functions" class="anchor"></a>High level, user oriented functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="match_all_against_all.html">match_all_against_all()</a></code> </p>
-        </td>
-        <td><p>Score similarity between <code>simpler_name</code> values in two dataframes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="restructure_ald_for_matching.html">restructure_ald_for_matching()</a></code> </p>
-        </td>
-        <td><p>Prepares asset-level data (ald) for the fuzzy matching process</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="restructure_loanbook_for_matching.html">restructure_loanbook_for_matching()</a></code> </p>
-        </td>
-        <td><p>Prepare a loanbook dataset for the fuzzy matching process</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-low-level-internal-ish-functions" class="hasAnchor"><a href="#section-low-level-internal-ish-functions" class="anchor"></a>Low level, internal-ish functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="bridge_sector.html">bridge_sector()</a></code> </p>
-        </td>
-        <td><p>Add the column <code>sector</code> (as classified by 2dii) and <code>borderline</code></p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="replace_customer_name.html">replace_customer_name()</a></code> <code><a href="replace_customer_name.html">get_replacements()</a></code> </p>
-        </td>
-        <td><p>Replace customer names</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="string_similarity.html">string_similarity()</a></code> </p>
-        </td>
-        <td><p>Compute similarity scores between strings</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="uniquify_id_column.html">uniquify_id_column()</a></code> </p>
-        </td>
-        <td><p>Overwrite <code>id_direct_loantaker</code> and <code>id_ultimate_parent</code> with unique values</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>A dataframe. Should be an asset-level dataset.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A dataframe with unique combinations of <code>name</code> + <code>sector</code>, including
+all IDs, and with elements already manually overwritten.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://rdrr.io/pkg/r2dii.dataraw/man/ald_demo.html'>r2dii.dataraw::ald_demo</a>.</p>
+<p>Other user-oriented: 
+<code><a href='match_all_against_all.html'>match_all_against_all</a>()</code>,
+<code><a href='restructure_loanbook_for_matching.html'>restructure_loanbook_for_matching</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
+
+<span class='no'>ald_demo</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>restructure_ald_for_matching</span>()</div><div class='output co'>#&gt; # A tibble: 591 x 3
+#&gt;    name                             sector   simpler_name                 
+#&gt;    &lt;chr&gt;                            &lt;chr&gt;    &lt;chr&gt;                        
+#&gt;  1 aba hydropower generation co ltd power    abahydropowergenco ltd       
+#&gt;  2 achinsky glinoziemskij kombinat  cement   achinskyglinoziemskijkombinat
+#&gt;  3 affinity renewables inc.         power    affinityrenewables inc       
+#&gt;  4 africa oil corp                  oil&amp;gas  africaoil corp               
+#&gt;  5 africon shipping sa              shipping africonshp sa                
+#&gt;  6 agni steels private limited      power    agnisteelsprivate ltd        
+#&gt;  7 agrenewables                     power    agrenewables                 
+#&gt;  8 airasia x bhd                    aviation airasiaxbhd                  
+#&gt;  9 airbaltic                        aviation airbaltic                    
+#&gt; 10 airblue                          aviation airblue                      
+#&gt; # … with 581 more rows</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-high-level-user-oriented-functions">High level, user oriented functions</a></li>
-      <li><a href="#section-low-level-internal-ish-functions">Low level, internal-ish functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

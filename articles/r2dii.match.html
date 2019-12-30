@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
 <a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></a>
 <a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</span></a></code></pre></div>
-<p>Before matching, both the loanbook and asset level data must be prepared. To this end, there are several mandatory steps, and several optional steps.</p>
+<p>Before matching, both the loanbook and asset level data must be restructred. To this end, there are several mandatory steps, and several optional steps.</p>
 <p>We can bridge from multiple sector classification codes to 2Dii’s sectors: automotive, aviation, cement, oil and gas, power, shipping, steel.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">loanbook_demo <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/bridge_sector.html">bridge_sector</a></span>() <span class="op">%&gt;%</span></a>
@@ -249,7 +249,7 @@
 <a class="sourceLine" id="cb5-50" data-line-number="50"><span class="co">#&gt; [1] "alpha" "beta"  "one"</span></a></code></pre></div>
 <p>The following function takes a loanbook with non-corrupt IDs and outputs a list of all unique name and sector combinations at every level, including the simplified name, to be used in the matching process:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">prep_loanbook &lt;-<span class="st"> </span>loanbook_demo <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/prepare_loanbook_for_matching.html">prepare_loanbook_for_matching</a></span>()</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/restructure_loanbook_for_matching.html">restructure_loanbook_for_matching</a></span>()</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; Adding new columns `sector` and `borderline`.</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"></a>
@@ -270,7 +270,7 @@
 <a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt; # … with 628 more rows</span></a></code></pre></div>
 <p>And similarly for the ald:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">prep_ald &lt;-<span class="st"> </span>r2dii.dataraw<span class="op">::</span>ald_demo <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/prepare_ald_for_matching.html">prepare_ald_for_matching</a></span>()</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/restructure_ald_for_matching.html">restructure_ald_for_matching</a></span>()</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">prep_ald</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; # A tibble: 591 x 3</span></a>
@@ -287,7 +287,7 @@
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;  9 airbaltic                        aviation airbaltic                    </span></a>
 <a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; 10 airblue                          aviation airblue                      </span></a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; # … with 581 more rows</span></a></code></pre></div>
-<p>For the purpose of manual matching, you can substitute the name and/ or sector of particular loans at the desired level when preparing the loanbook data. To do so, specify the <code>overwrite</code> argument in prepare_loanbook_for_matching(). (To substitute only the name, leave sector as <code>NA</code> and vice-versa).</p>
+<p>For the purpose of manual matching, you can substitute the name and/ or sector of particular loans at the desired level when preparing the loanbook data. To do so, specify the <code>overwrite</code> argument in restructure_loanbook_for_matching(). (To substitute only the name, leave sector as <code>NA</code> and vice-versa).</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">overwrite_demo &lt;-<span class="st"> </span>r2dii.dataraw<span class="op">::</span>overwrite_demo</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">overwrite_demo</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; # A tibble: 2 x 5</span></a>
@@ -297,7 +297,7 @@
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; 2 ultimate_parent  UP15  alpine india         power  manual</span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9">prep_loanbook &lt;-<span class="st"> </span>loanbook_demo <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/prepare_loanbook_for_matching.html">prepare_loanbook_for_matching</a></span>(<span class="dt">overwrite =</span> overwrite_demo)</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/restructure_loanbook_for_matching.html">restructure_loanbook_for_matching</a></span>(<span class="dt">overwrite =</span> overwrite_demo)</a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; Adding new columns `sector` and `borderline`.</span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"></a>
@@ -316,7 +316,7 @@
 <a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt;  9 direct_lo… C305  Yukon Energy Corp 1736   power  loanbo… yukonenergycorpones…</span></a>
 <a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; 10 ultimate_… UP104 Garland Power &amp; Light    power  loanbo… garlandpowerlight   </span></a>
 <a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; # … with 628 more rows</span></a></code></pre></div>
-<p><code><a href="../reference/match_all_against_all.html">match_all_against_all()</a></code> scores the similarity between <code>simpler_name</code> values in the prepared loanbook and ald datasets. The <code>by_sector</code> argument, flags if names should only be compared against ald names in the same sector. (setting <code>by_sector = TRUE</code> reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches).</p>
+<p><code><a href="../reference/match_all_against_all.html">match_all_against_all()</a></code> scores the similarity between <code>simpler_name</code> values in the restructred loanbook and ald datasets. The <code>by_sector</code> argument, flags if names should only be compared against ald names in the same sector. (setting <code>by_sector = TRUE</code> reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Using default `by_sector = TRUE`</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">matched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/match_all_against_all.html">match_all_against_all</a></span>(prep_loanbook, prep_ald)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>

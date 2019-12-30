@@ -16,16 +16,16 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/pipe.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prepare_ald_for_matching.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prepare_loanbook_for_matching.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/r2dii.match-package.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/replace_customer_name.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/restructure_ald_for_matching.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/restructure_loanbook_for_matching.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/string_similarity.html</loc>
