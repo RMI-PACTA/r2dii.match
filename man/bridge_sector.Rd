@@ -44,7 +44,7 @@ bridge_sector(r2dii.dataraw::loanbook_demo)
 \seealso{
 Other internal-ish: 
 \code{\link{replace_customer_name}()},
-\code{\link{string_similarity}()},
+\code{\link{score_similarity}()},
 \code{\link{uniquify_id_column}()}
 }
 \concept{internal-ish}

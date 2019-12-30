@@ -37,6 +37,6 @@ r2dii.dataraw::loanbook_demo \%>\%
 Other internal-ish: 
 \code{\link{bridge_sector}()},
 \code{\link{replace_customer_name}()},
-\code{\link{string_similarity}()}
+\code{\link{score_similarity}()}
 }
 \concept{internal-ish}
