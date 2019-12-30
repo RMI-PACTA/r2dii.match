@@ -25,8 +25,12 @@ ald_demo \%>\%
 \seealso{
 \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.
 
-Other user-oriented: 
+Other internal-ish: 
+\code{\link{bridge_sector}()},
 \code{\link{match_all_against_all}()},
-\code{\link{restructure_loanbook_for_matching}()}
+\code{\link{replace_customer_name}()},
+\code{\link{restructure_loanbook_for_matching}()},
+\code{\link{score_similarity}()},
+\code{\link{uniquify_id_column}()}
 }
-\concept{user-oriented}
+\concept{internal-ish}

@@ -9,7 +9,7 @@
 #' @param by_sector Should the combinations be done by sector?
 #' @inheritParams stringdist::stringdist
 #'
-#' @family user-oriented
+#' @family internal-ish
 #'
 #' @return A [dplyr::tibble].
 #' @export

@@ -19,6 +19,8 @@
 #' @param min_score A number (length-1) to set the minimum `score` values you
 #'   want to pick.
 #'
+#' @family user-oriented
+#'
 #' @return A dataframe with the same columns as the loanbook data with
 #'   additional columns: `id_lkb`, `sector_lbk`, `sector_ald`, `source_lbk`,
 #'   `simpler_name_lbk`, `simpler_name_ald`, `score`, `name_ald`.

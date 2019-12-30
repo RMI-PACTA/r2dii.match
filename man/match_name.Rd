@@ -73,7 +73,12 @@ match_name(
 )
 }
 \seealso{
-Other user-oriented: 
+Other internal-ish: 
+\code{\link{bridge_sector}()},
+\code{\link{replace_customer_name}()},
 \code{\link{restructure_ald_for_matching}()},
-\code{\link{restructure_loanbook_for_matching}()}
+\code{\link{restructure_loanbook_for_matching}()},
+\code{\link{score_similarity}()},
+\code{\link{uniquify_id_column}()}
 }
+\concept{user-oriented}

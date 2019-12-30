@@ -4,7 +4,7 @@
 #'
 #' @param data A dataframe. Should be an asset-level dataset.
 #'
-#' @family user-oriented
+#' @family internal-ish
 #' @seealso [r2dii.dataraw::ald_demo].
 #'
 #' @return A dataframe with unique combinations of `name` + `sector`, including
@@ -34,7 +34,7 @@ restructure_ald_for_matching <- function(data) {
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA`.
 #'
-#' @family user-oriented
+#' @family internal-ish
 #' @seealso [r2dii.dataraw::loanbook_description]
 #'
 #' @return A dataframe with unique combinations of `name` + `sector`, including
