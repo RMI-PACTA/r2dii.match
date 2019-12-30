@@ -23,7 +23,7 @@ We'll use some fake datasets from the r2dii.dataraw package, which name ends wit
 loanbook_demo
 ```
 
-Before matching, both the loanbook and asset level data must be prepared.
+Before matching, both the loanbook and asset level data must be restructred.
 To this end, there are several mandatory steps, and several optional steps. 
 
 We can bridge from multiple sector classification codes to 2Dii's sectors: `r sort(unique(bridge_sector(loanbook_demo)$sector))`.
@@ -80,7 +80,7 @@ The following function takes a loanbook with non-corrupt IDs and outputs a list 
 
 ```{r}
 prep_loanbook <- loanbook_demo %>%
-  prepare_loanbook_for_matching()
+  restructure_loanbook_for_matching()
 
 prep_loanbook
 ```
@@ -89,24 +89,24 @@ And similarly for the ald:
 
 ```{r}
 prep_ald <- r2dii.dataraw::ald_demo %>%
-  prepare_ald_for_matching()
+  restructure_ald_for_matching()
 
 prep_ald
 ```
 
-For the purpose of manual matching, you can substitute the name and/ or sector of particular loans at the desired level when preparing the loanbook data. To do so, specify the `overwrite` argument in prepare_loanbook_for_matching(). (To substitute only the name, leave sector as `NA` and vice-versa). 
+For the purpose of manual matching, you can substitute the name and/ or sector of particular loans at the desired level when preparing the loanbook data. To do so, specify the `overwrite` argument in restructure_loanbook_for_matching(). (To substitute only the name, leave sector as `NA` and vice-versa). 
 
 ```{r}
 overwrite_demo <- r2dii.dataraw::overwrite_demo
 overwrite_demo
 
 prep_loanbook <- loanbook_demo %>%
-  prepare_loanbook_for_matching(overwrite = overwrite_demo)
+  restructure_loanbook_for_matching(overwrite = overwrite_demo)
 
 prep_loanbook
 ```
 
-`match_all_against_all()` scores the similarity between `simpler_name` values in the prepared loanbook and ald datasets. The `by_sector` argument, flags if names should only be compared against ald names in the same sector. (setting `by_sector = TRUE` reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches). 
+`match_all_against_all()` scores the similarity between `simpler_name` values in the restructred loanbook and ald datasets. The `by_sector` argument, flags if names should only be compared against ald names in the same sector. (setting `by_sector = TRUE` reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches). 
 
 ```{r}
 # Using default `by_sector = TRUE`

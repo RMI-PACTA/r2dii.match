@@ -74,6 +74,6 @@ match_name(
 }
 \seealso{
 Other user-oriented: 
-\code{\link{prepare_ald_for_matching}()},
-\code{\link{prepare_loanbook_for_matching}()}
+\code{\link{restructure_ald_for_matching}()},
+\code{\link{restructure_loanbook_for_matching}()}
 }

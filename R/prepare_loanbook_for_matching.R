@@ -16,8 +16,8 @@
 #' library(r2dii.dataraw)
 #'
 #' ald_demo %>%
-#'   prepare_ald_for_matching()
-prepare_ald_for_matching <- function(data) {
+#'   restructure_ald_for_matching()
+restructure_ald_for_matching <- function(data) {
   data %>%
     check_crucial_names(c("name_company", "sector")) %>%
     select(name = .data$name_company, .data$sector) %>%
@@ -46,11 +46,11 @@ prepare_ald_for_matching <- function(data) {
 #' library(r2dii.dataraw)
 #'
 #' loanbook_demo %>%
-#'   prepare_loanbook_for_matching()
+#'   restructure_loanbook_for_matching()
 #'
 #' loanbook_demo %>%
-#'   prepare_loanbook_for_matching(overwrite = overwrite_demo)
-prepare_loanbook_for_matching <- function(data, overwrite = NULL) {
+#'   restructure_loanbook_for_matching(overwrite = overwrite_demo)
+restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 

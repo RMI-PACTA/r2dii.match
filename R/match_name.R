@@ -15,7 +15,7 @@
 #' * Spell out numbers to increase their importance.
 #'
 #' @inherit match_all_against_all
-#' @inheritParams prepare_loanbook_for_matching
+#' @inheritParams restructure_loanbook_for_matching
 #' @param min_score A number (length-1) to set the minimum `score` values you
 #'   want to pick.
 #'
@@ -44,9 +44,9 @@ match_name <- function(loanbook,
                        p = 0.1,
                        overwrite = NULL) {
   prep_lbk <- suppressMessages(
-    prepare_loanbook_for_matching(loanbook, overwrite = overwrite)
+    restructure_loanbook_for_matching(loanbook, overwrite = overwrite)
   )
-  prep_ald <- prepare_ald_for_matching(ald)
+  prep_ald <- restructure_ald_for_matching(ald)
 
   matched <- match_all_against_all(
     prep_lbk, prep_ald,
