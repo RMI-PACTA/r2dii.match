@@ -116,7 +116,7 @@ ald_demo %>%
   write_csv(path = "ald_demo.csv")
 ```
 
-  - In each dataset, replace out demo data with your data.
+  - In each dataset, replace our demo data with your data.
 
   - Save save each dataset as, say, *your\_loanbook.csv* and
     *your\_ald.csv*.
@@ -136,6 +136,7 @@ Here we’ll continue to use the `*_demo` datasets.
 ``` r
 warning("Skip this chunk to avoid overwriting your data with our demo data.")
 #> Warning: Skip this chunk to avoid overwriting your data with our demo data.
+
 your_loanbook <- loanbook_demo
 your_ald <- ald_demo
 ```
