@@ -1,11 +1,13 @@
 #' Restructure an asset-level dataset (ald) in preparation for fuzzy matching
 #'
-#' This function prepares asset-level data (ald) for the fuzzy matching process.
+#' This function restructures an asset-level dataset (ald) in preparation for
+#' the fuzzy matching process. Most notably, it outputs an the `alias` column
+#' from values in the `name_company` column.
 #'
 #' @param data A dataframe. Should be an asset-level dataset.
 #'
 #' @family internal-ish
-#' @seealso [r2dii.dataraw::ald_demo].
+#' @seealso [r2dii.dataraw::ald_demo] [to_alias()].
 #'
 #' @return A dataframe with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
@@ -27,7 +29,10 @@ restructure_ald_for_matching <- function(data) {
 
 #' Restructure  loanbook dataset (lbk) in preparation for fuzzy matching
 #'
-#' This function prepares a loanbook dataset for the fuzzy matching process.
+#' This function restructures a loanbook dataset (lbk) in preparation for
+#' the fuzzy matching process. Most notably, it outputs an the `alias` column
+#' from values in the columns `name_direct_loantaker` and
+#' `name_ultimate_parent`.
 #'
 #' @param data A dataframe. Should be a loanbook.
 #' @param overwrite A dataframe used to overwrite the `sector` and/or `name`

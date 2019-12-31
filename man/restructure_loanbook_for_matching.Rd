@@ -18,7 +18,10 @@ A dataframe with unique combinations of \code{name} + \code{sector}, including
 all IDs, and with elements already manually overwritten.
 }
 \description{
-This function prepares a loanbook dataset for the fuzzy matching process.
+This function restructures a loanbook dataset (lbk) in preparation for
+the fuzzy matching process. Most notably, it outputs an the \code{alias} column
+from values in the columns \code{name_direct_loantaker} and
+\code{name_ultimate_parent}.
 }
 \examples{
 library(r2dii.dataraw)

@@ -14,7 +14,9 @@ A dataframe with unique combinations of \code{name} + \code{sector}, including
 all IDs, and with elements already manually overwritten.
 }
 \description{
-This function prepares asset-level data (ald) for the fuzzy matching process.
+This function restructures an asset-level dataset (ald) in preparation for
+the fuzzy matching process. Most notably, it outputs an the \code{alias} column
+from values in the \code{name_company} column.
 }
 \examples{
 library(r2dii.dataraw)
@@ -23,7 +25,7 @@ ald_demo \%>\%
   restructure_ald_for_matching()
 }
 \seealso{
-\link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.
+\link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo} \code{\link[=to_alias]{to_alias()}}.
 
 Other internal-ish: 
 \code{\link{bridge_sector}()},
