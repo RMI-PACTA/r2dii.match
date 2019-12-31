@@ -66,9 +66,9 @@ score_similarity(c("fewer", "items", "get", "recycled"), "recycled")
 Other internal-ish: 
 \code{\link{bridge_sector}()},
 \code{\link{match_all_against_all}()},
-\code{\link{replace_customer_name}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
+\code{\link{to_alias}()},
 \code{\link{uniquify_id_column}()}
 }
 \concept{internal-ish}

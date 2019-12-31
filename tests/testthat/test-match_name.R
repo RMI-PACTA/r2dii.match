@@ -93,7 +93,7 @@ test_that("match_name outputs a reasonable number of rows", {
     restructure_ald_for_matching(ald_demo)
   ) %>%
     filter(score >= 0.8) %>%
-    prefer_perfect_match_by(.data$simpler_name_lbk)
+    prefer_perfect_match_by(.data$alias_lbk)
 
   nrows_out <- out %>%
     select(names(expected)) %>%
@@ -121,13 +121,13 @@ test_that("match_name names end with _lbk or _ald, except `score`", {
 
 test_that("match name outputs only perfect matches if any (#40 @2diiKlaus)", {
   this_name <- "Nanaimo Forest Products Ltd."
-  this_simpler_name <- replace_customer_name(this_name)
+  this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
     filter(name_direct_loantaker == this_name)
 
   nanimo_scores <- this_lbk %>%
     match_name(ald_demo) %>%
-    filter(simpler_name_lbk == this_simpler_name) %>%
+    filter(alias_lbk == this_alias) %>%
     pull(score)
 
   expect_true(
@@ -147,7 +147,7 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
         2,   0.99,
         3,   0.99,
   )
-# styler: on
+  # styler: on
 
   expect_equal(
     prefer_perfect_match_by(data, var),

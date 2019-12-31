@@ -89,9 +89,9 @@ your_ald <- ald_demo
 
 ### 2. Score the goodness of the match between the loanbook and ald datasets
 
-`match_name()` scores the match between names in a loanbook dataset (lbk; columns `name_direct_loantaker` and `name_ultimate_parent`) with names in an asset-level dataset (ald; column `name_company`). The raw names are first transformed and stored in the columns `simpler_name_lbk` and `simpler_name_ald`, then the similarity between them is scored using `stringdist::stringsim()`. 
+`match_name()` scores the match between names in a loanbook dataset (lbk; columns `name_direct_loantaker` and `name_ultimate_parent`) with names in an asset-level dataset (ald; column `name_company`). The raw names are first transformed and stored in the columns `alias_lbk` and `alias_ald`, then the similarity between them is scored using `stringdist::stringsim()`. 
 
-The process to create the `simpler_name_*` columns applies best-practices commonly used in name matching algorithms, such as:
+The process to create the `alias_*` columns applies best-practices commonly used in name matching algorithms, such as:
 
 * Remove special characters.
 * Replace language specific characters.
@@ -102,7 +102,7 @@ The process to create the `simpler_name_*` columns applies best-practices common
 match_name(your_loanbook, your_ald)
 ```
 
-By default, `simpler_name_lbk` and `simpler_name_ald` are scored only by sector. `by_sector = FALSE` removes this limitation, increasing computation time, and the number of nonsensical matches. 
+By default, `alias_lbk` and `alias_ald` are scored only by sector. `by_sector = FALSE` removes this limitation, increasing computation time, and the number of nonsensical matches. 
 
 ```{r}
 match_name(your_loanbook, your_ald, by_sector = FALSE)
@@ -130,7 +130,7 @@ matching_scores %>%
 
 * Open _matching_scores.csv_ with any spreadsheet editor (e.g. MS Excel, Google Sheets).
 
-* Visually compare `simpler_name_lbk` and `simpler_name_ald`, along with the loanbook sector.
+* Visually compare `alias_lbk` and `alias_ald`, along with the loanbook sector.
 
 * Edit the data manually:
     * If you are happy with the match, set the `score` value to `1`.

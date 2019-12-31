@@ -23,7 +23,7 @@ We'll use some fake datasets from the r2dii.dataraw package, which name ends wit
 loanbook_demo
 ```
 
-Before matching, both the loanbook and asset level data must be restructred.
+Before matching, both the loanbook and asset level data must be restructured.
 To this end, there are several mandatory steps, and several optional steps. 
 
 We can bridge from multiple sector classification codes to 2Dii's sectors: `r sort(unique(bridge_sector(loanbook_demo)$sector))`.
@@ -56,24 +56,24 @@ Before we run the fuzzy matching algorithm, we simplify the loanbook and ald nam
 
 ```{r}
 some_customer_names <- c("3M Company", "Abbott Laboratories", "AbbVie Inc.")
-replace_customer_name(some_customer_names)
+to_alias(some_customer_names)
 
 # replacements can be defined from scratch using:
 custom_replacement <- tibble(from = "AAAA", to = "B")
-replace_customer_name("Aa Aaaa", from_to = custom_replacement)
+to_alias("Aa Aaaa", from_to = custom_replacement)
 
 # or appended to the existing list of replacements:
-get_replacements()
+from_name_to_alias()
 
-appended_replacements <- get_replacements() %>%
+appended_replacements <- from_name_to_alias() %>%
   add_row(
     .before = 1,
     from = c("AA", "BB"), to = c("alpha", "beta")
   )
 appended_replacements
 
-# And in combination with `replace_customer_name()`
-replace_customer_name(c("AA", "BB", "1"), from_to = appended_replacements)
+# And in combination with `to_alias()`
+to_alias(c("AA", "BB", "1"), from_to = appended_replacements)
 ```
 
 The following function takes a loanbook with non-corrupt IDs and outputs a list of all unique name and sector combinations at every level, including the simplified name, to be used in the matching process: 
@@ -106,7 +106,7 @@ prep_loanbook <- loanbook_demo %>%
 prep_loanbook
 ```
 
-`match_all_against_all()` scores the similarity between `simpler_name` values in the restructred loanbook and ald datasets. The `by_sector` argument, flags if names should only be compared against ald names in the same sector. (setting `by_sector = TRUE` reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches). 
+`match_all_against_all()` scores the similarity between `alias` values in the restructured loanbook and ald datasets. The `by_sector` argument, flags if names should only be compared against ald names in the same sector. (setting `by_sector = TRUE` reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches). 
 
 ```{r}
 # Using default `by_sector = TRUE`
@@ -121,7 +121,7 @@ You may use common dplyr functions to recover all columns from the loanbook data
 threshold <- 0.9
 
 matched %>%
-  left_join(prep_loanbook, by = c("simpler_name_lbk" = "simpler_name")) %>%
+  left_join(prep_loanbook, by = c("alias_lbk" = "alias")) %>%
   filter(score >= threshold)
 ```
 
@@ -131,7 +131,7 @@ This matching data-frame should be saved and manually verified. To do so, try so
 readr::write_csv(matched, "path/to/save/matches_to_be_verified.csv")
 ```
 
-and open the .csv in excel/ google sheets/ however you want to edit a spreadsheet. Once open, compare `simpler_name_lbk` and `simpler_name_ald` manually, along with the loanbook sector. If you are happy with the match, set the `score` value to `1` (Note: Only values of exactly `1` will be considered valid, all other potential matches will be considered invalidated.)
+and open the .csv in excel/ google sheets/ however you want to edit a spreadsheet. Once open, compare `alias_lbk` and `alias_ald` manually, along with the loanbook sector. If you are happy with the match, set the `score` value to `1` (Note: Only values of exactly `1` will be considered valid, all other potential matches will be considered invalidated.)
 
 When you are happy with the match validation: 
 

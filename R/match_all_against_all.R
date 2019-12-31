@@ -1,9 +1,9 @@
-#' Score similarity between `simpler_name` values in two dataframes
+#' Score similarity between `alias` values in two dataframes
 #'
-#' Apply `score_similarity()` to all combinations of `simpler_name` values
+#' Apply `score_similarity()` to all combinations of `alias` values
 #' from two dataframes.
 #'
-#' @param loanbook,ald Dataframes with `simpler_name` and optionally `sector`
+#' @param loanbook,ald Dataframes with `alias` and optionally `sector`
 #'   columns.
 #' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #' @param by_sector Should the combinations be done by sector?
@@ -19,18 +19,18 @@
 #'
 #' loanbook <- tibble(
 #'   sector = c("A", "B", "B"),
-#'   simpler_name = c("xa", "xb", "xc")
+#'   alias = c("xa", "xb", "xc")
 #' )
 #'
 #' ald <- tibble(
 #'   sector = c("A", "B", "C"),
-#'   simpler_name = c("ya", "yb", "yc")
+#'   alias = c("ya", "yb", "yc")
 #' )
 #'
 #' out <- match_all_against_all(loanbook, ald)
 #'
 #' # Recover sector
-#' left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name"))
+#' left_join(out, loanbook, by = c("alias_lbk" = "alias"))
 #'
 #' threshold <- 0.5
 #' match_all_against_all(loanbook, ald) %>%
@@ -40,9 +40,9 @@
 #' out
 #'
 #' # Recover sectors from x & y
-#' left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name")) %>%
+#' left_join(out, loanbook, by = c("alias_lbk" = "alias")) %>%
 #'   rename(sector_x = sector) %>%
-#'   left_join(ald, by = c("simpler_name_ald" = "simpler_name")) %>%
+#'   left_join(ald, by = c("alias_ald" = "alias")) %>%
 #'   rename(sector_y = sector)
 match_all_against_all <- function(loanbook,
                                   ald,
@@ -53,24 +53,24 @@ match_all_against_all <- function(loanbook,
   ellipsis::check_dots_used()
 
   if (by_sector) {
-    out <- expand_simpler_name_by_sector(loanbook, ald)
+    out <- expand_alias_by_sector(loanbook, ald)
   } else {
-    out <- cross_simpler_name(loanbook, ald)
+    out <- cross_alias(loanbook, ald)
   }
 
   unique(
     mutate(
       out,
       score = score_similarity(
-        out$simpler_name_lbk, out$simpler_name_ald, ...,
+        out$alias_lbk, out$alias_ald, ...,
         method = method, p = p
       )
     )
   )
 }
 
-expand_simpler_name_by_sector <- function(loanbook, ald) {
-  vars <- c("sector", "simpler_name")
+expand_alias_by_sector <- function(loanbook, ald) {
+  vars <- c("sector", "alias")
 
   check_crucial_names(loanbook, vars)
   check_crucial_names(ald, vars)
@@ -80,17 +80,17 @@ expand_simpler_name_by_sector <- function(loanbook, ald) {
     by = "sector", suffix = c("_lbk", "_ald")
   ) %>%
     dplyr::group_by(.data$sector) %>%
-    tidyr::expand(.data$simpler_name_lbk, .data$simpler_name_ald) %>%
+    tidyr::expand(.data$alias_lbk, .data$alias_ald) %>%
     dplyr::ungroup() %>%
     select(-.data$sector)
 }
 
-cross_simpler_name <- function(loanbook, ald) {
-  check_crucial_names(loanbook, "simpler_name")
-  check_crucial_names(ald, "simpler_name")
+cross_alias <- function(loanbook, ald) {
+  check_crucial_names(loanbook, "alias")
+  check_crucial_names(ald, "alias")
 
   tidyr::crossing(
-    simpler_name_lbk = loanbook$simpler_name,
-    simpler_name_ald = ald$simpler_name
+    alias_lbk = loanbook$alias,
+    alias_ald = ald$alias
   )
 }

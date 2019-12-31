@@ -54,14 +54,14 @@ test_that("restructure_loanbook_for_matching outputs a tibble with expected name
   expect_is(out, "tbl_df")
   expect_named(
     out,
-    c("level", "id", "name", "sector", "source", "simpler_name")
+    c("level", "id", "name", "sector", "source", "alias")
   )
 
   out2 <- restructure_loanbook_for_matching(loanbook_demo, overwrite_demo)
   expect_is(out2, "tbl_df")
   expect_named(
     out2,
-    c("level", "id", "name", "sector", "source", "simpler_name")
+    c("level", "id", "name", "sector", "source", "alias")
   )
 })
 
@@ -93,7 +93,7 @@ test_that("restructure_loanbook_for_matching correctly overwrites sector", {
 test_that("restructure_ald_for_matching outputs the expected tibble", {
   out <- restructure_ald_for_matching(ald_demo)
   expect_is(out, "tbl_df")
-  expect_named(out, c("name", "sector", "simpler_name"))
+  expect_named(out, c("name", "sector", "alias"))
 })
 
 test_that("restructure_ald_for_matching errors if data lacks a crucial column", {

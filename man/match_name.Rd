@@ -15,10 +15,10 @@ match_name(
 )
 }
 \arguments{
-\item{loanbook}{Dataframes with \code{simpler_name} and optionally \code{sector}
+\item{loanbook}{Dataframes with \code{alias} and optionally \code{sector}
 columns.}
 
-\item{ald}{Dataframes with \code{simpler_name} and optionally \code{sector}
+\item{ald}{Dataframes with \code{alias} and optionally \code{sector}
 columns.}
 
 \item{by_sector}{Should the combinations be done by sector?}
@@ -40,19 +40,21 @@ only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 \value{
 A dataframe with the same columns as the loanbook data with
 additional columns: \code{id_lkb}, \code{sector_lbk}, \code{sector_ald}, \code{source_lbk},
-\code{simpler_name_lbk}, \code{simpler_name_ald}, \code{score}, \code{name_ald}.
+\code{alias_lbk}, \code{alias_ald}, \code{score}, \code{name_ald}.
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns
 \code{name_direct_loantaker} and \code{name_ultimate_parent}) with names in an
-asset-level dataset (colum n \code{name_company}). The raw names are first
-transformed and stored in a \code{simpler_name} column, then the similarity between
-the \code{simpler_name} columns in each of the loanbook and ald datasets is scored
+asset-level dataset (column \code{name_company}). The raw names are first
+transformed and stored in a \code{alias} column, then the similarity between
+the \code{alias} columns in each of the loanbook and ald datasets is scored
 using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
-\details{
-The process to create the \code{simpler_name} columns applies best practices
-commonly used in name matching algorithms, such as:
+\section{Assigning aliases}{
+
+The process to assign an alias for a \verb{name_*} column (i.e. the process to
+create the \verb{alias_*} columns) applies best practices
+commonly used in name matching algorithms:
 \itemize{
 \item Remove special characters.
 \item Replace language specific characters.
@@ -60,6 +62,7 @@ commonly used in name matching algorithms, such as:
 \item Spell out numbers to increase their importance.
 }
 }
+
 \examples{
 library(dplyr)
 library(r2dii.dataraw)
@@ -75,10 +78,10 @@ match_name(
 \seealso{
 Other internal-ish: 
 \code{\link{bridge_sector}()},
-\code{\link{replace_customer_name}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
 \code{\link{score_similarity}()},
+\code{\link{to_alias}()},
 \code{\link{uniquify_id_column}()}
 }
 \concept{user-oriented}

@@ -36,12 +36,12 @@ library(r2dii.match)
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
 library(tidyverse)
-#> -- Attaching packages ------------------------------------------------------- tidyverse 1.3.0 --
+#> -- Attaching packages ---------------------------------- tidyverse 1.3.0 --
 #> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
 #> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
 #> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
 #> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
-#> -- Conflicts ---------------------------------------------------------- tidyverse_conflicts() --
+#> -- Conflicts ------------------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ```
@@ -146,12 +146,12 @@ your_ald <- ald_demo
 `match_name()` scores the match between names in a loanbook dataset
 (lbk; columns `name_direct_loantaker` and `name_ultimate_parent`) with
 names in an asset-level dataset (ald; column `name_company`). The raw
-names are first transformed and stored in the columns `simpler_name_lbk`
-and `simpler_name_ald`, then the similarity between them is scored using
+names are first transformed and stored in the columns `alias_lbk` and
+`alias_ald`, then the similarity between them is scored using
 `stringdist::stringsim()`.
 
-The process to create the `simpler_name_*` columns applies
-best-practices commonly used in name matching algorithms, such as:
+The process to create the `alias_*` columns applies best-practices
+commonly used in name matching algorithms, such as:
 
   - Remove special characters.
   - Replace language specific characters.
@@ -163,24 +163,24 @@ best-practices commonly used in name matching algorithms, such as:
 ``` r
 match_name(your_loanbook, your_ald)
 #> # A tibble: 450 x 27
-#>    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
-#>    <chr>            <chr>            <dbl> <chr>  <chr>      <chr>      <chr>   
-#>  1 astonmartin      astonmartin          1 UP23   automotive loanbook   aston m…
-#>  2 avtozaz          avtozaz              1 UP25   automotive loanbook   avtozaz 
-#>  3 bogdan           bogdan               1 UP36   automotive loanbook   bogdan  
-#>  4 chauto           chauto               1 UP52   automotive loanbook   ch auto 
-#>  5 chehejia         chehejia             1 UP53   automotive loanbook   chehejia
-#>  6 chtcauto         chtcauto             1 UP58   automotive loanbook   chtc au…
-#>  7 dongfenghonda    dongfenghonda        1 UP80   automotive loanbook   dongfen…
-#>  8 dongfengluxgen   dongfengluxgen       1 UP79   automotive loanbook   dongfen…
-#>  9 electricmobilit… electricmobilit…     1 UP89   automotive loanbook   electri…
-#> 10 faradayfuture    faradayfuture        1 UP94   automotive loanbook   faraday…
-#> # … with 440 more rows, and 20 more variables: sector_ald <chr>,
-#> #   name_ultimate_parent_lbk <chr>, name_direct_loantaker_lbk <chr>,
-#> #   id_loan_lbk <chr>, id_direct_loantaker_lbk <chr>,
-#> #   id_intermediate_parent_1_lbk <chr>, name_intermediate_parent_1_lbk <chr>,
-#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
-#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
+#>    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
+#>    <chr>     <chr>     <dbl> <chr>  <chr>      <chr>      <chr>    <chr>     
+#>  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
+#>  2 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
+#>  3 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
+#>  4 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive
+#>  5 chehejia  chehejia      1 UP53   automotive loanbook   chehejia automotive
+#>  6 chtcauto  chtcauto      1 UP58   automotive loanbook   chtc au… automotive
+#>  7 dongfeng… dongfeng…     1 UP80   automotive loanbook   dongfen… automotive
+#>  8 dongfeng… dongfeng…     1 UP79   automotive loanbook   dongfen… automotive
+#>  9 electric… electric…     1 UP89   automotive loanbook   electri… automotive
+#> 10 faradayf… faradayf…     1 UP94   automotive loanbook   faraday… automotive
+#> # … with 440 more rows, and 19 more variables: name_ultimate_parent_lbk <chr>,
+#> #   name_direct_loantaker_lbk <chr>, id_loan_lbk <chr>,
+#> #   id_direct_loantaker_lbk <chr>, id_intermediate_parent_1_lbk <chr>,
+#> #   name_intermediate_parent_1_lbk <chr>, id_ultimate_parent_lbk <chr>,
+#> #   loan_size_outstanding_lbk <dbl>, loan_size_outstanding_currency_lbk <chr>,
+#> #   loan_size_credit_limit_lbk <dbl>,
 #> #   loan_size_credit_limit_currency_lbk <chr>,
 #> #   sector_classification_system_lbk <chr>,
 #> #   sector_classification_input_type_lbk <chr>,
@@ -189,31 +189,31 @@ match_name(your_loanbook, your_ald)
 #> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>
 ```
 
-By default, `simpler_name_lbk` and `simpler_name_ald` are scored only by
-sector. `by_sector = FALSE` removes this limitation, increasing
-computation time, and the number of nonsensical matches.
+By default, `alias_lbk` and `alias_ald` are scored only by sector.
+`by_sector = FALSE` removes this limitation, increasing computation
+time, and the number of nonsensical matches.
 
 ``` r
 match_name(your_loanbook, your_ald, by_sector = FALSE)
 #> # A tibble: 658 x 27
-#>    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
-#>    <chr>            <chr>            <dbl> <chr>  <chr>      <chr>      <chr>   
-#>  1 abahydropowerge… abahydropowerge…     1 UP1    power      loanbook   aba hyd…
-#>  2 achinskyglinozi… achinskyglinozi…     1 UP2    cement     loanbook   achinsk…
-#>  3 affinityrenewab… affinityrenewab…     1 UP3    power      loanbook   affinit…
-#>  4 africaoil corp   africaoil corp       1 C2     oil and g… loanbook   africa …
-#>  5 africonshp sa    africonshp sa        1 UP4    shipping   loanbook   africon…
-#>  6 agnisteelspriva… agnisteelspriva…     1 UP5    power      loanbook   agni st…
-#>  7 agrenewables     agrenewables         1 UP6    power      loanbook   agrenew…
-#>  8 airasiaxbhd      airasiaxbhd          1 C3     aviation   loanbook   airasia…
-#>  9 airasiaxbhd      airasiaxbhd          1 UP7    aviation   loanbook   airasia…
-#> 10 airbaltic        airbaltic            1 C4     aviation   loanbook   airbalt…
-#> # … with 648 more rows, and 20 more variables: sector_ald <chr>,
-#> #   name_ultimate_parent_lbk <chr>, name_direct_loantaker_lbk <chr>,
-#> #   id_loan_lbk <chr>, id_direct_loantaker_lbk <chr>,
-#> #   id_intermediate_parent_1_lbk <chr>, name_intermediate_parent_1_lbk <chr>,
-#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
-#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
+#>    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
+#>    <chr>     <chr>     <dbl> <chr>  <chr>      <chr>      <chr>    <chr>     
+#>  1 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
+#>  2 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
+#>  3 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
+#>  4 africaoi… africaoi…     1 C2     oil and g… loanbook   africa … oil&gas   
+#>  5 africons… africons…     1 UP4    shipping   loanbook   africon… shipping  
+#>  6 agnistee… agnistee…     1 UP5    power      loanbook   agni st… power     
+#>  7 agrenewa… agrenewa…     1 UP6    power      loanbook   agrenew… power     
+#>  8 airasiax… airasiax…     1 C3     aviation   loanbook   airasia… aviation  
+#>  9 airasiax… airasiax…     1 UP7    aviation   loanbook   airasia… aviation  
+#> 10 airbaltic airbaltic     1 C4     aviation   loanbook   airbalt… aviation  
+#> # … with 648 more rows, and 19 more variables: name_ultimate_parent_lbk <chr>,
+#> #   name_direct_loantaker_lbk <chr>, id_loan_lbk <chr>,
+#> #   id_direct_loantaker_lbk <chr>, id_intermediate_parent_1_lbk <chr>,
+#> #   name_intermediate_parent_1_lbk <chr>, id_ultimate_parent_lbk <chr>,
+#> #   loan_size_outstanding_lbk <dbl>, loan_size_outstanding_currency_lbk <chr>,
+#> #   loan_size_credit_limit_lbk <dbl>,
 #> #   loan_size_credit_limit_currency_lbk <chr>,
 #> #   sector_classification_system_lbk <chr>,
 #> #   sector_classification_input_type_lbk <chr>,
@@ -229,24 +229,24 @@ matching_scores <- match_name(your_loanbook, your_ald, min_score = 0.9)
 
 matching_scores
 #> # A tibble: 424 x 27
-#>    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
-#>    <chr>            <chr>            <dbl> <chr>  <chr>      <chr>      <chr>   
-#>  1 astonmartin      astonmartin          1 UP23   automotive loanbook   aston m…
-#>  2 avtozaz          avtozaz              1 UP25   automotive loanbook   avtozaz 
-#>  3 bogdan           bogdan               1 UP36   automotive loanbook   bogdan  
-#>  4 chauto           chauto               1 UP52   automotive loanbook   ch auto 
-#>  5 chehejia         chehejia             1 UP53   automotive loanbook   chehejia
-#>  6 chtcauto         chtcauto             1 UP58   automotive loanbook   chtc au…
-#>  7 dongfenghonda    dongfenghonda        1 UP80   automotive loanbook   dongfen…
-#>  8 dongfengluxgen   dongfengluxgen       1 UP79   automotive loanbook   dongfen…
-#>  9 electricmobilit… electricmobilit…     1 UP89   automotive loanbook   electri…
-#> 10 faradayfuture    faradayfuture        1 UP94   automotive loanbook   faraday…
-#> # … with 414 more rows, and 20 more variables: sector_ald <chr>,
-#> #   name_ultimate_parent_lbk <chr>, name_direct_loantaker_lbk <chr>,
-#> #   id_loan_lbk <chr>, id_direct_loantaker_lbk <chr>,
-#> #   id_intermediate_parent_1_lbk <chr>, name_intermediate_parent_1_lbk <chr>,
-#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
-#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
+#>    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
+#>    <chr>     <chr>     <dbl> <chr>  <chr>      <chr>      <chr>    <chr>     
+#>  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
+#>  2 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
+#>  3 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
+#>  4 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive
+#>  5 chehejia  chehejia      1 UP53   automotive loanbook   chehejia automotive
+#>  6 chtcauto  chtcauto      1 UP58   automotive loanbook   chtc au… automotive
+#>  7 dongfeng… dongfeng…     1 UP80   automotive loanbook   dongfen… automotive
+#>  8 dongfeng… dongfeng…     1 UP79   automotive loanbook   dongfen… automotive
+#>  9 electric… electric…     1 UP89   automotive loanbook   electri… automotive
+#> 10 faradayf… faradayf…     1 UP94   automotive loanbook   faraday… automotive
+#> # … with 414 more rows, and 19 more variables: name_ultimate_parent_lbk <chr>,
+#> #   name_direct_loantaker_lbk <chr>, id_loan_lbk <chr>,
+#> #   id_direct_loantaker_lbk <chr>, id_intermediate_parent_1_lbk <chr>,
+#> #   name_intermediate_parent_1_lbk <chr>, id_ultimate_parent_lbk <chr>,
+#> #   loan_size_outstanding_lbk <dbl>, loan_size_outstanding_currency_lbk <chr>,
+#> #   loan_size_credit_limit_lbk <dbl>,
 #> #   loan_size_credit_limit_currency_lbk <chr>,
 #> #   sector_classification_system_lbk <chr>,
 #> #   sector_classification_input_type_lbk <chr>,
@@ -270,8 +270,8 @@ matching_scores %>%
   - Open *matching\_scores.csv* with any spreadsheet editor (e.g. MS
     Excel, Google Sheets).
 
-  - Visually compare `simpler_name_lbk` and `simpler_name_ald`, along
-    with the loanbook sector.
+  - Visually compare `alias_lbk` and `alias_ald`, along with the
+    loanbook sector.
 
   - Edit the data manually:
     

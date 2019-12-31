@@ -1,30 +1,30 @@
 library(dplyr)
 
 test_that("match_all_against_all outputs a tibble", {
-  x <- tibble(sector = "A", simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = "a")
+  x <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = "a")
 
   expect_is(match_all_against_all(x, y), "tbl_df")
 })
 
 test_that("match_all_against_all has the expected names", {
-  x <- tibble(sector = "A", simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = "a")
+  x <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = "a")
 
   expect_named(
     match_all_against_all(x, y),
-    c("simpler_name_lbk", "simpler_name_ald", "score")
+    c("alias_lbk", "alias_ald", "score")
   )
 
   expect_named(
     match_all_against_all(x, y, by_sector = FALSE),
-    c("simpler_name_lbk", "simpler_name_ald", "score")
+    c("alias_lbk", "alias_ald", "score")
   )
 })
 
 test_that("match_all_against_all is sensitive to by_sector", {
-  x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
-  y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
+  x <- tibble(sector = c("A", "B"), alias = c("a", "ab"))
+  y <- tibble(sector = c("A", "B"), alias = c("a", "cd"))
 
   expect_false(
     identical(
@@ -35,12 +35,12 @@ test_that("match_all_against_all is sensitive to by_sector", {
 })
 
 test_that("match_all_against_all scores extreme cases correctly", {
-  x <- tibble(sector = c("A", "B"), simpler_name = c("a", "ab"))
-  y <- tibble(sector = c("A", "B"), simpler_name = c("a", "cd"))
+  x <- tibble(sector = c("A", "B"), alias = c("a", "ab"))
+  y <- tibble(sector = c("A", "B"), alias = c("a", "cd"))
   expect_equal(
     match_all_against_all(x, y),
     tribble(
-      ~simpler_name_lbk, ~simpler_name_ald, ~score,
+      ~alias_lbk, ~alias_ald, ~score,
       "a", "a", 1,
       "ab", "cd", 0,
     )
@@ -48,39 +48,39 @@ test_that("match_all_against_all scores extreme cases correctly", {
 })
 
 test_that("match_all_against_all w/out crucial cols errors gracefully", {
-  bad <- tibble(simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = "a")
+  bad <- tibble(alias = "a")
+  y <- tibble(sector = "A", alias = "a")
   expect_error(
     match_all_against_all(bad, y),
-    "must have.*simpler_name"
+    "must have.*alias"
   )
 
   bad <- tibble(sector = "A")
-  y <- tibble(sector = "A", simpler_name = "a")
+  y <- tibble(sector = "A", alias = "a")
   expect_error(
     match_all_against_all(bad, y),
     "must have.*sector"
   )
 })
 
-test_that("match_all_against_all combines all simpler_name of x and y", {
-  x <- tibble(sector = c("A", "A"), simpler_name = c("a", "b"))
-  y <- tibble(sector = c("A", "A"), simpler_name = c("c", "d"))
+test_that("match_all_against_all combines all alias of x and y", {
+  x <- tibble(sector = c("A", "A"), alias = c("a", "b"))
+  y <- tibble(sector = c("A", "A"), alias = c("c", "d"))
 
   out <- match_all_against_all(x, y)
 
-  expect_equal(out$simpler_name_lbk, c("a", "a", "b", "b"))
-  expect_equal(out$simpler_name_ald, c("c", "d", "c", "d"))
+  expect_equal(out$alias_lbk, c("a", "a", "b", "b"))
+  expect_equal(out$alias_ald, c("c", "d", "c", "d"))
 })
 
 test_that("match_all_against_all with `by_sector = FALSE` outputs
-  all combinations of simpler_name in x and y", {
-  x <- tibble(sector = c("A", "B", "B"), simpler_name = c("xa", "xb", "xc"))
-  y <- tibble(sector = c("A", "B", "C"), simpler_name = c("ya", "yb", "yc"))
+  all combinations of alias in x and y", {
+  x <- tibble(sector = c("A", "B", "B"), alias = c("xa", "xb", "xc"))
+  y <- tibble(sector = c("A", "B", "C"), alias = c("ya", "yb", "yc"))
 
   actual <- match_all_against_all(x, y, by_sector = FALSE)
   expect <- tribble(
-    ~simpler_name_lbk, ~simpler_name_ald, ~score,
+    ~alias_lbk, ~alias_ald, ~score,
     "xa", "ya", 0.667,
     "xa", "yb", 0,
     "xa", "yc", 0,
@@ -97,37 +97,37 @@ test_that("match_all_against_all with `by_sector = FALSE` outputs
 })
 
 test_that("match_all_against_all w/by_sector errors w/out `sector`", {
-  x <- tibble(simpler_name = "a")
-  y <- tibble(simpler_name = "a")
+  x <- tibble(alias = "a")
+  y <- tibble(alias = "a")
 
   expect_error(match_all_against_all(x, y, by_sector = TRUE))
   expect_error(match_all_against_all(x, y, by_sector = FALSE), NA)
 })
 
 test_that("match_all_against_all handles NA", {
-  x <- tibble(sector = "A", simpler_name = NA)
-  y <- tibble(sector = "A", simpler_name = "a")
-  expect_equal(match_all_against_all(x, y)$simpler_name_lbk, NA)
+  x <- tibble(sector = "A", alias = NA)
+  y <- tibble(sector = "A", alias = "a")
+  expect_equal(match_all_against_all(x, y)$alias_lbk, NA)
 
-  x <- tibble(sector = "A", simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = NA)
-  expect_equal(match_all_against_all(x, y)$simpler_name_ald, NA)
+  x <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = NA)
+  expect_equal(match_all_against_all(x, y)$alias_ald, NA)
 
-  x <- tibble(sector = "A", simpler_name = NA)
-  y <- tibble(sector = "A", simpler_name = "a")
-  s_n_x <- match_all_against_all(x, y, by_sector = FALSE)$simpler_name_lbk
+  x <- tibble(sector = "A", alias = NA)
+  y <- tibble(sector = "A", alias = "a")
+  s_n_x <- match_all_against_all(x, y, by_sector = FALSE)$alias_lbk
   expect_equal(s_n_x, NA)
 
-  x <- tibble(sector = "A", simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = NA)
+  x <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = NA)
 
-  s_n_y <- match_all_against_all(x, y, by_sector = FALSE)$simpler_name_ald
+  s_n_y <- match_all_against_all(x, y, by_sector = FALSE)$alias_ald
   expect_equal(s_n_y, NA)
 })
 
 test_that("match_all_agains_all passes arguments to score_similarity", {
-  x <- tibble(sector = "A", simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = "ab")
+  x <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = "ab")
 
   expect_false(
     identical(
@@ -138,8 +138,8 @@ test_that("match_all_agains_all passes arguments to score_similarity", {
 })
 
 test_that("match_all_agains_all passes arguments to stringdist::stringdist", {
-  x <- tibble(sector = "A", simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = "ab")
+  x <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = "ab")
 
   expect_false(
     identical(
@@ -150,21 +150,21 @@ test_that("match_all_agains_all passes arguments to stringdist::stringdist", {
 })
 
 test_that("match_all_against_all checks used dots", {
-  x <- tibble(sector = "A", simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = "a")
+  x <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = "a")
 
   # Not checking `class` because it caused unexpected error on TravisCI when
   # R version was other than release and oldrel
   expect_error(match_all_against_all(x, y, bad_argument = "bad_argument"))
 })
 
-test_that("match_all_against_all w/ same `simpler_name` in 2 sectors and
+test_that("match_all_against_all w/ same `alias` in 2 sectors and
           by_sector = TRUE outputs no `NA`", {
-  x <- tibble(sector = c("A", "B"), simpler_name = "a")
-  y <- tibble(sector = "A", simpler_name = "a")
+  x <- tibble(sector = c("A", "B"), alias = "a")
+  y <- tibble(sector = "A", alias = "a")
   expect_equal(
     match_all_against_all(x, y, by_sector = TRUE),
-    tibble(simpler_name_lbk = "a", simpler_name_ald = "a", score = 1)
+    tibble(alias_lbk = "a", alias_ald = "a", score = 1)
   )
 })
 
@@ -180,4 +180,3 @@ test_that("match_all_against_all outputs unique rows", {
 
   expect_equal(nrow(out), nrow(unique(out)))
 })
-

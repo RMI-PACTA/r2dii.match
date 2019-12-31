@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_all_against_all.R
 \name{match_all_against_all}
 \alias{match_all_against_all}
-\title{Score similarity between \code{simpler_name} values in two dataframes}
+\title{Score similarity between \code{alias} values in two dataframes}
 \usage{
 match_all_against_all(
   loanbook,
@@ -14,7 +14,7 @@ match_all_against_all(
 )
 }
 \arguments{
-\item{loanbook, ald}{Dataframes with \code{simpler_name} and optionally \code{sector}
+\item{loanbook, ald}{Dataframes with \code{alias} and optionally \code{sector}
 columns.}
 
 \item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
@@ -32,7 +32,7 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 A \link[dplyr:tibble]{dplyr::tibble}.
 }
 \description{
-Apply \code{score_similarity()} to all combinations of \code{simpler_name} values
+Apply \code{score_similarity()} to all combinations of \code{alias} values
 from two dataframes.
 }
 \examples{
@@ -40,18 +40,18 @@ library(dplyr)
 
 loanbook <- tibble(
   sector = c("A", "B", "B"),
-  simpler_name = c("xa", "xb", "xc")
+  alias = c("xa", "xb", "xc")
 )
 
 ald <- tibble(
   sector = c("A", "B", "C"),
-  simpler_name = c("ya", "yb", "yc")
+  alias = c("ya", "yb", "yc")
 )
 
 out <- match_all_against_all(loanbook, ald)
 
 # Recover sector
-left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name"))
+left_join(out, loanbook, by = c("alias_lbk" = "alias"))
 
 threshold <- 0.5
 match_all_against_all(loanbook, ald) \%>\%
@@ -61,18 +61,18 @@ out <- match_all_against_all(loanbook, ald, by_sector = FALSE)
 out
 
 # Recover sectors from x & y
-left_join(out, loanbook, by = c("simpler_name_lbk" = "simpler_name")) \%>\%
+left_join(out, loanbook, by = c("alias_lbk" = "alias")) \%>\%
   rename(sector_x = sector) \%>\%
-  left_join(ald, by = c("simpler_name_ald" = "simpler_name")) \%>\%
+  left_join(ald, by = c("alias_ald" = "alias")) \%>\%
   rename(sector_y = sector)
 }
 \seealso{
 Other internal-ish: 
 \code{\link{bridge_sector}()},
-\code{\link{replace_customer_name}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
 \code{\link{score_similarity}()},
+\code{\link{to_alias}()},
 \code{\link{uniquify_id_column}()}
 }
 \concept{internal-ish}

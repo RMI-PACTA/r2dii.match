@@ -2,17 +2,12 @@
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' `name_direct_loantaker` and `name_ultimate_parent`) with names in an
-#' asset-level dataset (colum n `name_company`). The raw names are first
-#' transformed and stored in a `simpler_name` column, then the similarity between
-#' the `simpler_name` columns in each of the loanbook and ald datasets is scored
+#' asset-level dataset (column `name_company`). The raw names are first
+#' transformed and stored in a `alias` column, then the similarity between
+#' the `alias` columns in each of the loanbook and ald datasets is scored
 #' using [stringdist::stringsim()].
 #'
-#' The process to create the `simpler_name` columns applies best practices
-#' commonly used in name matching algorithms, such as:
-#' * Remove special characters.
-#' * Replace language specific characters.
-#' * Abbreviate certain names to reduce their importance in the matching.
-#' * Spell out numbers to increase their importance.
+#' @template alias-assign
 #'
 #' @inherit match_all_against_all
 #' @inheritParams restructure_loanbook_for_matching
@@ -23,7 +18,7 @@
 #'
 #' @return A dataframe with the same columns as the loanbook data with
 #'   additional columns: `id_lkb`, `sector_lbk`, `sector_ald`, `source_lbk`,
-#'   `simpler_name_lbk`, `simpler_name_ald`, `score`, `name_ald`.
+#'   `alias_lbk`, `alias_ald`, `score`, `name_ald`.
 #'
 #' @export
 #'
@@ -61,7 +56,7 @@ match_name <- function(loanbook,
     pick_min_score(min_score) %>%
     restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
     restore_cols_from_loanbook(loanbook) %>%
-    prefer_perfect_match_by(.data$simpler_name_lbk)
+    prefer_perfect_match_by(.data$alias_lbk)
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
@@ -90,8 +85,8 @@ pick_min_score <- function(data, min_score) {
 
 restore_cols_sector_name_and_others <- function(matched, prep_lbk, prep_ald) {
   matched %>%
-    left_join(suffix_names(prep_lbk, "_lbk"), by = "simpler_name_lbk") %>%
-    left_join(suffix_names(prep_ald, "_ald"), by = "simpler_name_ald")
+    left_join(suffix_names(prep_lbk, "_lbk"), by = "alias_lbk") %>%
+    left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
 }
 
 restore_cols_from_loanbook <- function(matched, loanbook) {
@@ -125,4 +120,3 @@ none_is_one <- function(x) {
 some_is_one <- function(x) {
   any(x == 1L) & x == 1L
 }
-
