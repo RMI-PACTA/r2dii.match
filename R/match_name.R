@@ -52,11 +52,21 @@ match_name <- function(loanbook,
     p = p
   )
 
-  matched %>%
+  out <- matched %>%
     pick_min_score(min_score) %>%
     restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
     restore_cols_from_loanbook(loanbook) %>%
     prefer_perfect_match_by(.data$alias_lbk)
+
+  level_cols <- out %>%
+    names_matching(level = get_level_columns())
+
+  out %>%
+    tidyr::pivot_longer(
+      cols = level_cols,
+      names_to = "level_lbk",
+      values_to = "name_lbk"
+    )
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
@@ -120,4 +130,13 @@ none_is_one <- function(x) {
 
 some_is_one <- function(x) {
   any(x == 1L) & x == 1L
+}
+
+get_level_columns <- function() {
+  c("direct_", "intermediate_", "ultimate_")
+}
+
+names_matching <- function(x, level) {
+  pattern <- paste0(glue("^name_{level}.*_lbk$"), collapse = "|")
+  grep(pattern, names(x), value = TRUE)
 }

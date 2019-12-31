@@ -68,17 +68,14 @@ test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
   expect_false(has_name(out, "name.y"))
 })
 
-test_that("match_name columns in input loanbook (after stripping _lbk suffix", {
-  strip_lbk <- function(x) sub("_lbk$", "", x)
+test_that("match_name outputs expected names found in loanbook (after tweaks)", {
   out <- match_name(loanbook_demo, ald_demo)
 
-  expect_length(
-    setdiff(
-      names(set_names(loanbook_demo, strip_lbk)),
-      names(set_names(out, strip_lbk))
-    ),
-    0L
-  )
+  strip_suffix_lbk <- function(x) sub("_lbk$", "", x)
+  names_in_level_column <- unique(out$level_lbk)
+  tweaked <- strip_suffix_lbk(c(names(out), names_in_level_column))
+
+  expect_length(setdiff(names(loanbook_demo), tweaked), 0L)
 })
 
 test_that("match_name works with `min_score = 0` (bug fix)", {
@@ -153,4 +150,9 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
     prefer_perfect_match_by(data, var),
     tibble(var = c(1, 2, 3), score = c(1, 1, 0.99))
   )
+})
+
+test_that("match_name has name `level`", {
+  out <- match_name(loanbook_demo, ald_demo)
+  expect_true(rlang::has_name(out, "level_lbk"))
 })
