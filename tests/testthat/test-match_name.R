@@ -100,11 +100,6 @@ test_that("match_name outputs a reasonable number of rows", {
   expect_equal(nrows_out, nrow(expected))
 })
 
-test_that("match_name outputs known value", {
-  skip("FIXME: Skipping to avoid inconsistent encoding in test() vs. check()")
-  expect_known_value(match_name(loanbook_demo, ald_demo), "ref-match_name")
-})
-
 test_that("match_name names end with _lbk or _ald, except `score`", {
   out <- match_name(loanbook_demo, ald_demo)
   nms <- names(out)
