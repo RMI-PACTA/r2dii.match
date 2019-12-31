@@ -97,12 +97,12 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.dataraw)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Loading required package: r2dii.utils</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; -- Attaching packages ------------------------------------------------------- tidyverse 1.3.0 --</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; -- Attaching packages ---------------------------------- tidyverse 1.3.0 --</span></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; &lt;U+2713&gt; ggplot2 3.2.1     &lt;U+2713&gt; purrr   0.3.3</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; &lt;U+2713&gt; tibble  2.1.3     &lt;U+2713&gt; dplyr   0.8.3</span></a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; &lt;U+2713&gt; tidyr   1.0.0     &lt;U+2713&gt; stringr 1.4.0</span></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; &lt;U+2713&gt; readr   1.3.1     &lt;U+2713&gt; forcats 0.4.0</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; -- Conflicts ---------------------------------------------------------- tidyverse_conflicts() --</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; -- Conflicts ------------------------------------- tidyverse_conflicts() --</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></a></code></pre></div>
 <p>The process for matching loanbook and ald datasets has multiple steps:</p>
@@ -180,8 +180,8 @@
 <div id="score-the-goodness-of-the-match-between-the-loanbook-and-ald-datasets" class="section level3">
 <h3 class="hasAnchor">
 <a href="#score-the-goodness-of-the-match-between-the-loanbook-and-ald-datasets" class="anchor"></a>2. Score the goodness of the match between the loanbook and ald datasets</h3>
-<p><code><a href="reference/match_name.html">match_name()</a></code> scores the match between names in a loanbook dataset (lbk; columns <code>name_direct_loantaker</code> and <code>name_ultimate_parent</code>) with names in an asset-level dataset (ald; column <code>name_company</code>). The raw names are first transformed and stored in the columns <code>simpler_name_lbk</code> and <code>simpler_name_ald</code>, then the similarity between them is scored using <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html">stringdist::stringsim()</a></code>.</p>
-<p>The process to create the <code>simpler_name_*</code> columns applies best-practices commonly used in name matching algorithms, such as:</p>
+<p><code><a href="reference/match_name.html">match_name()</a></code> scores the match between names in a loanbook dataset (lbk; columns <code>name_direct_loantaker</code> and <code>name_ultimate_parent</code>) with names in an asset-level dataset (ald; column <code>name_company</code>). The raw names are first transformed and stored in the columns <code>alias_lbk</code> and <code>alias_ald</code>, then the similarity between them is scored using <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html">stringdist::stringsim()</a></code>.</p>
+<p>The process to create the <code>alias_*</code> columns applies best-practices commonly used in name matching algorithms, such as:</p>
 <ul>
 <li>Remove special characters.</li>
 <li>Replace language specific characters.</li>
@@ -190,51 +190,51 @@
 </ul>
 <!-- end list --><div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/match_name.html">match_name</a></span>(your_loanbook, your_ald)</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 450 x 27</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  1 astonmartin      astonmartin          1 UP23   automotive loanbook   aston m…</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  2 avtozaz          avtozaz              1 UP25   automotive loanbook   avtozaz </span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;  3 bogdan           bogdan               1 UP36   automotive loanbook   bogdan  </span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;  4 chauto           chauto               1 UP52   automotive loanbook   ch auto </span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;  5 chehejia         chehejia             1 UP53   automotive loanbook   chehejia</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;  6 chtcauto         chtcauto             1 UP58   automotive loanbook   chtc au…</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;  7 dongfenghonda    dongfenghonda        1 UP80   automotive loanbook   dongfen…</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;  8 dongfengluxgen   dongfengluxgen       1 UP79   automotive loanbook   dongfen…</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  9 electricmobilit… electricmobilit…     1 UP89   automotive loanbook   electri…</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 10 faradayfuture    faradayfuture        1 UP94   automotive loanbook   faraday…</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; # … with 440 more rows, and 20 more variables: sector_ald &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  2 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;  3 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;  4 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;  5 chehejia  chehejia      1 UP53   automotive loanbook   chehejia automotive</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;  6 chtcauto  chtcauto      1 UP58   automotive loanbook   chtc au… automotive</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;  7 dongfeng… dongfeng…     1 UP80   automotive loanbook   dongfen… automotive</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;  8 dongfeng… dongfeng…     1 UP79   automotive loanbook   dongfen… automotive</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  9 electric… electric…     1 UP89   automotive loanbook   electri… automotive</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 10 faradayf… faradayf…     1 UP94   automotive loanbook   faraday… automotive</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; # … with 440 more rows, and 19 more variables: name_ultimate_parent_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; #   name_direct_loantaker_lbk &lt;chr&gt;, id_loan_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; #   id_direct_loantaker_lbk &lt;chr&gt;, id_intermediate_parent_1_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; #   name_intermediate_parent_1_lbk &lt;chr&gt;, id_ultimate_parent_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; #   loan_size_outstanding_lbk &lt;dbl&gt;, loan_size_outstanding_currency_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; #   loan_size_credit_limit_lbk &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; #   sector_classification_system_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; #   sector_classification_direct_loantaker_lbk &lt;dbl&gt;, fi_type_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt; #   flag_project_finance_loan_lbk &lt;chr&gt;, name_project_lbk &lt;lgl&gt;,</span></a>
 <a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt; #   lei_direct_loantaker_lbk &lt;lgl&gt;, isin_direct_loantaker_lbk &lt;lgl&gt;</span></a></code></pre></div>
-<p>By default, <code>simpler_name_lbk</code> and <code>simpler_name_ald</code> are scored only by sector. <code>by_sector = FALSE</code> removes this limitation, increasing computation time, and the number of nonsensical matches.</p>
+<p>By default, <code>alias_lbk</code> and <code>alias_ald</code> are scored only by sector. <code>by_sector = FALSE</code> removes this limitation, increasing computation time, and the number of nonsensical matches.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/match_name.html">match_name</a></span>(your_loanbook, your_ald, <span class="dt">by_sector =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; # A tibble: 658 x 27</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  1 abahydropowerge… abahydropowerge…     1 UP1    power      loanbook   aba hyd…</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  2 achinskyglinozi… achinskyglinozi…     1 UP2    cement     loanbook   achinsk…</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;  3 affinityrenewab… affinityrenewab…     1 UP3    power      loanbook   affinit…</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  4 africaoil corp   africaoil corp       1 C2     oil and g… loanbook   africa …</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  5 africonshp sa    africonshp sa        1 UP4    shipping   loanbook   africon…</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  6 agnisteelspriva… agnisteelspriva…     1 UP5    power      loanbook   agni st…</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;  7 agrenewables     agrenewables         1 UP6    power      loanbook   agrenew…</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;  8 airasiaxbhd      airasiaxbhd          1 C3     aviation   loanbook   airasia…</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  9 airasiaxbhd      airasiaxbhd          1 UP7    aviation   loanbook   airasia…</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 10 airbaltic        airbaltic            1 C4     aviation   loanbook   airbalt…</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; # … with 648 more rows, and 20 more variables: sector_ald &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  1 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     </span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  2 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    </span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;  3 affinity… affinity…     1 UP3    power      loanbook   affinit… power     </span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  4 africaoi… africaoi…     1 C2     oil and g… loanbook   africa … oil&amp;gas   </span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  5 africons… africons…     1 UP4    shipping   loanbook   africon… shipping  </span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  6 agnistee… agnistee…     1 UP5    power      loanbook   agni st… power     </span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;  7 agrenewa… agrenewa…     1 UP6    power      loanbook   agrenew… power     </span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;  8 airasiax… airasiax…     1 C3     aviation   loanbook   airasia… aviation  </span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  9 airasiax… airasiax…     1 UP7    aviation   loanbook   airasia… aviation  </span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 10 airbaltic airbaltic     1 C4     aviation   loanbook   airbalt… aviation  </span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; # … with 648 more rows, and 19 more variables: name_ultimate_parent_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; #   name_direct_loantaker_lbk &lt;chr&gt;, id_loan_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; #   id_direct_loantaker_lbk &lt;chr&gt;, id_intermediate_parent_1_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; #   name_intermediate_parent_1_lbk &lt;chr&gt;, id_ultimate_parent_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; #   loan_size_outstanding_lbk &lt;dbl&gt;, loan_size_outstanding_currency_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; #   loan_size_credit_limit_lbk &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; #   sector_classification_system_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,</span></a>
@@ -246,24 +246,24 @@
 <a class="sourceLine" id="cb9-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">matching_scores</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; # A tibble: 424 x 27</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   </span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;  1 astonmartin      astonmartin          1 UP23   automotive loanbook   aston m…</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  2 avtozaz          avtozaz              1 UP25   automotive loanbook   avtozaz </span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  3 bogdan           bogdan               1 UP36   automotive loanbook   bogdan  </span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  4 chauto           chauto               1 UP52   automotive loanbook   ch auto </span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  5 chehejia         chehejia             1 UP53   automotive loanbook   chehejia</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  6 chtcauto         chtcauto             1 UP58   automotive loanbook   chtc au…</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  7 dongfenghonda    dongfenghonda        1 UP80   automotive loanbook   dongfen…</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  8 dongfengluxgen   dongfengluxgen       1 UP79   automotive loanbook   dongfen…</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  9 electricmobilit… electricmobilit…     1 UP89   automotive loanbook   electri…</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; 10 faradayfuture    faradayfuture        1 UP94   automotive loanbook   faraday…</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; # … with 414 more rows, and 20 more variables: sector_ald &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt;    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     </span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  2 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  3 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;  4 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;  5 chehejia  chehejia      1 UP53   automotive loanbook   chehejia automotive</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;  6 chtcauto  chtcauto      1 UP58   automotive loanbook   chtc au… automotive</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;  7 dongfeng… dongfeng…     1 UP80   automotive loanbook   dongfen… automotive</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  8 dongfeng… dongfeng…     1 UP79   automotive loanbook   dongfen… automotive</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  9 electric… electric…     1 UP89   automotive loanbook   electri… automotive</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; 10 faradayf… faradayf…     1 UP94   automotive loanbook   faraday… automotive</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; # … with 414 more rows, and 19 more variables: name_ultimate_parent_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; #   name_direct_loantaker_lbk &lt;chr&gt;, id_loan_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; #   id_direct_loantaker_lbk &lt;chr&gt;, id_intermediate_parent_1_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt; #   name_intermediate_parent_1_lbk &lt;chr&gt;, id_ultimate_parent_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt; #   loan_size_outstanding_lbk &lt;dbl&gt;, loan_size_outstanding_currency_lbk &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; #   loan_size_credit_limit_lbk &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb9-24" data-line-number="24"><span class="co">#&gt; #   sector_classification_system_lbk &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb9-25" data-line-number="25"><span class="co">#&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,</span></a>
@@ -284,7 +284,7 @@
 <a href="#compare-edit-and-save-the-data-manually" class="anchor"></a>4. Compare, edit, and save the data manually</h3>
 <ul>
 <li><p>Open <em>matching_scores.csv</em> with any spreadsheet editor (e.g. MS Excel, Google Sheets).</p></li>
-<li><p>Visually compare <code>simpler_name_lbk</code> and <code>simpler_name_ald</code>, along with the loanbook sector.</p></li>
+<li><p>Visually compare <code>alias_lbk</code> and <code>alias_ald</code>, along with the loanbook sector.</p></li>
 <li>
 <p>Edit the data manually:</p>
 <ul>

@@ -19,9 +19,6 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/r2dii.match-package.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/replace_customer_name.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/restructure_ald_for_matching.html</loc>
   </url>
   <url>
@@ -29,6 +26,9 @@
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/score_similarity.html</loc>
+  </url>
+  <url>
+    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/to_alias.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/uniquify_id_column.html</loc>

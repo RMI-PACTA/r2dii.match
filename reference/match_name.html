@@ -38,9 +38,9 @@
 <meta property="og:title" content="Match a loanbook (lbk) and asset-level datasets (ald) by the <code>name_*</code> columns — match_name" />
 <meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
 name_direct_loantaker and name_ultimate_parent) with names in an
-asset-level dataset (colum n name_company). The raw names are first
-transformed and stored in a simpler_name column, then the similarity between
-the simpler_name columns in each of the loanbook and ald datasets is scored
+asset-level dataset (column name_company). The raw names are first
+transformed and stored in a alias column, then the similarity between
+the alias columns in each of the loanbook and ald datasets is scored
 using stringdist::stringsim()." />
 <meta name="twitter:card" content="summary" />
 
@@ -127,9 +127,9 @@ using stringdist::stringsim()." />
     <div class="ref-description">
     <p><code>match_name()</code> scores the match between names in a loanbook dataset (columns
 <code>name_direct_loantaker</code> and <code>name_ultimate_parent</code>) with names in an
-asset-level dataset (colum n <code>name_company</code>). The raw names are first
-transformed and stored in a <code>simpler_name</code> column, then the similarity between
-the <code>simpler_name</code> columns in each of the loanbook and ald datasets is scored
+asset-level dataset (column <code>name_company</code>). The raw names are first
+transformed and stored in a <code>alias</code> column, then the similarity between
+the <code>alias</code> columns in each of the loanbook and ald datasets is scored
 using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim()</a></code>.</p>
     </div>
 
@@ -148,12 +148,12 @@ using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdi
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>loanbook</th>
-      <td><p>Dataframes with <code>simpler_name</code> and optionally <code>sector</code>
+      <td><p>Dataframes with <code>alias</code> and optionally <code>sector</code>
 columns.</p></td>
     </tr>
     <tr>
       <th>ald</th>
-      <td><p>Dataframes with <code>simpler_name</code> and optionally <code>sector</code>
+      <td><p>Dataframes with <code>alias</code> and optionally <code>sector</code>
 columns.</p></td>
     </tr>
     <tr>
@@ -188,11 +188,14 @@ only <code>sector</code>, the value in the <code>name</code> column should be <c
 
     <p>A dataframe with the same columns as the loanbook data with
 additional columns: <code>id_lkb</code>, <code>sector_lbk</code>, <code>sector_ald</code>, <code>source_lbk</code>,
-<code>simpler_name_lbk</code>, <code>simpler_name_ald</code>, <code>score</code>, <code>name_ald</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+<code>alias_lbk</code>, <code>alias_ald</code>, <code>score</code>, <code>name_ald</code>.</p>
+    <h2 class="hasAnchor" id="assigning-aliases"><a class="anchor" href="#assigning-aliases"></a>Assigning aliases</h2>
 
-    <p>The process to create the <code>simpler_name</code> columns applies best practices
-commonly used in name matching algorithms, such as:</p><ul>
+    
+
+<p>The process to assign an alias for a <code>name_*</code> column (i.e. the process to
+create the <code>alias_*</code> columns) applies best practices
+commonly used in name matching algorithms:</p><ul>
 <li><p>Remove special characters.</p></li>
 <li><p>Replace language specific characters.</p></li>
 <li><p>Abbreviate certain names to reduce their importance in the matching.</p></li>
@@ -203,10 +206,10 @@ commonly used in name matching algorithms, such as:</p><ul>
 
     <div class='dont-index'><p>Other internal-ish: 
 <code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
-<code><a href='replace_customer_name.html'>replace_customer_name</a>()</code>,
 <code><a href='restructure_ald_for_matching.html'>restructure_ald_for_matching</a>()</code>,
 <code><a href='restructure_loanbook_for_matching.html'>restructure_loanbook_for_matching</a>()</code>,
 <code><a href='score_similarity.html'>score_similarity</a>()</code>,
+<code><a href='to_alias.html'>to_alias</a>()</code>,
 <code><a href='uniquify_id_column.html'>uniquify_id_column</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -214,24 +217,24 @@ commonly used in name matching algorithms, such as:</p><ul>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
 
 <span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 450 x 27
-#&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
-#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   
-#&gt;  1 astonmartin      astonmartin          1 UP23   automotive loanbook   aston m…
-#&gt;  2 avtozaz          avtozaz              1 UP25   automotive loanbook   avtozaz 
-#&gt;  3 bogdan           bogdan               1 UP36   automotive loanbook   bogdan  
-#&gt;  4 chauto           chauto               1 UP52   automotive loanbook   ch auto 
-#&gt;  5 chehejia         chehejia             1 UP53   automotive loanbook   chehejia
-#&gt;  6 chtcauto         chtcauto             1 UP58   automotive loanbook   chtc au…
-#&gt;  7 dongfenghonda    dongfenghonda        1 UP79   automotive loanbook   dongfen…
-#&gt;  8 dongfengluxgen   dongfengluxgen       1 UP80   automotive loanbook   dongfen…
-#&gt;  9 electricmobilit… electricmobilit…     1 UP89   automotive loanbook   electri…
-#&gt; 10 faradayfuture    faradayfuture        1 UP94   automotive loanbook   faraday…
-#&gt; # … with 440 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
-#&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,
-#&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,
-#&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,
-#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,
+#&gt;    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
+#&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     
+#&gt;  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
+#&gt;  2 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
+#&gt;  3 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
+#&gt;  4 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive
+#&gt;  5 chehejia  chehejia      1 UP53   automotive loanbook   chehejia automotive
+#&gt;  6 chtcauto  chtcauto      1 UP58   automotive loanbook   chtc au… automotive
+#&gt;  7 dongfeng… dongfeng…     1 UP79   automotive loanbook   dongfen… automotive
+#&gt;  8 dongfeng… dongfeng…     1 UP80   automotive loanbook   dongfen… automotive
+#&gt;  9 electric… electric…     1 UP89   automotive loanbook   electri… automotive
+#&gt; 10 faradayf… faradayf…     1 UP94   automotive loanbook   faraday… automotive
+#&gt; # … with 440 more rows, and 19 more variables: name_ultimate_parent_lbk &lt;chr&gt;,
+#&gt; #   name_direct_loantaker_lbk &lt;chr&gt;, id_loan_lbk &lt;chr&gt;,
+#&gt; #   id_direct_loantaker_lbk &lt;chr&gt;, id_intermediate_parent_1_lbk &lt;chr&gt;,
+#&gt; #   name_intermediate_parent_1_lbk &lt;chr&gt;, id_ultimate_parent_lbk &lt;chr&gt;,
+#&gt; #   loan_size_outstanding_lbk &lt;dbl&gt;, loan_size_outstanding_currency_lbk &lt;chr&gt;,
+#&gt; #   loan_size_credit_limit_lbk &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_system_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,
@@ -243,24 +246,24 @@ commonly used in name matching algorithms, such as:</p><ul>
   <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</div><div class='output co'>#&gt; # A tibble: 616 x 27
-#&gt;    simpler_name_lbk simpler_name_ald score id_lbk sector_lbk source_lbk name_ald
-#&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;   
-#&gt;  1 abahydropowerge… abahydropowerge…     1 UP1    power      loanbook   aba hyd…
-#&gt;  2 achinskyglinozi… achinskyglinozi…     1 UP2    cement     loanbook   achinsk…
-#&gt;  3 affinityrenewab… affinityrenewab…     1 UP3    power      loanbook   affinit…
-#&gt;  4 africaoil corp   africaoil corp       1 C2     oil and g… loanbook   africa …
-#&gt;  5 africonshp sa    africonshp sa        1 UP4    shipping   loanbook   africon…
-#&gt;  6 agnisteelspriva… agnisteelspriva…     1 UP5    power      loanbook   agni st…
-#&gt;  7 agrenewables     agrenewables         1 UP6    power      loanbook   agrenew…
-#&gt;  8 airasiaxbhd      airasiaxbhd          1 C3     aviation   loanbook   airasia…
-#&gt;  9 airasiaxbhd      airasiaxbhd          1 UP7    aviation   loanbook   airasia…
-#&gt; 10 airbaltic        airbaltic            1 C4     aviation   loanbook   airbalt…
-#&gt; # … with 606 more rows, and 20 more variables: sector_ald &lt;chr&gt;,
-#&gt; #   name_ultimate_parent_lbk &lt;chr&gt;, name_direct_loantaker_lbk &lt;chr&gt;,
-#&gt; #   id_loan_lbk &lt;chr&gt;, id_direct_loantaker_lbk &lt;chr&gt;,
-#&gt; #   id_intermediate_parent_1_lbk &lt;chr&gt;, name_intermediate_parent_1_lbk &lt;chr&gt;,
-#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,
+#&gt;    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
+#&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     
+#&gt;  1 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
+#&gt;  2 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
+#&gt;  3 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
+#&gt;  4 africaoi… africaoi…     1 C2     oil and g… loanbook   africa … oil&amp;gas   
+#&gt;  5 africons… africons…     1 UP4    shipping   loanbook   africon… shipping  
+#&gt;  6 agnistee… agnistee…     1 UP5    power      loanbook   agni st… power     
+#&gt;  7 agrenewa… agrenewa…     1 UP6    power      loanbook   agrenew… power     
+#&gt;  8 airasiax… airasiax…     1 C3     aviation   loanbook   airasia… aviation  
+#&gt;  9 airasiax… airasiax…     1 UP7    aviation   loanbook   airasia… aviation  
+#&gt; 10 airbaltic airbaltic     1 C4     aviation   loanbook   airbalt… aviation  
+#&gt; # … with 606 more rows, and 19 more variables: name_ultimate_parent_lbk &lt;chr&gt;,
+#&gt; #   name_direct_loantaker_lbk &lt;chr&gt;, id_loan_lbk &lt;chr&gt;,
+#&gt; #   id_direct_loantaker_lbk &lt;chr&gt;, id_intermediate_parent_1_lbk &lt;chr&gt;,
+#&gt; #   name_intermediate_parent_1_lbk &lt;chr&gt;, id_ultimate_parent_lbk &lt;chr&gt;,
+#&gt; #   loan_size_outstanding_lbk &lt;dbl&gt;, loan_size_outstanding_currency_lbk &lt;chr&gt;,
+#&gt; #   loan_size_credit_limit_lbk &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_system_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,
@@ -273,7 +276,7 @@ commonly used in name matching algorithms, such as:</p><ul>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
+      <li><a href="#assigning-aliases">Assigning aliases</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

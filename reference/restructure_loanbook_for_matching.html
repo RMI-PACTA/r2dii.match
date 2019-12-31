@@ -150,9 +150,9 @@ all IDs, and with elements already manually overwritten.</p>
 <p>Other internal-ish: 
 <code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
 <code><a href='match_all_against_all.html'>match_all_against_all</a>()</code>,
-<code><a href='replace_customer_name.html'>replace_customer_name</a>()</code>,
 <code><a href='restructure_ald_for_matching.html'>restructure_ald_for_matching</a>()</code>,
 <code><a href='score_similarity.html'>score_similarity</a>()</code>,
+<code><a href='to_alias.html'>to_alias</a>()</code>,
 <code><a href='uniquify_id_column.html'>uniquify_id_column</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -160,33 +160,33 @@ all IDs, and with elements already manually overwritten.</p>
 
 <span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>restructure_loanbook_for_matching</span>()</div><div class='output co'>#&gt; <span class='message'>Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
-#&gt;    level      id    name                     sector source  simpler_name        
-#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;               
-#&gt;  1 direct_lo… C294  Yuamen Xinneng Thermal … power  loanbo… yuamenxinnengtherma…
-#&gt;  2 ultimate_… UP15  Alpine Knits India Pvt.… power  loanbo… alpineknitsindiapvt…
-#&gt;  3 direct_lo… C293  Yuamen Changyuan Hydrop… power  loanbo… yuamenchangyuanhydr…
-#&gt;  4 ultimate_… UP84  Eco Wave Power           power  loanbo… ecowavepower        
-#&gt;  5 direct_lo… C292  Yuama Ethanol Llc        power  loanbo… yuamaethanol llc    
-#&gt;  6 ultimate_… UP288 University Of Iowa       power  loanbo… universityofiowa    
-#&gt;  7 direct_lo… C299  Yudaksel Holding A.S     power  loanbo… yudakselhldgs as    
-#&gt;  8 ultimate_… UP54  China Electric Power (F… power  loanbo… chinaelectricpowerf…
-#&gt;  9 direct_lo… C305  Yukon Energy Corp 1736   power  loanbo… yukonenergycorpones…
-#&gt; 10 ultimate_… UP104 Garland Power &amp; Light    power  loanbo… garlandpowerlight   
+#&gt;    level       id    name                        sector source alias            
+#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;            
+#&gt;  1 direct_loa… C294  Yuamen Xinneng Thermal Pow… power  loanb… yuamenxinnengthe…
+#&gt;  2 ultimate_p… UP15  Alpine Knits India Pvt. Li… power  loanb… alpineknitsindia…
+#&gt;  3 direct_loa… C293  Yuamen Changyuan Hydropowe… power  loanb… yuamenchangyuanh…
+#&gt;  4 ultimate_p… UP84  Eco Wave Power              power  loanb… ecowavepower     
+#&gt;  5 direct_loa… C292  Yuama Ethanol Llc           power  loanb… yuamaethanol llc 
+#&gt;  6 ultimate_p… UP288 University Of Iowa          power  loanb… universityofiowa 
+#&gt;  7 direct_loa… C299  Yudaksel Holding A.S        power  loanb… yudakselhldgs as 
+#&gt;  8 ultimate_p… UP54  China Electric Power (Fuji… power  loanb… chinaelectricpow…
+#&gt;  9 direct_loa… C305  Yukon Energy Corp 1736      power  loanb… yukonenergycorpo…
+#&gt; 10 ultimate_p… UP104 Garland Power &amp; Light       power  loanb… garlandpowerlight
 #&gt; # … with 628 more rows</div><div class='input'>
 <span class='no'>loanbook_demo</span> <span class='kw'>%&gt;%</span>
   <span class='fu'>restructure_loanbook_for_matching</span>(<span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='no'>overwrite_demo</span>)</div><div class='output co'>#&gt; <span class='message'>Uniquifying `id_direct_loantaker` &amp; `id_ultimate_parent`.FALSE</span></div><div class='output co'>#&gt; <span class='message'>Adding new columns `sector` and `borderline`.</span></div><div class='output co'>#&gt; # A tibble: 638 x 6
-#&gt;    level      id    name                     sector source  simpler_name        
-#&gt;    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;               
-#&gt;  1 direct_lo… C294  yuamen power company     coal   manual  yuamenpower co      
-#&gt;  2 ultimate_… UP15  alpine india             power  manual  alpineindia         
-#&gt;  3 direct_lo… C293  Yuamen Changyuan Hydrop… power  loanbo… yuamenchangyuanhydr…
-#&gt;  4 ultimate_… UP84  Eco Wave Power           power  loanbo… ecowavepower        
-#&gt;  5 direct_lo… C292  Yuama Ethanol Llc        power  loanbo… yuamaethanol llc    
-#&gt;  6 ultimate_… UP288 University Of Iowa       power  loanbo… universityofiowa    
-#&gt;  7 direct_lo… C299  Yudaksel Holding A.S     power  loanbo… yudakselhldgs as    
-#&gt;  8 ultimate_… UP54  China Electric Power (F… power  loanbo… chinaelectricpowerf…
-#&gt;  9 direct_lo… C305  Yukon Energy Corp 1736   power  loanbo… yukonenergycorpones…
-#&gt; 10 ultimate_… UP104 Garland Power &amp; Light    power  loanbo… garlandpowerlight   
+#&gt;    level       id    name                        sector source alias            
+#&gt;    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;                       &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;            
+#&gt;  1 direct_loa… C294  yuamen power company        coal   manual yuamenpower co   
+#&gt;  2 ultimate_p… UP15  alpine india                power  manual alpineindia      
+#&gt;  3 direct_loa… C293  Yuamen Changyuan Hydropowe… power  loanb… yuamenchangyuanh…
+#&gt;  4 ultimate_p… UP84  Eco Wave Power              power  loanb… ecowavepower     
+#&gt;  5 direct_loa… C292  Yuama Ethanol Llc           power  loanb… yuamaethanol llc 
+#&gt;  6 ultimate_p… UP288 University Of Iowa          power  loanb… universityofiowa 
+#&gt;  7 direct_loa… C299  Yudaksel Holding A.S        power  loanb… yudakselhldgs as 
+#&gt;  8 ultimate_p… UP54  China Electric Power (Fuji… power  loanb… chinaelectricpow…
+#&gt;  9 direct_loa… C305  Yukon Energy Corp 1736      power  loanb… yukonenergycorpo…
+#&gt; 10 ultimate_p… UP104 Garland Power &amp; Light       power  loanb… garlandpowerlight
 #&gt; # … with 628 more rows</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
