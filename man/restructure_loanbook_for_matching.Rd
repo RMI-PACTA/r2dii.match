@@ -2,7 +2,7 @@
 % Please edit documentation in R/restructure_loanbook_for_matching.R
 \name{restructure_loanbook_for_matching}
 \alias{restructure_loanbook_for_matching}
-\title{Prepare a loanbook dataset for the fuzzy matching process}
+\title{Restructure  loanbook dataset (lbk) in preparation for fuzzy matching}
 \usage{
 restructure_loanbook_for_matching(data, overwrite = NULL)
 }

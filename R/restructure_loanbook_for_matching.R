@@ -1,4 +1,4 @@
-#' Prepares asset-level data (ald) for the fuzzy matching process
+#' Restructure an asset-level dataset (ald) in preparation for fuzzy matching
 #'
 #' This function prepares asset-level data (ald) for the fuzzy matching process.
 #'
@@ -25,7 +25,7 @@ restructure_ald_for_matching <- function(data) {
     add_alias()
 }
 
-#' Prepare a loanbook dataset for the fuzzy matching process
+#' Restructure  loanbook dataset (lbk) in preparation for fuzzy matching
 #'
 #' This function prepares a loanbook dataset for the fuzzy matching process.
 #'

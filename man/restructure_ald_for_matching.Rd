@@ -2,7 +2,7 @@
 % Please edit documentation in R/restructure_loanbook_for_matching.R
 \name{restructure_ald_for_matching}
 \alias{restructure_ald_for_matching}
-\title{Prepares asset-level data (ald) for the fuzzy matching process}
+\title{Restructure an asset-level dataset (ald) in preparation for fuzzy matching}
 \usage{
 restructure_ald_for_matching(data)
 }
