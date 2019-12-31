@@ -36,7 +36,9 @@
 
 
 <meta property="og:title" content="Restructure an asset-level dataset (ald) in preparation for fuzzy matching — restructure_ald_for_matching" />
-<meta property="og:description" content="This function prepares asset-level data (ald) for the fuzzy matching process." />
+<meta property="og:description" content="This function restructures an asset-level dataset (ald) in preparation for
+the fuzzy matching process. Most notably, it outputs an the alias column
+from values in the name_company column." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,7 +122,9 @@
     </div>
 
     <div class="ref-description">
-    <p>This function prepares asset-level data (ald) for the fuzzy matching process.</p>
+    <p>This function restructures an asset-level dataset (ald) in preparation for
+the fuzzy matching process. Most notably, it outputs an the <code>alias</code> column
+from values in the <code>name_company</code> column.</p>
     </div>
 
     <pre class="usage"><span class='fu'>restructure_ald_for_matching</span>(<span class='no'>data</span>)</pre>
@@ -140,7 +144,7 @@
 all IDs, and with elements already manually overwritten.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://rdrr.io/pkg/r2dii.dataraw/man/ald_demo.html'>r2dii.dataraw::ald_demo</a>.</p>
+    <div class='dont-index'><p><a href='https://rdrr.io/pkg/r2dii.dataraw/man/ald_demo.html'>r2dii.dataraw::ald_demo</a> <code><a href='to_alias.html'>to_alias()</a></code>.</p>
 <p>Other internal-ish: 
 <code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
 <code><a href='match_all_against_all.html'>match_all_against_all</a>()</code>,

@@ -36,7 +36,10 @@
 
 
 <meta property="og:title" content="Restructure  loanbook dataset (lbk) in preparation for fuzzy matching — restructure_loanbook_for_matching" />
-<meta property="og:description" content="This function prepares a loanbook dataset for the fuzzy matching process." />
+<meta property="og:description" content="This function restructures a loanbook dataset (lbk) in preparation for
+the fuzzy matching process. Most notably, it outputs an the alias column
+from values in the columns name_direct_loantaker and
+name_ultimate_parent." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,7 +123,10 @@
     </div>
 
     <div class="ref-description">
-    <p>This function prepares a loanbook dataset for the fuzzy matching process.</p>
+    <p>This function restructures a loanbook dataset (lbk) in preparation for
+the fuzzy matching process. Most notably, it outputs an the <code>alias</code> column
+from values in the columns <code>name_direct_loantaker</code> and
+<code>name_ultimate_parent</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>restructure_loanbook_for_matching</span>(<span class='no'>data</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
