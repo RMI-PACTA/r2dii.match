@@ -45,17 +45,18 @@ Depends:
 Imports: 
     dplyr,
     ellipsis,
+    forcats,
+    glue,
     magrittr,
     purrr,
     r2dii.utils (>= 0.0.0.9001),
+    readr,
+    rlang,
     stats,
     stringdist,
     stringi,
-    tidyr,
-    rlang,
-    glue,
-    readr,
-    tibble
+    tibble,
+    tidyr
 Suggests: 
     covr,
     r2dii.dataraw (>= 0.0.2.9000),

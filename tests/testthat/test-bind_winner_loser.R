@@ -85,4 +85,3 @@ test_that("the winner can be determined by reordering the list", {
   expect_equal(purrr::reduce(prio[order], bind_winner_loser), prio[[3]])
   expect_equal(purrr::reduce(prio[rev(order)], bind_winner_loser), prio[[2]])
 })
-

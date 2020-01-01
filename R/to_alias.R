@@ -65,9 +65,9 @@
 #' # And in combination with `to_alias()`
 #' to_alias(c("AA", "BB", "1"), from_to = append_replacements)
 to_alias <- function(x,
-                       from_to = NULL,
-                       ownership = NULL,
-                       remove_ownership = FALSE) {
+                     from_to = NULL,
+                     ownership = NULL,
+                     remove_ownership = FALSE) {
   # lowercase
   out <- tolower(x)
 

@@ -151,3 +151,7 @@ test_that("match_name has name `level`", {
   out <- match_name(loanbook_demo, ald_demo)
   expect_true(rlang::has_name(out, "level_lbk"))
 })
+
+test_that("match_name()$level_lbk lacks prefixf 'name_' suffix '_lbk'", {
+  skip("FIXME: TODO")
+})

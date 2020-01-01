@@ -70,4 +70,3 @@ modify_cols_as_ref <- function(.data, ref) {
   .data <- purrr::modify(.data, as.character)
   readr::type_convert(.data, col_types = rlang::eval_tidy(cols_expr(ref)))
 }
-

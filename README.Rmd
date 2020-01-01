@@ -1,5 +1,7 @@
 ---
 output: github_document 
+editor_options: 
+  chunk_output_type: console
 ---
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -144,10 +146,53 @@ Re-read the data from the previous step with:
 
 ```r
 # Reading from current working directory 
-matching_scores %>%
-  write_csv("matching_scores_edited.csv")
+matching_scores <- read_csv("matching_scores_edited.csv")
 ```
 
-### 6. Join in validated matches in order of priority
+### 6. Pick validated mathes (score = 1) and prioritize by level
 
-TODO
+Pick validated matches.
+
+```{r}
+validated <- matching_scores %>% 
+  filter(score == 1L)
+```
+
+Here is an interesting view of the validated data.
+
+```{r}
+some_interesting_columns <- vars(id_lbk, level_lbk, starts_with("alias"), score)
+
+validated %>% 
+  arrange(id_lbk) %>% 
+  select(!!! some_interesting_columns)
+```
+
+For each `id_lbk` there may be matches at multiple levels. To get only the best match, we set a priority for all possible levels, and we use it to pick one row per id.
+
+ASK TODO: Can we provide a default priority?
+
+```{r}
+# All possible levels
+unique(matching_scores$level_lbk)
+
+priority <- c(
+  "name_direct_loantaker_lbk",
+  "name_intermediate_parent_1_lbk",
+  "name_ultimate_parent_lbk"
+)
+
+prioritized <- matching_scores %>% 
+  group_by(id_lbk) %>% 
+  prioritize_at("level_lbk", priority = priority)
+```
+
+Here is an interesting view of the prioritized data.
+
+```{r}
+prioritized %>% 
+  ungroup() %>% 
+  arrange(id_lbk) %>%
+  select(!!! some_interesting_columns)
+```
+

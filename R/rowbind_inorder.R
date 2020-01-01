@@ -48,7 +48,7 @@ rowbind_inorder <- function(.x, order = NULL) {
   order <- order %||% names(.x)
 
   add_rowid_if_needed <- function(.x) {
-    lacks_rowid <- !purrr::map_lgl(.x, ~rlang::has_name(.x, "rowid"))
+    lacks_rowid <- !purrr::map_lgl(.x, ~ rlang::has_name(.x, "rowid"))
 
     nms <- glue::glue_collapse(
       rlang::expr_label(names(.x)[lacks_rowid]),

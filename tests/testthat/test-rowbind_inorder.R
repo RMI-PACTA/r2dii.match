@@ -36,4 +36,3 @@ test_that("errs with informative message", {
   )
   expect_warning(rowbind_inorder(prio), "Adding `rowid` to")
 })
-
