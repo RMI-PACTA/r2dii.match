@@ -46,7 +46,7 @@ additional columns: \code{id_lkb}, \code{sector_lbk}, \code{sector_ald}, \code{s
 \code{match_name()} scores the match between names in a loanbook dataset (columns
 \code{name_direct_loantaker} and \code{name_ultimate_parent}) with names in an
 asset-level dataset (column \code{name_company}). The raw names are first
-transformed and stored in a \code{alias} column, then the similarity between
+transformed and stored in an \code{alias} column, then the similarity between
 the \code{alias} columns in each of the loanbook and ald datasets is scored
 using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
@@ -76,6 +76,8 @@ match_name(
 )
 }
 \seealso{
+\link{match_name}.
+
 Other internal-ish: 
 \code{\link{bridge_sector}()},
 \code{\link{restructure_ald_for_matching}()},
