@@ -216,60 +216,58 @@ commonly used in name matching algorithms:</p><ul>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
 
-<span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 450 x 27
+<span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 1,350 x 26
 #&gt;    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
 #&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     
 #&gt;  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
-#&gt;  2 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
-#&gt;  3 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
-#&gt;  4 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive
-#&gt;  5 chehejia  chehejia      1 UP53   automotive loanbook   chehejia automotive
-#&gt;  6 chtcauto  chtcauto      1 UP58   automotive loanbook   chtc au… automotive
-#&gt;  7 dongfeng… dongfeng…     1 UP79   automotive loanbook   dongfen… automotive
-#&gt;  8 dongfeng… dongfeng…     1 UP80   automotive loanbook   dongfen… automotive
-#&gt;  9 electric… electric…     1 UP89   automotive loanbook   electri… automotive
-#&gt; 10 faradayf… faradayf…     1 UP94   automotive loanbook   faraday… automotive
-#&gt; # … with 440 more rows, and 19 more variables: name_ultimate_parent_lbk &lt;chr&gt;,
-#&gt; #   name_direct_loantaker_lbk &lt;chr&gt;, id_loan_lbk &lt;chr&gt;,
+#&gt;  2 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
+#&gt;  3 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
+#&gt;  4 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
+#&gt;  5 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
+#&gt;  6 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
+#&gt;  7 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
+#&gt;  8 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
+#&gt;  9 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
+#&gt; 10 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive
+#&gt; # … with 1,340 more rows, and 18 more variables: id_loan_lbk &lt;chr&gt;,
 #&gt; #   id_direct_loantaker_lbk &lt;chr&gt;, id_intermediate_parent_1_lbk &lt;chr&gt;,
-#&gt; #   name_intermediate_parent_1_lbk &lt;chr&gt;, id_ultimate_parent_lbk &lt;chr&gt;,
-#&gt; #   loan_size_outstanding_lbk &lt;dbl&gt;, loan_size_outstanding_currency_lbk &lt;chr&gt;,
-#&gt; #   loan_size_credit_limit_lbk &lt;dbl&gt;,
+#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,
+#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_system_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_direct_loantaker_lbk &lt;dbl&gt;, fi_type_lbk &lt;chr&gt;,
 #&gt; #   flag_project_finance_loan_lbk &lt;chr&gt;, name_project_lbk &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker_lbk &lt;lgl&gt;, isin_direct_loantaker_lbk &lt;lgl&gt;</div><div class='input'>
+#&gt; #   lei_direct_loantaker_lbk &lt;lgl&gt;, isin_direct_loantaker_lbk &lt;lgl&gt;,
+#&gt; #   level_lbk &lt;chr&gt;, name_lbk &lt;chr&gt;</div><div class='input'>
 <span class='fu'>match_name</span>(
   <span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>,
   <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='output co'>#&gt; # A tibble: 616 x 27
+)</div><div class='output co'>#&gt; # A tibble: 1,848 x 26
 #&gt;    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
 #&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;     
 #&gt;  1 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
-#&gt;  2 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
-#&gt;  3 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
-#&gt;  4 africaoi… africaoi…     1 C2     oil and g… loanbook   africa … oil&amp;gas   
-#&gt;  5 africons… africons…     1 UP4    shipping   loanbook   africon… shipping  
-#&gt;  6 agnistee… agnistee…     1 UP5    power      loanbook   agni st… power     
-#&gt;  7 agrenewa… agrenewa…     1 UP6    power      loanbook   agrenew… power     
-#&gt;  8 airasiax… airasiax…     1 C3     aviation   loanbook   airasia… aviation  
-#&gt;  9 airasiax… airasiax…     1 UP7    aviation   loanbook   airasia… aviation  
-#&gt; 10 airbaltic airbaltic     1 C4     aviation   loanbook   airbalt… aviation  
-#&gt; # … with 606 more rows, and 19 more variables: name_ultimate_parent_lbk &lt;chr&gt;,
-#&gt; #   name_direct_loantaker_lbk &lt;chr&gt;, id_loan_lbk &lt;chr&gt;,
+#&gt;  2 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
+#&gt;  3 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
+#&gt;  4 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
+#&gt;  5 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
+#&gt;  6 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
+#&gt;  7 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
+#&gt;  8 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
+#&gt;  9 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
+#&gt; 10 africaoi… africaoi…     1 C2     oil and g… loanbook   africa … oil&amp;gas   
+#&gt; # … with 1,838 more rows, and 18 more variables: id_loan_lbk &lt;chr&gt;,
 #&gt; #   id_direct_loantaker_lbk &lt;chr&gt;, id_intermediate_parent_1_lbk &lt;chr&gt;,
-#&gt; #   name_intermediate_parent_1_lbk &lt;chr&gt;, id_ultimate_parent_lbk &lt;chr&gt;,
-#&gt; #   loan_size_outstanding_lbk &lt;dbl&gt;, loan_size_outstanding_currency_lbk &lt;chr&gt;,
-#&gt; #   loan_size_credit_limit_lbk &lt;dbl&gt;,
+#&gt; #   id_ultimate_parent_lbk &lt;chr&gt;, loan_size_outstanding_lbk &lt;dbl&gt;,
+#&gt; #   loan_size_outstanding_currency_lbk &lt;chr&gt;, loan_size_credit_limit_lbk &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_system_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_input_type_lbk &lt;chr&gt;,
 #&gt; #   sector_classification_direct_loantaker_lbk &lt;dbl&gt;, fi_type_lbk &lt;chr&gt;,
 #&gt; #   flag_project_finance_loan_lbk &lt;chr&gt;, name_project_lbk &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker_lbk &lt;lgl&gt;, isin_direct_loantaker_lbk &lt;lgl&gt;</div></pre>
+#&gt; #   lei_direct_loantaker_lbk &lt;lgl&gt;, isin_direct_loantaker_lbk &lt;lgl&gt;,
+#&gt; #   level_lbk &lt;chr&gt;, name_lbk &lt;chr&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
