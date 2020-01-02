@@ -36,12 +36,12 @@ library(r2dii.match)
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
 library(tidyverse)
-#> -- Attaching packages ------------- tidyverse 1.3.0 --
+#> -- Attaching packages -------------------------- tidyverse 1.3.0 --
 #> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
 #> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
 #> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
 #> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
-#> -- Conflicts ---------------- tidyverse_conflicts() --
+#> -- Conflicts ----------------------------- tidyverse_conflicts() --
 #> x dplyr::filter() masks stats::filter()
 #> x dplyr::lag()    masks stats::lag()
 ```
@@ -305,18 +305,18 @@ validated %>%
   arrange(id_lbk) %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 1,269 x 5
-#>    id_lbk level_lbk                  alias_lbk          alias_ald          score
-#>    <chr>  <chr>                      <chr>              <chr>              <dbl>
-#>  1 C10    name_ultimate_parent_lbk   araratcement       araratcement           1
-#>  2 C10    name_direct_loantaker_lbk  araratcement       araratcement           1
-#>  3 C10    name_intermediate_parent_… araratcement       araratcement           1
-#>  4 C118   name_ultimate_parent_lbk   maisoncement       maisoncement           1
-#>  5 C118   name_direct_loantaker_lbk  maisoncement       maisoncement           1
-#>  6 C118   name_intermediate_parent_… maisoncement       maisoncement           1
-#>  7 C120   name_ultimate_parent_lbk   morgancement       morgancement           1
-#>  8 C120   name_direct_loantaker_lbk  morgancement       morgancement           1
-#>  9 C120   name_intermediate_parent_… morgancement       morgancement           1
-#> 10 C122   name_ultimate_parent_lbk   naginacottonmills… naginacottonmills…     1
+#>    id_lbk level_lbk             alias_lbk             alias_ald            score
+#>    <chr>  <chr>                 <chr>                 <chr>                <dbl>
+#>  1 C10    ultimate_parent       araratcement          araratcement             1
+#>  2 C10    direct_loantaker      araratcement          araratcement             1
+#>  3 C10    intermediate_parent_1 araratcement          araratcement             1
+#>  4 C118   ultimate_parent       maisoncement          maisoncement             1
+#>  5 C118   direct_loantaker      maisoncement          maisoncement             1
+#>  6 C118   intermediate_parent_1 maisoncement          maisoncement             1
+#>  7 C120   ultimate_parent       morgancement          morgancement             1
+#>  8 C120   direct_loantaker      morgancement          morgancement             1
+#>  9 C120   intermediate_parent_1 morgancement          morgancement             1
+#> 10 C122   ultimate_parent       naginacottonmills ltd naginacottonmills l…     1
 #> # … with 1,259 more rows
 ```
 
@@ -324,18 +324,17 @@ For each `id_lbk` there may be matches at multiple levels. To get only
 the best match, we set a priority for all possible levels, and we use it
 to pick one row per id.
 
-ASK TODO: Can we provide a default priority?
+**ASK TODO: Can we provide a default priority?**
 
 ``` r
 # All possible levels
 unique(matching_scores$level_lbk)
-#> [1] "name_ultimate_parent_lbk"       "name_direct_loantaker_lbk"     
-#> [3] "name_intermediate_parent_1_lbk"
+#> [1] "ultimate_parent"       "direct_loantaker"      "intermediate_parent_1"
 
 priority <- c(
-  "name_direct_loantaker_lbk",
-  "name_intermediate_parent_1_lbk",
-  "name_ultimate_parent_lbk"
+  "direct_loantaker",
+  "intermediate_parent_1",
+  "ultimate_parent"
 )
 
 prioritized <- matching_scores %>% 
@@ -351,17 +350,17 @@ prioritized %>%
   arrange(id_lbk) %>%
   select(!!! some_interesting_columns)
 #> # A tibble: 403 x 5
-#>    id_lbk level_lbk           alias_lbk              alias_ald             score
-#>    <chr>  <chr>               <chr>                  <chr>                 <dbl>
-#>  1 C10    name_direct_loanta… araratcement           araratcement              1
-#>  2 C118   name_direct_loanta… maisoncement           maisoncement              1
-#>  3 C120   name_direct_loanta… morgancement           morgancement              1
-#>  4 C122   name_direct_loanta… naginacottonmills ltd  naginacottonmills ltd     1
-#>  5 C123   name_direct_loanta… nagpurtoolspvt ltd     nagpurtoolspvt ltd        1
-#>  6 C124   name_direct_loanta… nagreekafoils ltd      nagreekafoils ltd         1
-#>  7 C126   name_direct_loanta… nalinipropertiespvt l… nalinipropertiespvt …     1
-#>  8 C127   name_direct_loanta… nalsinggadhydropowerd… nalsinggadhydropower…     1
-#>  9 C128   name_direct_loanta… namchienhydropowerjoi… namchienhydropowerjo…     1
-#> 10 C129   name_direct_loanta… namlongpowerco ltd     namlongpowerco ltd        1
+#>    id_lbk level_lbk      alias_lbk                alias_ald                score
+#>    <chr>  <chr>          <chr>                    <chr>                    <dbl>
+#>  1 C10    direct_loanta… araratcement             araratcement                 1
+#>  2 C118   direct_loanta… maisoncement             maisoncement                 1
+#>  3 C120   direct_loanta… morgancement             morgancement                 1
+#>  4 C122   direct_loanta… naginacottonmills ltd    naginacottonmills ltd        1
+#>  5 C123   direct_loanta… nagpurtoolspvt ltd       nagpurtoolspvt ltd           1
+#>  6 C124   direct_loanta… nagreekafoils ltd        nagreekafoils ltd            1
+#>  7 C126   direct_loanta… nalinipropertiespvt ltd  nalinipropertiespvt ltd      1
+#>  8 C127   direct_loanta… nalsinggadhydropowerdev… nalsinggadhydropowerdev…     1
+#>  9 C128   direct_loanta… namchienhydropowerjoint… namchienhydropowerjoint…     1
+#> 10 C129   direct_loanta… namlongpowerco ltd       namlongpowerco ltd           1
 #> # … with 393 more rows
 ```

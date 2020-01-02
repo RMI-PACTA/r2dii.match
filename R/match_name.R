@@ -66,6 +66,10 @@ match_name <- function(loanbook,
       cols = level_cols,
       names_to = "level_lbk",
       values_to = "name_lbk"
+    ) %>%
+    mutate(
+      level_lbk = sub("^name_", "", .data$level_lbk),
+      level_lbk = sub("_lbk$", "", .data$level_lbk),
     )
 }
 
@@ -85,7 +89,6 @@ suffix_some_names <- function(data, suffix, names) {
   newnames_oldnames <- set_names(names, paste0, suffix)
   rename(data, !!newnames_oldnames)
 }
-
 
 pick_min_score <- function(data, min_score) {
   data %>%

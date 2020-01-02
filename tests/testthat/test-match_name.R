@@ -71,9 +71,13 @@ test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
 test_that("match_name outputs expected names found in loanbook (after tweaks)", {
   out <- match_name(loanbook_demo, ald_demo)
 
-  strip_suffix_lbk <- function(x) sub("_lbk$", "", x)
-  names_in_level_column <- unique(out$level_lbk)
-  tweaked <- strip_suffix_lbk(c(names(out), names_in_level_column))
+
+  # `level_lbk` stores values that used to be columns in the input loanbook
+  # except they lack the prefix "name_"
+  names_with_prefix_added <- glue("name_{unique(out$level_lbk)}")
+  # All other names should be the same, except for the additional suffix "_lbk"
+  names_with_sufix_striped <- sub("_lbk$", "", names(out))
+  tweaked <- c(names_with_prefix_added, names_with_sufix_striped)
 
   expect_length(setdiff(names(loanbook_demo), tweaked), 0L)
 })
@@ -131,7 +135,7 @@ test_that("match name outputs only perfect matches if any (#40 @2diiKlaus)", {
 })
 
 test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
-# styler: off
+  # styler: off
   data <- tribble(
     ~var, ~score,
         1,      1,
@@ -153,5 +157,11 @@ test_that("match_name has name `level`", {
 })
 
 test_that("match_name()$level_lbk lacks prefixf 'name_' suffix '_lbk'", {
-  skip("FIXME: TODO")
+  out <- match_name(loanbook_demo, ald_demo)
+  expect_false(
+    any(startsWith(unique(out$level_lbk), "name_"))
+  )
+  expect_false(
+    any(endsWith(unique(out$level_lbk), "_lbk"))
+  )
 })
