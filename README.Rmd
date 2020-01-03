@@ -40,7 +40,9 @@ We'll use required packages from r2dii, and some convenient packages from the ti
 ```{r}
 library(r2dii.match)
 library(r2dii.dataraw)
-library(tidyverse)
+suppressPackageStartupMessages(
+  library(tidyverse)
+)
 ```
 
 The process for matching loanbook and ald datasets has multiple steps:
@@ -68,10 +70,8 @@ ald_demo %>%
   write_csv(path = "ald_demo.csv")
 ```
 
-* In each dataset, replace our demo data with your data.
-
-* Save save each dataset as, say, _your\_loanbook.csv_ and _your\_ald.csv_.
-
+* For each dataset, replace our demo data with your data.
+* Save each dataset as, say, _your\_loanbook.csv_ and _your\_ald.csv_.
 * Read your datasets back into R with:
 
 ```r
@@ -80,20 +80,17 @@ your_loanbook <- read_csv("your_loanbook.csv")
 your_ald <- read_csv("your_ald.csv")
 ```
 
-Here we'll continue to use the `*_demo` datasets.
+Here we'll continue to use our `*_demo` datasets, pretending they contain the data of your own.
 
 ```{r}
-warning("Skip this chunk to avoid overwriting your data with our demo data.")
-
+# WARNING: Skip this to avoid overwriting your data with our demo data
 your_loanbook <- loanbook_demo
 your_ald <- ald_demo
 ```
 
 ### 2. Score the goodness of the match between the loanbook and ald datasets
 
-`match_name()` scores the match between names in a loanbook dataset (lbk; columns `name_direct_loantaker` and `name_ultimate_parent`) with names in an asset-level dataset (ald; column `name_company`). The raw names are first transformed and stored in the columns `alias_lbk` and `alias_ald`, then the similarity between them is scored using `stringdist::stringsim()`. 
-
-The process to create the `alias_*` columns applies best-practices commonly used in name matching algorithms, such as:
+`match_name()` scores the match between names in a loanbook dataset (lbk) and names in an asset-level dataset (ald). The names come from the columns `name_direct_loantaker` and `name_ultimate_parent` of the loanbook dataset, and from the column `name_company` of the a asset-level dataset. The raw names are first transformed and stored in the columns `alias_lbk` and `alias_ald`. Then the similarity between `alias_lbk` and `alias_ald` is scored using `stringdist::stringsim()`. The process to create the `alias_*` columns applies best-practices commonly used in name matching algorithms, such as:
 
 * Remove special characters.
 * Replace language specific characters.
@@ -104,18 +101,22 @@ The process to create the `alias_*` columns applies best-practices commonly used
 match_name(your_loanbook, your_ald)
 ```
 
-By default, `alias_lbk` and `alias_ald` are scored only by sector. `by_sector = FALSE` removes this limitation, increasing computation time, and the number of nonsensical matches. 
+`match_name()` defaults to scoring matches between `alias_*` strings that belong to the same sector. Using `by_sector = FALSE` removes this limitation -- increasing computation time, and the number of matches with a low score.
 
 ```{r}
-match_name(your_loanbook, your_ald, by_sector = FALSE)
+match_name(your_loanbook, your_ald, by_sector = FALSE) %>% 
+  nrow()
+
+# Compare
+match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
+  nrow()
 ```
 
 `min_score` allows you to pick rows of a minimum `score` and above.
 
 ```{r}
-matching_scores <- match_name(your_loanbook, your_ald, min_score = 0.9)
-
-matching_scores
+matched <- match_name(your_loanbook, your_ald, min_score = 0.9)
+range(matched$score)
 ```
 
 ### 3. Write the output of the previous step into a .csv file
@@ -124,13 +125,13 @@ Write the output of the previous step into a .csv file with:
 
 ```r
 # Writting to current working directory 
-matching_scores %>%
-  write_csv("matching_scores.csv")
+matched %>%
+  write_csv("matched.csv")
 ```
 
 ### 4. Compare, edit, and save the data manually
 
-* Open _matching_scores.csv_ with any spreadsheet editor (e.g. MS Excel, Google Sheets).
+* Open _matched.csv_ with any spreadsheet editor (e.g. MS Excel, Google Sheets).
 
 * Visually compare `alias_lbk` and `alias_ald`, along with the loanbook sector.
 
@@ -138,7 +139,7 @@ matching_scores %>%
     * If you are happy with the match, set the `score` value to `1`.
     * Otherwise set or leave the `score` value to anything other than `1`.
 
-* Save the edited file as, say, _matching_scores_edited.csv_.
+* Save the edited file as, say, _matched_edited.csv_.
 
 ### 5. Re-read the data from the previous step
 
@@ -146,15 +147,15 @@ Re-read the data from the previous step with:
 
 ```r
 # Reading from current working directory 
-matching_scores <- read_csv("matching_scores_edited.csv")
+matched <- read_csv("matched_edited.csv")
 ```
 
-### 6. Pick validated mathes (score = 1) and prioritize by level
+### 6. Pick validated matches and prioritize by level
 
-Pick validated matches.
+Pick validated matches, i.e. those with a `score` of 1.
 
 ```{r}
-validated <- matching_scores %>% 
+validated <- matched %>% 
   filter(score == 1L)
 ```
 
@@ -164,35 +165,47 @@ Here is an interesting view of the validated data.
 some_interesting_columns <- vars(id_lbk, level_lbk, starts_with("alias"), score)
 
 validated %>% 
-  arrange(id_lbk) %>% 
   select(!!! some_interesting_columns)
 ```
 
 For each `id_lbk` there may be matches at multiple levels. To get only the best match, we set a priority for all possible levels, and we use it to pick one row per id.
 
-__ASK TODO: Can we provide a default priority?__
-
 ```{r}
-# All possible levels
-unique(matching_scores$level_lbk)
+sorted_levels <- sort(unique(matched$level_lbk))
+sorted_levels
 
-priority <- c(
-  "direct_loantaker",
-  "intermediate_parent_1",
-  "ultimate_parent"
-)
+prioritized_levels <- sorted_levels %>% 
+  select_chr(
+    # Showing off different tidyselect helpers
+    starts_with("direct"), 
+    matches("intermediate"), 
+    contains("ultimate"), 
+    everything()
+  )
+prioritized_levels
 
-prioritized <- matching_scores %>% 
+prioritized <- matched %>% 
   group_by(id_lbk) %>% 
-  prioritize_at("level_lbk", priority = priority)
+  prioritize_at("level_lbk", priority = prioritized_levels) %>% 
+  ungroup()
 ```
 
 Here is an interesting view of the prioritized data.
 
 ```{r}
 prioritized %>% 
-  ungroup() %>% 
-  arrange(id_lbk) %>%
   select(!!! some_interesting_columns)
 ```
 
+You may prioritize levels however you like.
+
+```{r}
+reverse_priority <- rev(prioritized_levels)
+reverse_priority
+
+matched %>% 
+  group_by(id_lbk) %>% 
+  prioritize_at("level_lbk", priority = reverse_priority) %>% 
+  ungroup() %>% 
+  select(!!! some_interesting_columns)
+```

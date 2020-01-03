@@ -20,5 +20,6 @@ stringdist
 stringsim
 substracting
 tibble
+tidyselect
 tidyverse
 Winkler

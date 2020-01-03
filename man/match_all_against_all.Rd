@@ -67,11 +67,15 @@ left_join(out, loanbook, by = c("alias_lbk" = "alias")) \%>\%
   rename(sector_y = sector)
 }
 \seealso{
+\link{match_name}.
+
 Other internal-ish: 
 \code{\link{bridge_sector}()},
+\code{\link{prioritize_at}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
 \code{\link{score_similarity}()},
+\code{\link{select_chr}()},
 \code{\link{to_alias}()},
 \code{\link{uniquify_id_column}()}
 }

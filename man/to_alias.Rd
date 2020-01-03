@@ -91,9 +91,11 @@ to_alias(c("AA", "BB", "1"), from_to = append_replacements)
 Other internal-ish: 
 \code{\link{bridge_sector}()},
 \code{\link{match_all_against_all}()},
+\code{\link{prioritize_at}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
 \code{\link{score_similarity}()},
+\code{\link{select_chr}()},
 \code{\link{uniquify_id_column}()}
 }
 \author{

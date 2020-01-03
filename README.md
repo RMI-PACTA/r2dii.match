@@ -35,15 +35,9 @@ from the tidyverse.
 library(r2dii.match)
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
-library(tidyverse)
-#> -- Attaching packages -------------------------- tidyverse 1.3.0 --
-#> <U+2713> ggplot2 3.2.1     <U+2713> purrr   0.3.3
-#> <U+2713> tibble  2.1.3     <U+2713> dplyr   0.8.3
-#> <U+2713> tidyr   1.0.0     <U+2713> stringr 1.4.0
-#> <U+2713> readr   1.3.1     <U+2713> forcats 0.4.0
-#> -- Conflicts ----------------------------- tidyverse_conflicts() --
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
+suppressPackageStartupMessages(
+  library(tidyverse)
+)
 ```
 
 The process for matching loanbook and ald datasets has multiple steps:
@@ -116,11 +110,8 @@ ald_demo %>%
   write_csv(path = "ald_demo.csv")
 ```
 
-  - In each dataset, replace our demo data with your data.
-
-  - Save save each dataset as, say, *your\_loanbook.csv* and
-    *your\_ald.csv*.
-
+  - For each dataset, replace our demo data with your data.
+  - Save each dataset as, say, *your\_loanbook.csv* and *your\_ald.csv*.
   - Read your datasets back into R with:
 
 <!-- end list -->
@@ -131,12 +122,11 @@ your_loanbook <- read_csv("your_loanbook.csv")
 your_ald <- read_csv("your_ald.csv")
 ```
 
-Here we’ll continue to use the `*_demo` datasets.
+Here we’ll continue to use our `*_demo` datasets, pretending they
+contain the data of your own.
 
 ``` r
-warning("Skip this chunk to avoid overwriting your data with our demo data.")
-#> Warning: Skip this chunk to avoid overwriting your data with our demo data.
-
+# WARNING: Skip this to avoid overwriting your data with our demo data
 your_loanbook <- loanbook_demo
 your_ald <- ald_demo
 ```
@@ -144,12 +134,12 @@ your_ald <- ald_demo
 ### 2\. Score the goodness of the match between the loanbook and ald datasets
 
 `match_name()` scores the match between names in a loanbook dataset
-(lbk; columns `name_direct_loantaker` and `name_ultimate_parent`) with
-names in an asset-level dataset (ald; column `name_company`). The raw
-names are first transformed and stored in the columns `alias_lbk` and
-`alias_ald`, then the similarity between them is scored using
-`stringdist::stringsim()`.
-
+(lbk) and names in an asset-level dataset (ald). The names come from the
+columns `name_direct_loantaker` and `name_ultimate_parent` of the
+loanbook dataset, and from the column `name_company` of the a
+asset-level dataset. The raw names are first transformed and stored in
+the columns `alias_lbk` and `alias_ald`. Then the similarity between
+`alias_lbk` and `alias_ald` is scored using `stringdist::stringsim()`.
 The process to create the `alias_*` columns applies best-practices
 commonly used in name matching algorithms, such as:
 
@@ -188,68 +178,28 @@ match_name(your_loanbook, your_ald)
 #> #   level_lbk <chr>, name_lbk <chr>
 ```
 
-By default, `alias_lbk` and `alias_ald` are scored only by sector.
-`by_sector = FALSE` removes this limitation, increasing computation
-time, and the number of nonsensical matches.
+`match_name()` defaults to scoring matches between `alias_*` strings
+that belong to the same sector. Using `by_sector = FALSE` removes this
+limitation – increasing computation time, and the number of matches with
+a low score.
 
 ``` r
-match_name(your_loanbook, your_ald, by_sector = FALSE)
-#> # A tibble: 1,974 x 26
-#>    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
-#>    <chr>     <chr>     <dbl> <chr>  <chr>      <chr>      <chr>    <chr>     
-#>  1 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
-#>  2 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
-#>  3 abahydro… abahydro…     1 UP1    power      loanbook   aba hyd… power     
-#>  4 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
-#>  5 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
-#>  6 achinsky… achinsky…     1 UP2    cement     loanbook   achinsk… cement    
-#>  7 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
-#>  8 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
-#>  9 affinity… affinity…     1 UP3    power      loanbook   affinit… power     
-#> 10 africaoi… africaoi…     1 C2     oil and g… loanbook   africa … oil&gas   
-#> # … with 1,964 more rows, and 18 more variables: id_loan_lbk <chr>,
-#> #   id_direct_loantaker_lbk <chr>, id_intermediate_parent_1_lbk <chr>,
-#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
-#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
-#> #   loan_size_credit_limit_currency_lbk <chr>,
-#> #   sector_classification_system_lbk <chr>,
-#> #   sector_classification_input_type_lbk <chr>,
-#> #   sector_classification_direct_loantaker_lbk <dbl>, fi_type_lbk <chr>,
-#> #   flag_project_finance_loan_lbk <chr>, name_project_lbk <lgl>,
-#> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>,
-#> #   level_lbk <chr>, name_lbk <chr>
+match_name(your_loanbook, your_ald, by_sector = FALSE) %>% 
+  nrow()
+#> [1] 1974
+
+# Compare
+match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
+  nrow()
+#> [1] 1350
 ```
 
 `min_score` allows you to pick rows of a minimum `score` and above.
 
 ``` r
-matching_scores <- match_name(your_loanbook, your_ald, min_score = 0.9)
-
-matching_scores
-#> # A tibble: 1,272 x 26
-#>    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
-#>    <chr>     <chr>     <dbl> <chr>  <chr>      <chr>      <chr>    <chr>     
-#>  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
-#>  2 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
-#>  3 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
-#>  4 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
-#>  5 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
-#>  6 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
-#>  7 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
-#>  8 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
-#>  9 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
-#> 10 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive
-#> # … with 1,262 more rows, and 18 more variables: id_loan_lbk <chr>,
-#> #   id_direct_loantaker_lbk <chr>, id_intermediate_parent_1_lbk <chr>,
-#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
-#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
-#> #   loan_size_credit_limit_currency_lbk <chr>,
-#> #   sector_classification_system_lbk <chr>,
-#> #   sector_classification_input_type_lbk <chr>,
-#> #   sector_classification_direct_loantaker_lbk <dbl>, fi_type_lbk <chr>,
-#> #   flag_project_finance_loan_lbk <chr>, name_project_lbk <lgl>,
-#> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>,
-#> #   level_lbk <chr>, name_lbk <chr>
+matched <- match_name(your_loanbook, your_ald, min_score = 0.9)
+range(matched$score)
+#> [1] 0.9058824 1.0000000
 ```
 
 ### 3\. Write the output of the previous step into a .csv file
@@ -258,14 +208,14 @@ Write the output of the previous step into a .csv file with:
 
 ``` r
 # Writting to current working directory 
-matching_scores %>%
-  write_csv("matching_scores.csv")
+matched %>%
+  write_csv("matched.csv")
 ```
 
 ### 4\. Compare, edit, and save the data manually
 
-  - Open *matching\_scores.csv* with any spreadsheet editor (e.g. MS
-    Excel, Google Sheets).
+  - Open *matched.csv* with any spreadsheet editor (e.g. MS Excel,
+    Google Sheets).
 
   - Visually compare `alias_lbk` and `alias_ald`, along with the
     loanbook sector.
@@ -276,7 +226,7 @@ matching_scores %>%
       - Otherwise set or leave the `score` value to anything other than
         `1`.
 
-  - Save the edited file as, say, *matching\_scores\_edited.csv*.
+  - Save the edited file as, say, *matched\_edited.csv*.
 
 ### 5\. Re-read the data from the previous step
 
@@ -284,15 +234,15 @@ Re-read the data from the previous step with:
 
 ``` r
 # Reading from current working directory 
-matching_scores <- read_csv("matching_scores_edited.csv")
+matched <- read_csv("matched_edited.csv")
 ```
 
-### 6\. Pick validated mathes (score = 1) and prioritize by level
+### 6\. Pick validated matches and prioritize by level
 
-Pick validated matches.
+Pick validated matches, i.e. those with a `score` of 1.
 
 ``` r
-validated <- matching_scores %>% 
+validated <- matched %>% 
   filter(score == 1L)
 ```
 
@@ -302,21 +252,20 @@ Here is an interesting view of the validated data.
 some_interesting_columns <- vars(id_lbk, level_lbk, starts_with("alias"), score)
 
 validated %>% 
-  arrange(id_lbk) %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 1,269 x 5
-#>    id_lbk level_lbk             alias_lbk             alias_ald            score
-#>    <chr>  <chr>                 <chr>                 <chr>                <dbl>
-#>  1 C10    ultimate_parent       araratcement          araratcement             1
-#>  2 C10    direct_loantaker      araratcement          araratcement             1
-#>  3 C10    intermediate_parent_1 araratcement          araratcement             1
-#>  4 C118   ultimate_parent       maisoncement          maisoncement             1
-#>  5 C118   direct_loantaker      maisoncement          maisoncement             1
-#>  6 C118   intermediate_parent_1 maisoncement          maisoncement             1
-#>  7 C120   ultimate_parent       morgancement          morgancement             1
-#>  8 C120   direct_loantaker      morgancement          morgancement             1
-#>  9 C120   intermediate_parent_1 morgancement          morgancement             1
-#> 10 C122   ultimate_parent       naginacottonmills ltd naginacottonmills l…     1
+#>    id_lbk level_lbk             alias_lbk   alias_ald   score
+#>    <chr>  <chr>                 <chr>       <chr>       <dbl>
+#>  1 UP23   ultimate_parent       astonmartin astonmartin     1
+#>  2 UP23   direct_loantaker      astonmartin astonmartin     1
+#>  3 UP23   intermediate_parent_1 astonmartin astonmartin     1
+#>  4 UP25   ultimate_parent       avtozaz     avtozaz         1
+#>  5 UP25   direct_loantaker      avtozaz     avtozaz         1
+#>  6 UP25   intermediate_parent_1 avtozaz     avtozaz         1
+#>  7 UP36   ultimate_parent       bogdan      bogdan          1
+#>  8 UP36   direct_loantaker      bogdan      bogdan          1
+#>  9 UP36   intermediate_parent_1 bogdan      bogdan          1
+#> 10 UP52   ultimate_parent       chauto      chauto          1
 #> # … with 1,259 more rows
 ```
 
@@ -324,43 +273,73 @@ For each `id_lbk` there may be matches at multiple levels. To get only
 the best match, we set a priority for all possible levels, and we use it
 to pick one row per id.
 
-**ASK TODO: Can we provide a default priority?**
-
 ``` r
-# All possible levels
-unique(matching_scores$level_lbk)
-#> [1] "ultimate_parent"       "direct_loantaker"      "intermediate_parent_1"
+sorted_levels <- sort(unique(matched$level_lbk))
+sorted_levels
+#> [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"
 
-priority <- c(
-  "direct_loantaker",
-  "intermediate_parent_1",
-  "ultimate_parent"
-)
+prioritized_levels <- sorted_levels %>% 
+  select_chr(
+    # Showing off different tidyselect helpers
+    starts_with("direct"), 
+    matches("intermediate"), 
+    contains("ultimate"), 
+    everything()
+  )
+prioritized_levels
+#> [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"
 
-prioritized <- matching_scores %>% 
+prioritized <- matched %>% 
   group_by(id_lbk) %>% 
-  prioritize_at("level_lbk", priority = priority)
+  prioritize_at("level_lbk", priority = prioritized_levels) %>% 
+  ungroup()
 ```
 
 Here is an interesting view of the prioritized data.
 
 ``` r
 prioritized %>% 
-  ungroup() %>% 
-  arrange(id_lbk) %>%
   select(!!! some_interesting_columns)
 #> # A tibble: 403 x 5
-#>    id_lbk level_lbk      alias_lbk                alias_ald                score
-#>    <chr>  <chr>          <chr>                    <chr>                    <dbl>
-#>  1 C10    direct_loanta… araratcement             araratcement                 1
-#>  2 C118   direct_loanta… maisoncement             maisoncement                 1
-#>  3 C120   direct_loanta… morgancement             morgancement                 1
-#>  4 C122   direct_loanta… naginacottonmills ltd    naginacottonmills ltd        1
-#>  5 C123   direct_loanta… nagpurtoolspvt ltd       nagpurtoolspvt ltd           1
-#>  6 C124   direct_loanta… nagreekafoils ltd        nagreekafoils ltd            1
-#>  7 C126   direct_loanta… nalinipropertiespvt ltd  nalinipropertiespvt ltd      1
-#>  8 C127   direct_loanta… nalsinggadhydropowerdev… nalsinggadhydropowerdev…     1
-#>  9 C128   direct_loanta… namchienhydropowerjoint… namchienhydropowerjoint…     1
-#> 10 C129   direct_loanta… namlongpowerco ltd       namlongpowerco ltd           1
+#>    id_lbk level_lbk        alias_lbk               alias_ald               score
+#>    <chr>  <chr>            <chr>                   <chr>                   <dbl>
+#>  1 UP23   direct_loantaker astonmartin             astonmartin                 1
+#>  2 UP25   direct_loantaker avtozaz                 avtozaz                     1
+#>  3 UP36   direct_loantaker bogdan                  bogdan                      1
+#>  4 UP52   direct_loantaker chauto                  chauto                      1
+#>  5 UP53   direct_loantaker chehejia                chehejia                    1
+#>  6 UP58   direct_loantaker chtcauto                chtcauto                    1
+#>  7 UP80   direct_loantaker dongfenghonda           dongfenghonda               1
+#>  8 UP79   direct_loantaker dongfengluxgen          dongfengluxgen              1
+#>  9 UP89   direct_loantaker electricmobilitysoluti… electricmobilitysoluti…     1
+#> 10 UP94   direct_loantaker faradayfuture           faradayfuture               1
+#> # … with 393 more rows
+```
+
+You may prioritize levels however you like.
+
+``` r
+reverse_priority <- rev(prioritized_levels)
+reverse_priority
+#> [1] "ultimate_parent"       "intermediate_parent_1" "direct_loantaker"
+
+matched %>% 
+  group_by(id_lbk) %>% 
+  prioritize_at("level_lbk", priority = reverse_priority) %>% 
+  ungroup() %>% 
+  select(!!! some_interesting_columns)
+#> # A tibble: 403 x 5
+#>    id_lbk level_lbk       alias_lbk                alias_ald               score
+#>    <chr>  <chr>           <chr>                    <chr>                   <dbl>
+#>  1 UP23   ultimate_parent astonmartin              astonmartin                 1
+#>  2 UP25   ultimate_parent avtozaz                  avtozaz                     1
+#>  3 UP36   ultimate_parent bogdan                   bogdan                      1
+#>  4 UP52   ultimate_parent chauto                   chauto                      1
+#>  5 UP53   ultimate_parent chehejia                 chehejia                    1
+#>  6 UP58   ultimate_parent chtcauto                 chtcauto                    1
+#>  7 UP80   ultimate_parent dongfenghonda            dongfenghonda               1
+#>  8 UP79   ultimate_parent dongfengluxgen           dongfengluxgen              1
+#>  9 UP89   ultimate_parent electricmobilitysolutio… electricmobilitysoluti…     1
+#> 10 UP94   ultimate_parent faradayfuture            faradayfuture               1
 #> # … with 393 more rows
 ```

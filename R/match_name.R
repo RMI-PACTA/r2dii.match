@@ -3,7 +3,7 @@
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' `name_direct_loantaker` and `name_ultimate_parent`) with names in an
 #' asset-level dataset (column `name_company`). The raw names are first
-#' transformed and stored in a `alias` column, then the similarity between
+#' transformed and stored in an `alias` column, then the similarity between
 #' the `alias` columns in each of the loanbook and ald datasets is scored
 #' using [stringdist::stringsim()].
 #'

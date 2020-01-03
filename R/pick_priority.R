@@ -6,6 +6,8 @@
 #' @param priority Most commonly, a character vector of the priority to
 #'   re-order the column(x) given by `.at`.
 #'
+#' @family internal-ish
+#'
 #' @return A dataframe, commonly with less rows than the input.
 #' @export
 #'

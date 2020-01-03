@@ -9,6 +9,8 @@
 #' @param by_sector Should the combinations be done by sector?
 #' @inheritParams stringdist::stringdist
 #'
+#' @seealso [match_name].
+#'
 #' @family internal-ish
 #'
 #' @return A [dplyr::tibble].
