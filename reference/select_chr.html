@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Score the similarity between two strings — score_similarity • r2dii.match</title>
+<title>Select elements from a vector using tidyselect helpers — select_chr • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,9 @@
 
 
 
-<meta property="og:title" content="Score the similarity between two strings — score_similarity" />
-<meta property="og:description" content="This function computes pairwise string similarities between elements of
-character vectors a and b, where the vector with less elements is
-recycled. It is a thin wrapper around stringdist::stringdist() with
-defaults set to the most common parameters used in 2dii analyses." />
+<meta property="og:title" content="Select elements from a vector using tidyselect helpers — select_chr" />
+<meta property="og:description" content="This function allows you to used tidyselect helpers to do with a character
+vector what dplyr::select() allows you to do with the names of a dataframe." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,97 +115,82 @@ defaults set to the most common parameters used in 2dii analyses." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Score the similarity between two strings</h1>
-    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/score_similarity.R'><code>R/score_similarity.R</code></a></small>
-    <div class="hidden name"><code>score_similarity.Rd</code></div>
+    <h1>Select elements from a vector using tidyselect helpers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/select_chr.R'><code>R/select_chr.R</code></a></small>
+    <div class="hidden name"><code>select_chr.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function computes pairwise string similarities between elements of
-character vectors <code>a</code> and <code>b</code>, where the vector with less elements is
-recycled. It is a thin wrapper around <code><a href='https://rdrr.io/pkg/stringdist/man/stringdist.html'>stringdist::stringdist()</a></code> with
-defaults set to the most common parameters used in 2dii analyses.</p>
+    <p>This function allows you to used tidyselect helpers to do with a character
+vector what <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> allows you to do with the names of a dataframe.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>score_similarity</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>...</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"jw"</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</pre>
+    <pre class="usage"><span class='fu'>select_chr</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>a</th>
-      <td><p>R object (target); will be converted by <code>as.character</code>.</p></td>
-    </tr>
-    <tr>
-      <th>b</th>
-      <td><p>R object (source); will be converted by <code>as.character</code>.</p></td>
+      <th>x</th>
+      <td><p>A character vector.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments are passed on to <a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim</a>.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>Method for distance calculation. One of <code><a href='https://rdrr.io/r/base/c.html'>c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")</a></code>. See
-<a href='https://rdrr.io/pkg/stringdist/man/stringdist-metrics.html'>stringdist::stringdist-metrics</a>.</p></td>
-    </tr>
-    <tr>
-      <th>p</th>
-      <td><p>Penalty factor for Jaro-Winkler distance. The valid range for 
-<code>p</code> is <code>0 &lt;= p &lt;= 0.25</code>. If <code>p=0</code> (default), the
-Jaro-distance is returned. Applies only to <code>method='jw'</code>.</p></td>
+      <td><p>Arguments passed on to <code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>tidyselect::starts_with</a></code></p><dl class='dl-horizontal'>
+    <dt><code>match</code></dt><dd><p>A string.</p></dd>
+    <dt><code>ignore.case</code></dt><dd><p>If <code>TRUE</code>, the default, ignores case when matching
+names.</p></dd>
+    <dt><code>vars</code></dt><dd><p>A character vector of variable names. When called
+from inside selecting functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> these are
+automatically set to the names of the table.</p></dd>
+  
+</dl></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a vector with similarities, which are values between 0 and 1 where
-1 corresponds to perfect similarity (distance 0) and 0 to complete
-dissimilarity. <code>NA</code> is returned when <code><a href='https://rdrr.io/pkg/stringdist/man/stringdist.html'>stringdist</a></code> returns 
-<code>NA</code>. Distances equal to <code>Inf</code> are truncated to a similarity of
-0.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The similarity is calculated by first calculating the distance using
-<code><a href='https://rdrr.io/pkg/stringdist/man/stringdist.html'>stringdist</a></code>, dividing the distance by the maximum
-possible distance, and substracting the result from 1. 
-This results in a score between 0 and 1, with 1
-corresponding to complete similarity and 0 to complete dissimilarity.
-Note that complete similarity only means equality for distances satisfying
-the identity property. This is not the case e.g. for q-gram based distances
-(for example if q=1, anagrams are completely similar).
-For distances where weights can be specified, the maximum distance 
-is currently computed by assuming that all weights are equal to 1.</p>
+    <p>A character vector</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim</a>, <a href='https://rdrr.io/pkg/stringdist/man/stringdist.html'>stringdist::stringdist</a>.</p>
-<p>Other internal-ish: 
+    <div class='dont-index'><p>Other internal-ish: 
 <code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
 <code><a href='match_all_against_all.html'>match_all_against_all</a>()</code>,
 <code><a href='prioritize_at.html'>prioritize_at</a>()</code>,
 <code><a href='restructure_ald_for_matching.html'>restructure_ald_for_matching</a>()</code>,
 <code><a href='restructure_loanbook_for_matching.html'>restructure_loanbook_for_matching</a>()</code>,
-<code><a href='select_chr.html'>select_chr</a>()</code>,
+<code><a href='score_similarity.html'>score_similarity</a>()</code>,
 <code><a href='to_alias.html'>to_alias</a>()</code>,
 <code><a href='uniquify_id_column.html'>uniquify_id_column</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Clear extreemes</span>
-<span class='fu'>score_similarity</span>(<span class='st'>"aa"</span>, <span class='st'>"aa"</span>)</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>score_similarity</span>(<span class='st'>"aa"</span>, <span class='st'>"bb"</span>)</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
-<span class='co'># Unclear extreemes</span>
-<span class='fu'>score_similarity</span>(<span class='st'>"ab"</span>, <span class='st'>"ba"</span>)</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(
-  <span class='fu'>score_similarity</span>(<span class='st'>"ab"</span>, <span class='st'>"ac"</span>),
-  <span class='fu'>score_similarity</span>(<span class='st'>"ac"</span>, <span class='st'>"ab"</span>)
-)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='fu'>score_similarity</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fewer"</span>, <span class='st'>"items"</span>, <span class='st'>"get"</span>, <span class='st'>"recycled"</span>), <span class='st'>"recycled"</span>)</div><div class='output co'>#&gt; [1] 0.5500000 0.4416667 0.4861111 1.0000000</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.match</span>)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"number_"</span>, <span class='fl'>1</span>:<span class='fl'>15</span>)
+<span class='no'>x</span></div><div class='output co'>#&gt;  [1] "number_1"  "number_2"  "number_3"  "number_4"  "number_5"  "number_6" 
+#&gt;  [7] "number_7"  "number_8"  "number_9"  "number_10" "number_11" "number_12"
+#&gt; [13] "number_13" "number_14" "number_15"</div><div class='input'>
+<span class='co'># You can select elements from a caracter vector in many ways.</span>
+<span class='co'># All the tidyselect helpers that work with dplyr::selec() work here too.</span>
+<span class='no'>x</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'>select_chr</span>(
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>matches</a></span>(<span class='st'>"_3"</span>),
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"_2"</span>),
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>ends_with</a></span>(<span class='st'>"_1"</span>),
+    <span class='no'>number_4</span>:<span class='no'>number_6</span>,
+    -<span class='no'>number_7</span>,
+    -<span class='fl'>8</span>,
+    <span class='fl'>11</span>:<span class='fl'>9</span>,
+    <span class='st'>"number_15"</span>
+  )</div><div class='output co'>#&gt;  [1] "number_3"  "number_2"  "number_1"  "number_4"  "number_5"  "number_6" 
+#&gt;  [7] "number_11" "number_10" "number_9"  "number_15"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

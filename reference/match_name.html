@@ -39,7 +39,7 @@
 <meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
 name_direct_loantaker and name_ultimate_parent) with names in an
 asset-level dataset (column name_company). The raw names are first
-transformed and stored in a alias column, then the similarity between
+transformed and stored in an alias column, then the similarity between
 the alias columns in each of the loanbook and ald datasets is scored
 using stringdist::stringsim()." />
 <meta name="twitter:card" content="summary" />
@@ -128,7 +128,7 @@ using stringdist::stringsim()." />
     <p><code>match_name()</code> scores the match between names in a loanbook dataset (columns
 <code>name_direct_loantaker</code> and <code>name_ultimate_parent</code>) with names in an
 asset-level dataset (column <code>name_company</code>). The raw names are first
-transformed and stored in a <code>alias</code> column, then the similarity between
+transformed and stored in an <code>alias</code> column, then the similarity between
 the <code>alias</code> columns in each of the loanbook and ald datasets is scored
 using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim()</a></code>.</p>
     </div>
@@ -204,11 +204,14 @@ commonly used in name matching algorithms:</p><ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other internal-ish: 
+    <div class='dont-index'><p>match_name.</p>
+<p>Other internal-ish: 
 <code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
+<code><a href='prioritize_at.html'>prioritize_at</a>()</code>,
 <code><a href='restructure_ald_for_matching.html'>restructure_ald_for_matching</a>()</code>,
 <code><a href='restructure_loanbook_for_matching.html'>restructure_loanbook_for_matching</a>()</code>,
 <code><a href='score_similarity.html'>score_similarity</a>()</code>,
+<code><a href='select_chr.html'>select_chr</a>()</code>,
 <code><a href='to_alias.html'>to_alias</a>()</code>,
 <code><a href='uniquify_id_column.html'>uniquify_id_column</a>()</code></p></div>
 
