@@ -29,19 +29,34 @@ vector what \code{\link[dplyr:select]{dplyr::select()}} allows you to do with th
 }
 \examples{
 library(dplyr)
+library(r2dii.match)
 
-# With dplyr::select() you can do something like this to a dataframe
-mtcars \%>\%
-  select(starts_with("cy"), matches("arb"), everything())
+x <- paste0("number_", 1:15)
+x
 
-# With select_chr() you can do the same to a character vector
-a_character_vector <- mtcars \%>\%
-  names()
-
-a_character_vector \%>\%
-  select_chr(starts_with("cy"), matches("arb"), everything())
-
-# Like select(), you may use "quoted" strings, bare strings, and positions
-a_character_vector \%>\%
-  select_chr("drat", cyl, 4:6)
+# You can select elements from a caracter vector in many ways.
+# All the tidyselect helpers that work with dplyr::selec() work here too.
+x \%>\%
+  select_chr(
+    matches("_3"),
+    contains("_2"),
+    ends_with("_1"),
+    number_4:number_6,
+    -number_7,
+    -8,
+    11:9,
+    "number_15"
+  )
 }
+\seealso{
+Other internal-ish: 
+\code{\link{bridge_sector}()},
+\code{\link{match_all_against_all}()},
+\code{\link{prioritize_at}()},
+\code{\link{restructure_ald_for_matching}()},
+\code{\link{restructure_loanbook_for_matching}()},
+\code{\link{score_similarity}()},
+\code{\link{to_alias}()},
+\code{\link{uniquify_id_column}()}
+}
+\concept{internal-ish}

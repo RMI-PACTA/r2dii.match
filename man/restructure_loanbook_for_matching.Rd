@@ -38,8 +38,10 @@ loanbook_demo \%>\%
 Other internal-ish: 
 \code{\link{bridge_sector}()},
 \code{\link{match_all_against_all}()},
+\code{\link{prioritize_at}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{score_similarity}()},
+\code{\link{select_chr}()},
 \code{\link{to_alias}()},
 \code{\link{uniquify_id_column}()}
 }

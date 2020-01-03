@@ -6,26 +6,31 @@
 #' @param x A character vector.
 #' @inheritDotParams tidyselect::starts_with
 #'
+#' @family internal-ish
+#'
 #' @return A character vector
 #' @export
 #'
 #' @examples
 #' library(dplyr)
+#' library(r2dii.match)
 #'
-#' # With dplyr::select() you can do something like this to a dataframe
-#' mtcars %>%
-#'   select(starts_with("cy"), matches("arb"), everything())
+#' x <- paste0("number_", 1:15)
+#' x
 #'
-#' # With select_chr() you can do the same to a character vector
-#' a_character_vector <- mtcars %>%
-#'   names()
-#'
-#' a_character_vector %>%
-#'   select_chr(starts_with("cy"), matches("arb"), everything())
-#'
-#' # Like select(), you may use "quoted" strings, bare strings, and positions
-#' a_character_vector %>%
-#'   select_chr("drat", cyl, 4:6)
+#' # You can select elements from a caracter vector in many ways.
+#' # All the tidyselect helpers that work with dplyr::selec() work here too.
+#' x %>%
+#'   select_chr(
+#'     matches("_3"),
+#'     contains("_2"),
+#'     ends_with("_1"),
+#'     number_4:number_6,
+#'     -number_7,
+#'     -8,
+#'     11:9,
+#'     "number_15"
+#'   )
 select_chr <- function(x, ...) {
   stopifnot(is.character(x))
 
