@@ -89,7 +89,7 @@ test_that("match_name works with `min_score = 0` (bug fix)", {
 test_that("match_name outputs a reasonable number of rows", {
   out <- match_name(loanbook_demo, ald_demo)
 
-  expected <- match_all_against_all(
+  expected <- score_alias_similarity(
     restructure_loanbook_for_matching(loanbook_demo),
     restructure_ald_for_matching(ald_demo)
   ) %>%

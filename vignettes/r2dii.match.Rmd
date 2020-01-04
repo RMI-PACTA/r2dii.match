@@ -106,11 +106,11 @@ prep_loanbook <- loanbook_demo %>%
 prep_loanbook
 ```
 
-`match_all_against_all()` scores the similarity between `alias` values in the restructured loanbook and ald datasets. The `by_sector` argument, flags if names should only be compared against ald names in the same sector. (setting `by_sector = TRUE` reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches). 
+`score_alias_similarity()` scores the similarity between `alias` values in the restructured loanbook and ald datasets. The `by_sector` argument, flags if names should only be compared against ald names in the same sector. (setting `by_sector = TRUE` reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches). 
 
 ```{r}
 # Using default `by_sector = TRUE`
-matched <- match_all_against_all(prep_loanbook, prep_ald)
+matched <- score_alias_similarity(prep_loanbook, prep_ald)
 
 matched
 ```
