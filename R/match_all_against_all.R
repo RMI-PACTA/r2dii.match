@@ -29,16 +29,16 @@
 #'   alias = c("ya", "yb", "yc")
 #' )
 #'
-#' out <- match_all_against_all(loanbook, ald)
+#' out <- score_alias_similarity(loanbook, ald)
 #'
 #' # Recover sector
 #' left_join(out, loanbook, by = c("alias_lbk" = "alias"))
 #'
 #' threshold <- 0.5
-#' match_all_against_all(loanbook, ald) %>%
+#' score_alias_similarity(loanbook, ald) %>%
 #'   filter(score >= threshold)
 #'
-#' out <- match_all_against_all(loanbook, ald, by_sector = FALSE)
+#' out <- score_alias_similarity(loanbook, ald, by_sector = FALSE)
 #' out
 #'
 #' # Recover sectors from x & y
@@ -46,7 +46,7 @@
 #'   rename(sector_x = sector) %>%
 #'   left_join(ald, by = c("alias_ald" = "alias")) %>%
 #'   rename(sector_y = sector)
-match_all_against_all <- function(loanbook,
+score_alias_similarity <- function(loanbook,
                                   ald,
                                   ...,
                                   by_sector = TRUE,
