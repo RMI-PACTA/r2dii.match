@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pick rows from a dataframe based on a priority set at some columns — prioritize_at • r2dii.match</title>
+<title>Pick rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority</code> — prioritize • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Pick rows from a dataframe based on a priority set at some columns — prioritize_at" />
-<meta property="og:description" content="Pick rows from a dataframe based on a priority set at some columns" />
+<meta property="og:title" content="Pick rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority</code> — prioritize" />
+<meta property="og:description" content="Pick rows where score is 1 and level per loan is of highest priority" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,85 +114,88 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pick rows from a dataframe based on a priority set at some columns</h1>
+    <h1>Pick rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/prioritize.R'><code>R/prioritize.R</code></a></small>
-    <div class="hidden name"><code>prioritize_at.Rd</code></div>
+    <div class="hidden name"><code>prioritize.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Pick rows from a dataframe based on a priority set at some columns</p>
+    <p>Pick rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>prioritize_at</span>(<span class='no'>data</span>, <span class='no'>.at</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>prioritize</span>(<span class='no'>data</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A dataframe.</p></td>
-    </tr>
-    <tr>
-      <th>.at</th>
-      <td><p>Most commonly, a character vector of one column name. For more
-general usage see the <code>.vars</code> argument to <code><a href='https://dplyr.tidyverse.org/reference/arrange_all.html'>dplyr::arrange_at()</a></code>.</p></td>
+      <td><p>A  dataframe, commonly the output of <code><a href='match_name.html'>match_name()</a></code>.</p></td>
     </tr>
     <tr>
       <th>priority</th>
-      <td><p>Most commonly, a character vector of the priority to
-re-order the column(x) given by <code>.at</code>.</p></td>
+      <td><p>One of:</p><ul>
+<li><p><code>NULL</code>: defaults to the default level priority as returned by
+<code><a href='prioritize_level.html'>prioritize_level()</a></code>.</p></li>
+<li><p>A character vector giving a custom priority.</p></li>
+<li><p>A function to apply to the output of <code><a href='prioritize_level.html'>prioritize_level()</a></code>, e.g. <code>rev</code>.</p></li>
+<li><p>A quosure-style lambda function, e.g. <code>~ rev(.x)</code>.</p></li>
+</ul></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe, commonly with less rows than the input.</p>
+    <p>A dataframe with a single row per loan, where <code>score</code> is 1 and
+priority level is highest.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other internal-ish: 
-<code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
-<code><a href='match_all_against_all.html'>match_all_against_all</a>()</code>,
-<code><a href='prioritize_level.html'>prioritize_level</a>()</code>,
-<code><a href='restructure_ald_for_matching.html'>restructure_ald_for_matching</a>()</code>,
-<code><a href='restructure_loanbook_for_matching.html'>restructure_loanbook_for_matching</a>()</code>,
-<code><a href='score_similarity.html'>score_similarity</a>()</code>,
-<code><a href='select_chr.html'>select_chr</a>()</code>,
-<code><a href='to_alias.html'>to_alias</a>()</code>,
-<code><a href='uniquify_id_column.html'>uniquify_id_column</a>()</code></p></div>
+    <div class='dont-index'><p><code><a href='match_name.html'>match_name()</a></code>, <code><a href='prioritize_level.html'>prioritize_level()</a></code>.</p>
+<p>Other user-oriented: 
+<code><a href='match_name.html'>match_name</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='co'># styler: off</span>
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span>(
-  ~<span class='no'>x</span>, ~<span class='no'>y</span>,
-  <span class='fl'>1</span>, <span class='st'>"a"</span>,
-  <span class='fl'>2</span>, <span class='st'>"a"</span>,
-  <span class='fl'>2</span>, <span class='st'>"z"</span>,
+<span class='no'>matched</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
+  ~<span class='no'>score</span>, ~<span class='no'>id_lbk</span>, ~<span class='no'>level_lbk</span>,
+  <span class='fl'>1</span>, <span class='st'>"aa"</span>, <span class='st'>"ultimate_parent"</span>,
+  <span class='fl'>1</span>, <span class='st'>"aa"</span>, <span class='st'>"direct_loantaker"</span>,
+  <span class='fl'>1</span>, <span class='st'>"bb"</span>, <span class='st'>"intermediate_parent"</span>,
+  <span class='fl'>1</span>, <span class='st'>"bb"</span>, <span class='st'>"ultimate_parent"</span>,
 )
-<span class='co'># styler: on</span>
 
-<span class='no'>data</span> <span class='kw'>%&gt;%</span> <span class='fu'>prioritize_at</span>(<span class='st'>"y"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;       x y    
-#&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1     1 a    </div><div class='input'>
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>prioritize_at</span>(<span class='st'>"y"</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
-#&gt; # Groups:   x [2]
-#&gt;       x y    
-#&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1     1 a    
-#&gt; 2     2 a    </div><div class='input'>
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>prioritize_at</span>(<span class='kw'>.at</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"z"</span>, <span class='st'>"a"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>()</div><div class='output co'>#&gt; # A tibble: 2 x 2
-#&gt;       x y    
-#&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1     1 a    
-#&gt; 2     2 z    </div></pre>
+<span class='fu'><a href='prioritize_level.html'>prioritize_level</a></span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; [1] "direct_loantaker"    "intermediate_parent" "ultimate_parent"    </div><div class='input'>
+<span class='co'># Using default priority</span>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   score id_lbk level_lbk          
+#&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;              
+#&gt; 1     1 aa     direct_loantaker   
+#&gt; 2     1 bb     intermediate_parent</div><div class='input'>
+<span class='co'># Using the reverse of the default priority</span>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>rev</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   score id_lbk level_lbk      
+#&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;          
+#&gt; 1     1 aa     ultimate_parent
+#&gt; 2     1 bb     ultimate_parent</div><div class='input'>
+<span class='co'># Same</span>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='no'>.x</span>))</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   score id_lbk level_lbk      
+#&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;          
+#&gt; 1     1 aa     ultimate_parent
+#&gt; 2     1 bb     ultimate_parent</div><div class='input'>
+<span class='co'># Using a custom priority</span>
+<span class='no'>bad_idea</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_chr.html'>select_chr</a></span>(
+  <span class='no'>matched</span>$<span class='no'>level_lbk</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>matches</a></span>(<span class='st'>"intermediate"</span>),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>()
+)
+<span class='no'>bad_idea</span></div><div class='output co'>#&gt; [1] "intermediate_parent" "ultimate_parent"     "direct_loantaker"   </div><div class='input'>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>bad_idea</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
+#&gt;   score id_lbk level_lbk          
+#&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;              
+#&gt; 1     1 bb     intermediate_parent
+#&gt; 2     1 aa     ultimate_parent    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -36,8 +36,9 @@
 
 
 <meta property="og:title" content="Select elements from a vector using tidyselect helpers — select_chr" />
-<meta property="og:description" content="This function allows you to used tidyselect helpers to do with a character
-vector what dplyr::select() allows you to do with the names of a dataframe." />
+<meta property="og:description" content="This function allows you to select elements of a character vector like
+dplyr::select() allows you to select columns of a dataframe -- via
+tidyselect helpers." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,8 +122,9 @@ vector what dplyr::select() allows you to do with the names of a dataframe." />
     </div>
 
     <div class="ref-description">
-    <p>This function allows you to used tidyselect helpers to do with a character
-vector what <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> allows you to do with the names of a dataframe.</p>
+    <p>This function allows you to select elements of a character vector like
+<code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> allows you to select columns of a dataframe -- via
+tidyselect helpers.</p>
     </div>
 
     <pre class="usage"><span class='fu'>select_chr</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -157,6 +159,7 @@ automatically set to the names of the table.</p></dd>
 <code><a href='bridge_sector.html'>bridge_sector</a>()</code>,
 <code><a href='match_all_against_all.html'>match_all_against_all</a>()</code>,
 <code><a href='prioritize_at.html'>prioritize_at</a>()</code>,
+<code><a href='prioritize_level.html'>prioritize_level</a>()</code>,
 <code><a href='restructure_ald_for_matching.html'>restructure_ald_for_matching</a>()</code>,
 <code><a href='restructure_loanbook_for_matching.html'>restructure_loanbook_for_matching</a>()</code>,
 <code><a href='score_similarity.html'>score_similarity</a>()</code>,
@@ -164,26 +167,26 @@ automatically set to the names of the table.</p></dd>
 <code><a href='uniquify_id_column.html'>uniquify_id_column</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.match</span>)
+    <pre class="examples"><div class='input'><span class='co'># Access tidyselect helpers via dplyr or directly with `library(tidyselect)`</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"number_"</span>, <span class='fl'>1</span>:<span class='fl'>15</span>)
 <span class='no'>x</span></div><div class='output co'>#&gt;  [1] "number_1"  "number_2"  "number_3"  "number_4"  "number_5"  "number_6" 
 #&gt;  [7] "number_7"  "number_8"  "number_9"  "number_10" "number_11" "number_12"
 #&gt; [13] "number_13" "number_14" "number_15"</div><div class='input'>
-<span class='co'># You can select elements from a caracter vector in many ways.</span>
-<span class='co'># All the tidyselect helpers that work with dplyr::selec() work here too.</span>
-<span class='no'>x</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>select_chr</span>(
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>matches</a></span>(<span class='st'>"_3"</span>),
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"_2"</span>),
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>ends_with</a></span>(<span class='st'>"_1"</span>),
-    <span class='no'>number_4</span>:<span class='no'>number_6</span>,
-    -<span class='no'>number_7</span>,
-    -<span class='fl'>8</span>,
-    <span class='fl'>11</span>:<span class='fl'>9</span>,
-    <span class='st'>"number_15"</span>
-  )</div><div class='output co'>#&gt;  [1] "number_3"  "number_2"  "number_1"  "number_4"  "number_5"  "number_6" 
+<span class='co'># You can select elements from a caracter vector in many ways. All the</span>
+<span class='co'># tidyselect (available via dplyr) helpers that work with dplyr::selec() work here too.</span>
+<span class='fu'>select_chr</span>(
+  <span class='no'>x</span>,
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>matches</a></span>(<span class='st'>"_3"</span>),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"_2"</span>),
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>ends_with</a></span>(<span class='st'>"_1"</span>),
+  <span class='no'>number_4</span>:<span class='no'>number_6</span>,
+  -<span class='no'>number_7</span>,
+  -<span class='fl'>8</span>,
+  <span class='fl'>11</span>:<span class='fl'>9</span>,
+  <span class='st'>"number_15"</span>
+)</div><div class='output co'>#&gt;  [1] "number_3"  "number_2"  "number_1"  "number_4"  "number_5"  "number_6" 
 #&gt;  [7] "number_11" "number_10" "number_9"  "number_15"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -252,89 +252,74 @@
 <div id="pick-validated-matches-and-prioritize-by-level" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pick-validated-matches-and-prioritize-by-level" class="anchor"></a>6. Pick validated matches and prioritize by level</h3>
-<p>Pick validated matches, i.e. those with a <code>score</code> of 1.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">validated &lt;-<span class="st"> </span>matched <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(score <span class="op">==</span><span class="st"> </span>1L)</a></code></pre></div>
-<p>Here is an interesting view of the validated data.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">some_interesting_columns &lt;-<span class="st"> </span><span class="kw">vars</span>(id_lbk, level_lbk, <span class="kw">starts_with</span>(<span class="st">"alias"</span>), score)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">validated <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt; # A tibble: 1,269 x 5</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt;    id_lbk level_lbk             alias_lbk   alias_ald   score</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;                 &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt;  1 UP23   ultimate_parent       astonmartin astonmartin     1</span></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt;  2 UP23   direct_loantaker      astonmartin astonmartin     1</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  3 UP23   intermediate_parent_1 astonmartin astonmartin     1</span></a>
-<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  4 UP25   ultimate_parent       avtozaz     avtozaz         1</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  5 UP25   direct_loantaker      avtozaz     avtozaz         1</span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  6 UP25   intermediate_parent_1 avtozaz     avtozaz         1</span></a>
-<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  7 UP36   ultimate_parent       bogdan      bogdan          1</span></a>
-<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  8 UP36   direct_loantaker      bogdan      bogdan          1</span></a>
-<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  9 UP36   intermediate_parent_1 bogdan      bogdan          1</span></a>
-<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt; 10 UP52   ultimate_parent       chauto      chauto          1</span></a>
-<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt; # … with 1,259 more rows</span></a></code></pre></div>
-<p>For each <code>id_lbk</code> there may be matches at multiple levels. To get only the best match, we set a priority for all possible levels, and we use it to pick one row per id.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">sorted_levels &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sort.html">sort</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(matched<span class="op">$</span>level_lbk))</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">sorted_levels</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">prioritized_levels &lt;-<span class="st"> </span>sorted_levels <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="reference/select_chr.html">select_chr</a></span>(</a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">    <span class="co"># Showing off different tidyselect helpers</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">    <span class="kw">starts_with</span>(<span class="st">"direct"</span>), </a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">    <span class="kw">matches</span>(<span class="st">"intermediate"</span>), </a>
-<a class="sourceLine" id="cb14-10" data-line-number="10">    <span class="kw">contains</span>(<span class="st">"ultimate"</span>), </a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">    <span class="kw">everything</span>()</a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">  )</a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">prioritized_levels</a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16">prioritized &lt;-<span class="st"> </span>matched <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="st">  </span><span class="kw">group_by</span>(id_lbk) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="reference/prioritize_at.html">prioritize_at</a></span>(<span class="st">"level_lbk"</span>, <span class="dt">priority =</span> prioritized_levels) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="st">  </span><span class="kw">ungroup</span>()</a></code></pre></div>
-<p>Here is an interesting view of the prioritized data.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">prioritized <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; # A tibble: 403 x 5</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt;    id_lbk level_lbk        alias_lbk               alias_ald               score</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;            &lt;chr&gt;                   &lt;chr&gt;                   &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt;  1 UP23   direct_loantaker astonmartin             astonmartin                 1</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;  2 UP25   direct_loantaker avtozaz                 avtozaz                     1</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt;  3 UP36   direct_loantaker bogdan                  bogdan                      1</span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt;  4 UP52   direct_loantaker chauto                  chauto                      1</span></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt;  5 UP53   direct_loantaker chehejia                chehejia                    1</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt;  6 UP58   direct_loantaker chtcauto                chtcauto                    1</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt;  7 UP80   direct_loantaker dongfenghonda           dongfenghonda               1</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt;  8 UP79   direct_loantaker dongfengluxgen          dongfengluxgen              1</span></a>
-<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt;  9 UP89   direct_loantaker electricmobilitysoluti… electricmobilitysoluti…     1</span></a>
-<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt; 10 UP94   direct_loantaker faradayfuture           faradayfuture               1</span></a>
-<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; # … with 393 more rows</span></a></code></pre></div>
-<p>You may prioritize levels however you like.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">reverse_priority &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(prioritized_levels)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">reverse_priority</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">#&gt; [1] "ultimate_parent"       "intermediate_parent_1" "direct_loantaker"</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">matched <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(id_lbk) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="reference/prioritize_at.html">prioritize_at</a></span>(<span class="st">"level_lbk"</span>, <span class="dt">priority =</span> reverse_priority) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt; # A tibble: 403 x 5</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt;    id_lbk level_lbk       alias_lbk                alias_ald               score</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;                    &lt;chr&gt;                   &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt;  1 UP23   ultimate_parent astonmartin              astonmartin                 1</span></a>
-<a class="sourceLine" id="cb16-14" data-line-number="14"><span class="co">#&gt;  2 UP25   ultimate_parent avtozaz                  avtozaz                     1</span></a>
-<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="co">#&gt;  3 UP36   ultimate_parent bogdan                   bogdan                      1</span></a>
-<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="co">#&gt;  4 UP52   ultimate_parent chauto                   chauto                      1</span></a>
-<a class="sourceLine" id="cb16-17" data-line-number="17"><span class="co">#&gt;  5 UP53   ultimate_parent chehejia                 chehejia                    1</span></a>
-<a class="sourceLine" id="cb16-18" data-line-number="18"><span class="co">#&gt;  6 UP58   ultimate_parent chtcauto                 chtcauto                    1</span></a>
-<a class="sourceLine" id="cb16-19" data-line-number="19"><span class="co">#&gt;  7 UP80   ultimate_parent dongfenghonda            dongfenghonda               1</span></a>
-<a class="sourceLine" id="cb16-20" data-line-number="20"><span class="co">#&gt;  8 UP79   ultimate_parent dongfengluxgen           dongfengluxgen              1</span></a>
-<a class="sourceLine" id="cb16-21" data-line-number="21"><span class="co">#&gt;  9 UP89   ultimate_parent electricmobilitysolutio… electricmobilitysoluti…     1</span></a>
-<a class="sourceLine" id="cb16-22" data-line-number="22"><span class="co">#&gt; 10 UP94   ultimate_parent faradayfuture            faradayfuture               1</span></a>
-<a class="sourceLine" id="cb16-23" data-line-number="23"><span class="co">#&gt; # … with 393 more rows</span></a></code></pre></div>
+<p>The <code>matched</code> dataset may have multiple matches per loan. To get the best match only, use <code>priorityze()</code> – it picks rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority()</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">some_interesting_columns &lt;-<span class="st"> </span><span class="kw">vars</span>(id_lbk, level_lbk, <span class="kw">starts_with</span>(<span class="st">"alias"</span>), score)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">matched <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/prioritize.html">prioritize</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; # A tibble: 402 x 5</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt;    id_lbk level_lbk        alias_lbk               alias_ald               score</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;            &lt;chr&gt;                   &lt;chr&gt;                   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;  1 UP23   direct_loantaker astonmartin             astonmartin                 1</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  2 UP25   direct_loantaker avtozaz                 avtozaz                     1</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  3 UP36   direct_loantaker bogdan                  bogdan                      1</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  4 UP52   direct_loantaker chauto                  chauto                      1</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  5 UP53   direct_loantaker chehejia                chehejia                    1</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  6 UP58   direct_loantaker chtcauto                chtcauto                    1</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  7 UP80   direct_loantaker dongfenghonda           dongfenghonda               1</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  8 UP79   direct_loantaker dongfengluxgen          dongfengluxgen              1</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  9 UP89   direct_loantaker electricmobilitysoluti… electricmobilitysoluti…     1</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; 10 UP94   direct_loantaker faradayfuture           faradayfuture               1</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; # … with 392 more rows</span></a></code></pre></div>
+<p>The default priority is set internally via <code>prioritize_levels()</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="reference/prioritize_level.html">prioritize_level</a></span>(matched)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></a></code></pre></div>
+<p>You may use a different priority. One way to do that is to pass a function to <code>priority</code>. For example, use <code>rev</code> to reverse the default priority.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">matched <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/prioritize.html">prioritize</a></span>(<span class="dt">priority =</span> rev) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; # A tibble: 402 x 5</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;    id_lbk level_lbk       alias_lbk                alias_ald               score</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;           &lt;chr&gt;                    &lt;chr&gt;                   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt;  1 UP23   ultimate_parent astonmartin              astonmartin                 1</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt;  2 UP25   ultimate_parent avtozaz                  avtozaz                     1</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt;  3 UP36   ultimate_parent bogdan                   bogdan                      1</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt;  4 UP52   ultimate_parent chauto                   chauto                      1</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;  5 UP53   ultimate_parent chehejia                 chehejia                    1</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt;  6 UP58   ultimate_parent chtcauto                 chtcauto                    1</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt;  7 UP80   ultimate_parent dongfenghonda            dongfenghonda               1</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt;  8 UP79   ultimate_parent dongfengluxgen           dongfengluxgen              1</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt;  9 UP89   ultimate_parent electricmobilitysolutio… electricmobilitysoluti…     1</span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; 10 UP94   ultimate_parent faradayfuture            faradayfuture               1</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; # … with 392 more rows</span></a></code></pre></div>
+<p>You may also pass a character vector with a custom priority – which you may write explicitly or with the help of <code><a href="reference/select_chr.html">select_chr()</a></code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">bad_idea &lt;-<span class="st"> </span><span class="kw"><a href="reference/select_chr.html">select_chr</a></span>(</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">  matched<span class="op">$</span>level_lbk,</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">  <span class="kw">matches</span>(<span class="st">"intermediate"</span>),</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">  <span class="kw">everything</span>()</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">bad_idea</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; [1] "intermediate_parent_1" "ultimate_parent"       "direct_loantaker"</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">matched <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="reference/prioritize.html">prioritize</a></span>(<span class="dt">priority =</span> bad_idea) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; # A tibble: 402 x 5</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt;    id_lbk level_lbk           alias_lbk              alias_ald             score</span></a>
+<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;               &lt;chr&gt;                  &lt;chr&gt;                 &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt;  1 UP23   intermediate_paren… astonmartin            astonmartin               1</span></a>
+<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt;  2 UP25   intermediate_paren… avtozaz                avtozaz                   1</span></a>
+<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt;  3 UP36   intermediate_paren… bogdan                 bogdan                    1</span></a>
+<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;  4 UP52   intermediate_paren… chauto                 chauto                    1</span></a>
+<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt;  5 UP53   intermediate_paren… chehejia               chehejia                  1</span></a>
+<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt;  6 UP58   intermediate_paren… chtcauto               chtcauto                  1</span></a>
+<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt;  7 UP80   intermediate_paren… dongfenghonda          dongfenghonda             1</span></a>
+<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt;  8 UP79   intermediate_paren… dongfengluxgen         dongfengluxgen            1</span></a>
+<a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co">#&gt;  9 UP89   intermediate_paren… electricmobilitysolut… electricmobilitysolu…     1</span></a>
+<a class="sourceLine" id="cb15-25" data-line-number="25"><span class="co">#&gt; 10 UP94   intermediate_paren… faradayfuture          faradayfuture             1</span></a>
+<a class="sourceLine" id="cb15-26" data-line-number="26"><span class="co">#&gt; # … with 392 more rows</span></a></code></pre></div>
 </div>
 </div>
 </div>
