@@ -24,35 +24,37 @@ automatically set to the names of the table.}
 A character vector
 }
 \description{
-This function allows you to used tidyselect helpers to do with a character
-vector what \code{\link[dplyr:select]{dplyr::select()}} allows you to do with the names of a dataframe.
+This function allows you to select elements of a character vector like
+\code{\link[dplyr:select]{dplyr::select()}} allows you to select columns of a dataframe -- via
+tidyselect helpers.
 }
 \examples{
+# Access tidyselect helpers via dplyr or directly with `library(tidyselect)`
 library(dplyr)
-library(r2dii.match)
 
 x <- paste0("number_", 1:15)
 x
 
-# You can select elements from a caracter vector in many ways.
-# All the tidyselect helpers that work with dplyr::selec() work here too.
-x \%>\%
-  select_chr(
-    matches("_3"),
-    contains("_2"),
-    ends_with("_1"),
-    number_4:number_6,
-    -number_7,
-    -8,
-    11:9,
-    "number_15"
-  )
+# You can select elements from a caracter vector in many ways. All the
+# tidyselect (available via dplyr) helpers that work with dplyr::selec() work here too.
+select_chr(
+  x,
+  matches("_3"),
+  contains("_2"),
+  ends_with("_1"),
+  number_4:number_6,
+  -number_7,
+  -8,
+  11:9,
+  "number_15"
+)
 }
 \seealso{
 Other internal-ish: 
 \code{\link{bridge_sector}()},
 \code{\link{match_all_against_all}()},
 \code{\link{prioritize_at}()},
+\code{\link{prioritize_level}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
 \code{\link{score_similarity}()},

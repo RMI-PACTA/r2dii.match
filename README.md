@@ -239,68 +239,17 @@ matched <- read_csv("matched_edited.csv")
 
 ### 6\. Pick validated matches and prioritize by level
 
-Pick validated matches, i.e. those with a `score` of 1.
-
-``` r
-validated <- matched %>% 
-  filter(score == 1L)
-```
-
-Here is an interesting view of the validated data.
+The `matched` dataset may have multiple matches per loan. To get the
+best match only, use `priorityze()` – it picks rows where `score` is 1
+and `level` per loan is of highest `priority()`.
 
 ``` r
 some_interesting_columns <- vars(id_lbk, level_lbk, starts_with("alias"), score)
 
-validated %>% 
+matched %>% 
+  prioritize() %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 1,269 x 5
-#>    id_lbk level_lbk             alias_lbk   alias_ald   score
-#>    <chr>  <chr>                 <chr>       <chr>       <dbl>
-#>  1 UP23   ultimate_parent       astonmartin astonmartin     1
-#>  2 UP23   direct_loantaker      astonmartin astonmartin     1
-#>  3 UP23   intermediate_parent_1 astonmartin astonmartin     1
-#>  4 UP25   ultimate_parent       avtozaz     avtozaz         1
-#>  5 UP25   direct_loantaker      avtozaz     avtozaz         1
-#>  6 UP25   intermediate_parent_1 avtozaz     avtozaz         1
-#>  7 UP36   ultimate_parent       bogdan      bogdan          1
-#>  8 UP36   direct_loantaker      bogdan      bogdan          1
-#>  9 UP36   intermediate_parent_1 bogdan      bogdan          1
-#> 10 UP52   ultimate_parent       chauto      chauto          1
-#> # … with 1,259 more rows
-```
-
-For each `id_lbk` there may be matches at multiple levels. To get only
-the best match, we set a priority for all possible levels, and we use it
-to pick one row per id.
-
-``` r
-sorted_levels <- sort(unique(matched$level_lbk))
-sorted_levels
-#> [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"
-
-prioritized_levels <- sorted_levels %>% 
-  select_chr(
-    # Showing off different tidyselect helpers
-    starts_with("direct"), 
-    matches("intermediate"), 
-    contains("ultimate"), 
-    everything()
-  )
-prioritized_levels
-#> [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"
-
-prioritized <- matched %>% 
-  group_by(id_lbk) %>% 
-  prioritize_at("level_lbk", priority = prioritized_levels) %>% 
-  ungroup()
-```
-
-Here is an interesting view of the prioritized data.
-
-``` r
-prioritized %>% 
-  select(!!! some_interesting_columns)
-#> # A tibble: 403 x 5
+#> # A tibble: 402 x 5
 #>    id_lbk level_lbk        alias_lbk               alias_ald               score
 #>    <chr>  <chr>            <chr>                   <chr>                   <dbl>
 #>  1 UP23   direct_loantaker astonmartin             astonmartin                 1
@@ -313,22 +262,25 @@ prioritized %>%
 #>  8 UP79   direct_loantaker dongfengluxgen          dongfengluxgen              1
 #>  9 UP89   direct_loantaker electricmobilitysoluti… electricmobilitysoluti…     1
 #> 10 UP94   direct_loantaker faradayfuture           faradayfuture               1
-#> # … with 393 more rows
+#> # … with 392 more rows
 ```
 
-You may prioritize levels however you like.
+The default priority is set internally via `prioritize_levels()`.
 
 ``` r
-reverse_priority <- rev(prioritized_levels)
-reverse_priority
-#> [1] "ultimate_parent"       "intermediate_parent_1" "direct_loantaker"
+prioritize_level(matched)
+#> [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"
+```
 
+You may use a different priority. One way to do that is to pass a
+function to `priority`. For example, use `rev` to reverse the default
+priority.
+
+``` r
 matched %>% 
-  group_by(id_lbk) %>% 
-  prioritize_at("level_lbk", priority = reverse_priority) %>% 
-  ungroup() %>% 
+  prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 403 x 5
+#> # A tibble: 402 x 5
 #>    id_lbk level_lbk       alias_lbk                alias_ald               score
 #>    <chr>  <chr>           <chr>                    <chr>                   <dbl>
 #>  1 UP23   ultimate_parent astonmartin              astonmartin                 1
@@ -341,5 +293,37 @@ matched %>%
 #>  8 UP79   ultimate_parent dongfengluxgen           dongfengluxgen              1
 #>  9 UP89   ultimate_parent electricmobilitysolutio… electricmobilitysoluti…     1
 #> 10 UP94   ultimate_parent faradayfuture            faradayfuture               1
-#> # … with 393 more rows
+#> # … with 392 more rows
+```
+
+You may also pass a character vector with a custom priority – which you
+may write explicitly or with the help of `select_chr()`.
+
+``` r
+bad_idea <- select_chr(
+  matched$level_lbk,
+  matches("intermediate"),
+  everything()
+)
+
+bad_idea
+#> [1] "intermediate_parent_1" "ultimate_parent"       "direct_loantaker"
+
+matched %>% 
+  prioritize(priority = bad_idea) %>% 
+  select(!!! some_interesting_columns)
+#> # A tibble: 402 x 5
+#>    id_lbk level_lbk           alias_lbk              alias_ald             score
+#>    <chr>  <chr>               <chr>                  <chr>                 <dbl>
+#>  1 UP23   intermediate_paren… astonmartin            astonmartin               1
+#>  2 UP25   intermediate_paren… avtozaz                avtozaz                   1
+#>  3 UP36   intermediate_paren… bogdan                 bogdan                    1
+#>  4 UP52   intermediate_paren… chauto                 chauto                    1
+#>  5 UP53   intermediate_paren… chehejia               chehejia                  1
+#>  6 UP58   intermediate_paren… chtcauto               chtcauto                  1
+#>  7 UP80   intermediate_paren… dongfenghonda          dongfenghonda             1
+#>  8 UP79   intermediate_paren… dongfengluxgen         dongfengluxgen            1
+#>  9 UP89   intermediate_paren… electricmobilitysolut… electricmobilitysolu…     1
+#> 10 UP94   intermediate_paren… faradayfuture          faradayfuture             1
+#> # … with 392 more rows
 ```

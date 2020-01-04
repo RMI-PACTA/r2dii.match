@@ -1,0 +1,173 @@
+#' Pick rows where `score` is 1 and `level` per loan is of highest `priority`
+#'
+#' @param data A  dataframe, commonly the output of [match_name()].
+#' @param priority One of:
+#'   * `NULL`: defaults to the default level priority as returned by
+#'   [prioritize_level()].
+#'   * A character vector giving a custom priority.
+#'   * A function to apply to the output of [prioritize_level()], e.g. `rev`.
+#'   * A quosure-style lambda function, e.g. `~ rev(.x)`.
+#'
+#' @seealso [match_name()], [prioritize_level()].
+#'
+#' @family user-oriented
+#'
+#' @return A dataframe with a single row per loan, where `score` is 1 and
+#'   priority level is highest.
+#'
+#' @export
+#'
+#' @examples
+#' library(dplyr)
+#'
+#' matched <- tribble(
+#'   ~score, ~id_lbk, ~level_lbk,
+#'   1, "aa", "ultimate_parent",
+#'   1, "aa", "direct_loantaker",
+#'   1, "bb", "intermediate_parent",
+#'   1, "bb", "ultimate_parent",
+#' )
+#'
+#' prioritize_level(matched)
+#'
+#' # Using default priority
+#' prioritize(matched)
+#'
+#' # Using the reverse of the default priority
+#' prioritize(matched, priority = rev)
+#'
+#' # Same
+#' prioritize(matched, priority = ~ rev(.x))
+#'
+#' # Using a custom priority
+#' bad_idea <- select_chr(
+#'   matched$level_lbk,
+#'   matches("intermediate"),
+#'   everything()
+#' )
+#' bad_idea
+#'
+#' prioritize(matched, priority = bad_idea)
+prioritize <- function(data, priority = NULL) {
+  check_crucial_names(data, c("id_lbk", "level_lbk", "score"))
+  priority <- set_priority(data, priority = priority)
+
+  old_groups <- dplyr::groups(data)
+  if (!is.null(old_groups)) {
+    message("Ignoring preexisting groups.")
+  }
+
+  perfect_matches <- filter(ungroup(data), .data$score == 1L)
+
+  out <- perfect_matches %>%
+    group_by(.data$id_lbk) %>%
+    prioritize_at(.at = "level_lbk", priority = priority) %>%
+    ungroup()
+
+  group_by(out, !!!old_groups)
+}
+
+set_priority <- function(data, priority) {
+  priority <- priority %||% prioritize_level(data)
+
+  if (inherits(priority, "function")) {
+    f <- priority
+    priority <- f(prioritize_level(data))
+  }
+
+  if (inherits(priority, "formula")) {
+    f <- rlang::as_function(priority)
+    priority <- f(prioritize_level(data))
+  }
+
+  known_levels <- sort(unique(data$level_lbk))
+  unknown_levels <- setdiff(priority, known_levels)
+  if (!identical(unknown_levels, character(0))) {
+    warning(
+      glue(
+        "Ignoring `priority` levels not found in data.
+        Did you mean to use one of: {paste0(known_levels, collapse = ', ')}?"
+      ),
+      call. = FALSE
+    )
+  }
+
+  priority
+}
+
+#' Unique level values ordered according to the default level priority
+#'
+#' @param data A dataframe, commonly the output of [match_name()].
+#'
+#' @return A character vector of the default level priority per loan.
+#' @export
+#'
+#' @family internal-ish
+#'
+#' @examples
+#' matched <- tibble::tibble(
+#'   level_lbk = c(
+#'     "intermediate_parent_1",
+#'     "direct_loantaker",
+#'     "direct_loantaker",
+#'     "direct_loantaker",
+#'     "ultimate_parent",
+#'     "intermediate_parent_2"
+#'   )
+#' )
+#' prioritize_level(matched)
+prioritize_level <- function(data) {
+  select_chr(
+    # Sort sufixes: e.g. intermediate*1, *2, *n
+    sort(unique(data$level_lbk)),
+    tidyselect::matches("direct"),
+    tidyselect::matches("intermediate"),
+    tidyselect::matches("ultimate")
+  )
+}
+
+#' Pick rows from a dataframe based on a priority set at some columns
+#'
+#' @param data A dataframe.
+#' @param .at Most commonly, a character vector of one column name. For more
+#'   general usage see the `.vars` argument to [dplyr::arrange_at()].
+#' @param priority Most commonly, a character vector of the priority to
+#'   re-order the column(x) given by `.at`.
+#'
+#' @family internal-ish
+#'
+#' @return A dataframe, commonly with less rows than the input.
+#' @export
+#'
+#' @examples
+#' library(dplyr)
+#'
+#' # styler: off
+#' data <- tibble::tribble(
+#'   ~x, ~y,
+#'   1, "a",
+#'   2, "a",
+#'   2, "z",
+#' )
+#' # styler: on
+#'
+#' data %>% prioritize_at("y")
+#'
+#' data %>%
+#'   group_by(x) %>%
+#'   prioritize_at("y")
+#'
+#' data %>%
+#'   group_by(x) %>%
+#'   prioritize_at(.at = "y", priority = c("z", "a")) %>%
+#'   arrange(x) %>%
+#'   ungroup()
+prioritize_at <- function(data, .at, priority = NULL) {
+  data %>%
+    dplyr::arrange_at(.at, .funs = prioritize_impl, priority = priority) %>%
+    dplyr::filter(dplyr::row_number() == 1L)
+}
+
+prioritize_impl <- function(x, priority) {
+  forcats::fct_relevel(x, priority)
+}

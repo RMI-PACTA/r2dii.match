@@ -1,7 +1,8 @@
 #' Select elements from a vector using tidyselect helpers
 #'
-#' This function allows you to used tidyselect helpers to do with a character
-#' vector what [dplyr::select()] allows you to do with the names of a dataframe.
+#' This function allows you to select elements of a character vector like
+#' [dplyr::select()] allows you to select columns of a dataframe -- via
+#' tidyselect helpers.
 #'
 #' @param x A character vector.
 #' @inheritDotParams tidyselect::starts_with
@@ -12,28 +13,28 @@
 #' @export
 #'
 #' @examples
+#' # Access tidyselect helpers via dplyr or directly with `library(tidyselect)`
 #' library(dplyr)
-#' library(r2dii.match)
 #'
 #' x <- paste0("number_", 1:15)
 #' x
 #'
-#' # You can select elements from a caracter vector in many ways.
-#' # All the tidyselect helpers that work with dplyr::selec() work here too.
-#' x %>%
-#'   select_chr(
-#'     matches("_3"),
-#'     contains("_2"),
-#'     ends_with("_1"),
-#'     number_4:number_6,
-#'     -number_7,
-#'     -8,
-#'     11:9,
-#'     "number_15"
-#'   )
+#' # You can select elements from a caracter vector in many ways. All the
+#' # tidyselect (available via dplyr) helpers that work with dplyr::selec() work here too.
+#' select_chr(
+#'   x,
+#'   matches("_3"),
+#'   contains("_2"),
+#'   ends_with("_1"),
+#'   number_4:number_6,
+#'   -number_7,
+#'   -8,
+#'   11:9,
+#'   "number_15"
+#' )
 select_chr <- function(x, ...) {
   stopifnot(is.character(x))
 
-  named <- tibble::as_tibble(purrr::set_names(as.list(unique(x))))
-  names(dplyr::select(named, ...))
+  x_df <- tibble::as_tibble(purrr::set_names(as.list(unique(x))))
+  names(dplyr::select(x_df, ...))
 }

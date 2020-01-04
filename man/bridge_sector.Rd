@@ -50,6 +50,7 @@ out \%>\%
 Other internal-ish: 
 \code{\link{match_all_against_all}()},
 \code{\link{prioritize_at}()},
+\code{\link{prioritize_level}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
 \code{\link{score_similarity}()},
