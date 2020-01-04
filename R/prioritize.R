@@ -95,7 +95,7 @@ set_priority <- function(data, priority) {
   priority
 }
 
-#' Unique level values ordered according to the default level priority
+#' Arrange unique `level` values in default order of `priority`
 #'
 #' @param data A dataframe, commonly the output of [match_name()].
 #'
