@@ -9,7 +9,7 @@
 #'
 #' @template alias-assign
 #'
-#' @inherit match_all_against_all
+#' @inherit score_alias_similarity
 #' @inheritParams restructure_loanbook_for_matching
 #' @param min_score A number (length-1) to set the minimum `score` values you
 #'   want to pick.
@@ -45,7 +45,7 @@ match_name <- function(loanbook,
   )
   prep_ald <- restructure_ald_for_matching(ald)
 
-  matched <- match_all_against_all(
+  matched <- score_alias_similarity(
     prep_lbk, prep_ald,
     by_sector = by_sector,
     method = method,
