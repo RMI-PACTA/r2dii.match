@@ -316,9 +316,9 @@
 <a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt;  9 direct_loa… C305  Yukon Energy Corp 1736      power  loanb… yukonenergycorpo…</span></a>
 <a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; 10 ultimate_p… UP104 Garland Power &amp; Light       power  loanb… garlandpowerlight</span></a>
 <a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; # … with 628 more rows</span></a></code></pre></div>
-<p><code><a href="../reference/match_all_against_all.html">match_all_against_all()</a></code> scores the similarity between <code>alias</code> values in the restructured loanbook and ald datasets. The <code>by_sector</code> argument, flags if names should only be compared against ald names in the same sector. (setting <code>by_sector = TRUE</code> reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches).</p>
+<p><code><a href="../reference/score_alias_similarity.html">score_alias_similarity()</a></code> scores the similarity between <code>alias</code> values in the restructured loanbook and ald datasets. The <code>by_sector</code> argument, flags if names should only be compared against ald names in the same sector. (setting <code>by_sector = TRUE</code> reduces the matching runtime on large datasets, and reduces the amount of nonsensical matches).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Using default `by_sector = TRUE`</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">matched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/match_all_against_all.html">match_all_against_all</a></span>(prep_loanbook, prep_ald)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">matched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/score_alias_similarity.html">score_alias_similarity</a></span>(prep_loanbook, prep_ald)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">matched</a>
 <a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; # A tibble: 64,302 x 3</span></a>
