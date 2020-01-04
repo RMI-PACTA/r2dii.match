@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Pick rows from a dataframe based on a priority set at some columns — prioritize_at • r2dii.match</title>
+<title>Add the columns <code>sector</code> and <code>borderline</code> — add_sector_and_borderline • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,13 @@
 
 
 
-<meta property="og:title" content="Pick rows from a dataframe based on a priority set at some columns — prioritize_at" />
-<meta property="og:description" content="Pick rows from a dataframe based on a priority set at some columns" />
+<meta property="og:title" content="Add the columns <code>sector</code> and <code>borderline</code> — add_sector_and_borderline" />
+<meta property="og:description" content="This function adds two columns, sector and borderline:
+sector: sector gives climate-relevant sectors looked up from standard
+sector classifications in production databases.
+borderline: Indicates if the classification is borderline or not.
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,43 +119,52 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Pick rows from a dataframe based on a priority set at some columns</h1>
-    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/prioritize.R'><code>R/prioritize.R</code></a></small>
-    <div class="hidden name"><code>prioritize_at.Rd</code></div>
+    <h1>Add the columns <code>sector</code> and <code>borderline</code></h1>
+    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/add_sector_and_borderline.R'><code>R/add_sector_and_borderline.R</code></a></small>
+    <div class="hidden name"><code>add_sector_and_borderline.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Pick rows from a dataframe based on a priority set at some columns</p>
+    <p>This function adds two columns, <code>sector</code> and <code>borderline</code>:</p><ul>
+<li><p><code>sector</code>: <code>sector</code> gives climate-relevant sectors looked up from standard
+sector classifications in production databases.</p></li>
+<li><p><code>borderline</code>: Indicates if the classification is borderline or not.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>prioritize_at</span>(<span class='no'>data</span>, <span class='no'>.at</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add_sector_and_borderline</span>(<span class='no'>data</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A dataframe.</p></td>
-    </tr>
-    <tr>
-      <th>.at</th>
-      <td><p>Most commonly, a character vector of one column name. For more
-general usage see the <code>.vars</code> argument to <code><a href='https://dplyr.tidyverse.org/reference/arrange_all.html'>dplyr::arrange_at()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>priority</th>
-      <td><p>Most commonly, a character vector of the priority to
-re-order the column(x) given by <code>.at</code>.</p></td>
+      <td><p>A loanbook dataframe.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe, commonly with less rows than the input.</p>
+    <p>A loanbook dataframe with additional <code>sector</code> and <code>borderline</code>
+columns.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>A company acts in a climate-relevant sector if it meets two conditions:</p><ol>
+<li><p>It is classified in one of the sectors that translate 1 to 1 from a a
+standard sector classification to a climate-relevant sector covered by the
+PACTA analysis (e.g. utilities to power).</p></li>
+<li><p>It is classified in a sector that can but does not necessarily map to a
+climate-relevant sector covered by the PACTA analysis (e.g. power
+grid/network to Power, general mining to coal mining).</p></li>
+</ol>
+
+<p>For a list of sector classification systems see
+<a href='https://rdrr.io/pkg/r2dii.dataraw/man/classification_bridge.html'>r2dii.dataraw::classification_bridge</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other internal-ish: 
-<code><a href='add_sector_and_borderline.html'>add_sector_and_borderline</a>()</code>,
+<code><a href='prioritize_at.html'>prioritize_at</a>()</code>,
 <code><a href='prioritize_level.html'>prioritize_level</a>()</code>,
 <code><a href='restructure_ald_for_matching.html'>restructure_ald_for_matching</a>()</code>,
 <code><a href='restructure_loanbook_for_matching.html'>restructure_loanbook_for_matching</a>()</code>,
@@ -161,44 +175,46 @@ re-order the column(x) given by <code>.at</code>.</p></td>
 <code><a href='uniquify_id_column.html'>uniquify_id_column</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='co'># Must be attached</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: r2dii.utils</span></div><div class='input'>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>add_sector_and_borderline</span>(<span class='no'>loanbook_demo</span>)
+<span class='no'>new_columns</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/setops.html'>setdiff</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>out</span>), <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>loanbook_demo</span>))
 
-<span class='co'># styler: off</span>
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span>(
-  ~<span class='no'>x</span>, ~<span class='no'>y</span>,
-  <span class='fl'>1</span>, <span class='st'>"a"</span>,
-  <span class='fl'>2</span>, <span class='st'>"a"</span>,
-  <span class='fl'>2</span>, <span class='st'>"z"</span>,
-)
-<span class='co'># styler: on</span>
-
-<span class='no'>data</span> <span class='kw'>%&gt;%</span> <span class='fu'>prioritize_at</span>(<span class='st'>"y"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;       x y    
-#&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1     1 a    </div><div class='input'>
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>prioritize_at</span>(<span class='st'>"y"</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 2
-#&gt; # Groups:   x [2]
-#&gt;       x y    
-#&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1     1 a    
-#&gt; 2     2 a    </div><div class='input'>
-<span class='no'>data</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>prioritize_at</span>(<span class='kw'>.at</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"z"</span>, <span class='st'>"a"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>x</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>()</div><div class='output co'>#&gt; # A tibble: 2 x 2
-#&gt;       x y    
-#&gt;   &lt;dbl&gt; &lt;chr&gt;
-#&gt; 1     1 a    
-#&gt; 2     2 z    </div></pre>
+<span class='no'>out</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>new_columns</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>())</div><div class='output co'>#&gt; # A tibble: 320 x 21
+#&gt;    sector borderline id_loan id_direct_loant… name_direct_loa… id_intermediate…
+#&gt;    &lt;chr&gt;  &lt;lgl&gt;      &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 power  TRUE       L1      C294             Yuamen Xinneng … &lt;NA&gt;            
+#&gt;  2 power  TRUE       L2      C293             Yuamen Changyua… &lt;NA&gt;            
+#&gt;  3 power  TRUE       L3      C292             Yuama Ethanol L… IP5             
+#&gt;  4 power  TRUE       L4      C299             Yudaksel Holdin… &lt;NA&gt;            
+#&gt;  5 power  TRUE       L5      C305             Yukon Energy Co… &lt;NA&gt;            
+#&gt;  6 power  TRUE       L6      C304             Yukon Developme… &lt;NA&gt;            
+#&gt;  7 power  TRUE       L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;            
+#&gt;  8 power  TRUE       L8      C303             Yueyang City Co… &lt;NA&gt;            
+#&gt;  9 power  TRUE       L9      C301             Yuedxiu Corp One IP10            
+#&gt; 10 power  TRUE       L10     C302             Yuexi County AA… &lt;NA&gt;            
+#&gt; # … with 310 more rows, and 15 more variables:
+#&gt; #   name_intermediate_parent_1 &lt;chr&gt;, id_ultimate_parent &lt;chr&gt;,
+#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
+#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
+#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
+#&gt; #   sector_classification_input_type &lt;chr&gt;,
+#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
+#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
+#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
