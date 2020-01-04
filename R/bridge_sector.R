@@ -1,4 +1,4 @@
-#' Add the column `sector` (as classified by 2dii) and `borderline`
+#' Add the columns `borderline` and `sector` (as classified by 2dii)
 #'
 #' This function adds two columns, `sector` and `borderline`:
 #' * `sector`: `sector` gives climate-relevant sectors looked up from standard

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bridge_sector.R
 \name{bridge_sector}
 \alias{bridge_sector}
-\title{Add the column \code{sector} (as classified by 2dii) and \code{borderline}}
+\title{Add the columns \code{borderline} and \code{sector} (as classified by 2dii)}
 \usage{
 bridge_sector(data)
 }
