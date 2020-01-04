@@ -47,7 +47,7 @@ data \%>\%
 }
 \seealso{
 Other internal-ish: 
-\code{\link{bridge_sector}()},
+\code{\link{add_sector_and_borderline}()},
 \code{\link{match_all_against_all}()},
 \code{\link{prioritize_level}()},
 \code{\link{restructure_ald_for_matching}()},

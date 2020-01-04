@@ -82,7 +82,7 @@ may_add_sector_and_borderline <- function(data) {
     data2 <- data
   } else {
     message("Adding new columns `sector` and `borderline`.")
-    data2 <- bridge_sector(data)
+    data2 <- add_sector_and_borderline(data)
   }
 
   data2

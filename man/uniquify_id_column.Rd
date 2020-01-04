@@ -51,7 +51,7 @@ loanbook_demo \%>\%
 \link[r2dii.dataraw:loanbook_demo]{r2dii.dataraw::loanbook_demo}.
 
 Other internal-ish: 
-\code{\link{bridge_sector}()},
+\code{\link{add_sector_and_borderline}()},
 \code{\link{match_all_against_all}()},
 \code{\link{prioritize_at}()},
 \code{\link{prioritize_level}()},

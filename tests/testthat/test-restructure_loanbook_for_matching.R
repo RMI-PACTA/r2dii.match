@@ -23,9 +23,9 @@ test_that("restructure_loanbook_for_matching cals uniquify_id_column()", {
   )
 })
 
-test_that("restructure_loanbook_for_matching may input bridge_sector(data)", {
+test_that("restructure_loanbook_for_matching may input add_sector_and_borderline(data)", {
   expect_warning(
-    out <- restructure_loanbook_for_matching(bridge_sector(loanbook_demo)),
+    out <- restructure_loanbook_for_matching(add_sector_and_borderline(loanbook_demo)),
     "Using existing columns `sector` and `borderline`."
   )
 
