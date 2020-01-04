@@ -1,22 +1,22 @@
-# bridge_sector() needs r2dii.dataraw in the search() path
+# add_sector_and_borderline() needs r2dii.dataraw in the search() path
 library(r2dii.dataraw)
 
-test_that("bridge_sector()$borderline is of type logical", {
-  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+test_that("add_sector_and_borderline()$borderline is of type logical", {
+  out <- add_sector_and_borderline(r2dii.dataraw::loanbook_demo)
   expect_is(out$borderline, "logical")
 })
 
-test_that("bridge_sector outputs known output", {
-  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
-  expect_known_output(out, "ref-bridge_sector", update = FALSE)
+test_that("add_sector_and_borderline outputs known output", {
+  out <- add_sector_and_borderline(r2dii.dataraw::loanbook_demo)
+  expect_known_output(out, "ref-add_sector_and_borderline", update = FALSE)
 })
 
-test_that("bridge_sector returns a tibble dataframe", {
-  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+test_that("add_sector_and_borderline returns a tibble dataframe", {
+  out <- add_sector_and_borderline(r2dii.dataraw::loanbook_demo)
   expect_is(out, "tbl_df")
 })
 
-test_that("bridge_sector with wrong input errs gracefully", {
+test_that("add_sector_and_borderline with wrong input errs gracefully", {
   rename_crucial_column <- function(data, x) {
     dplyr::rename(data, bad = x)
   }
@@ -25,33 +25,33 @@ test_that("bridge_sector with wrong input errs gracefully", {
   lbk_missing_sector_classification_system <-
     rename_crucial_column(lbk, "sector_classification_system")
   expect_error(
-    bridge_sector(lbk_missing_sector_classification_system),
+    add_sector_and_borderline(lbk_missing_sector_classification_system),
     "must have.*sector_classification_system"
   )
 
   lbk_missing_sector_classification_direct_loantaker <-
     rename_crucial_column(lbk, "sector_classification_direct_loantaker")
   expect_error(
-    bridge_sector(lbk_missing_sector_classification_direct_loantaker),
+    add_sector_and_borderline(lbk_missing_sector_classification_direct_loantaker),
     "must have.*sector_classification_direct_loantaker"
   )
 })
 
-test_that("bridge_sector adds two columns: `sector` and `borderline`", {
+test_that("add_sector_and_borderline adds two columns: `sector` and `borderline`", {
   input <- r2dii.dataraw::loanbook_demo
   expect_false(has_name(input, "sector"))
   expect_false(has_name(input, "borderline"))
 
-  output <- bridge_sector(input)
+  output <- add_sector_and_borderline(input)
   new_columns <- sort(setdiff(names(output), names(input)))
   expect_equal(
     new_columns, c("borderline", "sector")
   )
 })
 
-test_that("bridge_sector added columns return acceptable values", {
+test_that("add_sector_and_borderline added columns return acceptable values", {
   input <- r2dii.dataraw::loanbook_demo
-  output <- bridge_sector(input)
+  output <- add_sector_and_borderline(input)
 
   acceptable_sectors <- c(
     "automotive",
@@ -71,9 +71,9 @@ test_that("bridge_sector added columns return acceptable values", {
   )
 })
 
-test_that("bridge_sector preserves typeof() input columns", {
+test_that("add_sector_and_borderline preserves typeof() input columns", {
   input <- r2dii.dataraw::loanbook_demo
-  output <- bridge_sector(input)
+  output <- add_sector_and_borderline(input)
 
   expect_equal(
     purrr::map_chr(input, typeof),
@@ -81,22 +81,22 @@ test_that("bridge_sector preserves typeof() input columns", {
   )
 })
 
-test_that("bridge_sector outputs no missing value of `sector`", {
-  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+test_that("add_sector_and_borderline outputs no missing value of `sector`", {
+  out <- add_sector_and_borderline(r2dii.dataraw::loanbook_demo)
   expect_false(any(is.na(out$sector)))
 })
 
-test_that("bridge_sector outputs no missing value of `borderline`", {
-  out <- bridge_sector(r2dii.dataraw::loanbook_demo)
+test_that("add_sector_and_borderline outputs no missing value of `borderline`", {
+  out <- add_sector_and_borderline(r2dii.dataraw::loanbook_demo)
   expect_false(any(is.na(out$borderline)))
 })
 
-test_that("bridge_sector with bad sector code system errs gracefully", {
+test_that("add_sector_and_borderline with bad sector code system errs gracefully", {
   bad_classification <- r2dii.dataraw::loanbook_demo %>%
     mutate(sector_classification_system = "BAD_CLASSIFICATION")
 
   expect_error(
-    bridge_sector(bad_classification),
+    add_sector_and_borderline(bad_classification),
     "must use 2dfii's sector code system"
   )
 })

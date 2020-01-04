@@ -2,7 +2,7 @@
 % Please edit documentation in R/prioritize.R
 \name{prioritize_level}
 \alias{prioritize_level}
-\title{Unique level values ordered according to the default level priority}
+\title{Arrange unique \code{level} values in default order of \code{priority}}
 \usage{
 prioritize_level(data)
 }
@@ -13,7 +13,7 @@ prioritize_level(data)
 A character vector of the default level priority per loan.
 }
 \description{
-Unique level values ordered according to the default level priority
+Arrange unique \code{level} values in default order of \code{priority}
 }
 \examples{
 matched <- tibble::tibble(
@@ -30,7 +30,7 @@ prioritize_level(matched)
 }
 \seealso{
 Other internal-ish: 
-\code{\link{bridge_sector}()},
+\code{\link{add_sector_and_borderline}()},
 \code{\link{prioritize_at}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},

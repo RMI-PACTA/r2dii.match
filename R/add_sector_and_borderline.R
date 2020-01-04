@@ -1,4 +1,4 @@
-#' Add the columns `borderline` and `sector` (as classified by 2dii)
+#' Add the columns `sector` and `borderline`
 #'
 #' This function adds two columns, `sector` and `borderline`:
 #' * `sector`: `sector` gives climate-relevant sectors looked up from standard
@@ -30,12 +30,12 @@
 #' # Must be attached
 #' library(r2dii.dataraw)
 #'
-#' out <- bridge_sector(loanbook_demo)
+#' out <- add_sector_and_borderline(loanbook_demo)
 #' new_columns <- setdiff(names(out), names(loanbook_demo))
 #'
 #' out %>%
 #'   select(new_columns, everything())
-bridge_sector <- function(data) {
+add_sector_and_borderline <- function(data) {
   crucial <- c(
     "sector_classification_system",
     "sector_classification_direct_loantaker"

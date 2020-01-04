@@ -26,11 +26,11 @@ loanbook_demo
 Before matching, both the loanbook and asset level data must be restructured.
 To this end, there are several mandatory steps, and several optional steps. 
 
-We can bridge from multiple sector classification codes to 2Dii's sectors: `r sort(unique(bridge_sector(loanbook_demo)$sector))`.
+We can bridge from multiple sector classification codes to 2Dii's sectors: `r sort(unique(add_sector_and_borderline(loanbook_demo)$sector))`.
 
 ```{r}
 loanbook_demo %>%
-  bridge_sector() %>%
+  add_sector_and_borderline() %>%
   # Focusing on columns related to sector
   select(
     sector_classification_system,

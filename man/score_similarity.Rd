@@ -64,7 +64,7 @@ score_similarity(c("fewer", "items", "get", "recycled"), "recycled")
 \link[stringdist:stringsim]{stringdist::stringsim}, \link[stringdist:stringdist]{stringdist::stringdist}.
 
 Other internal-ish: 
-\code{\link{bridge_sector}()},
+\code{\link{add_sector_and_borderline}()},
 \code{\link{prioritize_at}()},
 \code{\link{prioritize_level}()},
 \code{\link{restructure_ald_for_matching}()},
