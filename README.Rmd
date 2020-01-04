@@ -152,60 +152,42 @@ matched <- read_csv("matched_edited.csv")
 
 ### 6. Pick validated matches and prioritize by level
 
-Pick validated matches, i.e. those with a `score` of 1.
-
-```{r}
-validated <- matched %>% 
-  filter(score == 1L)
-```
-
-Here is an interesting view of the validated data.
+The `matched` dataset may have multiple matches per loan. To get the best match only, use `priorityze()` -- it picks rows where `score` is 1 and `level` per loan is of highest `priority()`. 
 
 ```{r}
 some_interesting_columns <- vars(id_lbk, level_lbk, starts_with("alias"), score)
 
-validated %>% 
+matched %>% 
+  prioritize() %>% 
   select(!!! some_interesting_columns)
 ```
 
-For each `id_lbk` there may be matches at multiple levels. To get only the best match, we set a priority for all possible levels, and we use it to pick one row per id.
+The default priority is set internally via `prioritize_levels()`.
 
 ```{r}
-sorted_levels <- sort(unique(matched$level_lbk))
-sorted_levels
-
-prioritized_levels <- sorted_levels %>% 
-  select_chr(
-    # Showing off different tidyselect helpers
-    starts_with("direct"), 
-    matches("intermediate"), 
-    contains("ultimate"), 
-    everything()
-  )
-prioritized_levels
-
-prioritized <- matched %>% 
-  group_by(id_lbk) %>% 
-  prioritize_at("level_lbk", priority = prioritized_levels) %>% 
-  ungroup()
+prioritize_level(matched)
 ```
 
-Here is an interesting view of the prioritized data.
+You may use a different priority. One way to do that is to pass a function to `priority`. For example, use `rev` to reverse the default priority.
 
 ```{r}
-prioritized %>% 
+matched %>% 
+  prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
 ```
 
-You may prioritize levels however you like.
+You may also pass a character vector with a custom priority -- which you may write explicitly or with the help of `select_chr()`.
 
 ```{r}
-reverse_priority <- rev(prioritized_levels)
-reverse_priority
+bad_idea <- select_chr(
+  matched$level_lbk,
+  matches("intermediate"),
+  everything()
+)
+
+bad_idea
 
 matched %>% 
-  group_by(id_lbk) %>% 
-  prioritize_at("level_lbk", priority = reverse_priority) %>% 
-  ungroup() %>% 
+  prioritize(priority = bad_idea) %>% 
   select(!!! some_interesting_columns)
 ```
