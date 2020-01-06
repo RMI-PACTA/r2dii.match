@@ -1,5 +1,7 @@
 #' Pick rows where `score` is 1 and `level` per loan is of highest `priority`
 #'
+#' @template ignores-but-preserves-existing-groups
+#'
 #' @param data A  dataframe, commonly the output of [match_name()].
 #' @param priority One of:
 #'   * `NULL`: defaults to the default level priority as returned by
