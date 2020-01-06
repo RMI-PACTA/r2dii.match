@@ -164,3 +164,10 @@ test_that("match_name()$level lacks prefixf 'name_' suffix '_lbk'", {
     any(endsWith(unique(out$level), "_lbk"))
   )
 })
+
+test_that("match_name preserves groups", {
+  grouped_loanbook <- slice(loanbook_demo, 4:5) %>%
+    group_by(id_loan)
+
+  expect_true(is_grouped_df(match_name(grouped_loanbook, ald_demo)))
+})

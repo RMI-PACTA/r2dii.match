@@ -38,9 +38,16 @@ columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 }
 \value{
-A dataframe with the same columns as the loanbook data with
-additional columns: \code{id}, \code{sector}, \code{sector_ald}, \code{source},
-\code{alias}, \code{alias_ald}, \code{score}, \code{name_ald}.
+A dataframe with the same groups (if any) and columns as \code{loanbook},
+and the additional columns: \code{id}, \code{sector}, \code{sector_ald}, \code{source},
+\code{alias}, \code{alias_ald}, \code{score}, \code{name_ald}. The returned rows depend on the
+argument \code{min_value} and the result of the column \code{score} for each loan:
+\itemize{
+\item If any row has \code{score} equal to 1, \code{match_name()} returns all rows where
+\code{score} equals 1, dropping all other rows.
+\item If no row has \code{score} equal to 1, \code{match_name()} returns all rows where
+\code{score} is equal to or greater than \code{min_score}.
+}
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns
@@ -61,6 +68,11 @@ commonly used in name matching algorithms:
 \item Abbreviate certain names to reduce their importance in the matching.
 \item Spell out numbers to increase their importance.
 }
+}
+
+\section{Handling grouped data}{
+
+This function ignores but preserves existing groups them.
 }
 
 \examples{

@@ -145,10 +145,7 @@ test_that("prioritize previous preserves groups", {
     group_by(other_id, score)
   # styler: on
 
-  expect_message(
-    out <- prioritize(matched, priority = "z"),
-    "[Ii]gnor.*group"
-  )
+  out <- prioritize(matched, priority = "z")
   expect_true(dplyr::is_grouped_df(out))
   expect_equal(dplyr::group_vars(out), c("other_id", "score"))
 })

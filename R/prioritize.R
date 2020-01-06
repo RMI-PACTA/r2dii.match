@@ -1,5 +1,7 @@
 #' Pick rows where `score` is 1 and `level` per loan is of highest `priority`
 #'
+#' @template ignores-but-preserves-existing-groups
+#'
 #' @param data A  dataframe, commonly the output of [match_name()].
 #' @param priority One of:
 #'   * `NULL`: defaults to the default level priority as returned by
@@ -53,10 +55,6 @@ prioritize <- function(data, priority = NULL) {
   priority <- set_priority(data, priority = priority)
 
   old_groups <- dplyr::groups(data)
-  if (!is.null(old_groups)) {
-    message("Ignoring preexisting groups.")
-  }
-
   perfect_matches <- filter(ungroup(data), .data$score == 1L)
 
   out <- perfect_matches %>%

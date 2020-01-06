@@ -25,6 +25,11 @@ priority level is highest.
 \description{
 Pick rows where \code{score} is 1 and \code{level} per loan is of highest \code{priority}
 }
+\section{Handling grouped data}{
+
+This function ignores but preserves existing groups them.
+}
+
 \examples{
 library(dplyr)
 

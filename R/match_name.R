@@ -8,6 +8,7 @@
 #' using [stringdist::stringsim()].
 #'
 #' @template alias-assign
+#' @template ignores-but-preserves-existing-groups
 #'
 #' @inherit score_alias_similarity
 #' @inheritParams restructure_loanbook_for_matching
@@ -16,9 +17,14 @@
 #'
 #' @family user-oriented
 #'
-#' @return A dataframe with the same columns as the loanbook data with
-#'   additional columns: `id`, `sector`, `sector_ald`, `source`,
-#'   `alias`, `alias_ald`, `score`, `name_ald`.
+#' @return A dataframe with the same groups (if any) and columns as `loanbook`,
+#'   and the additional columns: `id`, `sector`, `sector_ald`, `source`,
+#'   `alias`, `alias_ald`, `score`, `name_ald`. The returned rows depend on the
+#'   argument `min_value` and the result of the column `score` for each loan:
+#'   * If any row has `score` equal to 1, `match_name()` returns all rows where
+#'   `score` equals 1, dropping all other rows.
+#'   * If no row has `score` equal to 1, `match_name()` returns all rows where
+#'   `score` is equal to or greater than `min_score`.
 #'
 #' @export
 #'
@@ -40,6 +46,9 @@ match_name <- function(loanbook,
                        method = "jw",
                        p = 0.1,
                        overwrite = NULL) {
+  old_groups <- dplyr::groups(loanbook)
+  loanbook <- ungroup(loanbook)
+
   prep_lbk <- suppressMessages(
     restructure_loanbook_for_matching(loanbook, overwrite = overwrite)
   )
@@ -61,7 +70,7 @@ match_name <- function(loanbook,
   level_cols <- out %>%
     names_matching(level = get_level_columns())
 
-  out %>%
+  out <- out %>%
     tidyr::pivot_longer(
       cols = level_cols,
       names_to = "level_lbk",
@@ -72,6 +81,8 @@ match_name <- function(loanbook,
       level_lbk = sub("_lbk$", "", .data$level_lbk),
     ) %>%
     remove_suffix("_lbk")
+
+  dplyr::group_by(out, !!! old_groups)
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
