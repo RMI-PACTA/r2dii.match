@@ -98,7 +98,6 @@ test_that("match_name outputs a reasonable number of rows", {
   ) %>%
     filter(score >= 0.8) %>%
     prefer_perfect_match_by(.data$alias_lbk) %>%
-    # FIXME: score_alias_similarity() should output columns withoug suffix _lbk
     set_names(~ sub("_lbk", "", .x))
 
   nrows_out <- out %>%

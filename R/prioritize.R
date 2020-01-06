@@ -21,7 +21,7 @@
 #' library(dplyr)
 #'
 #' matched <- tribble(
-#'   ~score, ~id_lbk, ~level_lbk,
+#'   ~score, ~id, ~level,
 #'   1, "aa", "ultimate_parent",
 #'   1, "aa", "direct_loantaker",
 #'   1, "bb", "intermediate_parent",
@@ -41,7 +41,7 @@
 #'
 #' # Using a custom priority
 #' bad_idea <- select_chr(
-#'   matched$level_lbk,
+#'   matched$level,
 #'   matches("intermediate"),
 #'   everything()
 #' )
@@ -49,7 +49,7 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  check_crucial_names(data, c("id_lbk", "level_lbk", "score"))
+  check_crucial_names(data, c("id", "level", "score"))
   priority <- set_priority(data, priority = priority)
 
   old_groups <- dplyr::groups(data)
@@ -60,8 +60,8 @@ prioritize <- function(data, priority = NULL) {
   perfect_matches <- filter(ungroup(data), .data$score == 1L)
 
   out <- perfect_matches %>%
-    group_by(.data$id_lbk) %>%
-    prioritize_at(.at = "level_lbk", priority = priority) %>%
+    group_by(.data$id) %>%
+    prioritize_at(.at = "level", priority = priority) %>%
     ungroup()
 
   group_by(out, !!!old_groups)
@@ -80,7 +80,7 @@ set_priority <- function(data, priority) {
     priority <- f(prioritize_level(data))
   }
 
-  known_levels <- sort(unique(data$level_lbk))
+  known_levels <- sort(unique(data$level))
   unknown_levels <- setdiff(priority, known_levels)
   if (!identical(unknown_levels, character(0))) {
     warning(
@@ -106,7 +106,7 @@ set_priority <- function(data, priority) {
 #'
 #' @examples
 #' matched <- tibble::tibble(
-#'   level_lbk = c(
+#'   level = c(
 #'     "intermediate_parent_1",
 #'     "direct_loantaker",
 #'     "direct_loantaker",
@@ -119,7 +119,7 @@ set_priority <- function(data, priority) {
 prioritize_level <- function(data) {
   select_chr(
     # Sort sufixes: e.g. intermediate*1, *2, *n
-    sort(unique(data$level_lbk)),
+    sort(unique(data$level)),
     tidyselect::matches("direct"),
     tidyselect::matches("intermediate"),
     tidyselect::matches("ultimate")
