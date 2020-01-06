@@ -55,7 +55,7 @@ test_that("match_name recovers `sector_lbk`", {
   expect_true(
     rlang::has_name(
       match_name(slice(loanbook_demo, 4:5), ald_demo),
-      "sector_lbk"
+      "sector"
     )
   )
 })
@@ -74,13 +74,9 @@ test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
 test_that("match_name outputs expected names found in loanbook (after tweaks)", {
   out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
 
-
-  # `level_lbk` stores values that used to be columns in the input loanbook
-  # except they lack the prefix "name_"
-  names_with_prefix_added <- glue("name_{unique(out$level_lbk)}")
-  # All other names should be the same, except for the additional suffix "_lbk"
-  names_with_sufix_striped <- sub("_lbk$", "", names(out))
-  tweaked <- c(names_with_prefix_added, names_with_sufix_striped)
+  # `level` stores values that used to be columns in the input loanbook except
+  # they lack the prefix "name_" All other names should be the same
+  tweaked <- c(glue("name_{unique(out$level)}"), names(out))
 
   expect_length(setdiff(names(loanbook_demo), tweaked), 0L)
 })
@@ -101,7 +97,9 @@ test_that("match_name outputs a reasonable number of rows", {
     restructure_ald_for_matching(ald_demo)
   ) %>%
     filter(score >= 0.8) %>%
-    prefer_perfect_match_by(.data$alias_lbk)
+    prefer_perfect_match_by(.data$alias_lbk) %>%
+    # FIXME: score_alias_similarity() should output columns withoug suffix _lbk
+    set_names(~ sub("_lbk", "", .x))
 
   nrows_out <- out %>%
     select(names(expected)) %>%
@@ -113,16 +111,11 @@ test_that("match_name outputs a reasonable number of rows", {
 
 test_that("match_name names end with _lbk or _ald, except `score`", {
   out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
-  nms <- names(out)
-  names_not_ending_with_lbk_or_ald <- nms[!grepl("_lbk$|_ald$", nms)]
-
-  expect_equal(
-    names_not_ending_with_lbk_or_ald,
-    "score"
-  )
+  out_names <- names(out)
+  expect_true(any(endsWith(out_names,  "_ald")))
 })
 
-test_that("match name outputs only perfect matches if any (#40 @2diiKlaus)", {
+test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
   this_name <- "Nanaimo Forest Products Ltd."
   this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
@@ -130,7 +123,7 @@ test_that("match name outputs only perfect matches if any (#40 @2diiKlaus)", {
 
   nanimo_scores <- this_lbk %>%
     match_name(ald_demo) %>%
-    filter(alias_lbk == this_alias) %>%
+    filter(alias == this_alias) %>%
     pull(score)
 
   expect_true(
@@ -160,15 +153,15 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
 
 test_that("match_name has name `level`", {
   out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
-  expect_true(rlang::has_name(out, "level_lbk"))
+  expect_true(rlang::has_name(out, "level"))
 })
 
-test_that("match_name()$level_lbk lacks prefixf 'name_' suffix '_lbk'", {
+test_that("match_name()$level lacks prefixf 'name_' suffix '_lbk'", {
   out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
   expect_false(
-    any(startsWith(unique(out$level_lbk), "name_"))
+    any(startsWith(unique(out$level), "name_"))
   )
   expect_false(
-    any(endsWith(unique(out$level_lbk), "_lbk"))
+    any(endsWith(unique(out$level), "_lbk"))
   )
 })

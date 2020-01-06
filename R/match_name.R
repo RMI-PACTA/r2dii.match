@@ -70,7 +70,10 @@ match_name <- function(loanbook,
     mutate(
       level_lbk = sub("^name_", "", .data$level_lbk),
       level_lbk = sub("_lbk$", "", .data$level_lbk),
-    )
+    ) %>%
+    # Remove suffix `_lbk`
+    set_names(~ sub("_lbk", "", .x))
+
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
