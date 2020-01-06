@@ -1,6 +1,48 @@
 library(dplyr)
 library(r2dii.dataraw)
 
+test_that("match_name has expected names", {
+  lbk <- slice(loanbook_demo, 4:5)
+  expected <- c(
+    "id_loan",
+    "id_direct_loantaker",
+    "id_intermediate_parent_1",
+    "id_ultimate_parent",
+    "loan_size_outstanding",
+    "loan_size_outstanding_currency",
+    "loan_size_credit_limit",
+    "loan_size_credit_limit_currency",
+    "sector_classification_system",
+    "sector_classification_input_type",
+    "sector_classification_direct_loantaker",
+    "fi_type",
+    "flag_project_finance_loan",
+    "name_project",
+    "lei_direct_loantaker",
+    "isin_direct_loantaker",
+    "id",
+    "level",
+    "sector",
+    "sector_ald",
+    "name",
+    "name_ald",
+    "alias",
+    "alias_ald",
+    "score",
+    "source"
+  )
+  expect_named(match_name(lbk, ald_demo), expected)
+})
+
+test_that("match_name names are as loanbook (except missing, plush new names)", {
+  lbk <- slice(loanbook_demo, 4:5)
+  out <- match_name(lbk, ald_demo)
+
+  expected <- setdiff(names(lbk), paste0("name_", out$level))
+  actual <- names(out)[seq_along(expected)]
+  expect_equal(actual, expected)
+})
+
 test_that("match_name takes unprepared loanbook and ald datasets", {
   expect_error(
     match_name(slice(loanbook_demo, 4:5), ald_demo),

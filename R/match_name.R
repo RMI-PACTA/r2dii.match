@@ -65,45 +65,11 @@ match_name <- function(loanbook,
     pick_min_score(min_score) %>%
     restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
     restore_cols_from_loanbook(loanbook) %>%
-    prefer_perfect_match_by(.data$id_lbk)
-
-  level_cols <- out %>%
-    names_matching(level = get_level_columns())
-
-  out <- out %>%
-    tidyr::pivot_longer(
-      cols = level_cols,
-      names_to = "level_lbk",
-      values_to = "name_lbk"
-    ) %>%
-    mutate(
-      level_lbk = sub("^name_", "", .data$level_lbk),
-      level_lbk = sub("_lbk$", "", .data$level_lbk),
-    ) %>%
-    remove_suffix("_lbk")
+    prefer_perfect_match_by(.data$id_lbk) %>%
+    tidy_match_name_result() %>%
+    reorder_names_as_in_loanbook(loanbook)
 
   dplyr::group_by(out, !!! old_groups)
-}
-
-suffix_names <- function(data, suffix, names = NULL) {
-  if (is.null(names)) {
-    return(suffix_all_names(data, suffix))
-  } else {
-    suffix_some_names(data, suffix, names)
-  }
-}
-
-suffix_all_names <- function(data, suffix) {
-  set_names(data, paste0, suffix)
-}
-
-suffix_some_names <- function(data, suffix, names) {
-  newnames_oldnames <- set_names(names, paste0, suffix)
-  rename(data, !!newnames_oldnames)
-}
-
-remove_suffix <- function(data, suffix) {
-  set_names(data, ~ sub(suffix, "", .x))
 }
 
 pick_min_score <- function(data, min_score) {
@@ -136,6 +102,23 @@ restore_cols_from_loanbook <- function(matched, loanbook) {
   )
 }
 
+suffix_names <- function(data, suffix, names = NULL) {
+  if (is.null(names)) {
+    return(suffix_all_names(data, suffix))
+  } else {
+    suffix_some_names(data, suffix, names)
+  }
+}
+
+suffix_all_names <- function(data, suffix) {
+  set_names(data, paste0, suffix)
+}
+
+suffix_some_names <- function(data, suffix, names) {
+  newnames_oldnames <- set_names(names, paste0, suffix)
+  rename(data, !!newnames_oldnames)
+}
+
 prefer_perfect_match_by <- function(data, ...) {
   data %>%
     group_by(...) %>%
@@ -151,11 +134,61 @@ some_is_one <- function(x) {
   any(x == 1L) & x == 1L
 }
 
-get_level_columns <- function() {
-  c("direct_", "intermediate_", "ultimate_")
+tidy_match_name_result <- function(data) {
+  level_cols <- data %>%
+    names_matching(level = get_level_columns())
+
+  data %>%
+    tidyr::pivot_longer(
+      cols = level_cols,
+      names_to = "level_lbk",
+      values_to = "name_lbk"
+    ) %>%
+    mutate(
+      level_lbk = sub("^name_", "", .data$level_lbk),
+      level_lbk = sub("_lbk$", "", .data$level_lbk),
+    ) %>%
+    remove_suffix("_lbk")
 }
 
 names_matching <- function(x, level) {
   pattern <- paste0(glue("^name_{level}.*_lbk$"), collapse = "|")
   grep(pattern, names(x), value = TRUE)
+}
+
+get_level_columns <- function() {
+  c("direct_", "intermediate_", "ultimate_")
+}
+
+remove_suffix <- function(data, suffix) {
+  set_names(data, ~ sub(suffix, "", .x))
+}
+
+reorder_names_as_in_loanbook <- function(data, loanbook) {
+  names_in_loanbook <- data %>%
+    intersect_names_as_in(reference = loanbook)
+
+  data %>%
+    select(
+      names_in_loanbook,
+      # New names
+      .data$id,
+      .data$level,
+      .data$sector,
+      .data$sector_ald,
+      .data$name,
+      .data$name_ald,
+      .data$alias,
+      .data$alias_ald,
+      .data$score,
+      .data$source,
+      # In case I missed something
+      dplyr::everything()
+    )
+}
+
+# What names of `data` exist in `reference`? (order from reference)
+intersect_names_as_in <- function(data, reference) {
+  missing_names <- setdiff(names(reference), names(data))
+  setdiff(names(reference), missing_names)
 }
