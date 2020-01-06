@@ -111,7 +111,7 @@ test_that("match_name outputs a reasonable number of rows", {
 test_that("match_name names end with _lbk or _ald, except `score`", {
   out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
   out_names <- names(out)
-  expect_true(any(endsWith(out_names,  "_ald")))
+  expect_true(any(endsWith(out_names, "_ald")))
 })
 
 test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {

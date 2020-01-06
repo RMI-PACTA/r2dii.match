@@ -1,4 +1,4 @@
-#' Match a loanbook (lbk) and asset-level datasets (ald) by the `name_*` columns
+#' Match a loanbook and asset-level datasets (ald) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' `name_direct_loantaker` and `name_ultimate_parent`) with names in an
@@ -17,8 +17,8 @@
 #' @family user-oriented
 #'
 #' @return A dataframe with the same columns as the loanbook data with
-#'   additional columns: `id_lkb`, `sector_lbk`, `sector_ald`, `source_lbk`,
-#'   `alias_lbk`, `alias_ald`, `score`, `name_ald`.
+#'   additional columns: `id`, `sector`, `sector_ald`, `source`,
+#'   `alias`, `alias_ald`, `score`, `name_ald`.
 #'
 #' @export
 #'
@@ -71,9 +71,7 @@ match_name <- function(loanbook,
       level_lbk = sub("^name_", "", .data$level_lbk),
       level_lbk = sub("_lbk$", "", .data$level_lbk),
     ) %>%
-    # Remove suffix `_lbk`
-    set_names(~ sub("_lbk", "", .x))
-
+    remove_suffix("_lbk")
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
@@ -91,6 +89,10 @@ suffix_all_names <- function(data, suffix) {
 suffix_some_names <- function(data, suffix, names) {
   newnames_oldnames <- set_names(names, paste0, suffix)
   rename(data, !!newnames_oldnames)
+}
+
+remove_suffix <- function(data, suffix) {
+  set_names(data, ~ sub(suffix, "", .x))
 }
 
 pick_min_score <- function(data, min_score) {
