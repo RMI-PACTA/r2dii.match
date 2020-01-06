@@ -153,27 +153,27 @@ name matching algorithms, such as:
 ``` r
 match_name(your_loanbook, your_ald)
 #> # A tibble: 1,350 x 26
-#>    alias alias_ald score id    sector source name_ald sector_ald id_loan
-#>    <chr> <chr>     <dbl> <chr> <chr>  <chr>  <chr>    <chr>      <chr>  
-#>  1 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive <NA>   
-#>  2 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive <NA>   
-#>  3 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive <NA>   
-#>  4 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive <NA>   
-#>  5 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive <NA>   
-#>  6 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive <NA>   
-#>  7 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive <NA>   
-#>  8 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive <NA>   
-#>  9 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive <NA>   
-#> 10 chau… chauto        1 UP52  autom… loanb… ch auto  automotive <NA>   
-#> # … with 1,340 more rows, and 17 more variables: id_direct_loantaker <chr>,
-#> #   id_intermediate_parent_1 <chr>, id_ultimate_parent <chr>,
-#> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
-#> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
-#> #   sector_classification_system <chr>, sector_classification_input_type <chr>,
+#>    id_loan id_direct_loant… id_intermediate… id_ultimate_par… loan_size_outst…
+#>    <chr>   <chr>            <chr>            <chr>                       <dbl>
+#>  1 <NA>    <NA>             <NA>             <NA>                           NA
+#>  2 <NA>    <NA>             <NA>             <NA>                           NA
+#>  3 <NA>    <NA>             <NA>             <NA>                           NA
+#>  4 <NA>    <NA>             <NA>             <NA>                           NA
+#>  5 <NA>    <NA>             <NA>             <NA>                           NA
+#>  6 <NA>    <NA>             <NA>             <NA>                           NA
+#>  7 <NA>    <NA>             <NA>             <NA>                           NA
+#>  8 <NA>    <NA>             <NA>             <NA>                           NA
+#>  9 <NA>    <NA>             <NA>             <NA>                           NA
+#> 10 <NA>    <NA>             <NA>             <NA>                           NA
+#> # … with 1,340 more rows, and 21 more variables:
+#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+#> #   sector_classification_input_type <chr>,
 #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, level <chr>,
-#> #   name <chr>
+#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id <chr>,
+#> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
+#> #   alias <chr>, alias_ald <chr>, score <dbl>, source <chr>
 ```
 
 `match_name()` defaults to scoring matches between `alias_*` strings
