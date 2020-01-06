@@ -97,7 +97,7 @@ test_that("add_sector_and_borderline with bad sector code system errs gracefully
 
   expect_error(
     add_sector_and_borderline(bad_classification),
-    "must use 2dfii's sector code system"
+    "must use 2dii.*sector"
   )
 })
 

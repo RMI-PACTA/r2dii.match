@@ -70,7 +70,7 @@ add_sector_and_borderline <- function(data) {
     !any(data2$sector_classification_system %in% classification$code_system)
   if (has_unknown_code_system) {
     stop(
-      "At least one loan must use 2dfii's sector code system.\n",
+      "At least one loan must use 2dii's sector code system.\n",
       "Are all of your loans classified as in 2dii's database?",
       call. = FALSE
     )
