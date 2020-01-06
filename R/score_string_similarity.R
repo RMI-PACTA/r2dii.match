@@ -19,19 +19,19 @@
 #' @export
 #' @examples
 #' # Clear extreemes
-#' score_similarity("aa", "aa")
-#' score_similarity("aa", "bb")
+#' score_string_similarity("aa", "aa")
+#' score_string_similarity("aa", "bb")
 #'
 #' # Unclear extreemes
-#' score_similarity("ab", "ba")
+#' score_string_similarity("ab", "ba")
 #'
 #' identical(
-#'   score_similarity("ab", "ac"),
-#'   score_similarity("ac", "ab")
+#'   score_string_similarity("ab", "ac"),
+#'   score_string_similarity("ac", "ab")
 #' )
 #'
-#' score_similarity(c("fewer", "items", "get", "recycled"), "recycled")
-score_similarity <- function(a, b, ..., method = "jw", p = 0.1) {
+#' score_string_similarity(c("fewer", "items", "get", "recycled"), "recycled")
+score_string_similarity <- function(a, b, ..., method = "jw", p = 0.1) {
   ellipsis::check_dots_used()
   stringdist::stringsim(a, b, ..., method = method, p = p)
 }

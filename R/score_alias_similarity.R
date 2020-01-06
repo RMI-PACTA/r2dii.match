@@ -1,6 +1,6 @@
 #' Score similarity between `alias` values in two dataframes
 #'
-#' Apply `score_similarity()` to all combinations of `alias` values
+#' Apply `score_string_similarity()` to all combinations of `alias` values
 #' from two dataframes.
 #'
 #' @param loanbook,ald Dataframes with `alias` and optionally `sector`
@@ -63,7 +63,7 @@ score_alias_similarity <- function(loanbook,
   unique(
     mutate(
       out,
-      score = score_similarity(
+      score = score_string_similarity(
         out$alias_lbk, out$alias_ald, ...,
         method = method, p = p
       )

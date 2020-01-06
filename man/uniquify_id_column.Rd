@@ -57,7 +57,7 @@ Other internal-ish:
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
 \code{\link{score_alias_similarity}()},
-\code{\link{score_similarity}()},
+\code{\link{score_string_similarity}()},
 \code{\link{select_chr}()},
 \code{\link{to_alias}()}
 }

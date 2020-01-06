@@ -69,7 +69,7 @@ match_name <- function(loanbook,
     tidy_match_name_result() %>%
     reorder_names_as_in_loanbook(loanbook)
 
-  dplyr::group_by(out, !!! old_groups)
+  dplyr::group_by(out, !!!old_groups)
 }
 
 pick_min_score <- function(data, min_score) {
