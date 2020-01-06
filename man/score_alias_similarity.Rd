@@ -32,7 +32,7 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 A \link[dplyr:tibble]{dplyr::tibble}.
 }
 \description{
-Apply \code{score_similarity()} to all combinations of \code{alias} values
+Apply \code{score_string_similarity()} to all combinations of \code{alias} values
 from two dataframes.
 }
 \examples{
@@ -75,7 +75,7 @@ Other internal-ish:
 \code{\link{prioritize_level}()},
 \code{\link{restructure_ald_for_matching}()},
 \code{\link{restructure_loanbook_for_matching}()},
-\code{\link{score_similarity}()},
+\code{\link{score_string_similarity}()},
 \code{\link{select_chr}()},
 \code{\link{to_alias}()},
 \code{\link{uniquify_id_column}()}
