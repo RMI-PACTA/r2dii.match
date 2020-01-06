@@ -56,7 +56,7 @@ match_name <- function(loanbook,
     pick_min_score(min_score) %>%
     restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
     restore_cols_from_loanbook(loanbook) %>%
-    prefer_perfect_match_by(.data$alias_lbk)
+    prefer_perfect_match_by(.data$id_lbk)
 
   level_cols <- out %>%
     names_matching(level = get_level_columns())
