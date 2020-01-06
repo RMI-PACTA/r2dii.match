@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_name.R
 \name{match_name}
 \alias{match_name}
-\title{Match a loanbook (lbk) and asset-level datasets (ald) by the \verb{name_*} columns}
+\title{Match a loanbook and asset-level datasets (ald) by the \verb{name_*} columns}
 \usage{
 match_name(
   loanbook,
@@ -39,8 +39,8 @@ only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 }
 \value{
 A dataframe with the same columns as the loanbook data with
-additional columns: \code{id_lkb}, \code{sector_lbk}, \code{sector_ald}, \code{source_lbk},
-\code{alias_lbk}, \code{alias_ald}, \code{score}, \code{name_ald}.
+additional columns: \code{id}, \code{sector}, \code{sector_ald}, \code{source},
+\code{alias}, \code{alias_ald}, \code{score}, \code{name_ald}.
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns

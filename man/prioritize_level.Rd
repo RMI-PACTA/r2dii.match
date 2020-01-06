@@ -17,7 +17,7 @@ Arrange unique \code{level} values in default order of \code{priority}
 }
 \examples{
 matched <- tibble::tibble(
-  level_lbk = c(
+  level = c(
     "intermediate_parent_1",
     "direct_loantaker",
     "direct_loantaker",

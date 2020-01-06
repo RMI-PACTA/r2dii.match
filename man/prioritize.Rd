@@ -29,7 +29,7 @@ Pick rows where \code{score} is 1 and \code{level} per loan is of highest \code{
 library(dplyr)
 
 matched <- tribble(
-  ~score, ~id_lbk, ~level_lbk,
+  ~score, ~id, ~level,
   1, "aa", "ultimate_parent",
   1, "aa", "direct_loantaker",
   1, "bb", "intermediate_parent",
@@ -49,7 +49,7 @@ prioritize(matched, priority = ~ rev(.x))
 
 # Using a custom priority
 bad_idea <- select_chr(
-  matched$level_lbk,
+  matched$level,
   matches("intermediate"),
   everything()
 )

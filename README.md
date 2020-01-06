@@ -138,10 +138,10 @@ your_ald <- ald_demo
 columns `name_direct_loantaker` and `name_ultimate_parent` of the
 loanbook dataset, and from the column `name_company` of the a
 asset-level dataset. The raw names are first transformed and stored in
-the columns `alias_lbk` and `alias_ald`. Then the similarity between
-`alias_lbk` and `alias_ald` is scored using `stringdist::stringsim()`.
-The process to create the `alias_*` columns applies best-practices
-commonly used in name matching algorithms, such as:
+the columns `alias` and `alias_ald`. Then the similarity between `alias`
+and `alias_ald` is scored using `stringdist::stringsim()`. The process
+to create the `alias_*` columns applies best-practices commonly used in
+name matching algorithms, such as:
 
   - Remove special characters.
   - Replace language specific characters.
@@ -153,29 +153,27 @@ commonly used in name matching algorithms, such as:
 ``` r
 match_name(your_loanbook, your_ald)
 #> # A tibble: 1,350 x 26
-#>    alias_lbk alias_ald score id_lbk sector_lbk source_lbk name_ald sector_ald
-#>    <chr>     <chr>     <dbl> <chr>  <chr>      <chr>      <chr>    <chr>     
-#>  1 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
-#>  2 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
-#>  3 astonmar… astonmar…     1 UP23   automotive loanbook   aston m… automotive
-#>  4 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
-#>  5 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
-#>  6 avtozaz   avtozaz       1 UP25   automotive loanbook   avtozaz  automotive
-#>  7 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
-#>  8 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
-#>  9 bogdan    bogdan        1 UP36   automotive loanbook   bogdan   automotive
-#> 10 chauto    chauto        1 UP52   automotive loanbook   ch auto  automotive
-#> # … with 1,340 more rows, and 18 more variables: id_loan_lbk <chr>,
-#> #   id_direct_loantaker_lbk <chr>, id_intermediate_parent_1_lbk <chr>,
-#> #   id_ultimate_parent_lbk <chr>, loan_size_outstanding_lbk <dbl>,
-#> #   loan_size_outstanding_currency_lbk <chr>, loan_size_credit_limit_lbk <dbl>,
-#> #   loan_size_credit_limit_currency_lbk <chr>,
-#> #   sector_classification_system_lbk <chr>,
-#> #   sector_classification_input_type_lbk <chr>,
-#> #   sector_classification_direct_loantaker_lbk <dbl>, fi_type_lbk <chr>,
-#> #   flag_project_finance_loan_lbk <chr>, name_project_lbk <lgl>,
-#> #   lei_direct_loantaker_lbk <lgl>, isin_direct_loantaker_lbk <lgl>,
-#> #   level_lbk <chr>, name_lbk <chr>
+#>    alias alias_ald score id    sector source name_ald sector_ald id_loan
+#>    <chr> <chr>     <dbl> <chr> <chr>  <chr>  <chr>    <chr>      <chr>  
+#>  1 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive <NA>   
+#>  2 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive <NA>   
+#>  3 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive <NA>   
+#>  4 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive <NA>   
+#>  5 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive <NA>   
+#>  6 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive <NA>   
+#>  7 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive <NA>   
+#>  8 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive <NA>   
+#>  9 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive <NA>   
+#> 10 chau… chauto        1 UP52  autom… loanb… ch auto  automotive <NA>   
+#> # … with 1,340 more rows, and 17 more variables: id_direct_loantaker <chr>,
+#> #   id_intermediate_parent_1 <chr>, id_ultimate_parent <chr>,
+#> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
+#> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
+#> #   sector_classification_system <chr>, sector_classification_input_type <chr>,
+#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
+#> #   flag_project_finance_loan <chr>, name_project <lgl>,
+#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, level <chr>,
+#> #   name <chr>
 ```
 
 `match_name()` defaults to scoring matches between `alias_*` strings
@@ -217,8 +215,8 @@ matched %>%
   - Open *matched.csv* with any spreadsheet editor (e.g. MS Excel,
     Google Sheets).
 
-  - Visually compare `alias_lbk` and `alias_ald`, along with the
-    loanbook sector.
+  - Visually compare `alias` and `alias_ald`, along with the loanbook
+    sector.
 
   - Edit the data manually:
     
@@ -244,24 +242,24 @@ best match only, use `priorityze()` – it picks rows where `score` is 1
 and `level` per loan is of highest `priority()`.
 
 ``` r
-some_interesting_columns <- vars(id_lbk, level_lbk, starts_with("alias"), score)
+some_interesting_columns <- vars(id, level, starts_with("alias"), score)
 
 matched %>% 
   prioritize() %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 402 x 5
-#>    id_lbk level_lbk        alias_lbk               alias_ald               score
-#>    <chr>  <chr>            <chr>                   <chr>                   <dbl>
-#>  1 UP23   direct_loantaker astonmartin             astonmartin                 1
-#>  2 UP25   direct_loantaker avtozaz                 avtozaz                     1
-#>  3 UP36   direct_loantaker bogdan                  bogdan                      1
-#>  4 UP52   direct_loantaker chauto                  chauto                      1
-#>  5 UP53   direct_loantaker chehejia                chehejia                    1
-#>  6 UP58   direct_loantaker chtcauto                chtcauto                    1
-#>  7 UP80   direct_loantaker dongfenghonda           dongfenghonda               1
-#>  8 UP79   direct_loantaker dongfengluxgen          dongfengluxgen              1
-#>  9 UP89   direct_loantaker electricmobilitysoluti… electricmobilitysoluti…     1
-#> 10 UP94   direct_loantaker faradayfuture           faradayfuture               1
+#>    id    level            alias                    alias_ald               score
+#>    <chr> <chr>            <chr>                    <chr>                   <dbl>
+#>  1 UP23  direct_loantaker astonmartin              astonmartin                 1
+#>  2 UP25  direct_loantaker avtozaz                  avtozaz                     1
+#>  3 UP36  direct_loantaker bogdan                   bogdan                      1
+#>  4 UP52  direct_loantaker chauto                   chauto                      1
+#>  5 UP53  direct_loantaker chehejia                 chehejia                    1
+#>  6 UP58  direct_loantaker chtcauto                 chtcauto                    1
+#>  7 UP80  direct_loantaker dongfenghonda            dongfenghonda               1
+#>  8 UP79  direct_loantaker dongfengluxgen           dongfengluxgen              1
+#>  9 UP89  direct_loantaker electricmobilitysolutio… electricmobilitysoluti…     1
+#> 10 UP94  direct_loantaker faradayfuture            faradayfuture               1
 #> # … with 392 more rows
 ```
 
@@ -281,18 +279,18 @@ matched %>%
   prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 402 x 5
-#>    id_lbk level_lbk       alias_lbk                alias_ald               score
-#>    <chr>  <chr>           <chr>                    <chr>                   <dbl>
-#>  1 UP23   ultimate_parent astonmartin              astonmartin                 1
-#>  2 UP25   ultimate_parent avtozaz                  avtozaz                     1
-#>  3 UP36   ultimate_parent bogdan                   bogdan                      1
-#>  4 UP52   ultimate_parent chauto                   chauto                      1
-#>  5 UP53   ultimate_parent chehejia                 chehejia                    1
-#>  6 UP58   ultimate_parent chtcauto                 chtcauto                    1
-#>  7 UP80   ultimate_parent dongfenghonda            dongfenghonda               1
-#>  8 UP79   ultimate_parent dongfengluxgen           dongfengluxgen              1
-#>  9 UP89   ultimate_parent electricmobilitysolutio… electricmobilitysoluti…     1
-#> 10 UP94   ultimate_parent faradayfuture            faradayfuture               1
+#>    id    level           alias                    alias_ald                score
+#>    <chr> <chr>           <chr>                    <chr>                    <dbl>
+#>  1 UP23  ultimate_parent astonmartin              astonmartin                  1
+#>  2 UP25  ultimate_parent avtozaz                  avtozaz                      1
+#>  3 UP36  ultimate_parent bogdan                   bogdan                       1
+#>  4 UP52  ultimate_parent chauto                   chauto                       1
+#>  5 UP53  ultimate_parent chehejia                 chehejia                     1
+#>  6 UP58  ultimate_parent chtcauto                 chtcauto                     1
+#>  7 UP80  ultimate_parent dongfenghonda            dongfenghonda                1
+#>  8 UP79  ultimate_parent dongfengluxgen           dongfengluxgen               1
+#>  9 UP89  ultimate_parent electricmobilitysolutio… electricmobilitysolutio…     1
+#> 10 UP94  ultimate_parent faradayfuture            faradayfuture                1
 #> # … with 392 more rows
 ```
 
@@ -301,7 +299,7 @@ may write explicitly or with the help of `select_chr()`.
 
 ``` r
 bad_idea <- select_chr(
-  matched$level_lbk,
+  matched$level,
   matches("intermediate"),
   everything()
 )
@@ -313,17 +311,17 @@ matched %>%
   prioritize(priority = bad_idea) %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 402 x 5
-#>    id_lbk level_lbk           alias_lbk              alias_ald             score
-#>    <chr>  <chr>               <chr>                  <chr>                 <dbl>
-#>  1 UP23   intermediate_paren… astonmartin            astonmartin               1
-#>  2 UP25   intermediate_paren… avtozaz                avtozaz                   1
-#>  3 UP36   intermediate_paren… bogdan                 bogdan                    1
-#>  4 UP52   intermediate_paren… chauto                 chauto                    1
-#>  5 UP53   intermediate_paren… chehejia               chehejia                  1
-#>  6 UP58   intermediate_paren… chtcauto               chtcauto                  1
-#>  7 UP80   intermediate_paren… dongfenghonda          dongfenghonda             1
-#>  8 UP79   intermediate_paren… dongfengluxgen         dongfengluxgen            1
-#>  9 UP89   intermediate_paren… electricmobilitysolut… electricmobilitysolu…     1
-#> 10 UP94   intermediate_paren… faradayfuture          faradayfuture             1
+#>    id    level               alias                  alias_ald              score
+#>    <chr> <chr>               <chr>                  <chr>                  <dbl>
+#>  1 UP23  intermediate_paren… astonmartin            astonmartin                1
+#>  2 UP25  intermediate_paren… avtozaz                avtozaz                    1
+#>  3 UP36  intermediate_paren… bogdan                 bogdan                     1
+#>  4 UP52  intermediate_paren… chauto                 chauto                     1
+#>  5 UP53  intermediate_paren… chehejia               chehejia                   1
+#>  6 UP58  intermediate_paren… chtcauto               chtcauto                   1
+#>  7 UP80  intermediate_paren… dongfenghonda          dongfenghonda              1
+#>  8 UP79  intermediate_paren… dongfengluxgen         dongfengluxgen             1
+#>  9 UP89  intermediate_paren… electricmobilitysolut… electricmobilitysolut…     1
+#> 10 UP94  intermediate_paren… faradayfuture          faradayfuture              1
 #> # … with 392 more rows
 ```

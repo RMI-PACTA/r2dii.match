@@ -47,11 +47,11 @@
 #'   left_join(ald, by = c("alias_ald" = "alias")) %>%
 #'   rename(sector_y = sector)
 score_alias_similarity <- function(loanbook,
-                                  ald,
-                                  ...,
-                                  by_sector = TRUE,
-                                  method = "jw",
-                                  p = 0.1) {
+                                   ald,
+                                   ...,
+                                   by_sector = TRUE,
+                                   method = "jw",
+                                   p = 0.1) {
   ellipsis::check_dots_used()
 
   if (by_sector) {
