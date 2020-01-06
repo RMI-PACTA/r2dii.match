@@ -53,10 +53,6 @@ prioritize <- function(data, priority = NULL) {
   priority <- set_priority(data, priority = priority)
 
   old_groups <- dplyr::groups(data)
-  if (!is.null(old_groups)) {
-    message("Ignoring preexisting groups.")
-  }
-
   perfect_matches <- filter(ungroup(data), .data$score == 1L)
 
   out <- perfect_matches %>%
