@@ -3,14 +3,14 @@ library(r2dii.dataraw)
 
 test_that("match_name takes unprepared loanbook and ald datasets", {
   expect_error(
-    match_name(loanbook_demo, ald_demo),
+    match_name(slice(loanbook_demo, 4:5), ald_demo),
     NA
   )
 })
 
 test_that("match_name takes `min_score`", {
   expect_error(
-    match_name(loanbook_demo, ald_demo, min_score = 0.5),
+    match_name(slice(loanbook_demo, 4:5), ald_demo, min_score = 0.5),
     NA
   )
 })
@@ -18,8 +18,8 @@ test_that("match_name takes `min_score`", {
 test_that("match_name takes `by_sector`", {
   expect_false(
     identical(
-      match_name(loanbook_demo, ald_demo, by_sector = TRUE),
-      match_name(loanbook_demo, ald_demo, by_sector = FALSE)
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
     )
   )
 })
@@ -27,8 +27,8 @@ test_that("match_name takes `by_sector`", {
 test_that("match_name takes `method`", {
   expect_false(
     identical(
-      match_name(loanbook_demo, ald_demo, method = "jw"),
-      match_name(loanbook_demo, ald_demo, method = "osa")
+      match_name(slice(loanbook_demo, 4:15), ald_demo, method = "jw"),
+      match_name(slice(loanbook_demo, 4:15), ald_demo, method = "osa")
     )
   )
 })
@@ -36,8 +36,8 @@ test_that("match_name takes `method`", {
 test_that("match_name takes `p`", {
   expect_false(
     identical(
-      match_name(loanbook_demo, ald_demo, p = 0.1),
-      match_name(loanbook_demo, ald_demo, p = 0.2)
+      match_name(slice(loanbook_demo, 4:5), ald_demo, p = 0.1),
+      match_name(slice(loanbook_demo, 4:5), ald_demo, p = 0.2)
     )
   )
 })
@@ -45,15 +45,18 @@ test_that("match_name takes `p`", {
 test_that("match_name takes `overwrite`", {
   expect_false(
     identical(
-      match_name(loanbook_demo, ald_demo, overwrite = NULL),
-      match_name(loanbook_demo, ald_demo, overwrite = overwrite_demo)
+      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = NULL),
+      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = overwrite_demo)
     )
   )
 })
 
 test_that("match_name recovers `sector_lbk`", {
   expect_true(
-    rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_lbk")
+    rlang::has_name(
+      match_name(slice(loanbook_demo, 4:5), ald_demo),
+      "sector_lbk"
+    )
   )
 })
 
@@ -64,12 +67,12 @@ test_that("match_name recovers `sector_y`", {
 })
 
 test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
-  out <- match_name(loanbook_demo, ald_demo)
+  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
   expect_false(has_name(out, "name.y"))
 })
 
 test_that("match_name outputs expected names found in loanbook (after tweaks)", {
-  out <- match_name(loanbook_demo, ald_demo)
+  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
 
 
   # `level_lbk` stores values that used to be columns in the input loanbook
@@ -83,14 +86,18 @@ test_that("match_name outputs expected names found in loanbook (after tweaks)", 
 })
 
 test_that("match_name works with `min_score = 0` (bug fix)", {
-  expect_error(match_name(loanbook_demo, ald_demo, min_score = 0), NA)
+  expect_error(
+    match_name(slice(loanbook_demo, 4:5), ald_demo, min_score = 0),
+    NA
+  )
 })
 
 test_that("match_name outputs a reasonable number of rows", {
-  out <- match_name(loanbook_demo, ald_demo)
+  lbk <- slice(loanbook_demo, 1:100)
+  out <- match_name(lbk, ald_demo)
 
   expected <- score_alias_similarity(
-    restructure_loanbook_for_matching(loanbook_demo),
+    restructure_loanbook_for_matching(lbk),
     restructure_ald_for_matching(ald_demo)
   ) %>%
     filter(score >= 0.8) %>%
@@ -105,7 +112,7 @@ test_that("match_name outputs a reasonable number of rows", {
 })
 
 test_that("match_name names end with _lbk or _ald, except `score`", {
-  out <- match_name(loanbook_demo, ald_demo)
+  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
   nms <- names(out)
   names_not_ending_with_lbk_or_ald <- nms[!grepl("_lbk$|_ald$", nms)]
 
@@ -152,12 +159,12 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
 })
 
 test_that("match_name has name `level`", {
-  out <- match_name(loanbook_demo, ald_demo)
+  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
   expect_true(rlang::has_name(out, "level_lbk"))
 })
 
 test_that("match_name()$level_lbk lacks prefixf 'name_' suffix '_lbk'", {
-  out <- match_name(loanbook_demo, ald_demo)
+  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
   expect_false(
     any(startsWith(unique(out$level_lbk), "name_"))
   )
