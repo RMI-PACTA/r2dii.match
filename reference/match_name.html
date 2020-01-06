@@ -224,53 +224,53 @@ commonly used in name matching algorithms:</p><ul>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
 
 <span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 1,350 x 26
-#&gt;    alias alias_ald score id    sector source name_ald sector_ald id_loan
-#&gt;    &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  
-#&gt;  1 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive &lt;NA&gt;   
-#&gt;  2 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive &lt;NA&gt;   
-#&gt;  3 asto… astonmar…     1 UP23  autom… loanb… aston m… automotive &lt;NA&gt;   
-#&gt;  4 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive &lt;NA&gt;   
-#&gt;  5 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive &lt;NA&gt;   
-#&gt;  6 avto… avtozaz       1 UP25  autom… loanb… avtozaz  automotive &lt;NA&gt;   
-#&gt;  7 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive &lt;NA&gt;   
-#&gt;  8 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive &lt;NA&gt;   
-#&gt;  9 bogd… bogdan        1 UP36  autom… loanb… bogdan   automotive &lt;NA&gt;   
-#&gt; 10 chau… chauto        1 UP52  autom… loanb… ch auto  automotive &lt;NA&gt;   
-#&gt; # … with 1,340 more rows, and 17 more variables: id_direct_loantaker &lt;chr&gt;,
-#&gt; #   id_intermediate_parent_1 &lt;chr&gt;, id_ultimate_parent &lt;chr&gt;,
-#&gt; #   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,
-#&gt; #   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,
-#&gt; #   sector_classification_system &lt;chr&gt;, sector_classification_input_type &lt;chr&gt;,
+#&gt;    id_loan id_direct_loant… id_intermediate… id_ultimate_par… loan_size_outst…
+#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                       &lt;dbl&gt;
+#&gt;  1 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  2 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  3 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  4 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  5 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  6 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  7 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  8 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  9 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt; 10 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt; # … with 1,340 more rows, and 21 more variables:
+#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
+#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
+#&gt; #   sector_classification_input_type &lt;chr&gt;,
 #&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
 #&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, level &lt;chr&gt;,
-#&gt; #   name &lt;chr&gt;</div><div class='input'>
+#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id &lt;chr&gt;,
+#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
+#&gt; #   alias &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</div><div class='input'>
 <span class='fu'>match_name</span>(
   <span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>,
   <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</div><div class='output co'>#&gt; # A tibble: 1,848 x 26
-#&gt;    alias alias_ald score id    sector source name_ald sector_ald id_loan
-#&gt;    &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  
-#&gt;  1 abah… abahydro…     1 UP1   power  loanb… aba hyd… power      &lt;NA&gt;   
-#&gt;  2 abah… abahydro…     1 UP1   power  loanb… aba hyd… power      &lt;NA&gt;   
-#&gt;  3 abah… abahydro…     1 UP1   power  loanb… aba hyd… power      &lt;NA&gt;   
-#&gt;  4 achi… achinsky…     1 UP2   cement loanb… achinsk… cement     &lt;NA&gt;   
-#&gt;  5 achi… achinsky…     1 UP2   cement loanb… achinsk… cement     &lt;NA&gt;   
-#&gt;  6 achi… achinsky…     1 UP2   cement loanb… achinsk… cement     &lt;NA&gt;   
-#&gt;  7 affi… affinity…     1 UP3   power  loanb… affinit… power      &lt;NA&gt;   
-#&gt;  8 affi… affinity…     1 UP3   power  loanb… affinit… power      &lt;NA&gt;   
-#&gt;  9 affi… affinity…     1 UP3   power  loanb… affinit… power      &lt;NA&gt;   
-#&gt; 10 afri… africaoi…     1 C2    oil a… loanb… africa … oil&amp;gas    &lt;NA&gt;   
-#&gt; # … with 1,838 more rows, and 17 more variables: id_direct_loantaker &lt;chr&gt;,
-#&gt; #   id_intermediate_parent_1 &lt;chr&gt;, id_ultimate_parent &lt;chr&gt;,
-#&gt; #   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,
-#&gt; #   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,
-#&gt; #   sector_classification_system &lt;chr&gt;, sector_classification_input_type &lt;chr&gt;,
+#&gt;    id_loan id_direct_loant… id_intermediate… id_ultimate_par… loan_size_outst…
+#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                       &lt;dbl&gt;
+#&gt;  1 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  2 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  3 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  4 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  5 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  6 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  7 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  8 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt;  9 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt; 10 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
+#&gt; # … with 1,838 more rows, and 21 more variables:
+#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
+#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
+#&gt; #   sector_classification_input_type &lt;chr&gt;,
 #&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
 #&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, level &lt;chr&gt;,
-#&gt; #   name &lt;chr&gt;</div></pre>
+#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id &lt;chr&gt;,
+#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
+#&gt; #   alias &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
