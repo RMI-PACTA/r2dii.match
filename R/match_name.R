@@ -17,9 +17,14 @@
 #'
 #' @family user-oriented
 #'
-#' @return A dataframe with the same columns as the loanbook data with
-#'   additional columns: `id`, `sector`, `sector_ald`, `source`,
-#'   `alias`, `alias_ald`, `score`, `name_ald`.
+#' @return A dataframe with the same groups (if any) and columns as `loanbook`,
+#'   and the additional columns: `id`, `sector`, `sector_ald`, `source`,
+#'   `alias`, `alias_ald`, `score`, `name_ald`. The returned rows depend on the
+#'   argument `min_value` and the result of the column `score` for each loan:
+#'   * If any row has `score` equal to 1, `match_name()` returns all rows where
+#'   `score` equals 1, dropping all other rows.
+#'   * If no row has `score` equal to 1, `match_name()` returns all rows where
+#'   `score` is equal to or greater than `min_score`.
 #'
 #' @export
 #'
