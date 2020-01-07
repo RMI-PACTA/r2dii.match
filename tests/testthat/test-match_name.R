@@ -2,7 +2,6 @@ library(dplyr)
 library(r2dii.dataraw)
 
 test_that("match_name has expected names", {
-  lbk <- slice(loanbook_demo, 4:5)
   expected <- c(
     "id_loan",
     "id_direct_loantaker",
@@ -31,11 +30,28 @@ test_that("match_name has expected names", {
     "score",
     "source"
   )
-  expect_named(match_name(lbk, ald_demo), expected)
+
+  # Matches cero row ...
+  lbk2 <- slice(loanbook_demo, 2)
+  expect_warning(
+    out <- match_name(lbk2, ald_demo),
+    "no match"
+  )
+  expect_equal(nrow(out), 0L)
+  # ... but preserves minimum expected names
+  expect_named(out, expected)
+
+  # Used to fail because levels were poorly handled
+  lbk1 <- slice(loanbook_demo, 1)
+  expect_named(match_name(lbk1, ald_demo), expected)
+
+  # Always worked fine
+  lbk45 <- slice(loanbook_demo, 4:5)
+  expect_named(match_name(lbk45, ald_demo), expected)
 })
 
-test_that("match_name names are as loanbook (except missing, plush new names)", {
-  lbk <- slice(loanbook_demo, 4:5)
+test_that("match_name names are as loanbook (except missing, plus new names)", {
+  lbk <- slice(loanbook_demo, 1)
   out <- match_name(lbk, ald_demo)
 
   expected <- setdiff(names(lbk), paste0("name_", out$level))
@@ -45,14 +61,14 @@ test_that("match_name names are as loanbook (except missing, plush new names)", 
 
 test_that("match_name takes unprepared loanbook and ald datasets", {
   expect_error(
-    match_name(slice(loanbook_demo, 4:5), ald_demo),
+    match_name(slice(loanbook_demo, 1), ald_demo),
     NA
   )
 })
 
 test_that("match_name takes `min_score`", {
   expect_error(
-    match_name(slice(loanbook_demo, 4:5), ald_demo, min_score = 0.5),
+    match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0.5),
     NA
   )
 })
@@ -76,10 +92,12 @@ test_that("match_name takes `method`", {
 })
 
 test_that("match_name takes `p`", {
+  lbk45 <- slice(loanbook_demo, 4:5) # slice(., 1) seems insensitive to `p`
+
   expect_false(
     identical(
-      match_name(slice(loanbook_demo, 4:5), ald_demo, p = 0.1),
-      match_name(slice(loanbook_demo, 4:5), ald_demo, p = 0.2)
+      match_name(lbk45, ald_demo, p = 0.1),
+      match_name(lbk45, ald_demo, p = 0.2)
     )
   )
 })
@@ -96,7 +114,7 @@ test_that("match_name takes `overwrite`", {
 test_that("match_name recovers `sector_lbk`", {
   expect_true(
     rlang::has_name(
-      match_name(slice(loanbook_demo, 4:5), ald_demo),
+      match_name(slice(loanbook_demo, 1), ald_demo),
       "sector"
     )
   )
@@ -109,12 +127,12 @@ test_that("match_name recovers `sector_y`", {
 })
 
 test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
-  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
+  out <- match_name(slice(loanbook_demo, 1), ald_demo)
   expect_false(has_name(out, "name.y"))
 })
 
 test_that("match_name outputs expected names found in loanbook (after tweaks)", {
-  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
+  out <- match_name(slice(loanbook_demo, 1), ald_demo)
 
   # `level` stores values that used to be columns in the input loanbook except
   # they lack the prefix "name_" All other names should be the same
@@ -125,7 +143,7 @@ test_that("match_name outputs expected names found in loanbook (after tweaks)", 
 
 test_that("match_name works with `min_score = 0` (bug fix)", {
   expect_error(
-    match_name(slice(loanbook_demo, 4:5), ald_demo, min_score = 0),
+    match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0),
     NA
   )
 })
@@ -151,7 +169,7 @@ test_that("match_name outputs a reasonable number of rows", {
 })
 
 test_that("match_name names end with _lbk or _ald, except `score`", {
-  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
+  out <- match_name(slice(loanbook_demo, 1), ald_demo)
   out_names <- names(out)
   expect_true(any(endsWith(out_names, "_ald")))
 })
@@ -193,12 +211,12 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
 })
 
 test_that("match_name has name `level`", {
-  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
+  out <- match_name(slice(loanbook_demo, 1), ald_demo)
   expect_true(rlang::has_name(out, "level"))
 })
 
 test_that("match_name()$level lacks prefixf 'name_' suffix '_lbk'", {
-  out <- match_name(slice(loanbook_demo, 4:5), ald_demo)
+  out <- match_name(slice(loanbook_demo, 1), ald_demo)
   expect_false(
     any(startsWith(unique(out$level), "name_"))
   )
@@ -208,8 +226,30 @@ test_that("match_name()$level lacks prefixf 'name_' suffix '_lbk'", {
 })
 
 test_that("match_name preserves groups", {
-  grouped_loanbook <- slice(loanbook_demo, 4:5) %>%
+  grouped_loanbook <- slice(loanbook_demo, 1) %>%
     group_by(id_loan)
 
   expect_true(is_grouped_df(match_name(grouped_loanbook, ald_demo)))
+})
+
+test_that("match_nanme works with slice(loanbook_demo, 1)", {
+  # This has always worked
+  # This slice levels: "name_ultimate_parent"  "name_direct_loantaker"
+  expect_error(
+    match_name(slice(loanbook_demo, 1), ald_demo),
+    NA
+  )
+
+  # This did not work before
+  # This slice has level: "name_ultimate_parent"
+  expect_error(
+    match_name(slice(loanbook_demo, 1), ald_demo),
+    NA
+  )
+
+  # This did not work before
+  expect_warning(
+    match_name(slice(loanbook_demo, 2), ald_demo),
+    "no match"
+  )
 })
