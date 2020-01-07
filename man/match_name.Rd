@@ -48,6 +48,9 @@ argument \code{min_value} and the result of the column \code{score} for each loa
 \item If no row has \code{score} equal to 1, \code{match_name()} returns all rows where
 \code{score} is equal to or greater than \code{min_score}.
 }
+
+If there is no match the output is a 0-row tibble with the expected column
+names -- for type stability.
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns

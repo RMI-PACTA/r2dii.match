@@ -26,6 +26,9 @@
 #'   * If no row has `score` equal to 1, `match_name()` returns all rows where
 #'   `score` is equal to or greater than `min_score`.
 #'
+#' If there is no match the output is a 0-row tibble with the expected column
+#' names -- for type stability.
+#'
 #' @export
 #'
 #' @examples
@@ -59,10 +62,16 @@ match_name <- function(loanbook,
     by_sector = by_sector,
     method = method,
     p = p
-  )
+  ) %>%
+    pick_min_score(min_score)
+
+  no_match <- identical(nrow(matched), 0L)
+  if (no_match) {
+    warning("Found no match.", call. = FALSE)
+    return(named_tibble(names = minimum_names_of_match_name(loanbook)))
+  }
 
   out <- matched %>%
-    pick_min_score(min_score) %>%
     restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
     restore_cols_from_loanbook(loanbook) %>%
     prefer_perfect_match_by(.data$id_lbk) %>%
@@ -78,6 +87,28 @@ pick_min_score <- function(data, min_score) {
     unique()
 }
 
+named_tibble <- function(names) {
+  dplyr::slice(tibble::as_tibble(set_names(as.list(names))), 0L)
+}
+
+minimum_names_of_match_name <- function(loanbook) {
+  pattern <- collapse_pipe(glue("^name_{level_root()}"))
+  name_starts_with_name_level <- grep(pattern, names(loanbook), value = TRUE)
+
+  unique(c(
+    setdiff(names(loanbook), name_starts_with_name_level),
+    names_added_by_match_name()
+  ))
+}
+
+level_root <- function() {
+  c("direct", "intermediate", "ultimate")
+}
+
+collapse_pipe <- function(x) {
+  paste0(x, collapse = "|")
+}
+
 restore_cols_sector_name_and_others <- function(matched, prep_lbk, prep_ald) {
   matched %>%
     left_join(suffix_names(prep_lbk, "_lbk"), by = "alias_lbk") %>%
@@ -85,7 +116,8 @@ restore_cols_sector_name_and_others <- function(matched, prep_lbk, prep_ald) {
 }
 
 restore_cols_from_loanbook <- function(matched, loanbook) {
-  level_cols <- c("name_ultimate_parent", "name_direct_loantaker")
+  matched_data_has_1_row_or_more <- !identical(nrow(matched), 0L)
+  stopifnot(matched_data_has_1_row_or_more)
 
   with_level_cols <- matched %>%
     tidyr::pivot_wider(
@@ -95,6 +127,7 @@ restore_cols_from_loanbook <- function(matched, loanbook) {
       names_prefix = "name_"
     )
 
+  level_cols <- paste0("name_", unique(matched$level_lbk))
   left_join(
     suffix_names(with_level_cols, "_lbk", level_cols),
     suffix_names(loanbook, "_lbk"),
@@ -116,7 +149,7 @@ suffix_all_names <- function(data, suffix) {
 
 suffix_some_names <- function(data, suffix, names) {
   newnames_oldnames <- set_names(names, paste0, suffix)
-  rename(data, !!newnames_oldnames)
+  rename(data, !!!newnames_oldnames)
 }
 
 prefer_perfect_match_by <- function(data, ...) {
@@ -172,16 +205,7 @@ reorder_names_as_in_loanbook <- function(data, loanbook) {
     select(
       names_in_loanbook,
       # New names
-      .data$id,
-      .data$level,
-      .data$sector,
-      .data$sector_ald,
-      .data$name,
-      .data$name_ald,
-      .data$alias,
-      .data$alias_ald,
-      .data$score,
-      .data$source,
+      !!!names_added_by_match_name(),
       # In case I missed something
       dplyr::everything()
     )
@@ -191,4 +215,19 @@ reorder_names_as_in_loanbook <- function(data, loanbook) {
 intersect_names_as_in <- function(data, reference) {
   missing_names <- setdiff(names(reference), names(data))
   setdiff(names(reference), missing_names)
+}
+
+names_added_by_match_name <- function() {
+  c(
+    "id",
+    "level",
+    "sector",
+    "sector_ald",
+    "name",
+    "name_ald",
+    "alias",
+    "alias_ald",
+    "score",
+    "source"
+  )
 }
