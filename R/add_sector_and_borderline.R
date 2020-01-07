@@ -42,26 +42,7 @@ add_sector_and_borderline <- function(data) {
   )
   check_crucial_names(data, crucial)
 
-  pkg <- "package:r2dii.dataraw"
-  check_is_attached(pkg)
-
-  classification <- enlist_datasets(pkg, pattern = "_classification$") %>%
-    purrr::imap(~ mutate(.x, code_system = toupper(.y))) %>%
-    purrr::map(~ select(
-      .,
-      .data$sector, .data$borderline,
-      # Required in `by` below
-      .data$code, .data$code_system
-    )) %>%
-    # Coerce every column to character for more robust reduce() and join()
-    purrr::map(~ purrr::modify(.x, as.character)) %>%
-    # Collapse the list of dataframes to a single, row-bind dataframe
-    purrr::reduce(dplyr::bind_rows) %>%
-    purrr::modify_at("borderline", as.logical) %>%
-    # Avoid duplicates
-    unique() %>%
-    # Reformat code_system
-    mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
+  classification <- sector_clasiffication_df()
 
   # Coerce crucial columns to character for more robust join()
   data2 <- data %>% purrr::modify_at(crucial, as.character)
@@ -84,6 +65,29 @@ add_sector_and_borderline <- function(data) {
 
 exported_data <- function(package) {
   utils::data(package = package)$results[, "Item"]
+}
+
+sector_clasiffication_df <- function() {
+  pkg <- "package:r2dii.dataraw"
+  check_is_attached(pkg)
+
+  enlist_datasets(pkg, pattern = "_classification$") %>%
+    purrr::imap(~ mutate(.x, code_system = toupper(.y))) %>%
+    purrr::map(~ select(
+      .,
+      .data$sector, .data$borderline,
+      # Required in `by` below
+      .data$code, .data$code_system
+    )) %>%
+    # Coerce every column to character for more robust reduce() and join()
+    purrr::map(~ purrr::modify(.x, as.character)) %>%
+    # Collapse the list of dataframes to a single, row-bind dataframe
+    purrr::reduce(dplyr::bind_rows) %>%
+    purrr::modify_at("borderline", as.logical) %>%
+    # Avoid duplicates
+    unique() %>%
+    # Reformat code_system
+    mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
 }
 
 check_is_attached <- function(pkg) {
