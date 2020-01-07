@@ -4,9 +4,6 @@ library(r2dii.dataraw)
 test_that("match_name has expected names", {
   expected <- c(
     "id_loan",
-    "id_direct_loantaker",
-    "id_intermediate_parent_1",
-    "id_ultimate_parent",
     "loan_size_outstanding",
     "loan_size_outstanding_currency",
     "loan_size_credit_limit",
@@ -48,15 +45,6 @@ test_that("match_name has expected names", {
   # Always worked fine
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(match_name(lbk45, ald_demo), expected)
-})
-
-test_that("match_name names are as loanbook (except missing, plus new names)", {
-  lbk <- slice(loanbook_demo, 1)
-  out <- match_name(lbk, ald_demo)
-
-  expected <- setdiff(names(lbk), paste0("name_", out$level))
-  actual <- names(out)[seq_along(expected)]
-  expect_equal(actual, expected)
 })
 
 test_that("match_name takes unprepared loanbook and ald datasets", {
@@ -136,7 +124,11 @@ test_that("match_name outputs expected names found in loanbook (after tweaks)", 
 
   # `level` stores values that used to be columns in the input loanbook except
   # they lack the prefix "name_" All other names should be the same
-  tweaked <- c(glue("name_{unique(out$level)}"), names(out))
+  tweaked <- c(
+    glue("name_{unique(out$level)}"),
+    glue("id_{unique(out$level)}"),
+    names(out)
+  )
 
   expect_length(setdiff(names(loanbook_demo), tweaked), 0L)
 })
@@ -251,5 +243,41 @@ test_that("match_nanme works with slice(loanbook_demo, 1)", {
   expect_warning(
     match_name(slice(loanbook_demo, 2), ald_demo),
     "no match"
+  )
+})
+
+test_that("match_name outputs id consistent with level", {
+  all_rows_of_level_have_expected_id <- function(loanbook, matched, this_level) {
+    prefix <- strsplit(
+      unique(loanbook[[paste0("id_", this_level, collapse = "")]]), split = ""
+    )[[1]][[1]]
+
+    matched %>%
+      dplyr::filter(.data$level %in% this_level) %>%
+      pull(id) %>%
+      unique() %>%
+      startsWith(prefix)
+  }
+
+  loanbook <- slice(loanbook_demo, 3)
+  matched <- loanbook %>% match_name(ald_demo)
+
+  expect_true(
+    all_rows_of_level_have_expected_id(
+      loanbook, matched,
+      "direct_loantaker"
+    )
+  )
+  expect_true(
+    all_rows_of_level_have_expected_id(
+      loanbook, matched,
+      "intermediate_parent_1"
+    )
+  )
+  expect_true(
+    all_rows_of_level_have_expected_id(
+      loanbook, matched,
+      "ultimate_parent"
+    )
   )
 })

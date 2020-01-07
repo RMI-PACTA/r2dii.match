@@ -92,7 +92,12 @@ named_tibble <- function(names) {
 }
 
 minimum_names_of_match_name <- function(loanbook) {
-  pattern <- collapse_pipe(glue("^name_{level_root()}"))
+  pattern <- collapse_pipe(
+    c(
+      glue("^name_{level_root()}"),
+      glue("^id_{level_root()}")
+    )
+  )
   name_starts_with_name_level <- grep(pattern, names(loanbook), value = TRUE)
 
   unique(c(
@@ -166,28 +171,39 @@ some_is_one <- function(x) {
 
 tidy_match_name_result <- function(data) {
   level_cols <- data %>%
-    names_matching(level = get_level_columns())
+    names_matching(level = level_root())
 
+  id_cols <- sub("name_", "id_", level_cols)
+
+  # FIXME # 83, here is where we get multiple UP
   data %>%
+
     tidyr::pivot_longer(
-      cols = level_cols,
+      cols = id_cols,
       names_to = "level_lbk",
-      values_to = "name_lbk"
+      values_to = "id_lbk2",
+      names_prefix = "id_"
     ) %>%
     mutate(
-      level_lbk = sub("^name_", "", .data$level_lbk),
-      level_lbk = sub("_lbk$", "", .data$level_lbk),
+      id_lbk = .data$id_lbk2, id_lbk2 = NULL,
+      level_lbk = sub("_lbk$", "", .data$level_lbk)
     ) %>%
+
+    tidyr::pivot_longer(
+      cols = level_cols,
+      names_to = "level_lbk2",
+      values_to = "name_lbk",
+      names_prefix = "name_"
+    ) %>%
+    # FIXME: This is hacky, I'm not sure why these levels don't correspond
+    # to id_lbk but the existing level_lbk does
+    mutate(level_lbk2 = NULL) %>%
     remove_suffix("_lbk")
 }
 
 names_matching <- function(x, level) {
   pattern <- paste0(glue("^name_{level}.*_lbk$"), collapse = "|")
   grep(pattern, names(x), value = TRUE)
-}
-
-get_level_columns <- function() {
-  c("direct_", "intermediate_", "ultimate_")
 }
 
 remove_suffix <- function(data, suffix) {

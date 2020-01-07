@@ -64,9 +64,18 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
     call. = FALSE
   )
   data %>%
+    # FIXME: Maybe map uniquify_id_column over level_root(), then reduce rbind
+    # and may map prefix of intermediate_parent_1, _2, _n to IP1, IP2, IPn
+    # My only concent is that I haven't come up yet with a way to test if this
+    # really matters
     uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
     uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
+
     may_add_sector_and_borderline() %>%
+
+    # FIXME: Here is where we loose intermediate_parent columns
+    # fix input_cols_for_prepare_loanbook() to use all level_root columsn and
+    # not fail is some is missing.
     select(input_cols_for_prepare_loanbook(), .data$sector) %>%
     identify_loans_by_sector_and_level() %>%
     identify_loans_by_name_and_source() %>%
@@ -122,6 +131,8 @@ check_prepare_loanbook_data <- function(data) {
 }
 
 input_cols_for_prepare_loanbook <- function() {
+  # FIXME: This should not be hard coded but taken from the input loanbook, as
+  # matching the values of level_root()
   c(
     "id_direct_loantaker",
     "name_direct_loantaker",
