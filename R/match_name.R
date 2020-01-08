@@ -120,11 +120,11 @@ restore_cols_from_loanbook <- function(matched, loanbook) {
     tidyr::pivot_wider(
       names_from = "level_lbk",
       values_from = "name_lbk",
-      # FIXME: Do we really need this?
       names_prefix = "name_"
     )
 
   level_cols <- paste0("name_", unique(matched$level_lbk))
+
   left_join(
     suffix_names(with_level_cols, "_lbk", level_cols),
     suffix_names(loanbook, "_lbk"),
@@ -226,5 +226,16 @@ names_added_by_match_name <- function() {
     "alias_ald",
     "score",
     "source"
+  )
+}
+
+crucial_loanbook_names_for_match_name <- function() {
+  c(
+    "id_ultimate_parent",
+    "name_ultimate_parent",
+    "id_direct_loantaker",
+    "name_direct_loantaker",
+    "sector_classification_system",
+    "sector_classification_direct_loantaker"
   )
 }

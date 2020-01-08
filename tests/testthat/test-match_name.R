@@ -253,3 +253,23 @@ test_that("match_nanme works with slice(loanbook_demo, 1)", {
     "no match"
   )
 })
+
+test_that("match_namne with slice 4:5 returns some non-NA in loanbook columns", {
+  good1 <- slice(loanbook_demo, 1)
+  good14 <- slice(loanbook_demo, 1:4)
+
+  # If slice 5 is included, the output has NA in all loanbook columns
+  bad15 <- slice(loanbook_demo, 1:5)
+  # Minimal data that exposes the bug
+  bad5 <- slice(loanbook_demo, 5)
+  bugger <- bad5 %>% select(crucial_loanbook_names_for_match_name())
+  out <- match_name(bugger, ald_demo)
+
+  loanbook_columns <- setdiff(names(out), names_added_by_match_name())
+  all_values_of_loanbook_columns_are_na <- out %>%
+    select(loanbook_columns) %>%
+    purrr::map_lgl(~ all(is.na(.x))) %>%
+    all()
+
+  expect_false(all_values_of_loanbook_columns_are_na)
+})
