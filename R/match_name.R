@@ -116,9 +116,6 @@ restore_cols_sector_name_and_others <- function(matched, prep_lbk, prep_ald) {
 }
 
 restore_cols_from_loanbook <- function(matched, loanbook) {
-  matched_data_has_1_row_or_more <- !identical(nrow(matched), 0L)
-  stopifnot(matched_data_has_1_row_or_more)
-
   with_level_cols <- matched %>%
     tidyr::pivot_wider(
       names_from = "level_lbk",
