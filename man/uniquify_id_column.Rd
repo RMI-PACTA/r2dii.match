@@ -4,14 +4,12 @@
 \alias{uniquify_id_column}
 \title{Overwrite \code{id_direct_loantaker} and \code{id_ultimate_parent} with unique values}
 \usage{
-uniquify_id_column(data, id_column, prefix)
+uniquify_id_column(data, id_column)
 }
 \arguments{
 \item{data}{A loanbook dataframe.}
 
 \item{id_column}{A String giving the name of an \code{id_} column.}
-
-\item{prefix}{A string giving a prefix for the values of the \code{id_column}.}
 }
 \value{
 A loanbook dataframe with adjusted ids.
@@ -34,7 +32,7 @@ loanbook_demo \%>\%
 
 loanbook_demo \%>\%
   select(id_direct_loantaker, everything()) \%>\%
-  uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C")
+  uniquify_id_column(id_column = "id_direct_loantaker")
 
 # Same
 loanbook_demo \%>\%
@@ -44,7 +42,7 @@ loanbook_demo \%>\%
 
 loanbook_demo \%>\%
   select(id_ultimate_parent, everything()) \%>\%
-  uniquify_id_column(id_column = "id_ultimate_parent", prefix = "C")
+  uniquify_id_column(id_column = "id_ultimate_parent")
 }
 \seealso{
 \link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description},

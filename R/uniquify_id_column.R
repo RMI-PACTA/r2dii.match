@@ -8,7 +8,6 @@
 #'
 #' @param data A loanbook dataframe.
 #' @param id_column A String giving the name of an `id_` column.
-#' @param prefix A string giving a prefix for the values of the `id_column`.
 #'
 #' @family internal-ish
 #' @seealso [r2dii.dataraw::loanbook_description],
@@ -28,7 +27,7 @@
 #'
 #' loanbook_demo %>%
 #'   select(id_direct_loantaker, everything()) %>%
-#'   uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C")
+#'   uniquify_id_column(id_column = "id_direct_loantaker")
 #'
 #' # Same
 #' loanbook_demo %>%
@@ -38,12 +37,18 @@
 #'
 #' loanbook_demo %>%
 #'   select(id_ultimate_parent, everything()) %>%
-#'   uniquify_id_column(id_column = "id_ultimate_parent", prefix = "C")
-uniquify_id_column <- function(data, id_column, prefix) {
+#'   uniquify_id_column(id_column = "id_ultimate_parent")
+uniquify_id_column <- function(data, id_column) {
+  if (grepl("intermediate", id_column) && !has_name(data, id_column)) {
+    warning(id_column, " not found in `data`.", call. = FALSE)
+    return(data)
+  }
+
   name_column <- replace_prefix(id_column, to = "name")
   crucial <- c("sector_classification_direct_loantaker", name_column, id_column)
   check_crucial_names(data, crucial)
 
+  prefix <- sub("^N", "", toupper(snakecase_initial(name_column)))
   out <- data
   out[id_column] <- paste0(prefix, group_indices_of(out, id_column))
   out
@@ -51,6 +56,14 @@ uniquify_id_column <- function(data, id_column, prefix) {
 
 replace_prefix <- function(x, to) {
   sub("^([^_]+)_(.*)$", glue("{to}_\\2"), x)
+}
+
+snakecase_initial <- function(x) {
+  x %>%
+    strsplit("_") %>%
+    purrr::map(~ strsplit(., "")) %>%
+    purrr::map_depth(2, dplyr::first) %>%
+    purrr::map_chr(~ paste(.x, collapse = ""))
 }
 
 # Unique combination of `id_var` and `sector_classification_direct_loantaker`

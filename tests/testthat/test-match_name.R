@@ -3,24 +3,32 @@ library(r2dii.dataraw)
 
 expected_names_of_match_name_with_loanbook_demo <- c(
   "id_loan",
+
   "id_direct_loantaker",
   "name_direct_loantaker",
+
   "id_intermediate_parent_1",
   "name_intermediate_parent_1",
+
   "id_ultimate_parent",
   "name_ultimate_parent",
+
   "loan_size_outstanding",
   "loan_size_outstanding_currency",
   "loan_size_credit_limit",
   "loan_size_credit_limit_currency",
+
   "sector_classification_system",
   "sector_classification_input_type",
   "sector_classification_direct_loantaker",
+
   "fi_type",
   "flag_project_finance_loan",
   "name_project",
+
   "lei_direct_loantaker",
   "isin_direct_loantaker",
+
   "id",
   "level",
   "sector",
@@ -45,7 +53,7 @@ test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
   )
 
   # loanbook_demo %>% mini_lbk(1) %>% mini_ald() %>% dput()
-  ald_mini1 <- tibble::tibble(
+  ald_mini <- tibble::tibble(
     name_company = "alpine knits india pvt. limited",
     sector = "power",
     alias_ald = "alpineknitsindiapvt ltd"
@@ -70,14 +78,14 @@ test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
     score = 1,
     source = "loanbook"
   )
-  out <- match_name(lbk_mini1, ald_mini1)
+  out <- match_name(lbk_mini1, ald_mini)
 
   expect_equal(out, expected)
 })
 
 test_that("match_name w/ 1 row of full loanbook_demo yields expected names", {
   # loanbook_demo %>% mini_lbk(1) %>% mini_ald() %>% dput()
-  ald_mini1 <- tibble::tibble(
+  ald_mini <- tibble::tibble(
     name_company = "alpine knits india pvt. limited",
     sector = "power",
     alias_ald = "alpineknitsindiapvt ltd"
@@ -85,8 +93,9 @@ test_that("match_name w/ 1 row of full loanbook_demo yields expected names", {
 
   out <- loanbook_demo %>%
     slice(1) %>%
-    match_name(ald_mini1)
+    match_name(ald_mini)
 
+  # setdiff(names(out), expected_names_of_match_name_with_loanbook_demo)
   expect_named(out, expected_names_of_match_name_with_loanbook_demo)
 })
 
@@ -225,7 +234,7 @@ test_that("match_name preserves groups", {
 test_that("match_name outputs id consistent with level", {
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
   expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
-  expect_equal(out$id, c("UP1", "C1"))
+  expect_equal(out$id, c("UP1", "DL1"))
 })
 
 test_that("match_name no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
@@ -277,4 +286,41 @@ test_that("match_name w/ 1 lbk row matching ultimate, yields expected names", {
     match_name(lbk1, ald_demo),
     expected_names_of_match_name_with_loanbook_demo
   )
+})
+
+test_that("match_name handles any number if intermediate_parent columns (#84)", {
+  # name_level is identical for all levels. I expect them all in the output
+  name_level <- "Alpine Knits India Pvt. Limited"
+
+  lbk_mini <- tibble::tibble(
+    # Same name
+    name_intermediate_parent_1 = name_level,
+    name_intermediate_parent_2 = name_level,
+    name_intermediate_parent_n = name_level,
+    name_direct_loantaker = name_level,
+    name_ultimate_parent = name_level,
+
+    id_intermediate_parent_1 = "IP1",
+    id_intermediate_parent_2 = "IP2",
+    id_intermediate_parent_n = "IPn",
+    id_direct_loantaker = "DL1",
+    id_ultimate_parent = "UP1",
+
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 3511
+  )
+
+  # lbk_mini1 %>% mini_ald() %>% dput()
+  ald_mini <- tibble::tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd"
+  )
+
+  out <- match_name(lbk_mini, ald_mini)
+  output_levels <- unique(out$level)
+  expect_length(output_levels, 5L)
+
+  has_intermediate_parent <- any(grepl("intermediate_parent_1", output_levels))
+  expect_true(has_intermediate_parent)
 })

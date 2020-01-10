@@ -59,25 +59,25 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
-  message(
-    "Uniquifying `id_direct_loantaker` & `id_ultimate_parent`.",
-    call. = FALSE
-  )
-  data %>%
-    # FIXME: Maybe map uniquify_id_column over level_root(), then reduce rbind
-    # and may map prefix of intermediate_parent_1, _2, _n to IP1, IP2, IPn
-    # My only concent is that I haven't come up yet with a way to test if this
-    # really matters
-    uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
-    uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
-    may_add_sector_and_borderline() %>%
+  id_level <- extract_level_names(data, prefix = "id_")
+  message("Uniquifying: ", paste0(id_level, collapse = ", "))
+  for (i in seq_along(id_level)) {
+    data <- uniquify_id_column(data, id_column = id_level[i])
+  }
 
-    # FIXME: Here is where we loose intermediate_parent columns
-    # fix input_cols_for_restructure_loanbook() to use all level_root columsn and
-    # not fail is some is missing.
-    select(.data$rowid, input_cols_for_restructure_loanbook(), .data$sector) %>%
+  name_level <- extract_level_names(data, prefix = "name_")
+  important_columns <- c("rowid", id_level, name_level)
+
+  data %>%
+    may_add_sector_and_borderline() %>%
+    select(
+      .data$rowid,
+      important_columns,
+      .data$sector
+    ) %>%
     identify_loans_by_sector_and_level() %>%
-    identify_loans_by_name_and_source() %>%
+    identify_loans_by_name() %>%
+    mutate(source = "loanbook") %>%
     select(.data$rowid, output_cols_for_prepare_loanbook()) %>%
     distinct() %>%
     may_overwrite_name_and_sector(overwrite = overwrite) %>%
@@ -125,20 +125,18 @@ add_alias <- function(data) {
 
 check_prepare_loanbook_data <- function(data) {
   stopifnot(is.data.frame(data))
-  check_crucial_names(data, input_cols_for_restructure_loanbook())
-  invisible(data)
-}
 
-input_cols_for_restructure_loanbook <- function() {
-  # FIXME: This should not be hard coded but taken from the input loanbook, as
-  # matching the values of level_root()
-  c(
+  # The "intermediate" level isn't crucial; it may be missing in some datasets
+  crucial <- c(
     "rowid",
     "id_direct_loantaker",
     "name_direct_loantaker",
     "id_ultimate_parent",
     "name_ultimate_parent"
   )
+  check_crucial_names(data, crucial)
+
+  invisible(data)
 }
 
 check_prepare_loanbook_overwrite <- function(overwrite) {
@@ -172,19 +170,14 @@ identify_loans_by_sector_and_level <- function(data) {
     )
 }
 
-identify_loans_by_name_and_source <- function(data) {
+identify_loans_by_name <- function(data) {
   data %>%
-    mutate(
-      name = if_else(
-        .data$level == "direct_loantaker",
-        .data$name_direct_loantaker,
-        NA_character_
-      ),
-      name = if_else(
-        .data$level == "ultimate_parent",
-        .data$name_ultimate_parent,
-        .data$name
-      ),
-      source = "loanbook"
-    )
+    tidyr::pivot_longer(
+      cols = extract_level_names(data, prefix = "name_"),
+      names_to = "level2",
+      names_prefix = "name_",
+      values_to = "name"
+    ) %>%
+    filter(.data$level == .data$level2) %>%
+    mutate(level2 = NULL)
 }
