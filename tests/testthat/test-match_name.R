@@ -4,6 +4,12 @@ library(r2dii.dataraw)
 test_that("match_name has expected names", {
   expected <- c(
     "id_loan",
+    "id_direct_loantaker",
+    "name_direct_loantaker",
+    "id_intermediate_parent_1",
+    "name_intermediate_parent_1",
+    "id_ultimate_parent",
+    "name_ultimate_parent",
     "loan_size_outstanding",
     "loan_size_outstanding_currency",
     "loan_size_credit_limit",
@@ -22,7 +28,7 @@ test_that("match_name has expected names", {
     "sector_ald",
     "name",
     "name_ald",
-    "alias",
+    "alias_lbk",
     "alias_ald",
     "score",
     "source"

@@ -51,9 +51,10 @@ match_name <- function(loanbook,
                        overwrite = NULL) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
+  loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- suppressMessages(
-    restructure_loanbook_for_matching(loanbook, overwrite = overwrite)
+    restructure_loanbook_for_matching(loanbook_rowid, overwrite = overwrite)
   )
   prep_ald <- restructure_ald_for_matching(ald)
 
@@ -71,11 +72,20 @@ match_name <- function(loanbook,
     return(named_tibble(names = minimum_names_of_match_name(loanbook)))
   }
 
-  out <- matched %>%
-    restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
-    restore_cols_from_loanbook(loanbook) %>%
-    prefer_perfect_match_by(.data$id_lbk) %>%
-    tidy_match_name_result() %>%
+  preferred <- prefer_perfect_match_by(matched, .data$id)
+
+  out <- preferred %>%
+    restore_cols_sector_name_from_ald(prep_ald) %>%
+
+    # FIXME: Remove dead code
+    # restore_cols_from_loanbook(loanbook) %>%
+
+    # Restore columns from loanbook
+    left_join(loanbook_rowid, by = "rowid") %>%
+    mutate(rowid = NULL) %>%
+
+    # FIXME: Remove dead code
+    # tidy_match_name_result() %>%
     reorder_names_as_in_loanbook(loanbook)
 
   dplyr::group_by(out, !!!old_groups)
@@ -92,18 +102,7 @@ named_tibble <- function(names) {
 }
 
 minimum_names_of_match_name <- function(loanbook) {
-  pattern <- collapse_pipe(
-    c(
-      glue("^name_{level_root()}"),
-      glue("^id_{level_root()}")
-    )
-  )
-  name_starts_with_name_level <- grep(pattern, names(loanbook), value = TRUE)
-
-  unique(c(
-    setdiff(names(loanbook), name_starts_with_name_level),
-    names_added_by_match_name()
-  ))
+  unique(c(names(loanbook), names_added_by_match_name()))
 }
 
 level_root <- function() {
@@ -112,11 +111,10 @@ level_root <- function() {
 
 collapse_pipe <- function(x) {
   paste0(x, collapse = "|")
-}
 
-restore_cols_sector_name_and_others <- function(matched, prep_lbk, prep_ald) {
+}
+restore_cols_sector_name_from_ald <- function(matched, prep_ald) {
   matched %>%
-    left_join(suffix_names(prep_lbk, "_lbk"), by = "alias_lbk") %>%
     left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
 }
 
@@ -238,7 +236,7 @@ names_added_by_match_name <- function() {
     "sector_ald",
     "name",
     "name_ald",
-    "alias",
+    "alias_lbk",
     "alias_ald",
     "score",
     "source"

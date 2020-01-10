@@ -60,6 +60,9 @@ score_alias_similarity <- function(loanbook,
     out <- cross_alias(loanbook, ald)
   }
 
+  out <- out %>%
+    left_join(loanbook, by = c("alias_lbk" = "alias"))
+
   unique(
     mutate(
       out,
