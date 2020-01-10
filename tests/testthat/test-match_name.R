@@ -1,56 +1,93 @@
 library(dplyr)
 library(r2dii.dataraw)
 
-test_that("match_name has expected names", {
-  expected <- c(
-    "id_loan",
-    "id_direct_loantaker",
-    "name_direct_loantaker",
-    "id_intermediate_parent_1",
-    "name_intermediate_parent_1",
-    "id_ultimate_parent",
-    "name_ultimate_parent",
-    "loan_size_outstanding",
-    "loan_size_outstanding_currency",
-    "loan_size_credit_limit",
-    "loan_size_credit_limit_currency",
-    "sector_classification_system",
-    "sector_classification_input_type",
-    "sector_classification_direct_loantaker",
-    "fi_type",
-    "flag_project_finance_loan",
-    "name_project",
-    "lei_direct_loantaker",
-    "isin_direct_loantaker",
-    "id",
-    "level",
-    "sector",
-    "sector_ald",
-    "name",
-    "name_ald",
-    "alias_lbk",
-    "alias_ald",
-    "score",
-    "source"
+expected_names_of_match_name_with_loanbook_demo <- c(
+  "id_loan",
+  "id_direct_loantaker",
+  "name_direct_loantaker",
+  "id_intermediate_parent_1",
+  "name_intermediate_parent_1",
+  "id_ultimate_parent",
+  "name_ultimate_parent",
+  "loan_size_outstanding",
+  "loan_size_outstanding_currency",
+  "loan_size_credit_limit",
+  "loan_size_credit_limit_currency",
+  "sector_classification_system",
+  "sector_classification_input_type",
+  "sector_classification_direct_loantaker",
+  "fi_type",
+  "flag_project_finance_loan",
+  "name_project",
+  "lei_direct_loantaker",
+  "isin_direct_loantaker",
+  "id",
+  "level",
+  "sector",
+  "sector_ald",
+  "name",
+  "name_ald",
+  "alias_lbk",
+  "alias_ald",
+  "score",
+  "source"
+)
+
+test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
+  # loanbook_demo %>% mini_lbk(1) %>% dput()
+  lbk_mini1 <- tibble::tibble(
+    id_ultimate_parent = "UP15",
+    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+    id_direct_loantaker = "C294",
+    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 3511
   )
 
-  # Matches cero row ...
-  lbk2 <- slice(loanbook_demo, 2)
-  expect_warning(
-    out <- match_name(lbk2, ald_demo),
-    "no match"
+  # loanbook_demo %>% mini_lbk(1) %>% mini_ald() %>% dput()
+  ald_mini1 <- tibble::tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd"
   )
-  expect_equal(nrow(out), 0L)
-  # ... but preserves minimum expected names
-  expect_named(out, expected)
 
-  # Used to fail because levels were poorly handled
-  lbk1 <- slice(loanbook_demo, 1)
-  expect_named(match_name(lbk1, ald_demo), expected)
+  # out %>% dput()
+  expected <- tibble(
+    id_ultimate_parent = "UP15",
+    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+    id_direct_loantaker = "C294",
+    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 3511,
+    id = "UP1",
+    level = "ultimate_parent",
+    sector = "power",
+    sector_ald = "power",
+    name = "Alpine Knits India Pvt. Limited",
+    name_ald = "alpine knits india pvt. limited",
+    alias_lbk = "alpineknitsindiapvt ltd",
+    alias_ald = "alpineknitsindiapvt ltd",
+    score = 1,
+    source = "loanbook"
+  )
+  out <- match_name(lbk_mini1, ald_mini1)
 
-  # Always worked fine
-  lbk45 <- slice(loanbook_demo, 4:5)
-  expect_named(match_name(lbk45, ald_demo), expected)
+  expect_equal(out, expected)
+})
+
+test_that("match_name w/ 1 row of full loanbook_demo yields expected naems", {
+  # loanbook_demo %>% mini_lbk(1) %>% mini_ald() %>% dput()
+  ald_mini1 <- tibble::tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd"
+  )
+
+  out <- loanbook_demo %>%
+    slice(1) %>%
+    match_name(ald_mini1)
+
+  expect_named(out, expected_names_of_match_name_with_loanbook_demo)
 })
 
 test_that("match_name takes unprepared loanbook and ald datasets", {
@@ -114,7 +151,7 @@ test_that("match_name recovers `sector_lbk`", {
   )
 })
 
-test_that("match_name recovers `sector_y`", {
+test_that("match_name recovers `sector_ald`", {
   expect_true(
     rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_ald")
   )
@@ -125,31 +162,11 @@ test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
   expect_false(has_name(out, "name.y"))
 })
 
-test_that("match_name outputs expected names found in loanbook (after tweaks)", {
-  out <- match_name(slice(loanbook_demo, 1), ald_demo)
-
-  # `level` stores values that used to be columns in the input loanbook except
-  # they lack the prefix "name_" All other names should be the same
-  tweaked <- c(
-    glue("name_{unique(out$level)}"),
-    glue("id_{unique(out$level)}"),
-    names(out)
-  )
-
-  expect_length(setdiff(names(loanbook_demo), tweaked), 0L)
-})
-
 test_that("match_name works with `min_score = 0` (bug fix)", {
   expect_error(
     match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0),
     NA
   )
-})
-
-test_that("match_name names end with _lbk or _ald, except `score`", {
-  out <- match_name(slice(loanbook_demo, 1), ald_demo)
-  out_names <- names(out)
-  expect_true(any(endsWith(out_names, "_ald")))
 })
 
 test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
@@ -188,12 +205,7 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
   )
 })
 
-test_that("match_name has name `level`", {
-  out <- match_name(slice(loanbook_demo, 1), ald_demo)
-  expect_true(rlang::has_name(out, "level"))
-})
-
-test_that("match_name()$level lacks prefixf 'name_' suffix '_lbk'", {
+test_that("match_name()$level lacks prefix 'name_' suffix '_lbk'", {
   out <- match_name(slice(loanbook_demo, 1), ald_demo)
   expect_false(
     any(startsWith(unique(out$level), "name_"))
@@ -210,33 +222,51 @@ test_that("match_name preserves groups", {
   expect_true(is_grouped_df(match_name(grouped_loanbook, ald_demo)))
 })
 
-test_that("match_nanme works with slice(loanbook_demo, 1)", {
-  # This has always worked
-  # This slice levels: "name_ultimate_parent"  "name_direct_loantaker"
-  expect_error(
-    match_name(slice(loanbook_demo, 1), ald_demo),
-    NA
-  )
-
-  # This did not work before
-  # This slice has level: "name_ultimate_parent"
-  expect_error(
-    match_name(slice(loanbook_demo, 1), ald_demo),
-    NA
-  )
-
-  # This did not work before
-  expect_warning(
-    match_name(slice(loanbook_demo, 2), ald_demo),
-    "no match"
-  )
-})
-
 test_that("match_name outputs id consistent with level", {
-  this_level <- "direct_loantaker"
-  this_level <- "intermediate_parent_1"
-
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
   expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
   expect_equal(out$id, c("UP1", "C1"))
+})
+
+
+
+
+
+
+
+
+
+
+test_that("match_name w/ loanbook that matches nothing, yields expected", {
+  # Matches cero row ...
+  lbk2 <- slice(loanbook_demo, 2)
+  expect_warning(
+    out <- match_name(lbk2, ald_demo),
+    "no match"
+  )
+  expect_equal(nrow(out), 0L)
+  # ... but preserves minimum expected names
+  expect_named(
+    out,
+    expected_names_of_match_name_with_loanbook_demo
+  )
+})
+
+test_that("match_name w/ 2 lbk rows matching 2 ald rows, yields expected names", {
+  # Slice 5 once was problematic (#85)
+  lbk45 <- slice(loanbook_demo, 4:5)
+  expect_named(
+    match_name(lbk45, ald_demo),
+    expected_names_of_match_name_with_loanbook_demo
+  )
+})
+
+test_that("match_name w/ 1 lbk row matching ultimate, yields expected names", {
+  # Slice 1 used to fail due to poorly handled levels
+  lbk1 <- slice(loanbook_demo, 1)
+
+  expect_named(
+    match_name(lbk1, ald_demo),
+    expected_names_of_match_name_with_loanbook_demo
+  )
 })
