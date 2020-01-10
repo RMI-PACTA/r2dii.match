@@ -75,7 +75,7 @@ test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
   expect_equal(out, expected)
 })
 
-test_that("match_name w/ 1 row of full loanbook_demo yields expected naems", {
+test_that("match_name w/ 1 row of full loanbook_demo yields expected names", {
   # loanbook_demo %>% mini_lbk(1) %>% mini_ald() %>% dput()
   ald_mini1 <- tibble::tibble(
     name_company = "alpine knits india pvt. limited",
@@ -228,14 +228,22 @@ test_that("match_name outputs id consistent with level", {
   expect_equal(out$id, c("UP1", "C1"))
 })
 
+test_that("match_name no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
+  out <- match_name(loanbook_demo, ald_demo)
+  out_lbk_cols <- out %>%
+    select(
+      setdiff(
+        names(.),
+        names_added_by_match_name()
+      )
+    )
 
+  all_lbk_columns_contain_na_exclusively <- out_lbk_cols %>%
+    purrr::map_lgl(~ all(is.na(.x))) %>%
+    all()
 
-
-
-
-
-
-
+  expect_false(all_lbk_columns_contain_na_exclusively)
+})
 
 test_that("match_name w/ loanbook that matches nothing, yields expected", {
   # Matches cero row ...

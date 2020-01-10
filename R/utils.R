@@ -9,7 +9,7 @@
 # Helpers to create mini data ---------------------------------------------
 
 # mini_lbk(loanbook_demo, 1)
-mini_lbk <- function(loanbook, ..., vars = crucial_match_name()) {
+mini_lbk <- function(loanbook, ..., vars = crucial_lbk()) {
   loanbook %>%
     dplyr::slice(...) %>%
     dplyr::select(vars, tidyselect::matches("intermediate"))
@@ -20,21 +20,21 @@ mini_lbk <- function(loanbook, ..., vars = crucial_match_name()) {
 #   mini_ald()
 mini_ald <- function(loanbook, alias_ald = alias_ald()) {
   alias_ald %>%
-    filter(alias_ald %in% pull_alias_ald(loanbook, .))
+    filter(.data$alias_ald %in% pull_alias_ald(loanbook, .))
 }
 
 # alias_ald()
 alias_ald <- function() {
   r2dii.dataraw::ald_demo %>%
     dplyr::select(crucial_ald()) %>%
-    dplyr::mutate(alias_ald = to_alias(name_company)) %>%
+    dplyr::mutate(alias_ald = to_alias(.data$name_company)) %>%
     unique()
 }
 
 pull_alias_ald <- function(loanbook, ald) {
   loanbook %>%
     match_name(ald) %>%
-    dplyr::select(ends_with("ald")) %>%
+    dplyr::select(dplyr::ends_with("ald")) %>%
     dplyr::pull(.data$alias_ald)
 }
 
