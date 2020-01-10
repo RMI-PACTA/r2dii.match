@@ -76,17 +76,10 @@ match_name <- function(loanbook,
 
   out <- preferred %>%
     restore_cols_sector_name_from_ald(prep_ald) %>%
-
-    # FIXME: Remove dead code
-    # restore_cols_from_loanbook(loanbook) %>%
-
     # Restore columns from loanbook
     left_join(loanbook_rowid, by = "rowid") %>%
     mutate(rowid = NULL) %>%
-
-    # FIXME: Remove dead code
-    # tidy_match_name_result() %>%
-    reorder_names_as_in_loanbook(loanbook)
+    reorder_names_as_in_loanbook(loanbook_rowid)
 
   dplyr::group_by(out, !!!old_groups)
 }
@@ -111,28 +104,10 @@ level_root <- function() {
 
 collapse_pipe <- function(x) {
   paste0(x, collapse = "|")
-
 }
 restore_cols_sector_name_from_ald <- function(matched, prep_ald) {
   matched %>%
     left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
-}
-
-restore_cols_from_loanbook <- function(matched, loanbook) {
-  with_level_cols <- matched %>%
-    tidyr::pivot_wider(
-      names_from = "level_lbk",
-      values_from = "name_lbk",
-      # FIXME: Do we really need this?
-      names_prefix = "name_"
-    )
-
-  level_cols <- paste0("name_", unique(matched$level_lbk))
-  left_join(
-    suffix_names(with_level_cols, "_lbk", level_cols),
-    suffix_names(loanbook, "_lbk"),
-    by = paste0(level_cols, "_lbk")
-  )
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
@@ -165,38 +140,6 @@ none_is_one <- function(x) {
 
 some_is_one <- function(x) {
   any(x == 1L) & x == 1L
-}
-
-tidy_match_name_result <- function(data) {
-  level_cols <- data %>%
-    names_matching(level = level_root())
-
-  id_cols <- sub("name_", "id_", level_cols)
-
-  # FIXME # 83, here is where we get multiple UP
-  data %>%
-
-    tidyr::pivot_longer(
-      cols = id_cols,
-      names_to = "level_lbk",
-      values_to = "id_lbk2",
-      names_prefix = "id_"
-    ) %>%
-    mutate(
-      id_lbk = .data$id_lbk2, id_lbk2 = NULL,
-      level_lbk = sub("_lbk$", "", .data$level_lbk)
-    ) %>%
-
-    tidyr::pivot_longer(
-      cols = level_cols,
-      names_to = "level_lbk2",
-      values_to = "name_lbk",
-      names_prefix = "name_"
-    ) %>%
-    # FIXME: This is hacky, I'm not sure why these levels don't correspond
-    # to id_lbk but the existing level_lbk does
-    mutate(level_lbk2 = NULL) %>%
-    remove_suffix("_lbk")
 }
 
 names_matching <- function(x, level) {

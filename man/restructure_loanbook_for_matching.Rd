@@ -26,11 +26,11 @@ from values in the columns \code{name_direct_loantaker} and
 \examples{
 library(r2dii.dataraw)
 
-loanbook_demo \%>\%
-  restructure_loanbook_for_matching()
+lbk <- tibble::rowid_to_column(loanbook_demo)
 
-loanbook_demo \%>\%
-  restructure_loanbook_for_matching(overwrite = overwrite_demo)
+restructure_loanbook_for_matching(lbk)
+
+restructure_loanbook_for_matching(lbk, overwrite = overwrite_demo)
 }
 \seealso{
 \link[r2dii.dataraw:loanbook_description]{r2dii.dataraw::loanbook_description}

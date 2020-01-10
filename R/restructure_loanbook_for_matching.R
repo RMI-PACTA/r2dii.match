@@ -50,11 +50,11 @@ restructure_ald_for_matching <- function(data) {
 #' @examples
 #' library(r2dii.dataraw)
 #'
-#' loanbook_demo %>%
-#'   restructure_loanbook_for_matching()
+#' lbk <- tibble::rowid_to_column(loanbook_demo)
 #'
-#' loanbook_demo %>%
-#'   restructure_loanbook_for_matching(overwrite = overwrite_demo)
+#' restructure_loanbook_for_matching(lbk)
+#'
+#' restructure_loanbook_for_matching(lbk, overwrite = overwrite_demo)
 restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
@@ -70,7 +70,6 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
     # really matters
     uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
     uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
-
     may_add_sector_and_borderline() %>%
 
     # FIXME: Here is where we loose intermediate_parent columns
@@ -134,7 +133,7 @@ input_cols_for_restructure_loanbook <- function() {
   # FIXME: This should not be hard coded but taken from the input loanbook, as
   # matching the values of level_root()
   c(
-    # "rowid",
+    "rowid",
     "id_direct_loantaker",
     "name_direct_loantaker",
     "id_ultimate_parent",
