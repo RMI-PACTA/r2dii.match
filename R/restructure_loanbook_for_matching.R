@@ -50,11 +50,11 @@ restructure_ald_for_matching <- function(data) {
 #' @examples
 #' library(r2dii.dataraw)
 #'
-#' loanbook_demo %>%
-#'   restructure_loanbook_for_matching()
+#' lbk <- tibble::rowid_to_column(loanbook_demo)
 #'
-#' loanbook_demo %>%
-#'   restructure_loanbook_for_matching(overwrite = overwrite_demo)
+#' restructure_loanbook_for_matching(lbk)
+#'
+#' restructure_loanbook_for_matching(lbk, overwrite = overwrite_demo)
 restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
@@ -64,13 +64,21 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
     call. = FALSE
   )
   data %>%
+    # FIXME: Maybe map uniquify_id_column over level_root(), then reduce rbind
+    # and may map prefix of intermediate_parent_1, _2, _n to IP1, IP2, IPn
+    # My only concent is that I haven't come up yet with a way to test if this
+    # really matters
     uniquify_id_column(id_column = "id_direct_loantaker", prefix = "C") %>%
     uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP") %>%
     may_add_sector_and_borderline() %>%
-    select(input_cols_for_prepare_loanbook(), .data$sector) %>%
+
+    # FIXME: Here is where we loose intermediate_parent columns
+    # fix input_cols_for_restructure_loanbook() to use all level_root columsn and
+    # not fail is some is missing.
+    select(.data$rowid, input_cols_for_restructure_loanbook(), .data$sector) %>%
     identify_loans_by_sector_and_level() %>%
     identify_loans_by_name_and_source() %>%
-    select(output_cols_for_prepare_loanbook()) %>%
+    select(.data$rowid, output_cols_for_prepare_loanbook()) %>%
     distinct() %>%
     may_overwrite_name_and_sector(overwrite = overwrite) %>%
     add_alias()
@@ -117,12 +125,15 @@ add_alias <- function(data) {
 
 check_prepare_loanbook_data <- function(data) {
   stopifnot(is.data.frame(data))
-  check_crucial_names(data, input_cols_for_prepare_loanbook())
+  check_crucial_names(data, input_cols_for_restructure_loanbook())
   invisible(data)
 }
 
-input_cols_for_prepare_loanbook <- function() {
+input_cols_for_restructure_loanbook <- function() {
+  # FIXME: This should not be hard coded but taken from the input loanbook, as
+  # matching the values of level_root()
   c(
+    "rowid",
     "id_direct_loantaker",
     "name_direct_loantaker",
     "id_ultimate_parent",

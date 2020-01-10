@@ -13,12 +13,12 @@ test_that("score_alias_similarity has the expected names", {
 
   expect_named(
     score_alias_similarity(x, y),
-    c("alias_lbk", "alias_ald", "score")
+    c("alias_lbk", "alias_ald", "sector", "score")
   )
 
   expect_named(
     score_alias_similarity(x, y, by_sector = FALSE),
-    c("alias_lbk", "alias_ald", "score")
+    c("alias_lbk", "alias_ald", "sector", "score")
   )
 })
 
@@ -39,27 +39,36 @@ test_that("score_alias_similarity scores extreme cases correctly", {
   y <- tibble(sector = c("A", "B"), alias = c("a", "cd"))
   expect_equal(
     score_alias_similarity(x, y),
+    # styler: off
     tribble(
-      ~alias_lbk, ~alias_ald, ~score,
-      "a", "a", 1,
-      "ab", "cd", 0,
+      ~alias_lbk, ~alias_ald, ~sector,  ~score,
+      "a",        "a",        "A",      1,
+      "ab",       "cd",       "B",      0,
     )
+    # styler: on
   )
 })
 
 test_that("score_alias_similarity w/out crucial cols errors gracefully", {
+  good <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = "a")
+  expect_error(
+    score_alias_similarity(good, y),
+    NA
+  )
+
   bad <- tibble(alias = "a")
   y <- tibble(sector = "A", alias = "a")
   expect_error(
     score_alias_similarity(bad, y),
-    "must have.*alias"
+    "must have.*"
   )
 
-  bad <- tibble(sector = "A")
+  bad <- tibble(rowid = 1, sector = "A")
   y <- tibble(sector = "A", alias = "a")
   expect_error(
     score_alias_similarity(bad, y),
-    "must have.*sector"
+    "must have.*"
   )
 })
 
@@ -164,13 +173,14 @@ test_that("score_alias_similarity w/ same `alias` in 2 sectors and
   y <- tibble(sector = "A", alias = "a")
   expect_equal(
     score_alias_similarity(x, y, by_sector = TRUE),
-    tibble(alias_lbk = "a", alias_ald = "a", score = 1)
+    tibble(alias_lbk = "a", alias_ald = "a", sector = c("A", "B"), score = 1)
   )
 })
 
 test_that("score_alias_similarity outputs unique rows", {
   # Known problematic data
   lbk <- loanbook_demo %>%
+    tibble::rowid_to_column() %>%
     filter(name_direct_loantaker == "Tata Group")
 
   out <- score_alias_similarity(

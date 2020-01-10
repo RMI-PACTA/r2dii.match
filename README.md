@@ -152,20 +152,21 @@ name matching algorithms, such as:
 
 ``` r
 match_name(your_loanbook, your_ald)
-#> # A tibble: 1,350 x 26
-#>    id_loan id_direct_loant… id_intermediate… id_ultimate_par… loan_size_outst…
-#>    <chr>   <chr>            <chr>            <chr>                       <dbl>
-#>  1 <NA>    <NA>             <NA>             <NA>                           NA
-#>  2 <NA>    <NA>             <NA>             <NA>                           NA
-#>  3 <NA>    <NA>             <NA>             <NA>                           NA
-#>  4 <NA>    <NA>             <NA>             <NA>                           NA
-#>  5 <NA>    <NA>             <NA>             <NA>                           NA
-#>  6 <NA>    <NA>             <NA>             <NA>                           NA
-#>  7 <NA>    <NA>             <NA>             <NA>                           NA
-#>  8 <NA>    <NA>             <NA>             <NA>                           NA
-#>  9 <NA>    <NA>             <NA>             <NA>                           NA
-#> 10 <NA>    <NA>             <NA>             <NA>                           NA
-#> # … with 1,340 more rows, and 21 more variables:
+#> # A tibble: 454 x 29
+#>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+#>    <chr>   <chr>            <chr>            <chr>            <chr>           
+#>  1 L170    C203             Tesla Inc        <NA>             <NA>            
+#>  2 L180    C217             Weichai Power C… <NA>             <NA>            
+#>  3 L181    C218             Wheego           <NA>             <NA>            
+#>  4 L195    C313             Zhengzhou Yuton… <NA>             <NA>            
+#>  5 L174    C211             Tvr              <NA>             <NA>            
+#>  6 L198    C317             Ziyang Nanjun    <NA>             <NA>            
+#>  7 L193    C310             Zamyad           <NA>             <NA>            
+#>  8 L165    C195             Sunwin Bus       <NA>             <NA>            
+#>  9 L154    C171             Shandong Tangju… <NA>             <NA>            
+#> 10 L164    C193             Subaru Corp      <NA>             <NA>            
+#> # … with 444 more rows, and 24 more variables: id_ultimate_parent <chr>,
+#> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
 #> #   sector_classification_input_type <chr>,
@@ -173,7 +174,7 @@ match_name(your_loanbook, your_ald)
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
 #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id <chr>,
 #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#> #   alias <chr>, alias_ald <chr>, score <dbl>, source <chr>
+#> #   alias_lbk <chr>, alias_ald <chr>, score <dbl>, source <chr>
 ```
 
 `match_name()` defaults to scoring matches between `alias_*` strings
@@ -184,12 +185,12 @@ a low score.
 ``` r
 match_name(your_loanbook, your_ald, by_sector = FALSE) %>% 
   nrow()
-#> [1] 1974
+#> [1] 662
 
 # Compare
 match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
   nrow()
-#> [1] 1350
+#> [1] 454
 ```
 
 `min_score` allows you to pick rows of a minimum `score` and above.
@@ -248,18 +249,18 @@ matched %>%
   prioritize() %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 402 x 5
-#>    id    level            alias                    alias_ald               score
-#>    <chr> <chr>            <chr>                    <chr>                   <dbl>
-#>  1 UP23  direct_loantaker astonmartin              astonmartin                 1
-#>  2 UP25  direct_loantaker avtozaz                  avtozaz                     1
-#>  3 UP36  direct_loantaker bogdan                   bogdan                      1
-#>  4 UP52  direct_loantaker chauto                   chauto                      1
-#>  5 UP53  direct_loantaker chehejia                 chehejia                    1
-#>  6 UP58  direct_loantaker chtcauto                 chtcauto                    1
-#>  7 UP80  direct_loantaker dongfenghonda            dongfenghonda               1
-#>  8 UP79  direct_loantaker dongfengluxgen           dongfengluxgen              1
-#>  9 UP89  direct_loantaker electricmobilitysolutio… electricmobilitysoluti…     1
-#> 10 UP94  direct_loantaker faradayfuture            faradayfuture               1
+#>    id    level         alias_lbk                 alias_ald                 score
+#>    <chr> <chr>         <chr>                     <chr>                     <dbl>
+#>  1 C167  direct_loant… shaanxiauto               shaanxiauto                   1
+#>  2 C168  direct_loant… shandongauto              shandongauto                  1
+#>  3 C169  direct_loant… shandongkama              shandongkama                  1
+#>  4 C170  direct_loant… shandongtangjunouling     shandongtangjunouling         1
+#>  5 C172  direct_loant… shanghaiautomotiveindust… shanghaiautomotiveindust…     1
+#>  6 C175  direct_loant… shanxidayun               shanxidayun                   1
+#>  7 C177  direct_loant… shenyangpolarsun          shenyangpolarsun              1
+#>  8 C179  direct_loant… shuanghuanauto            shuanghuanauto                1
+#>  9 C181  direct_loant… sichuanauto               sichuanauto                   1
+#> 10 C183  direct_loant… singulato                 singulato                     1
 #> # … with 392 more rows
 ```
 
@@ -267,7 +268,7 @@ The default priority is set internally via `prioritize_levels()`.
 
 ``` r
 prioritize_level(matched)
-#> [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"
+#> [1] "direct_loantaker" "ultimate_parent"
 ```
 
 You may use a different priority. One way to do that is to pass a
@@ -279,7 +280,7 @@ matched %>%
   prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 402 x 5
-#>    id    level           alias                    alias_ald                score
+#>    id    level           alias_lbk                alias_ald                score
 #>    <chr> <chr>           <chr>                    <chr>                    <dbl>
 #>  1 UP23  ultimate_parent astonmartin              astonmartin                  1
 #>  2 UP25  ultimate_parent avtozaz                  avtozaz                      1
@@ -305,23 +306,23 @@ bad_idea <- select_chr(
 )
 
 bad_idea
-#> [1] "intermediate_parent_1" "ultimate_parent"       "direct_loantaker"
+#> [1] "ultimate_parent"  "direct_loantaker"
 
 matched %>% 
   prioritize(priority = bad_idea) %>% 
   select(!!! some_interesting_columns)
 #> # A tibble: 402 x 5
-#>    id    level               alias                  alias_ald              score
-#>    <chr> <chr>               <chr>                  <chr>                  <dbl>
-#>  1 UP23  intermediate_paren… astonmartin            astonmartin                1
-#>  2 UP25  intermediate_paren… avtozaz                avtozaz                    1
-#>  3 UP36  intermediate_paren… bogdan                 bogdan                     1
-#>  4 UP52  intermediate_paren… chauto                 chauto                     1
-#>  5 UP53  intermediate_paren… chehejia               chehejia                   1
-#>  6 UP58  intermediate_paren… chtcauto               chtcauto                   1
-#>  7 UP80  intermediate_paren… dongfenghonda          dongfenghonda              1
-#>  8 UP79  intermediate_paren… dongfengluxgen         dongfengluxgen             1
-#>  9 UP89  intermediate_paren… electricmobilitysolut… electricmobilitysolut…     1
-#> 10 UP94  intermediate_paren… faradayfuture          faradayfuture              1
+#>    id    level           alias_lbk                alias_ald                score
+#>    <chr> <chr>           <chr>                    <chr>                    <dbl>
+#>  1 UP23  ultimate_parent astonmartin              astonmartin                  1
+#>  2 UP25  ultimate_parent avtozaz                  avtozaz                      1
+#>  3 UP36  ultimate_parent bogdan                   bogdan                       1
+#>  4 UP52  ultimate_parent chauto                   chauto                       1
+#>  5 UP53  ultimate_parent chehejia                 chehejia                     1
+#>  6 UP58  ultimate_parent chtcauto                 chtcauto                     1
+#>  7 UP80  ultimate_parent dongfenghonda            dongfenghonda                1
+#>  8 UP79  ultimate_parent dongfengluxgen           dongfengluxgen               1
+#>  9 UP89  ultimate_parent electricmobilitysolutio… electricmobilitysolutio…     1
+#> 10 UP94  ultimate_parent faradayfuture            faradayfuture                1
 #> # … with 392 more rows
 ```

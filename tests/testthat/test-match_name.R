@@ -5,8 +5,11 @@ test_that("match_name has expected names", {
   expected <- c(
     "id_loan",
     "id_direct_loantaker",
+    "name_direct_loantaker",
     "id_intermediate_parent_1",
+    "name_intermediate_parent_1",
     "id_ultimate_parent",
+    "name_ultimate_parent",
     "loan_size_outstanding",
     "loan_size_outstanding_currency",
     "loan_size_credit_limit",
@@ -25,7 +28,7 @@ test_that("match_name has expected names", {
     "sector_ald",
     "name",
     "name_ald",
-    "alias",
+    "alias_lbk",
     "alias_ald",
     "score",
     "source"
@@ -48,15 +51,6 @@ test_that("match_name has expected names", {
   # Always worked fine
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(match_name(lbk45, ald_demo), expected)
-})
-
-test_that("match_name names are as loanbook (except missing, plus new names)", {
-  lbk <- slice(loanbook_demo, 1)
-  out <- match_name(lbk, ald_demo)
-
-  expected <- setdiff(names(lbk), paste0("name_", out$level))
-  actual <- names(out)[seq_along(expected)]
-  expect_equal(actual, expected)
 })
 
 test_that("match_name takes unprepared loanbook and ald datasets", {
@@ -136,7 +130,11 @@ test_that("match_name outputs expected names found in loanbook (after tweaks)", 
 
   # `level` stores values that used to be columns in the input loanbook except
   # they lack the prefix "name_" All other names should be the same
-  tweaked <- c(glue("name_{unique(out$level)}"), names(out))
+  tweaked <- c(
+    glue("name_{unique(out$level)}"),
+    glue("id_{unique(out$level)}"),
+    names(out)
+  )
 
   expect_length(setdiff(names(loanbook_demo), tweaked), 0L)
 })
@@ -146,26 +144,6 @@ test_that("match_name works with `min_score = 0` (bug fix)", {
     match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0),
     NA
   )
-})
-
-test_that("match_name outputs a reasonable number of rows", {
-  lbk <- slice(loanbook_demo, 1:100)
-  out <- match_name(lbk, ald_demo)
-
-  expected <- score_alias_similarity(
-    restructure_loanbook_for_matching(lbk),
-    restructure_ald_for_matching(ald_demo)
-  ) %>%
-    filter(score >= 0.8) %>%
-    prefer_perfect_match_by(.data$alias_lbk) %>%
-    set_names(~ sub("_lbk", "", .x))
-
-  nrows_out <- out %>%
-    select(names(expected)) %>%
-    unique() %>%
-    nrow()
-
-  expect_equal(nrows_out, nrow(expected))
 })
 
 test_that("match_name names end with _lbk or _ald, except `score`", {
@@ -182,7 +160,7 @@ test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
 
   nanimo_scores <- this_lbk %>%
     match_name(ald_demo) %>%
-    filter(alias == this_alias) %>%
+    filter(alias_lbk == this_alias) %>%
     pull(score)
 
   expect_true(
@@ -196,7 +174,7 @@ test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
 test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
   # styler: off
   data <- tribble(
-    ~var, ~score,
+    ~var,  ~score,
         1,      1,
         2,      1,
         2,   0.99,
@@ -252,4 +230,13 @@ test_that("match_nanme works with slice(loanbook_demo, 1)", {
     match_name(slice(loanbook_demo, 2), ald_demo),
     "no match"
   )
+})
+
+test_that("match_name outputs id consistent with level", {
+  this_level <- "direct_loantaker"
+  this_level <- "intermediate_parent_1"
+
+  out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
+  expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
+  expect_equal(out$id, c("UP1", "C1"))
 })

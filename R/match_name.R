@@ -51,9 +51,10 @@ match_name <- function(loanbook,
                        overwrite = NULL) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
+  loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- suppressMessages(
-    restructure_loanbook_for_matching(loanbook, overwrite = overwrite)
+    restructure_loanbook_for_matching(loanbook_rowid, overwrite = overwrite)
   )
   prep_ald <- restructure_ald_for_matching(ald)
 
@@ -71,12 +72,14 @@ match_name <- function(loanbook,
     return(named_tibble(names = minimum_names_of_match_name(loanbook)))
   }
 
-  out <- matched %>%
-    restore_cols_sector_name_and_others(prep_lbk, prep_ald) %>%
-    restore_cols_from_loanbook(loanbook) %>%
-    prefer_perfect_match_by(.data$id_lbk) %>%
-    tidy_match_name_result() %>%
-    reorder_names_as_in_loanbook(loanbook)
+  preferred <- prefer_perfect_match_by(matched, .data$id)
+
+  out <- preferred %>%
+    restore_cols_sector_name_from_ald(prep_ald) %>%
+    # Restore columns from loanbook
+    left_join(loanbook_rowid, by = "rowid") %>%
+    mutate(rowid = NULL) %>%
+    reorder_names_as_in_loanbook(loanbook_rowid)
 
   dplyr::group_by(out, !!!old_groups)
 }
@@ -92,13 +95,7 @@ named_tibble <- function(names) {
 }
 
 minimum_names_of_match_name <- function(loanbook) {
-  pattern <- collapse_pipe(glue("^name_{level_root()}"))
-  name_starts_with_name_level <- grep(pattern, names(loanbook), value = TRUE)
-
-  unique(c(
-    setdiff(names(loanbook), name_starts_with_name_level),
-    names_added_by_match_name()
-  ))
+  unique(c(names(loanbook), names_added_by_match_name()))
 }
 
 level_root <- function() {
@@ -108,28 +105,9 @@ level_root <- function() {
 collapse_pipe <- function(x) {
   paste0(x, collapse = "|")
 }
-
-restore_cols_sector_name_and_others <- function(matched, prep_lbk, prep_ald) {
+restore_cols_sector_name_from_ald <- function(matched, prep_ald) {
   matched %>%
-    left_join(suffix_names(prep_lbk, "_lbk"), by = "alias_lbk") %>%
     left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
-}
-
-restore_cols_from_loanbook <- function(matched, loanbook) {
-  with_level_cols <- matched %>%
-    tidyr::pivot_wider(
-      names_from = "level_lbk",
-      values_from = "name_lbk",
-      # FIXME: Do we really need this?
-      names_prefix = "name_"
-    )
-
-  level_cols <- paste0("name_", unique(matched$level_lbk))
-  left_join(
-    suffix_names(with_level_cols, "_lbk", level_cols),
-    suffix_names(loanbook, "_lbk"),
-    by = paste0(level_cols, "_lbk")
-  )
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
@@ -164,30 +142,9 @@ some_is_one <- function(x) {
   any(x == 1L) & x == 1L
 }
 
-tidy_match_name_result <- function(data) {
-  level_cols <- data %>%
-    names_matching(level = get_level_columns())
-
-  data %>%
-    tidyr::pivot_longer(
-      cols = level_cols,
-      names_to = "level_lbk",
-      values_to = "name_lbk"
-    ) %>%
-    mutate(
-      level_lbk = sub("^name_", "", .data$level_lbk),
-      level_lbk = sub("_lbk$", "", .data$level_lbk),
-    ) %>%
-    remove_suffix("_lbk")
-}
-
 names_matching <- function(x, level) {
   pattern <- paste0(glue("^name_{level}.*_lbk$"), collapse = "|")
   grep(pattern, names(x), value = TRUE)
-}
-
-get_level_columns <- function() {
-  c("direct_", "intermediate_", "ultimate_")
 }
 
 remove_suffix <- function(data, suffix) {
@@ -222,7 +179,7 @@ names_added_by_match_name <- function() {
     "sector_ald",
     "name",
     "name_ald",
-    "alias",
+    "alias_lbk",
     "alias_ald",
     "score",
     "source"
