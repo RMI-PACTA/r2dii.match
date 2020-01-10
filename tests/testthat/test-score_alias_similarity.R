@@ -50,18 +50,25 @@ test_that("score_alias_similarity scores extreme cases correctly", {
 })
 
 test_that("score_alias_similarity w/out crucial cols errors gracefully", {
+  good <- tibble(sector = "A", alias = "a")
+  y <- tibble(sector = "A", alias = "a")
+  expect_error(
+    score_alias_similarity(good, y),
+    NA
+  )
+
   bad <- tibble(alias = "a")
   y <- tibble(sector = "A", alias = "a")
   expect_error(
     score_alias_similarity(bad, y),
-    "must have.*alias"
+    "must have.*"
   )
 
-  bad <- tibble(sector = "A")
+  bad <- tibble(rowid = 1, sector = "A")
   y <- tibble(sector = "A", alias = "a")
   expect_error(
     score_alias_similarity(bad, y),
-    "must have.*sector"
+    "must have.*"
   )
 })
 

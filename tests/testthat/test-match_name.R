@@ -146,26 +146,6 @@ test_that("match_name works with `min_score = 0` (bug fix)", {
   )
 })
 
-test_that("match_name outputs a reasonable number of rows", {
-  lbk <- slice(loanbook_demo, 1:100)
-  out <- match_name(lbk, ald_demo)
-
-  expected <- score_alias_similarity(
-    restructure_loanbook_for_matching(lbk),
-    restructure_ald_for_matching(ald_demo)
-  ) %>%
-    filter(score >= 0.8) %>%
-    prefer_perfect_match_by(.data$alias_lbk) %>%
-    set_names(~ sub("_lbk", "", .x))
-
-  nrows_out <- out %>%
-    select(names(expected)) %>%
-    unique() %>%
-    nrow()
-
-  expect_equal(nrows_out, nrow(expected))
-})
-
 test_that("match_name names end with _lbk or _ald, except `score`", {
   out <- match_name(slice(loanbook_demo, 1), ald_demo)
   out_names <- names(out)
@@ -180,7 +160,7 @@ test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
 
   nanimo_scores <- this_lbk %>%
     match_name(ald_demo) %>%
-    filter(alias == this_alias) %>%
+    filter(alias_lbk == this_alias) %>%
     pull(score)
 
   expect_true(
@@ -194,7 +174,7 @@ test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
 test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
   # styler: off
   data <- tribble(
-    ~var, ~score,
+    ~var,  ~score,
         1,      1,
         2,      1,
         2,   0.99,
@@ -253,37 +233,10 @@ test_that("match_nanme works with slice(loanbook_demo, 1)", {
 })
 
 test_that("match_name outputs id consistent with level", {
-  all_rows_of_level_have_expected_id <- function(loanbook, matched, this_level) {
-    prefix <- strsplit(
-      unique(loanbook[[paste0("id_", this_level, collapse = "")]]), split = ""
-    )[[1]][[1]]
+  this_level <- "direct_loantaker"
+  this_level <- "intermediate_parent_1"
 
-    matched %>%
-      dplyr::filter(.data$level %in% this_level) %>%
-      pull(id) %>%
-      unique() %>%
-      startsWith(prefix)
-  }
-
-  loanbook <- slice(loanbook_demo, 3)
-  matched <- loanbook %>% match_name(ald_demo)
-
-  expect_true(
-    all_rows_of_level_have_expected_id(
-      loanbook, matched,
-      "direct_loantaker"
-    )
-  )
-  expect_true(
-    all_rows_of_level_have_expected_id(
-      loanbook, matched,
-      "intermediate_parent_1"
-    )
-  )
-  expect_true(
-    all_rows_of_level_have_expected_id(
-      loanbook, matched,
-      "ultimate_parent"
-    )
-  )
+  out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
+  expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
+  expect_equal(out$id, c("UP1", "C1"))
 })

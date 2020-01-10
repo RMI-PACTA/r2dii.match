@@ -74,9 +74,9 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
     may_add_sector_and_borderline() %>%
 
     # FIXME: Here is where we loose intermediate_parent columns
-    # fix input_cols_for_prepare_loanbook() to use all level_root columsn and
+    # fix input_cols_for_restructure_loanbook() to use all level_root columsn and
     # not fail is some is missing.
-    select(rowid, input_cols_for_prepare_loanbook(), .data$sector) %>%
+    select(rowid, input_cols_for_restructure_loanbook(), .data$sector) %>%
     identify_loans_by_sector_and_level() %>%
     identify_loans_by_name_and_source() %>%
     select(rowid, output_cols_for_prepare_loanbook()) %>%
@@ -126,14 +126,15 @@ add_alias <- function(data) {
 
 check_prepare_loanbook_data <- function(data) {
   stopifnot(is.data.frame(data))
-  check_crucial_names(data, input_cols_for_prepare_loanbook())
+  check_crucial_names(data, input_cols_for_restructure_loanbook())
   invisible(data)
 }
 
-input_cols_for_prepare_loanbook <- function() {
+input_cols_for_restructure_loanbook <- function() {
   # FIXME: This should not be hard coded but taken from the input loanbook, as
   # matching the values of level_root()
   c(
+    # "rowid",
     "id_direct_loantaker",
     "name_direct_loantaker",
     "id_ultimate_parent",

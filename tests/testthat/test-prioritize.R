@@ -1,11 +1,12 @@
 library(dplyr)
+library(r2dii.dataraw)
 
 test_that("prioritize works with loanbook_demo and ald_demo", {
   expect_error(
     loanbook_demo %>%
       slice(4:5) %>%
       match_name(ald_demo) %>%
-      prioritize(),
+      prioritize(priority = "ultimate_parent"),
     NA
   )
 })
