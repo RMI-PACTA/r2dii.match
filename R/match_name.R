@@ -98,13 +98,6 @@ minimum_names_of_match_name <- function(loanbook) {
   unique(c(names(loanbook), names_added_by_match_name()))
 }
 
-level_root <- function() {
-  c("direct", "intermediate", "ultimate")
-}
-
-collapse_pipe <- function(x) {
-  paste0(x, collapse = "|")
-}
 restore_cols_sector_name_from_ald <- function(matched, prep_ald) {
   matched %>%
     left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")

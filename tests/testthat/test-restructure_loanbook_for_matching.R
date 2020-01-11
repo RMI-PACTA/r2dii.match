@@ -15,20 +15,11 @@ test_that("restructure_loanbook_for_matching warns overwriting id_ vars", {
   )
 })
 
-test_that("restructure_loanbook_for_matching cals uniquify_id_column()", {
-  lbk <- loanbook_rowid %>%
-    uniquify_id_column(id_column = "id_direct_loantaker", prefix = "UP") %>%
-    uniquify_id_column(id_column = "id_ultimate_parent", prefix = "UP")
-
-  expect_equal(
-    restructure_loanbook_for_matching(loanbook_rowid),
-    restructure_loanbook_for_matching(lbk)
-  )
-})
-
 test_that("restructure_loanbook_for_matching may input add_sector_and_borderline(data)", {
   expect_warning(
-    out <- restructure_loanbook_for_matching(add_sector_and_borderline(loanbook_rowid)),
+    out <- restructure_loanbook_for_matching(
+      add_sector_and_borderline(loanbook_rowid)
+    ),
     "Using existing columns `sector` and `borderline`."
   )
 
