@@ -12,9 +12,7 @@
 #'
 #' @template alias-assign
 #'
-#' @author person(given = "Evgeny",
-#' family = "Petrovsky",
-#' role = c("aut", "ctr"))
+#' @author person(given = "Evgeny", family = "Petrovsky", role = c("aut", "ctr"))
 #'
 #' @param x Character string, commonly from the columns `name_direct_loantaker`
 #'   or `name_ultimate_parent` of a loanbook dataset, or from the column
@@ -26,9 +24,6 @@
 #' @param remove_ownership Flag that defines whether ownership type (like llc)
 #'   should be cut-off.
 #'
-#' @family internal-ish
-#'
-#' @export
 #' @return
 #' * `to_alias()` returns a character string.
 #' * `from_name_to_alias()` returns a [dplyr::tibble] with columns `from` and
@@ -64,6 +59,7 @@
 #'
 #' # And in combination with `to_alias()`
 #' to_alias(c("AA", "BB", "1"), from_to = append_replacements)
+#' @noRd
 to_alias <- function(x,
                      from_to = NULL,
                      ownership = NULL,
@@ -135,8 +131,7 @@ replace_abbrev <- function(text, abr, fixed = FALSE) {
 }
 
 # Source: @jdhoffa https://github.com/2DegreesInvesting/r2dii.dataraw/pull/8
-#' @export
-#' @rdname to_alias
+#' @noRd
 from_name_to_alias <- function() {
   # styler: off
   tribble(
