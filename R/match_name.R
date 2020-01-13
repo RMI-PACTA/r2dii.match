@@ -78,19 +78,26 @@ match_name <- function(loanbook,
   no_match <- identical(nrow(matched), 0L)
   if (no_match) {
     warning("Found no match.", call. = FALSE)
-    return(named_tibble(names = minimum_names_of_match_name(loanbook)))
+    named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
+      unsuffix_and_regroup(old_groups) %>%
+      return()
   }
 
   preferred <- prefer_perfect_match_by(matched, .data$id)
 
-  out <- preferred %>%
+  preferred %>%
     restore_cols_sector_name_from_ald(prep_ald) %>%
     # Restore columns from loanbook
     left_join(loanbook_rowid, by = "rowid") %>%
     mutate(rowid = NULL) %>%
-    reorder_names_as_in_loanbook(loanbook_rowid)
+    reorder_names_as_in_loanbook(loanbook_rowid) %>%
+    unsuffix_and_regroup(old_groups)
+}
 
-  dplyr::group_by(out, !!!old_groups)
+unsuffix_and_regroup <- function(data, old_groups) {
+  data %>%
+    rename(alias = .data$alias_lbk) %>%
+    dplyr::group_by(!!!old_groups)
 }
 
 pick_min_score <- function(data, min_score) {
