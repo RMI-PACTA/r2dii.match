@@ -15,4 +15,3 @@ extract_level_names <- function(data, prefix) {
 level <- function() {
   c("direct", "intermediate", "ultimate")
 }
-

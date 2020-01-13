@@ -41,28 +41,176 @@ expected_names_of_match_name_with_loanbook_demo <- c(
   "source"
 )
 
+test_that("match_name with non-NA only at intermediate level yields matches at
+          only at intermediate level only", {
+  lbk <- tibble(
+    id_intermediate_parent_999 = "IP8",
+    name_intermediate_parent_999 = "Nanco Hosiery Mills",
+
+    id_ultimate_parent = NA_character_,
+    name_ultimate_parent = NA_character_,
+
+    id_direct_loantaker = NA_character_,
+    name_direct_loantaker = NA_character_,
+
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 3511,
+  )
+
+  ald <- tibble(
+    name_company = c("nanco hosiery mills", "standard solar inc"),
+    sector = c("power", "power"),
+    alias_ald = c("nancohosierymills", "standardsolar inc")
+  )
+
+  out <- match_name(lbk, ald)
+  expect_equal(out$level, "intermediate_parent_999")
+})
+
+test_that("match_name w/ missing values at all levels outputs 0-row", {
+  lbk <- tibble(
+    id_direct_loantaker = NA_character_,
+    name_direct_loantaker = NA_character_,
+    id_ultimate_parent =  NA_character_,
+    name_ultimate_parent =  NA_character_,
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 291,
+  )
+
+  ald <- tibble(
+    name_company = "any",
+    sector = "power",
+    alias_ald = "any",
+  )
+
+  out <- expect_warning(match_name(lbk, ald), "no match")
+  expect_equal(nrow(out), 0L)
+})
+
+test_that("match_name w/ 1 lbk row matching 1 ald company in 2 sectors yields
+          2 rows -- one per ald-sector", {
+  sector_ald <- c("automotive", "shipping")
+
+  lbk <- tibble(
+    id_direct_loantaker = "C196",
+    name_direct_loantaker = "Suzuki Motor Corp",
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 291,
+
+    id_ultimate_parent =  NA_character_,
+    name_ultimate_parent =  NA_character_,
+  )
+
+  ald <- tibble(
+    name_company = "suzuki motor corp",
+    sector = sector_ald,
+    alias_ald = "suzukimotor corp",
+  )
+
+  out <- match_name(lbk, ald)
+  expect_equal(nrow(out), 2L)
+  out$sector
+  expect_equal(out$sector_ald, sector_ald)
+})
+
+test_that("match_name with bad code system errors gracefully", {
+  bad_system <- "bad system"
+
+  lbk_mini1 <- tibble::tibble(
+    sector_classification_system = bad_system,
+    id_ultimate_parent = "UP15",
+    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+    id_direct_loantaker = "C294",
+    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
+    sector_classification_direct_loantaker = 3511
+  )
+
+  ald_mini <- tibble::tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd"
+  )
+
+  expect_error(
+    match_name(lbk_mini1, ald_mini),
+    "must use.*code system"
+  )
+})
+
+test_that("match_name with non existing sector code just warns '*.no match'", {
+  code_does_not_exist <- -9999L
+  code <- suppressWarnings(sort(as.integer(sector_clasiffication_df()$code)))
+  expect_false(any(code == code_does_not_exist))
+
+  lbk_mini1 <- tibble::tibble(
+    sector_classification_direct_loantaker = code_does_not_exist,
+    id_ultimate_parent = "UP15",
+    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+    id_direct_loantaker = "C294",
+    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
+    sector_classification_system = "NACE"
+  )
+
+  ald_mini <- tibble::tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd"
+  )
+
+  expect_warning(
+    match_name(lbk_mini1, ald_mini),
+    "no match"
+  )
+})
+
+test_that("match_name with sector 'not in scope' warns '*.no match'", {
+  code_for_sector_not_in_scope <- 1L
+
+  lbk_mini1 <- tibble::tibble(
+    sector_classification_direct_loantaker = code_for_sector_not_in_scope,
+    id_ultimate_parent = "UP15",
+    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+    id_direct_loantaker = "C294",
+    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
+    sector_classification_system = "NACE"
+  )
+
+  ald_mini <- tibble::tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    alias_ald = "alpineknitsindiapvt ltd"
+  )
+
+  expect_warning(
+    match_name(lbk_mini1, ald_mini),
+    "no match"
+  )
+})
+
 test_that("match_name with missmatching sector_classification yields no match", {
   # loanbook's sector_classification_direct_loantaker and ald sector should
   # match (lookup code to sectors via sector_clasiffication_df()$code).
+  code_maps_to_sector_power <- 27
 
   # Here they match and we expect some match
   lbk_mini1 <- tibble::tibble(
+    sector_classification_direct_loantaker = code_maps_to_sector_power,
     id_ultimate_parent = "UP15",
     name_ultimate_parent = "Alpine Knits India Pvt. Limited",
     id_direct_loantaker = "C294",
     name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
     sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = 27 # * code = 27 is sector power *
-  )                                             #                             |
-  ald_mini <- tibble::tibble(                   #                             |
-    sector = "power",                           # * code = 27 is sector power *
+  )
+  ald_mini <- tibble::tibble(
+    sector = "power",
     name_company = "alpine knits india pvt. limited",
     alias_ald = "alpineknitsindiapvt ltd"
   )
   expect_equal(nrow(match_name(lbk_mini1, ald_mini)), 1L)
 
   # Here they do NOT match and we expect no match
-  ald_mini$sector <- "coal"
+  sector_not_power <- "coal"
+  ald_mini$sector <- sector_not_power
   out <- expect_warning(match_name(lbk_mini1, ald_mini), "no match")
   expect_equal(nrow(out), 0L)
 })
