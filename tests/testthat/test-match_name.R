@@ -69,6 +69,11 @@ test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
     sector_classification_direct_loantaker = 3511,
     id = "UP1",
     level = "ultimate_parent",
+    # ASK @jdhoffa: It seems strange that
+    # `sector_classification_direct_loantaker` refers to the level
+    # direct_loantaker but the match is at the level of ultimate_parent. Is this
+    # expected? (I guess so because loanbook_demo has no such column as
+    # sector_classification_ultimate_parent, but I'd like to understand why.)
     sector = "power",
     sector_ald = "power",
     name = "Alpine Knits India Pvt. Limited",
