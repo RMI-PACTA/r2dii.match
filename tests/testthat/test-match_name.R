@@ -41,6 +41,32 @@ expected_names_of_match_name_with_loanbook_demo <- c(
   "source"
 )
 
+test_that("match_name with missmatching sector_classification yields no match", {
+  # loanbook's sector_classification_direct_loantaker and ald sector should
+  # match (lookup code to sectors via sector_clasiffication_df()$code).
+
+  # Here they match and we expect some match
+  lbk_mini1 <- tibble::tibble(
+    id_ultimate_parent = "UP15",
+    name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+    id_direct_loantaker = "C294",
+    name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 27 # * code = 27 is sector power *
+  )                                             #                             |
+  ald_mini <- tibble::tibble(                   #                             |
+    sector = "power",                           # * code = 27 is sector power *
+    name_company = "alpine knits india pvt. limited",
+    alias_ald = "alpineknitsindiapvt ltd"
+  )
+  expect_equal(nrow(match_name(lbk_mini1, ald_mini)), 1L)
+
+  # Here they do NOT match and we expect no match
+  ald_mini$sector <- "coal"
+  out <- expect_warning(match_name(lbk_mini1, ald_mini), "no match")
+  expect_equal(nrow(out), 0L)
+})
+
 test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
   # loanbook_demo %>% mini_lbk(1) %>% dput()
   lbk_mini1 <- tibble::tibble(
