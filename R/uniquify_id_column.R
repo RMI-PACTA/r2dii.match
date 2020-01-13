@@ -9,12 +9,10 @@
 #' @param data A loanbook dataframe.
 #' @param id_column A String giving the name of an `id_` column.
 #'
-#' @family internal-ish
 #' @seealso [r2dii.dataraw::loanbook_description],
 #'   [r2dii.dataraw::loanbook_demo].
 #'
 #' @return A loanbook dataframe with adjusted ids.
-#' @export
 #'
 #' @examples
 #' library(dplyr)
@@ -38,6 +36,7 @@
 #' loanbook_demo %>%
 #'   select(id_ultimate_parent, everything()) %>%
 #'   uniquify_id_column(id_column = "id_ultimate_parent")
+#' @noRd
 uniquify_id_column <- function(data, id_column) {
   if (grepl("intermediate", id_column) && !has_name(data, id_column)) {
     warning(id_column, " not found in `data`.", call. = FALSE)

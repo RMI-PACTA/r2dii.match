@@ -53,12 +53,7 @@ prioritize(matched, priority = rev)
 prioritize(matched, priority = ~ rev(.x))
 
 # Using a custom priority
-bad_idea <- select_chr(
-  matched$level,
-  matches("intermediate"),
-  everything()
-)
-bad_idea
+bad_idea <- c("intermediate_parent", "ultimate_parent", "direct_loantaker")
 
 prioritize(matched, priority = bad_idea)
 }

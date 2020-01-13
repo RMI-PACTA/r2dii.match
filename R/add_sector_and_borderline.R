@@ -18,12 +18,8 @@
 #'
 #' @param data A loanbook dataframe.
 #'
-#' @family internal-ish
-#'
 #' @return A loanbook dataframe with additional `sector` and `borderline`
 #'   columns.
-#' @export
-#'
 #'
 #' @examples
 #' library(dplyr)
@@ -35,6 +31,7 @@
 #'
 #' out %>%
 #'   select(new_columns, everything())
+#' @noRd
 add_sector_and_borderline <- function(data) {
   crucial <- c(
     "sector_classification_system",

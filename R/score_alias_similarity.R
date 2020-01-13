@@ -3,18 +3,11 @@
 #' Apply `score_string_similarity()` to all combinations of `alias` values
 #' from two dataframes.
 #'
-#' @param loanbook,ald Dataframes with `alias` and optionally `sector`
-#'   columns.
-#' @param ... Additional arguments are passed on to [stringdist::stringsim].
-#' @param by_sector Should the combinations be done by sector?
-#' @inheritParams stringdist::stringdist
+#' @inheritParams match_name
 #'
 #' @seealso [match_name].
 #'
-#' @family internal-ish
-#'
 #' @return A [dplyr::tibble].
-#' @export
 #'
 #' @examples
 #' library(dplyr)
@@ -32,6 +25,7 @@
 #' score_alias_similarity(loanbook, ald)
 #'
 #' score_alias_similarity(loanbook, ald, by_sector = FALSE)
+#' @noRd
 score_alias_similarity <- function(loanbook,
                                    ald,
                                    ...,

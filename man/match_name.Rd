@@ -15,10 +15,7 @@ match_name(
 )
 }
 \arguments{
-\item{loanbook}{Dataframes with \code{alias} and optionally \code{sector}
-columns.}
-
-\item{ald}{Dataframes with \code{alias} and optionally \code{sector}
+\item{loanbook, ald}{Dataframes with \code{alias} and optionally \code{sector}
 columns.}
 
 \item{by_sector}{Should the combinations be done by sector?}
@@ -26,8 +23,8 @@ columns.}
 \item{min_score}{A number (length-1) to set the minimum \code{score} values you
 want to pick.}
 
-\item{method}{Method for distance calculation. The default is \code{"osa"},
-see \code{\link[stringdist]{stringdist-metrics}}.}
+\item{method}{Method for distance calculation. One of \code{c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")}. See
+\link[stringdist:stringdist-metrics]{stringdist::stringdist-metrics}.}
 
 \item{p}{Penalty factor for Jaro-Winkler distance. The valid range for 
 \code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
@@ -36,6 +33,8 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 \item{overwrite}{A dataframe used to overwrite the \code{sector} and/or \code{name}
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA}.}
+
+\item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 }
 \value{
 A dataframe with the same groups (if any) and columns as \code{loanbook},

@@ -28,16 +28,3 @@ matched <- tibble::tibble(
 )
 prioritize_level(matched)
 }
-\seealso{
-Other internal-ish: 
-\code{\link{add_sector_and_borderline}()},
-\code{\link{prioritize_at}()},
-\code{\link{restructure_ald_for_matching}()},
-\code{\link{restructure_loanbook_for_matching}()},
-\code{\link{score_alias_similarity}()},
-\code{\link{score_string_similarity}()},
-\code{\link{select_chr}()},
-\code{\link{to_alias}()},
-\code{\link{uniquify_id_column}()}
-}
-\concept{internal-ish}

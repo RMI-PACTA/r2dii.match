@@ -42,12 +42,7 @@
 #' prioritize(matched, priority = ~ rev(.x))
 #'
 #' # Using a custom priority
-#' bad_idea <- select_chr(
-#'   matched$level,
-#'   matches("intermediate"),
-#'   everything()
-#' )
-#' bad_idea
+#' bad_idea <- c("intermediate_parent", "ultimate_parent", "direct_loantaker")
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
@@ -98,9 +93,8 @@ set_priority <- function(data, priority) {
 #' @param data A dataframe, commonly the output of [match_name()].
 #'
 #' @return A character vector of the default level priority per loan.
-#' @export
 #'
-#' @family internal-ish
+#' @export
 #'
 #' @examples
 #' matched <- tibble::tibble(
@@ -132,10 +126,7 @@ prioritize_level <- function(data) {
 #' @param priority Most commonly, a character vector of the priority to
 #'   re-order the column(x) given by `.at`.
 #'
-#' @family internal-ish
-#'
 #' @return A dataframe, commonly with less rows than the input.
-#' @export
 #'
 #' @examples
 #' library(dplyr)
@@ -160,6 +151,7 @@ prioritize_level <- function(data) {
 #'   prioritize_at(.at = "y", priority = c("z", "a")) %>%
 #'   arrange(x) %>%
 #'   ungroup()
+#' @noRd
 prioritize_at <- function(data, .at, priority = NULL) {
   data %>%
     dplyr::arrange_at(.at, .funs = prioritize_impl, priority = priority) %>%

@@ -6,19 +6,17 @@
 #'
 #' @param data A dataframe. Should be an asset-level dataset.
 #'
-#' @family internal-ish
-#' @seealso [r2dii.dataraw::ald_demo] [to_alias()].
+#' @seealso [r2dii.dataraw::ald_demo] `to_alias()`.
 #'
 #' @return A dataframe with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
-#'
-#' @export
 #'
 #' @examples
 #' library(r2dii.dataraw)
 #'
 #' ald_demo %>%
 #'   restructure_ald_for_matching()
+#' @noRd
 restructure_ald_for_matching <- function(data) {
   data %>%
     check_crucial_names(c("name_company", "sector")) %>%
@@ -34,18 +32,12 @@ restructure_ald_for_matching <- function(data) {
 #' from values in the columns `name_direct_loantaker` and
 #' `name_ultimate_parent`.
 #'
-#' @param data A dataframe. Should be a loanbook.
-#' @param overwrite A dataframe used to overwrite the `sector` and/or `name`
-#'   columns of a particular direct loantaker or ultimate parent. To overwrite
-#'   only `sector`, the value in the `name` column should be `NA`.
+#' @inheritParams match_name
 #'
-#' @family internal-ish
 #' @seealso [r2dii.dataraw::loanbook_description]
 #'
 #' @return A dataframe with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
-#'
-#' @export
 #'
 #' @examples
 #' library(r2dii.dataraw)
@@ -55,6 +47,7 @@ restructure_ald_for_matching <- function(data) {
 #' restructure_loanbook_for_matching(lbk)
 #'
 #' restructure_loanbook_for_matching(lbk, overwrite = overwrite_demo)
+#' @noRd
 restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)

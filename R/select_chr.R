@@ -7,10 +7,7 @@
 #' @param x A character vector.
 #' @inheritDotParams tidyselect::starts_with
 #'
-#' @family internal-ish
-#'
 #' @return A character vector
-#' @export
 #'
 #' @examples
 #' # Access tidyselect helpers via dplyr or directly with `library(tidyselect)`
@@ -32,6 +29,7 @@
 #'   11:9,
 #'   "number_15"
 #' )
+#' @noRd
 select_chr <- function(x, ...) {
   stopifnot(is.character(x))
 
