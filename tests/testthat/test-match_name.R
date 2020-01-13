@@ -1,46 +1,6 @@
 library(dplyr)
 library(r2dii.dataraw)
 
-expected_names_of_match_name_with_loanbook_demo <- c(
-  "id_loan",
-
-  "id_direct_loantaker",
-  "name_direct_loantaker",
-
-  "id_intermediate_parent_1",
-  "name_intermediate_parent_1",
-
-  "id_ultimate_parent",
-  "name_ultimate_parent",
-
-  "loan_size_outstanding",
-  "loan_size_outstanding_currency",
-  "loan_size_credit_limit",
-  "loan_size_credit_limit_currency",
-
-  "sector_classification_system",
-  "sector_classification_input_type",
-  "sector_classification_direct_loantaker",
-
-  "fi_type",
-  "flag_project_finance_loan",
-  "name_project",
-
-  "lei_direct_loantaker",
-  "isin_direct_loantaker",
-
-  "id",
-  "level",
-  "sector",
-  "sector_ald",
-  "name",
-  "name_ald",
-  "alias",
-  "alias_ald",
-  "score",
-  "source"
-)
-
 test_that("match_name with non-NA only at intermediate level yields matches at
           only at intermediate level only", {
   lbk <- tibble(
@@ -262,6 +222,46 @@ test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
   expect_equal(out, expected)
 })
 
+expected_names_of_match_name_with_loanbook_demo <- c(
+  "id_loan",
+
+  "id_direct_loantaker",
+  "name_direct_loantaker",
+
+  "id_intermediate_parent_1",
+  "name_intermediate_parent_1",
+
+  "id_ultimate_parent",
+  "name_ultimate_parent",
+
+  "loan_size_outstanding",
+  "loan_size_outstanding_currency",
+  "loan_size_credit_limit",
+  "loan_size_credit_limit_currency",
+
+  "sector_classification_system",
+  "sector_classification_input_type",
+  "sector_classification_direct_loantaker",
+
+  "fi_type",
+  "flag_project_finance_loan",
+  "name_project",
+
+  "lei_direct_loantaker",
+  "isin_direct_loantaker",
+
+  "id",
+  "level",
+  "sector",
+  "sector_ald",
+  "name",
+  "name_ald",
+  "alias",
+  "alias_ald",
+  "score",
+  "source"
+)
+
 test_that("match_name w/ 1 row of full loanbook_demo yields expected names", {
   # loanbook_demo %>% mini_lbk(1) %>% mini_ald() %>% dput()
   ald_mini <- tibble::tibble(
@@ -282,6 +282,40 @@ test_that("match_name takes unprepared loanbook and ald datasets", {
   expect_error(
     match_name(slice(loanbook_demo, 1), ald_demo),
     NA
+  )
+})
+
+test_that("match_name w/ loanbook that matches nothing, yields expected", {
+  # Matches cero row ...
+  lbk2 <- slice(loanbook_demo, 2)
+  expect_warning(
+    out <- match_name(lbk2, ald_demo),
+    "no match"
+  )
+  expect_equal(nrow(out), 0L)
+  # ... but preserves minimum expected names
+  expect_named(
+    out,
+    expected_names_of_match_name_with_loanbook_demo
+  )
+})
+
+test_that("match_name w/ 2 lbk rows matching 2 ald rows, yields expected names", {
+  # Slice 5 once was problematic (#85)
+  lbk45 <- slice(loanbook_demo, 4:5)
+  expect_named(
+    match_name(lbk45, ald_demo),
+    expected_names_of_match_name_with_loanbook_demo
+  )
+})
+
+test_that("match_name w/ 1 lbk row matching ultimate, yields expected names", {
+  # Slice 1 used to fail due to poorly handled levels
+  lbk1 <- slice(loanbook_demo, 1)
+
+  expect_named(
+    match_name(lbk1, ald_demo),
+    expected_names_of_match_name_with_loanbook_demo
   )
 })
 
@@ -431,40 +465,6 @@ test_that("match_name no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
     all()
 
   expect_false(all_lbk_columns_contain_na_exclusively)
-})
-
-test_that("match_name w/ loanbook that matches nothing, yields expected", {
-  # Matches cero row ...
-  lbk2 <- slice(loanbook_demo, 2)
-  expect_warning(
-    out <- match_name(lbk2, ald_demo),
-    "no match"
-  )
-  expect_equal(nrow(out), 0L)
-  # ... but preserves minimum expected names
-  expect_named(
-    out,
-    expected_names_of_match_name_with_loanbook_demo
-  )
-})
-
-test_that("match_name w/ 2 lbk rows matching 2 ald rows, yields expected names", {
-  # Slice 5 once was problematic (#85)
-  lbk45 <- slice(loanbook_demo, 4:5)
-  expect_named(
-    match_name(lbk45, ald_demo),
-    expected_names_of_match_name_with_loanbook_demo
-  )
-})
-
-test_that("match_name w/ 1 lbk row matching ultimate, yields expected names", {
-  # Slice 1 used to fail due to poorly handled levels
-  lbk1 <- slice(loanbook_demo, 1)
-
-  expect_named(
-    match_name(lbk1, ald_demo),
-    expected_names_of_match_name_with_loanbook_demo
-  )
 })
 
 test_that("match_name handles any number if intermediate_parent columns (#84)", {
