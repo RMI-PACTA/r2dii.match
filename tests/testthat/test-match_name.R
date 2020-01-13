@@ -35,7 +35,7 @@ expected_names_of_match_name_with_loanbook_demo <- c(
   "sector_ald",
   "name",
   "name_ald",
-  "alias_lbk",
+  "alias",
   "alias_ald",
   "score",
   "source"
@@ -73,7 +73,7 @@ test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
     sector_ald = "power",
     name = "Alpine Knits India Pvt. Limited",
     name_ald = "alpine knits india pvt. limited",
-    alias_lbk = "alpineknitsindiapvt ltd",
+    alias = "alpineknitsindiapvt ltd",
     alias_ald = "alpineknitsindiapvt ltd",
     score = 1,
     source = "loanbook"
@@ -186,7 +186,7 @@ test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
 
   nanimo_scores <- this_lbk %>%
     match_name(ald_demo) %>%
-    filter(alias_lbk == this_alias) %>%
+    filter(alias == this_alias) %>%
     pull(score)
 
   expect_true(
