@@ -324,3 +324,4 @@ test_that("match_name handles any number if intermediate_parent columns (#84)", 
   has_intermediate_parent <- any(grepl("intermediate_parent_1", output_levels))
   expect_true(has_intermediate_parent)
 })
+
