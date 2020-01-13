@@ -74,7 +74,7 @@ using stringdist::stringsim()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
       </span>
     </div>
 
@@ -85,9 +85,6 @@ using stringdist::stringsim()." />
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/r2dii.match.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -147,12 +144,7 @@ using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdi
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>loanbook</th>
-      <td><p>Dataframes with <code>alias</code> and optionally <code>sector</code>
-columns.</p></td>
-    </tr>
-    <tr>
-      <th>ald</th>
+      <th>loanbook, ald</th>
       <td><p>Dataframes with <code>alias</code> and optionally <code>sector</code>
 columns.</p></td>
     </tr>
@@ -167,8 +159,8 @@ want to pick.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Method for distance calculation. The default is <code>"osa"</code>,
-see <code><a href='https://rdrr.io/pkg/stringdist/man/stringdist-metrics.html'>stringdist-metrics</a></code>.</p></td>
+      <td><p>Method for distance calculation. One of <code><a href='https://rdrr.io/r/base/c.html'>c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")</a></code>. See
+<a href='https://rdrr.io/pkg/stringdist/man/stringdist-metrics.html'>stringdist::stringdist-metrics</a>.</p></td>
     </tr>
     <tr>
       <th>p</th>
@@ -181,6 +173,10 @@ Jaro-distance is returned. Applies only to <code>method='jw'</code>.</p></td>
       <td><p>A dataframe used to overwrite the <code>sector</code> and/or <code>name</code>
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only <code>sector</code>, the value in the <code>name</code> column should be <code>NA</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments are passed on to <a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim</a>.</p></td>
     </tr>
     </table>
 
@@ -222,23 +218,27 @@ commonly used in name matching algorithms:</p><ul>
 <code><a href='prioritize.html'>prioritize</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)
-
-<span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 1,350 x 26
-#&gt;    id_loan id_direct_loant… id_intermediate… id_ultimate_par… loan_size_outst…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                       &lt;dbl&gt;
-#&gt;  1 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  2 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  3 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  4 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  5 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  6 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  7 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  8 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  9 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt; 10 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt; # … with 1,340 more rows, and 21 more variables:
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: r2dii.utils</span></div><div class='input'>
+<span class='fu'>match_name</span>(<span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 459 x 29
+#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 L170    C203             Tesla Inc        &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  2 L180    C217             Weichai Power C… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  3 L181    C218             Wheego           &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  4 L195    C313             Zhengzhou Yuton… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  5 L174    C211             Tvr              &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  6 L198    C317             Ziyang Nanjun    &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  7 L193    C310             Zamyad           &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  8 L165    C195             Sunwin Bus       &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  9 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            
+#&gt; 10 L164    C193             Subaru Corp      &lt;NA&gt;             &lt;NA&gt;            
+#&gt; # … with 449 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,
+#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
 #&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
 #&gt; #   sector_classification_input_type &lt;chr&gt;,
@@ -246,25 +246,26 @@ commonly used in name matching algorithms:</p><ul>
 #&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
 #&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id &lt;chr&gt;,
 #&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
-#&gt; #   alias &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</div><div class='input'>
+#&gt; #   alias_lbk &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</div><div class='input'>
 <span class='fu'>match_name</span>(
   <span class='no'>loanbook_demo</span>, <span class='no'>ald_demo</span>,
   <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</div><div class='output co'>#&gt; # A tibble: 1,848 x 26
-#&gt;    id_loan id_direct_loant… id_intermediate… id_ultimate_par… loan_size_outst…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                       &lt;dbl&gt;
-#&gt;  1 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  2 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  3 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  4 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  5 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  6 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  7 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  8 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt;  9 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt; 10 &lt;NA&gt;    &lt;NA&gt;             &lt;NA&gt;             &lt;NA&gt;                           NA
-#&gt; # … with 1,838 more rows, and 21 more variables:
+)</div><div class='output co'>#&gt; # A tibble: 623 x 29
+#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+#&gt;  1 L86     C137             Nanaimo Forest … &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  2 L223    C307             Yunnan Cement    &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  3 L14     C296             Yuasfnjiang Ele… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  4 L287    C2               Africa Oil Corp  &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  5 L142    C86              Hang Hai Co Ltd  &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  6 L31     C273             Yorkshire Windp… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  7 L17     C290             Yu Wsang Shaanx… &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  8 L316    C3               Airasia X Bhd    &lt;NA&gt;             &lt;NA&gt;            
+#&gt;  9 L316    C3               Airasia X Bhd    &lt;NA&gt;             &lt;NA&gt;            
+#&gt; 10 L317    C4               Airbaltic        &lt;NA&gt;             &lt;NA&gt;            
+#&gt; # … with 613 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,
+#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
 #&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
 #&gt; #   sector_classification_input_type &lt;chr&gt;,
@@ -272,7 +273,7 @@ commonly used in name matching algorithms:</p><ul>
 #&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
 #&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id &lt;chr&gt;,
 #&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
-#&gt; #   alias &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</div></pre>
+#&gt; #   alias_lbk &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

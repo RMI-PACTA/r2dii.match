@@ -4,9 +4,6 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.match//index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/add_sector_and_borderline.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html</loc>
   </url>
   <url>
@@ -16,36 +13,9 @@
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_at.html</loc>
-  </url>
-  <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html</loc>
   </url>
   <url>
     <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/r2dii.match-package.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/restructure_ald_for_matching.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/restructure_loanbook_for_matching.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/score_alias_similarity.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/score_string_similarity.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/select_chr.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/to_alias.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/uniquify_id_column.html</loc>
-  </url>
-  <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//articles/r2dii.match.html</loc>
   </url>
 </urlset>

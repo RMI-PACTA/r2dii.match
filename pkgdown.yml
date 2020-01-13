@@ -1,8 +1,7 @@
 pandoc: '2.2'
 pkgdown: 1.4.1
 pkgdown_sha: ~
-articles:
-  r2dii.match: r2dii.match.html
+articles: []
 urls:
   reference: https://github.com/2DegreesInvesting/r2dii.match//reference
   article: https://github.com/2DegreesInvesting/r2dii.match//articles

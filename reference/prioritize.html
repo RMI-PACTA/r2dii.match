@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9004</span>
       </span>
     </div>
 
@@ -80,9 +80,6 @@
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
-</li>
-<li>
-  <a href="../articles/r2dii.match.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -190,12 +187,8 @@ priority level is highest.</p>
 #&gt; 1     1 aa    ultimate_parent
 #&gt; 2     1 bb    ultimate_parent</div><div class='input'>
 <span class='co'># Using a custom priority</span>
-<span class='no'>bad_idea</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='select_chr.html'>select_chr</a></span>(
-  <span class='no'>matched</span>$<span class='no'>level</span>,
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>matches</a></span>(<span class='st'>"intermediate"</span>),
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>everything</a></span>()
-)
-<span class='no'>bad_idea</span></div><div class='output co'>#&gt; [1] "intermediate_parent" "ultimate_parent"     "direct_loantaker"   </div><div class='input'>
+<span class='no'>bad_idea</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"intermediate_parent"</span>, <span class='st'>"ultimate_parent"</span>, <span class='st'>"direct_loantaker"</span>)
+
 <span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>bad_idea</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
 #&gt;   score id    level              
 #&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
