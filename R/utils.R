@@ -8,7 +8,7 @@
 
 extract_level_names <- function(data, prefix) {
   pattern <- paste0(prefix, level(), collapse = "|")
-  columns <- select(data, matches(pattern))
+  columns <- select(data, tidyselect::matches(pattern))
   names(columns)
 }
 
