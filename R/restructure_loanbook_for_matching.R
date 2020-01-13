@@ -75,7 +75,7 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
       important_columns,
       .data$sector
     ) %>%
-    identify_loans_by_sector_and_level() %>%
+    identify_loans_by_level() %>%
     identify_loans_by_name() %>%
     mutate(source = "loanbook") %>%
     select(.data$rowid, output_cols_for_prepare_loanbook()) %>%
@@ -160,7 +160,7 @@ output_cols_for_prepare_loanbook <- function() {
   )
 }
 
-identify_loans_by_sector_and_level <- function(data) {
+identify_loans_by_level <- function(data) {
   data %>%
     tidyr::pivot_longer(
       cols = tidyr::starts_with("id_"),
