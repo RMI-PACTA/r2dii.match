@@ -1,7 +1,21 @@
 library(dplyr)
 library(r2dii.dataraw)
 
-test_that("prioritize works with loanbook_demo and ald_demo", {
+test_that("prioritize w/ 2 identical rows except for sector_ald yields 2 rows", {
+  # Minimal data derived from
+  # loanbook_demo %>% filter(id_loan == "L162")
+  # styler: off
+  matched <- tibble::tribble(
+    ~id_loan,   ~id,             ~level, ~score,      ~sector,  ~sector_ald,
+      "L162", "UP1",  "ultimate_parent",      1, "automotive",   "shipping",
+      "L162", "UP1",  "ultimate_parent",      1, "automotive", "automotive",
+  )
+  # styler: on
+
+  expect_equal(nrow(prioritize(matched)), 2L)
+})
+
+test_that("prioritize w/ full demo datasets throws no error", {
   expect_error(
     loanbook_demo %>%
       slice(4:5) %>%
