@@ -1,7 +1,7 @@
 library(dplyr)
 library(r2dii.dataraw)
 
-test_that("prioritize works with loanbook_demo and ald_demo", {
+test_that("prioritize w/ full demo datasets throws no error", {
   expect_error(
     loanbook_demo %>%
       slice(4:5) %>%
@@ -49,7 +49,7 @@ test_that("prioritize picks score equal to 1", {
     ~id,             ~level, ~score,
    "aa", "direct_loantaker",      1,
    "bb", "direct_loantaker",    0.9,
-    )
+  )
   # styler: on
 
   expect_equal(min(prioritize(matched)$score), 1L)
