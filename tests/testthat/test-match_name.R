@@ -467,7 +467,7 @@ test_that("match_name no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
   expect_false(all_lbk_columns_contain_na_exclusively)
 })
 
-test_that("match_name handles any number if intermediate_parent columns (#84)", {
+test_that("match_name handles any number of intermediate_parent columns (#84)", {
   # name_level is identical for all levels. I expect them all in the output
   name_level <- "Alpine Knits India Pvt. Limited"
 
