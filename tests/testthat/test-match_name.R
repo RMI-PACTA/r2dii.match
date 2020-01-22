@@ -147,7 +147,7 @@ test_that("match_name with sector 'not in scope' warns '*.no match'", {
   )
 })
 
-test_that("match_name with missmatching sector_classification yields no match", {
+test_that("match_name with mismatching sector_classification yields no match", {
   # loanbook's sector_classification_direct_loantaker and ald sector should
   # match (lookup code to sectors via sector_clasiffication_df()$code).
   code_maps_to_sector_power <- 27
@@ -168,11 +168,14 @@ test_that("match_name with missmatching sector_classification yields no match", 
   )
   expect_equal(nrow(match_name(lbk_mini1, ald_mini)), 1L)
 
-  # Here they do NOT match and we expect no match
+  # Here they do NOT match and we expect no match if by_sector=T
   sector_not_power <- "coal"
   ald_mini$sector <- sector_not_power
   out <- expect_warning(match_name(lbk_mini1, ald_mini), "no match")
   expect_equal(nrow(out), 0L)
+
+  # If by_sector=F, we expect match
+  expect_equal(nrow(match_name(lbk_mini1,ald_mini, by_sector=F)), 1L)
 })
 
 test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
