@@ -31,8 +31,8 @@ test_that("match_name w/ missing values at all levels outputs 0-row", {
   lbk <- tibble(
     id_direct_loantaker = NA_character_,
     name_direct_loantaker = NA_character_,
-    id_ultimate_parent =  NA_character_,
-    name_ultimate_parent =  NA_character_,
+    id_ultimate_parent = NA_character_,
+    name_ultimate_parent = NA_character_,
     sector_classification_system = "NACE",
     sector_classification_direct_loantaker = 291,
   )
@@ -57,8 +57,8 @@ test_that("match_name w/ 1 lbk row matching 1 ald company in 2 sectors yields
     sector_classification_system = "NACE",
     sector_classification_direct_loantaker = 291,
 
-    id_ultimate_parent =  NA_character_,
-    name_ultimate_parent =  NA_character_,
+    id_ultimate_parent = NA_character_,
+    name_ultimate_parent = NA_character_,
   )
 
   ald <- tibble(
@@ -175,7 +175,7 @@ test_that("match_name with mismatching sector_classification yields no match", {
   expect_equal(nrow(out), 0L)
 
   # If by_sector=F, we expect match
-  expect_equal(nrow(match_name(lbk_mini1,ald_mini, by_sector=F)), 1L)
+  expect_equal(nrow(match_name(lbk_mini1, ald_mini, by_sector = F)), 1L)
 })
 
 test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
@@ -501,4 +501,3 @@ test_that("match_name handles any number of intermediate_parent columns (#84)", 
   has_intermediate_parent <- any(grepl("intermediate_parent_1", output_levels))
   expect_true(has_intermediate_parent)
 })
-

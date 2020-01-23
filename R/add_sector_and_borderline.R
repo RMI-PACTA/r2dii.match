@@ -47,7 +47,6 @@ add_sector_and_borderline <- function(data) {
   has_unknown_code_system <-
     !any(data2$sector_classification_system %in% classification$code_system)
   if (has_unknown_code_system) {
-
     good_systems <- unique(classification$code_system)
     good_systems_string <- paste(good_systems, collapse = ", ")
 
