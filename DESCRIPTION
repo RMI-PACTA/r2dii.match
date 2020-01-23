@@ -67,6 +67,7 @@ Remotes:
     2degreesinvesting/r2dii.dataraw,
     2degreesinvesting/r2dii.utils
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
