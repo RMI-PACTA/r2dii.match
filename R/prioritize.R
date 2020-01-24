@@ -23,11 +23,11 @@
 #' library(dplyr)
 #'
 #' matched <- tribble(
-#'   ~score, ~id, ~level,
-#'   1, "aa", "ultimate_parent",
-#'   1, "aa", "direct_loantaker",
-#'   1, "bb", "intermediate_parent",
-#'   1, "bb", "ultimate_parent",
+#'   ~sector, ~sector_ald, ~score,  ~id,  ~level,
+#'   "coal",  "coal",      1,       "aa", "ultimate_parent",
+#'   "coal",  "coal",      1,       "aa", "direct_loantaker",
+#'   "coal",  "coal",      1,       "bb", "intermediate_parent",
+#'   "coal",  "coal",      1,       "bb", "ultimate_parent",
 #' )
 #'
 #' prioritize_level(matched)
@@ -46,14 +46,14 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  check_crucial_names(data, c("id", "level", "score"))
+  check_crucial_names(data, c("id", "level", "score", "sector", "sector_ald"))
   priority <- set_priority(data, priority = priority)
 
   old_groups <- dplyr::groups(data)
   perfect_matches <- filter(ungroup(data), .data$score == 1L)
 
   out <- perfect_matches %>%
-    group_by(.data$id) %>%
+    group_by(.data$id, .data$sector, .data$sector_ald) %>%
     prioritize_at(.at = "level", priority = priority) %>%
     ungroup()
 
