@@ -34,42 +34,75 @@
 #' @noRd
 add_sector_and_borderline <- function(data) {
   crucial <- c(
-    "sector_classification_system",
-    "sector_classification_direct_loantaker"
+    "sector_classification_system", "sector_classification_direct_loantaker"
   )
-  check_crucial_names(data, crucial)
 
-  classification <- sector_clasiffication_df()
+  checked <- data %>%
+    check_crucial_names(crucial) %>%
+    # Coerce crucial columns to character for more robust join()
+    purrr::modify_at(crucial, as.character) %>%
+    check_classification(column = "sector_classification_system") %>%
+    check_classification(column = "sector_classification_direct_loantaker")
 
-  # Coerce crucial columns to character for more robust join()
-  data2 <- data %>% purrr::modify_at(crucial, as.character)
+  out <- left_join(
+    checked, sector_classification_df(),
+    by = set_names(c("code_system", "code"), crucial)
+  )
 
-  has_unknown_code_system <-
-    !any(data2$sector_classification_system %in% classification$code_system)
-  if (has_unknown_code_system) {
-    good_systems <- unique(classification$code_system)
-    good_systems_string <- paste(good_systems, collapse = ", ")
+  restore_typeof(data, out, crucial)
+}
 
-    stop(
-      "At least one loan must use 2dii's sector code systems:\n",
-      good_systems_string,
-      "\n",
-      "Are all of your loans classified as in 2dii's database?",
-      call. = FALSE
+check_classification <- function(data,
+                                 column,
+                                 classification = sector_classification_df()) {
+  # To call columns from both data and classification with the same colname
+  reference <- rename_as_loanbook(classification)
+
+  all_unknown <- !any(data[[column]] %in% reference[[column]])
+  known <- unique(reference[[column]])
+  if (all_unknown) {
+    abort(
+      class = "all_sector_classification_is_unknown",
+      message = glue(
+        "Some `{column}` must be known, i.e. one of:
+        {collapse2(known)}"
+      )
     )
   }
 
-  by <- stats::setNames(c("code_system", "code"), crucial)
-  out <- left_join(data2, classification, by = by)
+  unknown <- setdiff(unique(data[[column]]), reference[[column]])
+  some_unknown <- !identical(unknown, character(0))
+  if (some_unknown) {
+    warn(
+      class = "some_sector_classification_is_unknown",
+      message = glue(
+        "Some `{column}` are unknown:
+        {collapse2(unknown)}"
+      )
+    )
+  }
 
-  restore_typeof(data, out, crucial)
+  invisible(data)
+}
+
+collapse2 <- function(x, sep = ", ", last = " and ", width = 80) {
+  glue::glue_collapse(x, sep = sep, last = last, width = width)
+}
+
+rename_as_loanbook <- function(classification) {
+  classification %>%
+    check_crucial_names(c("code_system", "code")) %>%
+    dplyr::rename(
+      sector_classification_system = .data$code_system,
+      sector_classification_direct_loantaker = .data$code
+    )
 }
 
 exported_data <- function(package) {
   utils::data(package = package)$results[, "Item"]
 }
 
-sector_clasiffication_df <- function() {
+sector_classification_df <- function() {
   pkg <- "package:r2dii.dataraw"
   check_is_attached(pkg)
 
