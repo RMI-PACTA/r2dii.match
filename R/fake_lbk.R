@@ -3,9 +3,10 @@
 #' These funtions are developer-oriented. They all call [tibble::tibble()] so
 #' you can expect all the goodies that come with that.
 #' * `fake_lbk()` is based on `mini_lbk(loanbook_demo, 1)` with the additional,
-#'   non-crucal columns `id_intermediate_parent_1`, `name_intermediate_parent_1`.
+#' non-crucal columns `id_intermediate_parent_1`, `name_intermediate_parent_1`.
 #' * `fake_lbk()` is created from applying `mini_lbk()` to `fake_lbk()`.
-#' * `fake_matched()` fakes the ouput of `match_name()`.
+#' * `fake_matched()` fakes the ouput of `match_name()`. It is based on
+#' `loanbook_demo %>% filter(id_loan == "L162")`.
 #'
 #' @section Params
 #' The arguments are the column names of the datasets being faked. They all have
