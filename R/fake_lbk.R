@@ -95,12 +95,12 @@ fake_matched <- function(id_loan = NULL,
                          sector_ald = NULL,
                          ...) {
   tibble::tibble(
-    id_loan = "L162",
-    id = "UP1",
-    level = "ultimate_parent",
-    score = 1,
-    sector = "automotive",
-    sector_ald = "automotive",
+    id_loan = id_loan %||% "L162",
+    id = id %||% "UP1",
+    level = level %||% "ultimate_parent",
+    score = score %||% 1,
+    sector = sector %||% "automotive",
+    sector_ald = sector_ald %||% "automotive",
     ...
   )
 }
