@@ -84,7 +84,7 @@ check_classification <- function(data,
   invisible(data)
 }
 
-collapse2 <- function(x, sep = ", ", last = " and ", width = 120) {
+collapse2 <- function(x, sep = ", ", last = " and ", width = 80) {
   glue::glue_collapse(x, sep = sep, last = last, width = width)
 }
 
