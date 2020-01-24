@@ -160,40 +160,40 @@ priority level is highest.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 
 <span class='no'>matched</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-  ~<span class='no'>score</span>, ~<span class='no'>id</span>, ~<span class='no'>level</span>,
-  <span class='fl'>1</span>, <span class='st'>"aa"</span>, <span class='st'>"ultimate_parent"</span>,
-  <span class='fl'>1</span>, <span class='st'>"aa"</span>, <span class='st'>"direct_loantaker"</span>,
-  <span class='fl'>1</span>, <span class='st'>"bb"</span>, <span class='st'>"intermediate_parent"</span>,
-  <span class='fl'>1</span>, <span class='st'>"bb"</span>, <span class='st'>"ultimate_parent"</span>,
+  ~<span class='no'>sector</span>, ~<span class='no'>sector_ald</span>, ~<span class='no'>score</span>,  ~<span class='no'>id</span>,  ~<span class='no'>level</span>,
+  <span class='st'>"coal"</span>,  <span class='st'>"coal"</span>,      <span class='fl'>1</span>,       <span class='st'>"aa"</span>, <span class='st'>"ultimate_parent"</span>,
+  <span class='st'>"coal"</span>,  <span class='st'>"coal"</span>,      <span class='fl'>1</span>,       <span class='st'>"aa"</span>, <span class='st'>"direct_loantaker"</span>,
+  <span class='st'>"coal"</span>,  <span class='st'>"coal"</span>,      <span class='fl'>1</span>,       <span class='st'>"bb"</span>, <span class='st'>"intermediate_parent"</span>,
+  <span class='st'>"coal"</span>,  <span class='st'>"coal"</span>,      <span class='fl'>1</span>,       <span class='st'>"bb"</span>, <span class='st'>"ultimate_parent"</span>,
 )
 
 <span class='fu'><a href='prioritize_level.html'>prioritize_level</a></span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; [1] "direct_loantaker"    "intermediate_parent" "ultimate_parent"    </div><div class='input'>
 <span class='co'># Using default priority</span>
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   score id    level              
-#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
-#&gt; 1     1 aa    direct_loantaker   
-#&gt; 2     1 bb    intermediate_parent</div><div class='input'>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 5
+#&gt;   sector sector_ald score id    level              
+#&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
+#&gt; 1 coal   coal           1 aa    direct_loantaker   
+#&gt; 2 coal   coal           1 bb    intermediate_parent</div><div class='input'>
 <span class='co'># Using the reverse of the default priority</span>
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>rev</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   score id    level          
-#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;          
-#&gt; 1     1 aa    ultimate_parent
-#&gt; 2     1 bb    ultimate_parent</div><div class='input'>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>rev</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 5
+#&gt;   sector sector_ald score id    level          
+#&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;          
+#&gt; 1 coal   coal           1 aa    ultimate_parent
+#&gt; 2 coal   coal           1 bb    ultimate_parent</div><div class='input'>
 <span class='co'># Same</span>
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='no'>.x</span>))</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   score id    level          
-#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;          
-#&gt; 1     1 aa    ultimate_parent
-#&gt; 2     1 bb    ultimate_parent</div><div class='input'>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='no'>.x</span>))</div><div class='output co'>#&gt; # A tibble: 2 x 5
+#&gt;   sector sector_ald score id    level          
+#&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;          
+#&gt; 1 coal   coal           1 aa    ultimate_parent
+#&gt; 2 coal   coal           1 bb    ultimate_parent</div><div class='input'>
 <span class='co'># Using a custom priority</span>
 <span class='no'>bad_idea</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"intermediate_parent"</span>, <span class='st'>"ultimate_parent"</span>, <span class='st'>"direct_loantaker"</span>)
 
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>bad_idea</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 3
-#&gt;   score id    level              
-#&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
-#&gt; 1     1 bb    intermediate_parent
-#&gt; 2     1 aa    ultimate_parent    </div></pre>
+<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>bad_idea</span>)</div><div class='output co'>#&gt; # A tibble: 2 x 5
+#&gt;   sector sector_ald score id    level              
+#&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
+#&gt; 1 coal   coal           1 bb    intermediate_parent
+#&gt; 2 coal   coal           1 aa    ultimate_parent    </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
