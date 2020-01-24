@@ -23,11 +23,11 @@
 #' library(dplyr)
 #'
 #' matched <- tribble(
-#'   ~score, ~id, ~level,
-#'   1, "aa", "ultimate_parent",
-#'   1, "aa", "direct_loantaker",
-#'   1, "bb", "intermediate_parent",
-#'   1, "bb", "ultimate_parent",
+#'   ~sector, ~sector_ald, ~score,  ~id,  ~level,
+#'   "coal",  "coal",      1,       "aa", "ultimate_parent",
+#'   "coal",  "coal",      1,       "aa", "direct_loantaker",
+#'   "coal",  "coal",      1,       "bb", "intermediate_parent",
+#'   "coal",  "coal",      1,       "bb", "ultimate_parent",
 #' )
 #'
 #' prioritize_level(matched)
