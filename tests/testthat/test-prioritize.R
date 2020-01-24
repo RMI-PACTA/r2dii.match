@@ -1,6 +1,17 @@
 library(dplyr)
 library(r2dii.dataraw)
 
+test_that("prioritize w/ 2 identical rows except for sector yields 2 rows", {
+  matched <- tibble::tribble(
+    ~id_loan,   ~id,             ~level, ~score,  ~sector_ald,      ~sector,
+      "L162", "UP1",  "ultimate_parent",      1, "automotive",   "shipping",
+      "L162", "UP1",  "ultimate_parent",      1, "automotive", "automotive",
+  )
+  # styler: on
+
+  expect_equal(nrow(prioritize(matched)), 2L)
+})
+
 test_that("prioritize w/ 2 identical rows except for sector_ald yields 2 rows", {
   # Minimal data derived from
   # loanbook_demo %>% filter(id_loan == "L162")
