@@ -95,13 +95,7 @@ test_that("prioritize takes a `priority` function or lambda", {
 })
 
 test_that("prioritize is sensitive to `priority`", {
-  matched <- tibble(
-    id = "aa",
-    level = c("z", "a"),
-    score = 1,
-    sector_ald = "coal",
-    sector = "coal"
-  )
+  matched <- fake_matched(level = c("z", "a"))
   expect_equal(
     prioritize(matched, priority = "z")$level,
     "z"
