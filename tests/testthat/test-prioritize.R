@@ -80,17 +80,8 @@ test_that("prioritize picks the highetst level per loan", {
   )
 })
 
-test_that("prioritize takes a `priority` function
-          or lambda", {
-  level <- c("direct_loantaker", "ultimate_parent")
-  matched <- tibble(
-      id = "aa",
-      level,
-      score = 1,
-      sector_ald = "coal",
-      sector = "coal"
-    )
-
+test_that("prioritize takes a `priority` function or lambda", {
+  matched <- fake_matched(level = c("direct_loantaker", "ultimate_parent"))
   out <- prioritize(matched, priority = NULL)
   expect_equal(out$level, "direct_loantaker")
 
