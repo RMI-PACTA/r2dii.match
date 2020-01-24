@@ -46,14 +46,14 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  check_crucial_names(data, c("id", "level", "score"))
+  check_crucial_names(data, c("id", "level", "score", "sector_ald"))
   priority <- set_priority(data, priority = priority)
 
   old_groups <- dplyr::groups(data)
   perfect_matches <- filter(ungroup(data), .data$score == 1L)
 
   out <- perfect_matches %>%
-    group_by(.data$id) %>%
+    group_by(.data$id, .data$sector_ald) %>%
     prioritize_at(.at = "level", priority = priority) %>%
     ungroup()
 

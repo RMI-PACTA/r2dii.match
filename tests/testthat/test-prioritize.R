@@ -28,7 +28,7 @@ test_that("prioritize w/ full demo datasets throws no error", {
 test_that("prioritize errors gracefully if data lacks crucial columns", {
   expect_error(prioritize(tibble(bad = 1)), "must have.*names")
 
-  matched <- tibble(id = "a", level = "a", score = 1)
+  matched <- tibble(id = "a", level = "a", score = 1, sector_ald = "coal")
   expect_error(prioritize(matched), NA)
 
   expect_error(
@@ -43,10 +43,16 @@ test_that("prioritize errors gracefully if data lacks crucial columns", {
     prioritize(select(matched, -score)),
     "must have.*names"
   )
+  expect_error(
+    prioritize(select(matched, -sector_ald)),
+    "must have.*names"
+  )
 })
 
 test_that("prioritize errors gracefully with bad `priority`", {
-  matched <- tibble(id = "a", level = c("z", "a"), score = 1)
+  matched <- tibble(
+    id = "a", level = c("z", "a"), score = 1, sector_ald = "coal"
+  )
   expect_warning(
     prioritize(matched, priority = c("bad1", "bab2")),
     "[Ii]gnoring.*levels"
@@ -60,9 +66,9 @@ test_that("prioritize errors gracefully with bad `priority`", {
 test_that("prioritize picks score equal to 1", {
   # styler: off
   matched <- tibble::tribble(
-    ~id,             ~level, ~score,
-   "aa", "direct_loantaker",      1,
-   "bb", "direct_loantaker",    0.9,
+    ~id,             ~level, ~score, ~sector_ald,
+   "aa", "direct_loantaker",      1,      "coal",
+   "bb", "direct_loantaker",    0.9,      "coal",
     )
   # styler: on
 
@@ -72,11 +78,11 @@ test_that("prioritize picks score equal to 1", {
 test_that("prioritize picks priority level per loan", {
   # styler: off
   matched <- tibble::tribble(
-    ~id,                  ~level, ~score,
-   "aa",       "ultimate_parent",      1,
-   "aa",      "direct_loantaker",      1,  # pick this
-   "bb",   "intermediate_parent",      1,  # pick this
-   "bb",      "ultimate_parent",       1,
+    ~id,                 ~level, ~sector_ald, ~score,
+   "aa",      "ultimate_parent",      "coal",      1,
+   "aa",     "direct_loantaker",      "coal",      1,  # pick this
+   "bb",  "intermediate_parent",      "coal",      1,  # pick this
+   "bb",      "ultimate_parent",      "coal",      1,
     )
   # styler: on
 
@@ -89,11 +95,11 @@ test_that("prioritize picks priority level per loan", {
 test_that("prioritize picks the highetst level per loan", {
   # styler: off
   matched <- tibble::tribble(
-     ~id,                  ~level, ~score,
-    "aa",       "ultimate_parent",      1,
-    "aa",      "direct_loantaker",      1,  # pick this
-    "bb",   "intermediate_parent",      1,  # pick this
-    "bb",      "ultimate_parent",       1,
+    ~id,                 ~level, ~sector_ald, ~score,
+    "aa",     "ultimate_parent",      "coal",      1,
+    "aa",    "direct_loantaker",      "coal",      1,  # pick this
+    "bb", "intermediate_parent",      "coal",      1,  # pick this
+    "bb",     "ultimate_parent",      "coal",      1,
     )
   # styler: on
 
@@ -106,7 +112,7 @@ test_that("prioritize picks the highetst level per loan", {
 test_that("prioritize takes a `priority` function
           or lambda", {
   level <- c("direct_loantaker", "ultimate_parent")
-  matched <- tibble(id = "aa", level, score = 1)
+  matched <- tibble(id = "aa", level, score = 1, sector_ald = "coal")
 
   out <- prioritize(matched, priority = NULL)
   expect_equal(out$level, "direct_loantaker")
@@ -121,7 +127,9 @@ test_that("prioritize takes a `priority` function
 })
 
 test_that("prioritize is sensitive to `priority`", {
-  matched <- tibble(id = "aa", level = c("z", "a"), score = 1)
+  matched <- tibble(
+    id = "aa", level = c("z", "a"), score = 1, sector_ald = "coal"
+  )
   expect_equal(
     prioritize(matched, priority = "z")$level,
     "z"
@@ -131,11 +139,11 @@ test_that("prioritize is sensitive to `priority`", {
 test_that("prioritize ignores other groups", {
   # styler: off
   matched <- tibble::tribble(
-    ~id, ~level, ~score, ~other_id,
-    "a",    "z",      1,         1,
-    "a",    "a",      1,         2,
-    "b",    "z",      1,         3,
-    "b",    "a",      1,         4,
+    ~id, ~level, ~score, ~other_id, ~sector_ald,
+    "a",    "z",      1,         1,      "coal",
+    "a",    "a",      1,         2,      "coal",
+    "b",    "z",      1,         3,      "coal",
+    "b",    "a",      1,         4,      "coal",
   ) %>%
     group_by(other_id)
   # styler: on
@@ -151,11 +159,11 @@ test_that("prioritize ignores other groups", {
 test_that("prioritize previous preserves groups", {
   # styler: off
   matched <- tibble::tribble(
-    ~id, ~level, ~score, ~other_id,
-    "a",    "z",      1,         1,
-    "a",    "a",      1,         2,
-    "b",    "z",      1,         3,
-    "b",    "a",      1,         4,
+    ~id, ~level, ~score, ~other_id, ~sector_ald,
+    "a",    "z",      1,         1, "automotive",
+    "a",    "a",      1,         2, "automotive",
+    "b",    "z",      1,         3, "automotive",
+    "b",    "a",      1,         4, "automotive",
   ) %>%
     group_by(other_id, score)
   # styler: on
