@@ -172,11 +172,11 @@ test_that("prioritize_at with grouped data picks one row per group", {
   expect_equal(out$y, c("a", "z"))
 })
 
-test_that("prioritize_at does not warn if a group has not all priority items", {
+test_that("prioritize does not warn if a group has not all priority items", {
   expect_warning(
-    tibble(x = c("a", "z"), y = x) %>%
-      group_by(y) %>%
-      prioritize_at(.at = "x", priority = c("z", "a")),
+    fake_matched(level = c("a", "z"), new = level) %>%
+      group_by(new) %>%
+      prioritize(priority = c("z", "a")),
     NA
   )
 })
