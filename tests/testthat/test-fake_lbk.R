@@ -16,3 +16,7 @@ test_that("fake_lbk creates new columns", {
     c(names(fake_lbk()), "new1", "new2")
   )
 })
+
+test_that("fake_lbk outputs known value", {
+  expect_known_value(fake_lbk(), "ref-fake_lbk", update = FALSE)
+})
