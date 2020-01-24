@@ -4,12 +4,24 @@
 #' * `fake_lbk()` is based on `mini_lbk(loanbook_demo, 1)` with the additional,
 #'   non-crucal columns `id_intermediate_parent_1`, `name_intermediate_parent_1`.
 #' * `fake_lbk()` is created from applying `mini_lbk()` to `fake_lbk()`.
+#' * `fake_matched()` fakes the ouput of `match_name()`.
 #'
-#' @section Params:
-#' The arguments are the names of the crucial columns of loanbook and ald
-#' datasets.
+#' @section Params
+#' The arguments are the column names of the datasets being faked. They all have
+#' a default and it can be overwritten.
 #'
-#' @seealso `mini_lbk()` `mini_ald()`
+#' @section Pros and cons
+#' These functions help you to avoid duplicating test code, and help
+#' the reader of your code to focus on the one thing you want to test, instead
+#' of burring that thing in the much longer code you need to create a fake
+#' object from scratch.
+#'
+#' But `fake_*()` functions hide the explicit content. If the reader of your
+#' code wants to inspect the data being tested, they need to jump to the
+#' function definition or call them interactively.
+#'
+#' @seealso `mini_lbk()`, `mini_ald()`, [r2dii.dataraw::loanbook_demo]
+#'   [r2dii.dataraw::ald_demo]
 #'
 #' @return A dataframe
 #'
@@ -17,6 +29,10 @@
 #' fake_lbk()
 #'
 #' fake_ald()
+#'
+#' fake_matched()
+#'
+#' fake_matched(id = c("a", "a"), sector = c("coal", "automotive"))
 #'
 #' identical(fake_ald(), mini_ald(fake_lbk()))
 #'
@@ -53,6 +69,22 @@ fake_ald <- function(name_company = NULL,
     alias_ald = alias_ald %||% "alpineknitsindiapvt ltd"
   )
 
+}
+
+#' See `fake_lbk()`
+#' @noRd
+fake_matched <- function(id = NULL,
+                         level = NULL,
+                         score = NULL,
+                         sector_ald = NULL,
+                         sector = NULL) {
+  tibble::tibble(
+    id = id %||% "a",
+    level = level %||% "a",
+    score = score %||% 1,
+    sector_ald = sector_ald %||% "coal",
+    sector = sector %||% "coal",
+  )
 }
 
 #' Help to create minimal loanbook (lbk) and asset-level data (ald)
