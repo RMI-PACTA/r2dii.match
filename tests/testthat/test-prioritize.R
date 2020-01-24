@@ -22,46 +22,37 @@ test_that("prioritize w/ full demo datasets throws no error", {
 })
 
 test_that("prioritize errors gracefully if data lacks crucial columns", {
-  matched <- fake_matched()
-
-  expect_error(prioritize(matched), NA)
+  expect_error(prioritize(fake_matched()), NA)
 
   expect_error(
-    prioritize(select(matched, -id)),
+    prioritize(select(fake_matched(), -id)),
     "must have.*names"
   )
   expect_error(
-    prioritize(select(matched, -level)),
+    prioritize(select(fake_matched(), -level)),
     "must have.*names"
   )
   expect_error(
-    prioritize(select(matched, -score)),
+    prioritize(select(fake_matched(), -score)),
     "must have.*names"
   )
   expect_error(
-    prioritize(select(matched, -sector_ald)),
+    prioritize(select(fake_matched(), -sector_ald)),
     "must have.*names"
   )
   expect_error(
-    prioritize(select(matched, -sector)),
+    prioritize(select(fake_matched(), -sector)),
     "must have.*names"
   )
 })
 
 test_that("prioritize errors gracefully with bad `priority`", {
-  matched <- tibble(
-    id = "a",
-    level = c("z", "a"),
-    score = 1,
-    sector_ald = "coal",
-    sector = "coal"
-  )
   expect_warning(
-    prioritize(matched, priority = c("bad1", "bab2")),
+    prioritize(fake_matched(), priority = c("bad1", "bab2")),
     "[Ii]gnoring.*levels"
   )
   expect_warning(
-    prioritize(matched, priority = c("bad1", "bab2")),
+    prioritize(fake_matched(), priority = c("bad1", "bab2")),
     "[Uu]nknown.*bad1.*bab2"
   )
 })
