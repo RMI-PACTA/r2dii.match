@@ -73,31 +73,7 @@ test_that("match_name w/ 1 lbk row matching 1 ald company in 2 sectors yields
   expect_equal(out$sector_ald, sector_ald)
 })
 
-test_that("match_name w/ bad sector_classification_system errors gracefully", {
-  expect_error(
-    match_name(
-      fake_lbk(sector_classification_system = "bad"),
-      fake_ald()
-    ),
-    "must use.*code system"
-  )
-})
-
-test_that("match_name with non existing sector code just warns '*.no match'", {
-  code_does_not_exist <- -9999L
-  code <- suppressWarnings(sort(as.integer(sector_clasiffication_df()$code)))
-  expect_false(any(code == code_does_not_exist))
-
-  expect_warning(
-    match_name(
-      fake_lbk(sector_classification_direct_loantaker = code_does_not_exist),
-      fake_ald()
-    ),
-    "no match"
-  )
-})
-
-test_that("match_name with sector 'not in scope' warns '*.no match'", {
+test_that("match_name with sector 'not in scope' FIXME: ASK @jdhoffa #103", {
   sector_not_in_scope <- 1L
 
   expect_warning(
@@ -111,7 +87,7 @@ test_that("match_name with sector 'not in scope' warns '*.no match'", {
 
 test_that("match_name with mismatching sector_classification and
           `by_sector = TRUE` yields no match", {
-  # Lookup code to sectors via sector_clasiffication_df()$code
+  # Lookup code to sectors via sector_classification_df()$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -127,7 +103,7 @@ test_that("match_name with mismatching sector_classification and
 
 test_that("match_name with mismatching sector_classification and
           `by_sector = FALSE` yields a match", {
-  # Lookup code to sectors via sector_clasiffication_df()$code
+  # Lookup code to sectors via sector_classification_df()$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -426,4 +402,47 @@ test_that("match_name handles any number of intermediate_parent columns (#84)", 
 
   has_intermediate_parent <- any(grepl("intermediate_parent_1", output_levels))
   expect_true(has_intermediate_parent)
+})
+
+test_that("match_name warns if some system classification is unknown", {
+  with_unknown_system <- fake_lbk(
+    sector_classification_system = c("NACE", "bad")
+  )
+
+  expect_warning(
+    add_sector_and_borderline(with_unknown_system),
+    "sector_classification_system.*unknown.*bad"
+  )
+})
+
+test_that("match_name errors if all system classification is unknown", {
+  with_unknown_system <- fake_lbk(
+    sector_classification_system = c("bad", "bad")
+  )
+
+  expect_error(
+    add_sector_and_borderline(with_unknown_system),
+    "sector_classification_system.*must.*one of"
+  )
+})
+
+test_that("match_name warns if some sector classification is unknown", {
+  with_unknown <- fake_lbk(
+    sector_classification_direct_loantaker = c(good =3511, bad = -999)
+  )
+  expect_warning(
+    add_sector_and_borderline(with_unknown),
+    "sector_classification_direct_loantaker.*unknown"
+
+  )
+})
+
+test_that("match_name errors if all sector classification is unknown", {
+  with_unknown <- fake_lbk(
+    sector_classification_direct_loantaker = c(bad = -999, bad = -999)
+  )
+  expect_error(
+    add_sector_and_borderline(with_unknown),
+    "sector_classification_direct_loantaker"
+  )
 })
