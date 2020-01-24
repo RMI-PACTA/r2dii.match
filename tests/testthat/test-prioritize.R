@@ -22,14 +22,8 @@ test_that("prioritize w/ full demo datasets throws no error", {
 })
 
 test_that("prioritize errors gracefully if data lacks crucial columns", {
-  expect_error(prioritize(tibble(bad = 1)), "must have.*names")
+  matched <- fake_matched()
 
-  matched <- tibble(
-      id = "a",
-      level = "a",
-      score = 1,
-      sector_ald = "coal",
-      sector = "coal")
   expect_error(prioritize(matched), NA)
 
   expect_error(
