@@ -64,19 +64,23 @@ test_that("prioritize picks score equal to 1", {
 
 test_that("prioritize picks priority level per loan", {
   # styler: off
-  matched <- tibble::tribble(
-    ~id,                 ~level,     ~sector,~sector_ald, ~score,
-   "aa",      "ultimate_parent",      "coal",     "coal",      1,
-   "aa",     "direct_loantaker",      "coal",     "coal",      1,  # pick this
-   "bb",  "intermediate_parent",      "coal",     "coal",      1,  # pick this
-   "bb",      "ultimate_parent",      "coal",     "coal",      1,
-    )
-  # styler: on
-
-  out <- prioritize(matched)
-  expect_equal(
-    out$level, c("direct_loantaker", "intermediate_parent")
+  id_level <- tibble::tribble(
+    ~id,                 ~level,
+   "aa",      "ultimate_parent",
+   "aa",     "direct_loantaker",  # pick this **
+   "bb",  "intermediate_parent",  # pick this **
+   "bb",      "ultimate_parent",
   )
+  matched <- fake_matched(id = id_level$id, level = id_level$level)
+
+  expect_equal(
+    prioritize(matched)$level,
+    c(
+      "direct_loantaker",         # **
+      "intermediate_parent"       # **
+    )
+  )
+  # styler: on
 })
 
 test_that("prioritize picks the highetst level per loan", {
