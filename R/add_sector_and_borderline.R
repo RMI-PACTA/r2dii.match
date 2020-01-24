@@ -47,8 +47,13 @@ add_sector_and_borderline <- function(data) {
   has_unknown_code_system <-
     !any(data2$sector_classification_system %in% classification$code_system)
   if (has_unknown_code_system) {
+    good_systems <- unique(classification$code_system)
+    good_systems_string <- paste(good_systems, collapse = ", ")
+
     stop(
-      "At least one loan must use 2dii's sector code system.\n",
+      "At least one loan must use 2dii's sector code systems:\n",
+      good_systems_string,
+      "\n",
       "Are all of your loans classified as in 2dii's database?",
       call. = FALSE
     )

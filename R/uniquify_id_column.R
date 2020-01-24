@@ -43,7 +43,7 @@ uniquify_id_column <- function(data, id_column) {
     return(data)
   }
 
-  name_column <- replace_prefix(id_column, to = "name")
+  name_column <- id_column %>% replace_prefix(to = "name")
   crucial <- c("sector_classification_direct_loantaker", name_column, id_column)
   check_crucial_names(data, crucial)
 
@@ -65,9 +65,9 @@ snakecase_initial <- function(x) {
     purrr::map_chr(~ paste(.x, collapse = ""))
 }
 
-# Unique combination of `id_var` and `sector_classification_direct_loantaker`
-group_indices_of <- function(data, column_name) {
-  col_name <- replace_prefix(column_name, to = "name")
+# Unique combination of `column` & `sector_classification_direct_loantaker`
+group_indices_of <- function(data, column) {
+  col_name <- replace_prefix(column, to = "name")
   dplyr::group_indices(
     data, !!rlang::sym(col_name), .data$sector_classification_direct_loantaker
   )
