@@ -58,15 +58,8 @@ test_that("prioritize errors gracefully with bad `priority`", {
 })
 
 test_that("prioritize picks score equal to 1", {
-  # styler: off
-  matched <- tibble::tribble(
-    ~id,             ~level, ~score, ~sector_ald, ~sector,
-   "aa", "direct_loantaker",      1,      "coal",  "coal",
-   "bb", "direct_loantaker",    0.9,      "coal",  "coal",
-    )
-  # styler: on
-
-  expect_equal(min(prioritize(matched)$score), 1L)
+  matched <- fake_matched(score = c(1, 0.9))
+  expect_equal(min(prioritize(matched)$score), 1)
 })
 
 test_that("prioritize picks priority level per loan", {
