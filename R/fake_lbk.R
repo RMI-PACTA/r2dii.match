@@ -1,6 +1,7 @@
 #' Minimal explicit loanbook and ald datasets that allow overwriting values
 #'
-#' These funtions are developer-oriented:
+#' These funtions are developer-oriented. They all call [tibble::tibble()] so
+#' you can expect all the goodies that come with that.
 #' * `fake_lbk()` is based on `mini_lbk(loanbook_demo, 1)` with the additional,
 #'   non-crucal columns `id_intermediate_parent_1`, `name_intermediate_parent_1`.
 #' * `fake_lbk()` is created from applying `mini_lbk()` to `fake_lbk()`.
@@ -23,6 +24,7 @@
 #' @seealso `mini_lbk()`, `mini_ald()`, [r2dii.dataraw::loanbook_demo]
 #'   [r2dii.dataraw::ald_demo]
 #'
+#'
 #' @return A dataframe
 #'
 #' @examples
@@ -38,13 +40,22 @@
 #'
 #' # Helps invalidate values for tests
 #' fake_ald(name_company = "bad")
+#'
+#' # tibble() goodies:
+#'
+#' # Create new columns on the fly
+#' fake_ald(new = "a")
+#'
+#' # Support for trailing commas
+#' fake_matched(id = "a",)
 #' @noRd
 fake_lbk <- function(sector_classification_system = NULL,
                      id_ultimate_parent = NULL,
                      name_ultimate_parent = NULL,
                      id_direct_loantaker = NULL,
                      name_direct_loantaker = NULL,
-                     sector_classification_direct_loantaker = NULL) {
+                     sector_classification_direct_loantaker = NULL,
+                     ...) {
   tibble::tibble(
     sector_classification_system = sector_classification_system %||% "NACE",
     id_ultimate_parent = id_ultimate_parent %||% "UP15",
@@ -54,7 +65,8 @@ fake_lbk <- function(sector_classification_system = NULL,
     name_direct_loantaker =
       name_direct_loantaker %||% "Yuamen Xinneng Thermal Power Co Ltd",
     sector_classification_direct_loantaker =
-      sector_classification_direct_loantaker %||% 3511
+      sector_classification_direct_loantaker %||% 3511,
+    ...
   )
 }
 
@@ -62,28 +74,34 @@ fake_lbk <- function(sector_classification_system = NULL,
 #' @noRd
 fake_ald <- function(name_company = NULL,
                      sector = NULL,
-                     alias_ald = NULL) {
+                     alias_ald = NULL,
+                     ...) {
   tibble::tibble(
     name_company = name_company %||% "alpine knits india pvt. limited",
     sector = sector %||% "power",
-    alias_ald = alias_ald %||% "alpineknitsindiapvt ltd"
+    alias_ald = alias_ald %||% "alpineknitsindiapvt ltd",
+    ...
   )
 
 }
 
 #' See `fake_lbk()`
 #' @noRd
-fake_matched <- function(id = NULL,
+fake_matched <- function(id_loan = NULL,
+                         id = NULL,
                          level = NULL,
                          score = NULL,
+                         sector = NULL,
                          sector_ald = NULL,
-                         sector = NULL) {
+                         ...) {
   tibble::tibble(
-    id = id %||% "a",
-    level = level %||% "a",
-    score = score %||% 1,
-    sector_ald = sector_ald %||% "coal",
-    sector = sector %||% "coal",
+    id_loan = "L162",
+    id = "UP1",
+    level = "ultimate_parent",
+    score = 1,
+    sector = "automotive",
+    sector_ald = "automotive",
+    ...
   )
 }
 
