@@ -180,10 +180,3 @@ test_that("prioritize_at does not warn if a group has not all priority items", {
     NA
   )
 })
-
-test_that("prioritize_at accepts `priority = NULL`", {
-  expect_error(
-    tibble(x = "a") %>% prioritize_at("x"),
-    NA
-  )
-})
