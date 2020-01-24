@@ -95,9 +95,8 @@ test_that("prioritize takes a `priority` function or lambda", {
 })
 
 test_that("prioritize is sensitive to `priority`", {
-  matched <- fake_matched(level = c("z", "a"))
   expect_equal(
-    prioritize(matched, priority = "z")$level,
+    prioritize(fake_matched(level = c("z", "a")), priority = "z")$level,
     "z"
   )
 })
@@ -105,38 +104,31 @@ test_that("prioritize is sensitive to `priority`", {
 test_that("prioritize ignores other groups", {
   # styler: off
   matched <- tibble::tribble(
-    ~id, ~level, ~score, ~other_id, ~sector_ald, ~sector,
-    "a",    "z",      1,         1,      "coal",  "coal",
-    "a",    "a",      1,         2,      "coal",  "coal",
-    "b",    "z",      1,         3,      "coal",  "coal",
-    "b",    "a",      1,         4,      "coal",  "coal",
+    ~id, ~other_id, ~level,
+    "a",         1,    "z",  # pick **
+    "a",         2,    "a",
+    "b",         3,    "z",  # pick **
+    "b",         4,    "a",
   ) %>%
+    # Crucial columns with toy values
+    mutate(sector = "coal", sector_ald = "coal", score = 1) %>%
     group_by(other_id)
   # styler: on
 
-  out <- prioritize(matched, priority = "z")
-
   expect_equal(
-    out$level,
-    c("z", "z")
+    prioritize(matched, priority = "z")$level,
+    c("z", "z")  # **
   )
 })
 
 test_that("prioritize previous preserves groups", {
-  # styler: off
-  matched <- tibble::tribble(
-    ~id, ~level, ~score, ~other_id,  ~sector_ald,      ~sector,
-    "a",    "z",      1,         1, "automotive", "automotive",
-    "a",    "a",      1,         2, "automotive", "automotive",
-    "b",    "z",      1,         3, "automotive", "automotive",
-    "b",    "a",      1,         4, "automotive", "automotive",
-  ) %>%
+  matched <- fake_matched(other_id = 1:4) %>%
     group_by(other_id, score)
-  # styler: on
 
-  out <- prioritize(matched, priority = "z")
-  expect_true(dplyr::is_grouped_df(out))
-  expect_equal(dplyr::group_vars(out), c("other_id", "score"))
+  expect_equal(
+    dplyr::group_vars(prioritize(matched)),
+    c("other_id", "score")
+  )
 })
 
 test_that("prioritize_level otputs expected vector", {
