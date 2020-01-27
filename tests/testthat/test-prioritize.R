@@ -26,23 +26,23 @@ test_that("prioritize errors gracefully if data lacks crucial columns", {
 
   expect_error(
     prioritize(select(fake_matched(), -id)),
-    "must have.*names"
+    class = "missing_names"
   )
   expect_error(
     prioritize(select(fake_matched(), -level)),
-    "must have.*names"
+    class = "missing_names"
   )
   expect_error(
     prioritize(select(fake_matched(), -score)),
-    "must have.*names"
+    class = "missing_names"
   )
   expect_error(
     prioritize(select(fake_matched(), -sector_ald)),
-    "must have.*names"
+    class = "missing_names"
   )
   expect_error(
     prioritize(select(fake_matched(), -sector)),
-    "must have.*names"
+    class = "missing_names"
   )
 })
 

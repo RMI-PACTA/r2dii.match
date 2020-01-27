@@ -22,22 +22,6 @@ test_that("add_sector_and_borderline returns a tibble dataframe", {
   )
 })
 
-test_that("add_sector_and_borderline with wrong input errs gracefully", {
-  expect_error(
-    add_sector_and_borderline(
-      select(loanbook_demo, -sector_classification_system)
-    ),
-    "must have.*sector_classification_system"
-  )
-
-  expect_error(
-    add_sector_and_borderline(
-      select(loanbook_demo, -sector_classification_direct_loantaker)
-    ),
-    "must have.*sector_classification_direct_loantaker"
-  )
-})
-
 test_that("add_sector_and_borderline adds two columns: `sector` and `borderline`", {
   expect_false(has_name(loanbook_demo, "sector"))
   expect_false(has_name(loanbook_demo, "borderline"))

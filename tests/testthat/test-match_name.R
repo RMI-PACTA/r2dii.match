@@ -175,10 +175,7 @@ test_that("w/ 1 row of full loanbook_demo yields expected names", {
 })
 
 test_that("takes unprepared loanbook and ald datasets", {
-  expect_error(
-    match_name(slice(loanbook_demo, 1), ald_demo),
-    NA
-  )
+  expect_no_error(match_name(slice(loanbook_demo, 1), ald_demo))
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
@@ -215,9 +212,8 @@ test_that("w/ 1 lbk row matching ultimate, yields expected names", {
 })
 
 test_that("takes `min_score`", {
-  expect_error(
-    match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0.5),
-    NA
+  expect_no_error(
+    match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0.5)
   )
 })
 
@@ -280,10 +276,7 @@ test_that("outputs name from loanbook, not name.y (bug fix)", {
 })
 
 test_that("works with `min_score = 0` (bug fix)", {
-  expect_error(
-    match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0),
-    NA
-  )
+  expect_no_error(match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0))
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
@@ -434,5 +427,42 @@ test_that("warns/errors if some/all system classification is unknown", {
 
       invisible(match_name(some_bad_system, fake_ald()))
     }
+  )
+})
+
+# crucial names -----------------------------------------------------------
+
+test_that("w/ loaanbook or ald with missing names errors gracefully", {
+  invalid <- function(data, x) dplyr::rename(data, bad = x)
+
+  expect_error_class_missing_names <- function(lbk = NULL, ald = NULL) {
+    expect_error(
+      class = "missing_names",
+      match_name(lbk %||% fake_lbk(), ald %||% fake_ald())
+    )
+  }
+
+  expect_error_class_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
+  expect_error_class_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
+  expect_error_class_missing_names(invalid(fake_lbk(), "id_direct_loantaker"))
+  expect_error_class_missing_names(invalid(fake_lbk(), "name_direct_loantaker"))
+
+  expect_error_class_missing_names(
+    invalid(fake_lbk(), "sector_classification_system")
+  )
+  expect_error_class_missing_names(
+    invalid(fake_lbk(), "sector_classification_direct_loantaker")
+  )
+
+  expect_error_class_missing_names(invalid(fake_ald(), "sector"))
+})
+
+test_that("w/ overwrite with missing names errors gracefully", {
+  expect_error(
+    class = "missing_names",
+    match_name(
+      fake_lbk(), overwrite = tibble(bad = 1),
+      fake_ald()
+    )
   )
 })

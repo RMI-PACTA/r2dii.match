@@ -49,29 +49,6 @@ test_that("score_alias_similarity scores extreme cases correctly", {
   )
 })
 
-test_that("score_alias_similarity w/out crucial cols errors gracefully", {
-  good <- tibble(sector = "A", alias = "a")
-  y <- tibble(sector = "A", alias = "a")
-  expect_error(
-    score_alias_similarity(good, y),
-    NA
-  )
-
-  bad <- tibble(alias = "a")
-  y <- tibble(sector = "A", alias = "a")
-  expect_error(
-    score_alias_similarity(bad, y),
-    "must have.*"
-  )
-
-  bad <- tibble(rowid = 1, sector = "A")
-  y <- tibble(sector = "A", alias = "a")
-  expect_error(
-    score_alias_similarity(bad, y),
-    "must have.*"
-  )
-})
-
 test_that("score_alias_similarity combines all alias of x and y", {
   x <- tibble(sector = c("A", "A"), alias = c("a", "b"))
   y <- tibble(sector = c("A", "A"), alias = c("c", "d"))

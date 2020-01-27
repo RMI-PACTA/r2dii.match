@@ -54,13 +54,6 @@ test_that("restructure_loanbook_for_matching outputs a tibble with expected name
   )
 })
 
-test_that("restructure_loanbook_for_matching errors with bad overwrite columns", {
-  expect_error(
-    restructure_loanbook_for_matching(loanbook_rowid, overwrite = tibble(bad = 1)),
-    "data must have all expected names"
-  )
-})
-
 test_that("restructure_loanbook_for_matching correctly overwrites name", {
   overwrite <- overwrite_demo
   out <- restructure_loanbook_for_matching(loanbook_rowid, overwrite_demo) %>%
@@ -83,14 +76,4 @@ test_that("restructure_ald_for_matching outputs the expected tibble", {
   out <- restructure_ald_for_matching(ald_demo)
   expect_is(out, "tbl_df")
   expect_named(out, c("name", "sector", "alias"))
-})
-
-test_that("restructure_ald_for_matching errors if data lacks a crucial column", {
-  bad_data <- ald_demo %>%
-    select(-sector)
-
-  expect_error(
-    restructure_ald_for_matching(bad_data),
-    "data must have all expected names"
-  )
 })

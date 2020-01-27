@@ -106,13 +106,13 @@ test_that("to_alias with custom ownership types works ok", {
 
 test_that("to_alias errors with malformed `from_to`", {
   expect_error(
-    to_alias("a", from_to = tibble(bad = "a", to = "b")),
-    "must have all expected names"
+    class = "missing_names",
+    to_alias("a", from_to = tibble(bad = "a", to = "b"))
   )
 
   expect_error(
-    to_alias("a", from_to = tibble(from = "a", bad = "b")),
-    "must have all expected names"
+    class = "missing_names",
+    to_alias("a", from_to = tibble(from = "a", bad = "b"))
   )
 })
 
