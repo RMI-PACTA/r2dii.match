@@ -26,6 +26,9 @@ Install the development version of r2dii.match from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
+[How to minimize installation
+errors?](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation)
+
 ## Example
 
 We’ll use required packages from r2dii, and some convenient packages
@@ -152,7 +155,7 @@ name matching algorithms, such as:
 
 ``` r
 match_name(your_loanbook, your_ald)
-#> # A tibble: 454 x 29
+#> # A tibble: 576 x 29
 #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
 #>  1 L170    C203             Tesla Inc        <NA>             <NA>            
@@ -165,7 +168,7 @@ match_name(your_loanbook, your_ald)
 #>  8 L165    C195             Sunwin Bus       <NA>             <NA>            
 #>  9 L154    C171             Shandong Tangju… <NA>             <NA>            
 #> 10 L164    C193             Subaru Corp      <NA>             <NA>            
-#> # … with 444 more rows, and 24 more variables: id_ultimate_parent <chr>,
+#> # … with 566 more rows, and 24 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -174,7 +177,7 @@ match_name(your_loanbook, your_ald)
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
 #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id <chr>,
 #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#> #   alias_lbk <chr>, alias_ald <chr>, score <dbl>, source <chr>
+#> #   alias <chr>, alias_ald <chr>, score <dbl>, source <chr>
 ```
 
 `match_name()` defaults to scoring matches between `alias_*` strings
@@ -185,12 +188,12 @@ a low score.
 ``` r
 match_name(your_loanbook, your_ald, by_sector = FALSE) %>% 
   nrow()
-#> [1] 662
+#> [1] 673
 
 # Compare
 match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
   nrow()
-#> [1] 454
+#> [1] 576
 ```
 
 `min_score` allows you to pick rows of a minimum `score` and above.
@@ -248,27 +251,27 @@ some_interesting_columns <- vars(id, level, starts_with("alias"), score)
 matched %>% 
   prioritize() %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 402 x 5
-#>    id    level         alias_lbk                 alias_ald                 score
-#>    <chr> <chr>         <chr>                     <chr>                     <dbl>
-#>  1 C167  direct_loant… shaanxiauto               shaanxiauto                   1
-#>  2 C168  direct_loant… shandongauto              shandongauto                  1
-#>  3 C169  direct_loant… shandongkama              shandongkama                  1
-#>  4 C170  direct_loant… shandongtangjunouling     shandongtangjunouling         1
-#>  5 C172  direct_loant… shanghaiautomotiveindust… shanghaiautomotiveindust…     1
-#>  6 C175  direct_loant… shanxidayun               shanxidayun                   1
-#>  7 C177  direct_loant… shenyangpolarsun          shenyangpolarsun              1
-#>  8 C179  direct_loant… shuanghuanauto            shuanghuanauto                1
-#>  9 C181  direct_loant… sichuanauto               sichuanauto                   1
-#> 10 C183  direct_loant… singulato                 singulato                     1
-#> # … with 392 more rows
+#> # A tibble: 541 x 5
+#>    id    level          alias                    alias_ald                 score
+#>    <chr> <chr>          <chr>                    <chr>                     <dbl>
+#>  1 DL167 direct_loanta… shaanxiauto              shaanxiauto                   1
+#>  2 DL168 direct_loanta… shandongauto             shandongauto                  1
+#>  3 DL169 direct_loanta… shandongkama             shandongkama                  1
+#>  4 DL170 direct_loanta… shandongtangjunouling    shandongtangjunouling         1
+#>  5 DL172 direct_loanta… shanghaiautomotiveindus… shanghaiautomotiveindust…     1
+#>  6 DL172 direct_loanta… shanghaiautomotiveindus… shanghaiautomotiveindust…     1
+#>  7 DL175 direct_loanta… shanxidayun              shanxidayun                   1
+#>  8 DL177 direct_loanta… shenyangpolarsun         shenyangpolarsun              1
+#>  9 DL179 direct_loanta… shuanghuanauto           shuanghuanauto                1
+#> 10 DL181 direct_loanta… sichuanauto              sichuanauto                   1
+#> # … with 531 more rows
 ```
 
 The default priority is set internally via `prioritize_levels()`.
 
 ``` r
 prioritize_level(matched)
-#> [1] "direct_loantaker" "ultimate_parent"
+#> [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"
 ```
 
 You may use a different priority. One way to do that is to pass a
@@ -279,8 +282,8 @@ priority.
 matched %>% 
   prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 402 x 5
-#>    id    level           alias_lbk                alias_ald                score
+#> # A tibble: 541 x 5
+#>    id    level           alias                    alias_ald                score
 #>    <chr> <chr>           <chr>                    <chr>                    <dbl>
 #>  1 UP23  ultimate_parent astonmartin              astonmartin                  1
 #>  2 UP25  ultimate_parent avtozaz                  avtozaz                      1
@@ -292,37 +295,5 @@ matched %>%
 #>  8 UP79  ultimate_parent dongfengluxgen           dongfengluxgen               1
 #>  9 UP89  ultimate_parent electricmobilitysolutio… electricmobilitysolutio…     1
 #> 10 UP94  ultimate_parent faradayfuture            faradayfuture                1
-#> # … with 392 more rows
-```
-
-You may also pass a character vector with a custom priority – which you
-may write explicitly or with the help of `select_chr()`.
-
-``` r
-bad_idea <- select_chr(
-  matched$level,
-  matches("intermediate"),
-  everything()
-)
-
-bad_idea
-#> [1] "ultimate_parent"  "direct_loantaker"
-
-matched %>% 
-  prioritize(priority = bad_idea) %>% 
-  select(!!! some_interesting_columns)
-#> # A tibble: 402 x 5
-#>    id    level           alias_lbk                alias_ald                score
-#>    <chr> <chr>           <chr>                    <chr>                    <dbl>
-#>  1 UP23  ultimate_parent astonmartin              astonmartin                  1
-#>  2 UP25  ultimate_parent avtozaz                  avtozaz                      1
-#>  3 UP36  ultimate_parent bogdan                   bogdan                       1
-#>  4 UP52  ultimate_parent chauto                   chauto                       1
-#>  5 UP53  ultimate_parent chehejia                 chehejia                     1
-#>  6 UP58  ultimate_parent chtcauto                 chtcauto                     1
-#>  7 UP80  ultimate_parent dongfenghonda            dongfenghonda                1
-#>  8 UP79  ultimate_parent dongfengluxgen           dongfengluxgen               1
-#>  9 UP89  ultimate_parent electricmobilitysolutio… electricmobilitysolutio…     1
-#> 10 UP94  ultimate_parent faradayfuture            faradayfuture                1
-#> # … with 392 more rows
+#> # … with 531 more rows
 ```
