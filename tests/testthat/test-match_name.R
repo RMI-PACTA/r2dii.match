@@ -82,7 +82,8 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
     out <- match_name(
       fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
       fake_ald(sector = sector_not_power),
-      by_sector = TRUE),
+      by_sector = TRUE
+    ),
     "no match"
   )
   expect_equal(nrow(out), 0L)
@@ -421,7 +422,8 @@ test_that("warns/errors if some/all system classification is unknown", {
   )
 
   verify_output(
-    test_path("output", "match_name-sector_classification_is_unknown.txt"), {
+    test_path("output", "match_name-sector_classification_is_unknown.txt"),
+    {
       "# Error"
       match_name(all_bad_code, fake_ald())
 
@@ -431,5 +433,6 @@ test_that("warns/errors if some/all system classification is unknown", {
       invisible(match_name(some_bad_code, fake_ald()))
 
       invisible(match_name(some_bad_system, fake_ald()))
-    })
+    }
+  )
 })
