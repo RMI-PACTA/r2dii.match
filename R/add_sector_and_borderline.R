@@ -61,28 +61,39 @@ check_classification <- function(data,
   all_unknown <- !any(data[[column]] %in% reference[[column]])
   known <- unique(reference[[column]])
   if (all_unknown) {
-    abort(
-      class = "all_sector_classification_is_unknown",
-      message = glue(
-        "Some `{column}` must be known, i.e. one of:
-        {collapse2(known)}"
-      )
-    )
+    abort_all_sector_classification_is_unknown(column, known)
   }
 
   unknown <- setdiff(unique(data[[column]]), reference[[column]])
   some_unknown <- !identical(unknown, character(0))
   if (some_unknown) {
-    warn(
-      class = "some_sector_classification_is_unknown",
-      message = glue(
-        "Some `{column}` are unknown:
-        {collapse2(unknown)}"
-      )
-    )
+    warn_some_sector_classification_is_unknown(column, unknown)
   }
 
   invisible(data)
+}
+
+abort_all_sector_classification_is_unknown <- function(column, known) {
+  abort(
+    class = "all_sector_classification_is_unknown",
+    message = glue(
+      "Some `{column}` must be known, i.e. one of:
+      {collapse2(known)}"
+    )
+  )
+
+  invisible(column)
+}
+warn_some_sector_classification_is_unknown <- function(column, unknown) {
+  warn(
+    class = "some_sector_classification_is_unknown",
+    message = glue(
+      "Some `{column}` are unknown:
+      {collapse2(unknown)}"
+    )
+  )
+
+  invisible(column)
 }
 
 collapse2 <- function(x, sep = ", ", last = " and ", width = 80) {
