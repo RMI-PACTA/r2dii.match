@@ -48,7 +48,7 @@
 #' fake_ald(new = "a")
 #'
 #' # Support for trailing commas
-#' fake_matched(id = "a",)
+#' fake_matched(id = "a", )
 #' @noRd
 fake_lbk <- function(sector_classification_system = NULL,
                      id_ultimate_parent = NULL,
@@ -83,7 +83,6 @@ fake_ald <- function(name_company = NULL,
     alias_ald = alias_ald %||% "alpineknitsindiapvt ltd",
     ...
   )
-
 }
 
 #' See `fake_lbk()`
@@ -184,4 +183,3 @@ crucial_lbk <- function() {
 crucial_ald <- function() {
   c("name_company", "sector")
 }
-

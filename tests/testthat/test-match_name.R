@@ -1,7 +1,7 @@
 library(dplyr)
 library(r2dii.dataraw)
 
-test_that("match_name with non-NA only at intermediate level yields matches at
+test_that("w/ non-NA only at intermediate level yields matches at
           only at intermediate level only", {
   lbk <- tibble(
     id_intermediate_parent_999 = "IP8",
@@ -27,7 +27,7 @@ test_that("match_name with non-NA only at intermediate level yields matches at
   expect_equal(out$level, "intermediate_parent_999")
 })
 
-test_that("match_name w/ missing values at all levels outputs 0-row", {
+test_that("w/ missing values at all levels outputs 0-row", {
   lbk <- tibble(
     id_direct_loantaker = NA_character_,
     name_direct_loantaker = NA_character_,
@@ -47,8 +47,7 @@ test_that("match_name w/ missing values at all levels outputs 0-row", {
   expect_equal(nrow(out), 0L)
 })
 
-test_that("match_name w/ 1 lbk row matching 1 ald company in 2 sectors yields
-          2 rows -- one per ald-sector", {
+test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
   sector_ald <- c("automotive", "shipping")
 
   lbk <- tibble(
@@ -73,45 +72,9 @@ test_that("match_name w/ 1 lbk row matching 1 ald company in 2 sectors yields
   expect_equal(out$sector_ald, sector_ald)
 })
 
-test_that("match_name w/ bad sector_classification_system errors gracefully", {
-  expect_error(
-    match_name(
-      fake_lbk(sector_classification_system = "bad"),
-      fake_ald()
-    ),
-    "must use.*code system"
-  )
-})
-
-test_that("match_name with non existing sector code just warns '*.no match'", {
-  code_does_not_exist <- -9999L
-  code <- suppressWarnings(sort(as.integer(sector_clasiffication_df()$code)))
-  expect_false(any(code == code_does_not_exist))
-
-  expect_warning(
-    match_name(
-      fake_lbk(sector_classification_direct_loantaker = code_does_not_exist),
-      fake_ald()
-    ),
-    "no match"
-  )
-})
-
-test_that("match_name with sector 'not in scope' warns '*.no match'", {
-  sector_not_in_scope <- 1L
-
-  expect_warning(
-    match_name(
-      fake_lbk(sector_classification_direct_loantaker = sector_not_in_scope),
-      fake_ald()
-    ),
-    "no match"
-  )
-})
-
-test_that("match_name with mismatching sector_classification and
-          `by_sector = TRUE` yields no match", {
-  # Lookup code to sectors via sector_clasiffication_df()$code
+test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
+          no match", {
+  # Lookup code to sectors via sector_classification_df()$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -119,15 +82,16 @@ test_that("match_name with mismatching sector_classification and
     out <- match_name(
       fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
       fake_ald(sector = sector_not_power),
-      by_sector = TRUE),
+      by_sector = TRUE
+    ),
     "no match"
   )
   expect_equal(nrow(out), 0L)
 })
 
-test_that("match_name with mismatching sector_classification and
-          `by_sector = FALSE` yields a match", {
-  # Lookup code to sectors via sector_clasiffication_df()$code
+test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
+          a match", {
+  # Lookup code to sectors via sector_classification_df()$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -139,7 +103,7 @@ test_that("match_name with mismatching sector_classification and
   expect_equal(nrow(out), 1L)
 })
 
-test_that("match_name w/ row 1 of loanbook and crucial cols yields expected", {
+test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
     id_ultimate_parent = "UP15",
     name_ultimate_parent = "Alpine Knits India Pvt. Limited",
@@ -205,19 +169,19 @@ expected_names_of_match_name_with_loanbook_demo <- c(
   "source"
 )
 
-test_that("match_name w/ 1 row of full loanbook_demo yields expected names", {
+test_that("w/ 1 row of full loanbook_demo yields expected names", {
   out <- match_name(slice(loanbook_demo, 1L), fake_ald())
   expect_named(out, expected_names_of_match_name_with_loanbook_demo)
 })
 
-test_that("match_name takes unprepared loanbook and ald datasets", {
+test_that("takes unprepared loanbook and ald datasets", {
   expect_error(
     match_name(slice(loanbook_demo, 1), ald_demo),
     NA
   )
 })
 
-test_that("match_name w/ loanbook that matches nothing, yields expected", {
+test_that("w/ loanbook that matches nothing, yields expected", {
   # Matches cero row ...
   lbk2 <- slice(loanbook_demo, 2)
   expect_warning(
@@ -232,7 +196,7 @@ test_that("match_name w/ loanbook that matches nothing, yields expected", {
   )
 })
 
-test_that("match_name w/ 2 lbk rows matching 2 ald rows, yields expected names", {
+test_that("w/ 2 lbk rows matching 2 ald rows, yields expected names", {
   # Slice 5 once was problematic (#85)
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
@@ -241,8 +205,7 @@ test_that("match_name w/ 2 lbk rows matching 2 ald rows, yields expected names",
   )
 })
 
-test_that("match_name w/ 1 lbk row matching ultimate, yields expected names", {
-  # Slice 1 used to fail due to poorly handled levels
+test_that("w/ 1 lbk row matching ultimate, yields expected names", {
   lbk1 <- slice(loanbook_demo, 1)
 
   expect_named(
@@ -251,14 +214,14 @@ test_that("match_name w/ 1 lbk row matching ultimate, yields expected names", {
   )
 })
 
-test_that("match_name takes `min_score`", {
+test_that("takes `min_score`", {
   expect_error(
     match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0.5),
     NA
   )
 })
 
-test_that("match_name takes `by_sector`", {
+test_that("takes `by_sector`", {
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
@@ -267,7 +230,7 @@ test_that("match_name takes `by_sector`", {
   )
 })
 
-test_that("match_name takes `method`", {
+test_that("takes `method`", {
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:15), ald_demo, method = "jw"),
@@ -276,7 +239,7 @@ test_that("match_name takes `method`", {
   )
 })
 
-test_that("match_name takes `p`", {
+test_that("takes `p`", {
   lbk45 <- slice(loanbook_demo, 4:5) # slice(., 1) seems insensitive to `p`
 
   expect_false(
@@ -287,7 +250,7 @@ test_that("match_name takes `p`", {
   )
 })
 
-test_that("match_name takes `overwrite`", {
+test_that("takes `overwrite`", {
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = NULL),
@@ -296,7 +259,7 @@ test_that("match_name takes `overwrite`", {
   )
 })
 
-test_that("match_name recovers `sector_lbk`", {
+test_that("recovers `sector_lbk`", {
   expect_true(
     rlang::has_name(
       match_name(slice(loanbook_demo, 1), ald_demo),
@@ -305,25 +268,25 @@ test_that("match_name recovers `sector_lbk`", {
   )
 })
 
-test_that("match_name recovers `sector_ald`", {
+test_that("recovers `sector_ald`", {
   expect_true(
     rlang::has_name(match_name(loanbook_demo, ald_demo), "sector_ald")
   )
 })
 
-test_that("match_name outputs name from loanbook, not name.y (bug fix)", {
+test_that("outputs name from loanbook, not name.y (bug fix)", {
   out <- match_name(slice(loanbook_demo, 1), ald_demo)
   expect_false(has_name(out, "name.y"))
 })
 
-test_that("match_name works with `min_score = 0` (bug fix)", {
+test_that("works with `min_score = 0` (bug fix)", {
   expect_error(
     match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0),
     NA
   )
 })
 
-test_that("match_name outputs only perfect matches if any (#40 @2diiKlaus)", {
+test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
   this_name <- "Nanaimo Forest Products Ltd."
   this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
@@ -369,20 +332,20 @@ test_that("match_name()$level lacks prefix 'name_' suffix '_lbk'", {
   )
 })
 
-test_that("match_name preserves groups", {
+test_that("preserves groups", {
   grouped_loanbook <- slice(loanbook_demo, 1) %>%
     group_by(id_loan)
 
   expect_true(is_grouped_df(match_name(grouped_loanbook, ald_demo)))
 })
 
-test_that("match_name outputs id consistent with level", {
+test_that("outputs id consistent with level", {
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
   expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
   expect_equal(out$id, c("UP1", "DL1"))
 })
 
-test_that("match_name no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
+test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
   out <- match_name(loanbook_demo, ald_demo)
   out_lbk_cols <- out %>%
     select(
@@ -399,7 +362,7 @@ test_that("match_name no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
   expect_false(all_lbk_columns_contain_na_exclusively)
 })
 
-test_that("match_name handles any number of intermediate_parent columns (#84)", {
+test_that("handles any number of intermediate_parent columns (#84)", {
   # name_level is identical for all levels. I expect them all in the output
   name_level <- "Alpine Knits India Pvt. Limited"
 
@@ -426,4 +389,50 @@ test_that("match_name handles any number of intermediate_parent columns (#84)", 
 
   has_intermediate_parent <- any(grepl("intermediate_parent_1", output_levels))
   expect_true(has_intermediate_parent)
+})
+
+test_that("warns/errors if some/all system classification is unknown", {
+  some_bad_system <- fake_lbk(sector_classification_system = c("NACE", "bad"))
+
+  expect_warning(
+    class = "some_sector_classification_is_unknown",
+    match_name(some_bad_system, fake_ald())
+  )
+
+  all_bad_system <- fake_lbk(sector_classification_system = c("bad", "bad"))
+
+  expect_error(
+    class = "all_sector_classification_is_unknown",
+    match_name(all_bad_system, fake_ald())
+  )
+
+  bad <- -999
+  some_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(35, bad))
+
+  expect_warning(
+    class = "some_sector_classification_is_unknown",
+    match_name(some_bad_code, fake_ald()),
+  )
+
+  all_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(bad, bad))
+
+  expect_error(
+    class = "all_sector_classification_is_unknown",
+    match_name(all_bad_code, fake_ald()),
+  )
+
+  verify_output(
+    test_path("output", "match_name-sector_classification_is_unknown.txt"),
+    {
+      "# Error"
+      match_name(all_bad_code, fake_ald())
+
+      match_name(all_bad_system, fake_ald())
+
+      "# Warning"
+      invisible(match_name(some_bad_code, fake_ald()))
+
+      invisible(match_name(some_bad_system, fake_ald()))
+    }
+  )
 })

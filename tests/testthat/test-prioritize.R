@@ -76,7 +76,7 @@ test_that("prioritize picks the highetst level per loan", {
 
   expect_equal(
     prioritize(matched)$level,
-    c("direct_loantaker", "intermediate_parent")  # **
+    c("direct_loantaker", "intermediate_parent") # **
   )
 })
 
@@ -117,7 +117,7 @@ test_that("prioritize ignores existing groups", {
 
   expect_equal(
     prioritize(matched, priority = "z")$level,
-    c("z", "z")  # **
+    c("z", "z") # **
   )
 })
 
