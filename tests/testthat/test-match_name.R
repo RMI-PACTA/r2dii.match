@@ -442,7 +442,7 @@ test_that("match_name errors if all sector classification is unknown", {
     sector_classification_direct_loantaker = c(bad = -999, bad = -999)
   )
   expect_error(
-    add_sector_and_borderline(with_unknown),
+    match_name(with_unknown, fake_ald()),
     "sector_classification_direct_loantaker"
   )
 })
