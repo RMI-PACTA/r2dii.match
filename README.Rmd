@@ -33,6 +33,8 @@ Install the development version of r2dii.match from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
+[How to minimize installation errors?](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation)
+
 ## Example
 
 We'll use required packages from r2dii, and some convenient packages from the tidyverse.
@@ -176,18 +178,3 @@ matched %>%
   select(!!! some_interesting_columns)
 ```
 
-You may also pass a character vector with a custom priority -- which you may write explicitly or with the help of `select_chr()`.
-
-```{r}
-bad_idea <- select_chr(
-  matched$level,
-  matches("intermediate"),
-  everything()
-)
-
-bad_idea
-
-matched %>% 
-  prioritize(priority = bad_idea) %>% 
-  select(!!! some_interesting_columns)
-```
