@@ -129,7 +129,25 @@ check_prepare_loanbook_data <- function(data) {
   )
   check_crucial_names(data, crucial)
 
+  abort_if_has_intermediate_name_but_not_id(data)
+
+
   invisible(data)
+}
+
+abort_if_has_intermediate_name_but_not_id <- function(data) {
+  missing_id <- setdiff(
+    sort(replace_prefix(extract_level_names(data, "name_"), to = "")),
+    sort(replace_prefix(extract_level_names(data, "id_"), to = ""))
+  )
+
+  if (rlang::is_true(length(missing_id) > 0L)) {
+    missing_columns <- paste0("id", missing_id, collapse = ', ')
+    abort(
+      class = "has_name_but_not_id",
+      glue("Must have missing columns:\n {missing_columns}")
+    )
+  }
 }
 
 check_prepare_loanbook_overwrite <- function(overwrite) {

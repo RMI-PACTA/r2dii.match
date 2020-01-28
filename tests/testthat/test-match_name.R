@@ -442,6 +442,8 @@ test_that("w/ loaanbook or ald with missing names errors gracefully", {
     )
   }
 
+  expect_error_class_missing_names(invalid(fake_ald(), "sector"))
+
   expect_error_class_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
   expect_error_class_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
   expect_error_class_missing_names(invalid(fake_lbk(), "id_direct_loantaker"))
@@ -454,7 +456,24 @@ test_that("w/ loaanbook or ald with missing names errors gracefully", {
     invalid(fake_lbk(), "sector_classification_direct_loantaker")
   )
 
-  expect_error_class_missing_names(invalid(fake_ald(), "sector"))
+  expect_error_class_missing_names(
+    match_name(
+      # missing name_intermediate_parent (doesn't come with fake_lbk())
+      fake_lbk(id_intermediate_parent = id_direct_loantaker),
+      fake_ald()
+    )
+  )
+})
+
+test_that("w/ lbk with name_intermediate_* but missing id_intermediate_*", {
+  expect_error(
+    match_name(
+      class = "has_name_but_not_id",
+      # missing id_intermediate_parent (doesn't come with fake_lbk())
+      fake_lbk(name_intermediate_parent = name_direct_loantaker),
+      fake_ald()
+    )
+  )
 })
 
 test_that("w/ overwrite with missing names errors gracefully", {
