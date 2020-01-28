@@ -180,3 +180,15 @@ test_that("prioritize does not warn if a group has not all priority items", {
     NA
   )
 })
+
+test_that("w/ id_loan at level direct* & ultimate* picks direct* (#106)", {
+  matched <- tibble::tribble(
+    ~id_loan,     ~id,             ~level, ~score,  ~sector, ~sector_ald,
+         "A",     "U",  "ultimate_parent",      1,  "power",     "power",
+         "A",     "D", "direct_loantaker",      1,  "power",     "power",
+  )
+
+  out <- prioritize(matched)
+  expect_false("ultimate_parent" %in% out$level)
+  expect_false(any(duplicated(out$id_loan)))
+})
