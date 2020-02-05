@@ -86,7 +86,7 @@ match_name <- function(loanbook,
   preferred <- prefer_perfect_match_by(matched, .data$id)
 
   preferred %>%
-    restore_cols_sector_name_from_ald(prep_ald, by_sector) %>%
+    restore_cols_sector_name_from_ald(prep_ald, by_sector = by_sector) %>%
     # Restore columns from loanbook
     left_join(loanbook_rowid, by = "rowid") %>%
     mutate(rowid = NULL) %>%
