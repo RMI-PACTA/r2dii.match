@@ -118,7 +118,7 @@ restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
   out <- matched %>%
     left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
   if (by_sector) {
-    out %>% filter(sector == sector_ald)
+    out %>% filter(.data$sector == .data$sector_ald)
   } else {
     return(out)
   }
