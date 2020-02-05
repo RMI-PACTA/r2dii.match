@@ -24,11 +24,11 @@
 #'
 #' # styler: off
 #' matched <- tribble(
-#'   ~sector, ~sector_ald,  ~score, ~id,  ~level,
-#'   "coal",  "coal",       1,      "aa", "ultimate_parent",
-#'   "coal",  "coal",       1,      "aa", "direct_loantaker",
-#'   "coal",  "coal",       1,      "bb", "intermediate_parent",
-#'   "coal",  "coal",       1,      "bb", "ultimate_parent",
+#'   ~sector, ~sector_ald,  ~score, ~id_loan,                ~level,
+#'    "coal",      "coal",       1,     "aa",     "ultimate_parent",
+#'    "coal",      "coal",       1,     "aa",    "direct_loantaker",
+#'    "coal",      "coal",       1,     "bb", "intermediate_parent",
+#'    "coal",      "coal",       1,     "bb",     "ultimate_parent",
 #' )
 #' # styler: on
 #'
@@ -48,14 +48,16 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  check_crucial_names(data, c("id", "level", "score", "sector", "sector_ald"))
+  data %>%
+    check_crucial_names(c("id_loan", "level", "score", "sector", "sector_ald"))
+
   priority <- set_priority(data, priority = priority)
 
   old_groups <- dplyr::groups(data)
   perfect_matches <- filter(ungroup(data), .data$score == 1L)
 
   out <- perfect_matches %>%
-    group_by(.data$id, .data$sector, .data$sector_ald) %>%
+    group_by(.data$id_loan, .data$sector, .data$sector_ald) %>%
     prioritize_at(.at = "level", priority = priority) %>%
     ungroup()
 
@@ -135,10 +137,10 @@ prioritize_level <- function(data) {
 #'
 #' # styler: off
 #' data <- tibble::tribble(
-#'   ~x, ~y,
-#'   1, "a",
-#'   2, "a",
-#'   2, "z",
+#'   ~x,  ~y,
+#'    1, "a",
+#'    2, "a",
+#'    2, "z",
 #' )
 #' # styler: on
 #'

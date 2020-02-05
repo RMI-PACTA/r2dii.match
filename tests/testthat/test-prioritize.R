@@ -25,7 +25,7 @@ test_that("prioritize errors gracefully if data lacks crucial columns", {
   expect_error(prioritize(fake_matched()), NA)
 
   expect_error(
-    prioritize(select(fake_matched(), -id)),
+    prioritize(select(fake_matched(), -id_loan)),
     class = "missing_names"
   )
   expect_error(
@@ -62,17 +62,17 @@ test_that("prioritize picks score equal to 1", {
   expect_equal(min(prioritize(matched)$score), 1)
 })
 
-test_that("prioritize picks the highetst level per loan", {
+test_that("prioritize picks the highetst level per id_loan", {
   # styler: off
   id_level <- tibble::tribble(
-    ~id,                 ~level,
-   "aa",      "ultimate_parent",
-   "aa",     "direct_loantaker",  # pick this **
-   "bb",  "intermediate_parent",  # pick this **
-   "bb",      "ultimate_parent",
+    ~id_loan,                 ~level,
+        "aa",      "ultimate_parent",
+        "aa",     "direct_loantaker",  # pick this **
+        "bb",  "intermediate_parent",  # pick this **
+        "bb",      "ultimate_parent",
   )
   # styler: on
-  matched <- fake_matched(id = id_level$id, level = id_level$level)
+  matched <- fake_matched(id_loan = id_level$id_loan, level = id_level$level)
 
   expect_equal(
     prioritize(matched)$level,
@@ -104,11 +104,11 @@ test_that("prioritize is sensitive to `priority`", {
 test_that("prioritize ignores existing groups", {
   # styler: off
   matched <- tibble::tribble(
-    ~id, ~other_id, ~level,
-    "a",         1,    "z",  # pick **
-    "a",         2,    "a",
-    "b",         3,    "z",  # pick **
-    "b",         4,    "a",
+    ~id_loan, ~other_id, ~level,
+         "a",         1,    "z",  # pick **
+         "a",         2,    "a",
+         "b",         3,    "z",  # pick **
+         "b",         4,    "a",
   ) %>%
     # Crucial columns with toy values
     mutate(sector = "coal", sector_ald = "coal", score = 1) %>%
@@ -179,4 +179,9 @@ test_that("prioritize does not warn if a group has not all priority items", {
       prioritize(priority = c("z", "a")),
     NA
   )
+})
+
+test_that("w/ id_loan at level direct* & ultimate* picks only direct* (#106)", {
+  matched <- fake_matched(level = c("ultimate_parent", "direct_loantaker"))
+  expect_identical(prioritize(matched)$level, "direct_loantaker")
 })
