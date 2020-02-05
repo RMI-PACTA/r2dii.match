@@ -73,16 +73,15 @@ test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
 })
 
 test_that("`by_sector = TRUE` yields only matching sectors", {
+  out <- match_name(
+    fake_lbk(),
+    fake_ald(),
+    by_sector = TRUE
+  ) %>%
+    filter(sector != sector_ald)
 
-              out <- match_name(
-                fake_lbk(),
-                fake_ald(),
-                by_sector = TRUE
-              ) %>%
-                filter(sector != sector_ald)
-
-            expect_equal(nrow(out), 0L)
-          })
+  expect_equal(nrow(out), 0L)
+})
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
@@ -492,7 +491,8 @@ test_that("w/ overwrite with missing names errors gracefully", {
   expect_error(
     class = "missing_names",
     match_name(
-      fake_lbk(), overwrite = tibble(bad = 1),
+      fake_lbk(),
+      overwrite = tibble(bad = 1),
       fake_ald()
     )
   )

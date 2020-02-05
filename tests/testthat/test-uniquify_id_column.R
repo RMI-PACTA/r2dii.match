@@ -39,4 +39,3 @@ test_that("uniquify_id_column prints its output (fix not returned result)", {
   )
   expect_false(identical(out, character(0)))
 })
-
