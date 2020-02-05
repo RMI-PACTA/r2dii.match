@@ -66,11 +66,23 @@ test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
     alias_ald = "suzukimotor corp",
   )
 
-  out <- match_name(lbk, ald)
+  out <- match_name(lbk, ald, by_sector = FALSE)
   expect_equal(nrow(out), 2L)
   out$sector
   expect_equal(out$sector_ald, sector_ald)
 })
+
+test_that("`by_sector = TRUE` yields only matching sectors", {
+
+              out <- match_name(
+                fake_lbk(),
+                fake_ald(),
+                by_sector = TRUE
+              ) %>%
+                filter(sector != sector_ald)
+
+            expect_equal(nrow(out), 0L)
+          })
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
@@ -432,7 +444,7 @@ test_that("warns/errors if some/all system classification is unknown", {
 
 # crucial names -----------------------------------------------------------
 
-test_that("w/ loaanbook or ald with missing names errors gracefully", {
+test_that("w/ loanbook or ald with missing names errors gracefully", {
   invalid <- function(data, x) dplyr::rename(data, bad = x)
 
   expect_error_class_missing_names <- function(lbk = NULL, ald = NULL) {
