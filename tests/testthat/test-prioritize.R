@@ -104,11 +104,11 @@ test_that("prioritize is sensitive to `priority`", {
 test_that("prioritize ignores existing groups", {
   # styler: off
   matched <- tibble::tribble(
-    ~id, ~other_id, ~level,
-    "a",         1,    "z",  # pick **
-    "a",         2,    "a",
-    "b",         3,    "z",  # pick **
-    "b",         4,    "a",
+    ~id_loan, ~id, ~other_id, ~level,
+         "a", "a",         1,    "z",  # pick **
+         "a", "a",         2,    "a",
+         "b", "b",         3,    "z",  # pick **
+         "b", "b",         4,    "a",
   ) %>%
     # Crucial columns with toy values
     mutate(sector = "coal", sector_ald = "coal", score = 1) %>%

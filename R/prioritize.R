@@ -48,7 +48,10 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  check_crucial_names(data, c("id", "level", "score", "sector", "sector_ald"))
+  check_crucial_names(
+    data,
+    c("id_loan", "id", "level", "score", "sector", "sector_ald")
+  )
   priority <- set_priority(data, priority = priority)
 
   old_groups <- dplyr::groups(data)
