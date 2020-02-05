@@ -44,7 +44,7 @@
 #' library(dplyr)
 #' library(r2dii.dataraw)
 #'
-#' mini_loanbook <- sample_n(loanbook_demo, 50)
+#' mini_loanbook <- sample_n(loanbook_demo, 10)
 #'
 #' match_name(mini_loanbook, ald_demo)
 #'
