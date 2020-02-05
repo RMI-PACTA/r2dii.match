@@ -85,11 +85,14 @@ mini_loanbook <- sample_n(loanbook_demo, 10)
 
 match_name(mini_loanbook, ald_demo)
 
+# May be a little slow
+\dontrun{
 match_name(
   mini_loanbook, ald_demo,
   min_score = 0.9,
   by_sector = FALSE
 )
+}
 }
 \seealso{
 Other user-oriented: 
