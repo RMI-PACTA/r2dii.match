@@ -44,10 +44,12 @@
 #' library(dplyr)
 #' library(r2dii.dataraw)
 #'
-#' match_name(loanbook_demo, ald_demo)
+#' mini_loanbook <- sample_n(loanbook_demo, 50)
+#'
+#' match_name(mini_loanbook, ald_demo)
 #'
 #' match_name(
-#'   loanbook_demo, ald_demo,
+#'   mini_loanbook, ald_demo,
 #'   min_score = 0.9,
 #'   by_sector = FALSE
 #' )
