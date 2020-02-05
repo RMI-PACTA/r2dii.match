@@ -117,10 +117,11 @@ minimum_names_of_match_name <- function(loanbook) {
 restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
   out <- matched %>%
     left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
+
   if (by_sector) {
     out %>% filter(.data$sector == .data$sector_ald)
   } else {
-    return(out)
+    out
   }
 }
 
