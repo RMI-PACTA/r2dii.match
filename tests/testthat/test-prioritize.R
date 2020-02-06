@@ -186,13 +186,15 @@ test_that("w/ id_loan at level direct* & ultimate* picks only direct* (#106)", {
   expect_identical(prioritize(matched)$level, "direct_loantaker")
 })
 
-test_that("output is independent from the row-order of the input", {
+test_that("output is independent from the row-order of the input (#113)", {
+  # styler: off
   matched_direct <- tibble::tribble(
     ~id_loan,   ~id,             ~level, ~score,      ~sector,  ~sector_ald,
     "A",   "D", "direct_loantaker",      1, "automotive", "automotive",
     "A",   "U",  "ultimate_parent",      1, "automotive", "automotive",
     "B",   "U",  "ultimate_parent",      1, "automotive", "automotive",
   )
+  # styler: on
 
   matched_invert <- dplyr::arrange(matched_direct, desc(id_loan))
 
@@ -200,5 +202,4 @@ test_that("output is independent from the row-order of the input", {
     prioritize(matched_direct)$id_loan,
     prioritize(matched_invert)$id_loan
   )
-
 })
