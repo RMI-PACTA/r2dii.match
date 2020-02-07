@@ -105,19 +105,19 @@
 <p>Start by creating datasets like <a href="https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_demo.html"><code>loanbook_demo</code></a> and <a href="https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_demo.html"><code>ald_demo</code></a> (from the <a href="https://2degreesinvesting.github.io/r2dii.dataraw">r2dii.dataraw package</a>).</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">loanbook_demo</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; # A tibble: 320 x 19</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;  2 L2      C293             Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;  4 L4      C299             Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;  7 L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;  1 L1      C294             Yuamen Xinneng ~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;  2 L2      C293             Yuamen Changyua~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;  3 L3      C292             Yuama Ethanol L~ IP5              Yuama Inc.      </span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;  4 L4      C299             Yudaksel Holdin~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;  5 L5      C305             Yukon Energy Co~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;  6 L6      C304             Yukon Developme~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;  7 L7      C227             Yaugoa-Zapadnay~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt;  8 L8      C303             Yueyang City Co~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
 <a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; # … with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; 10 L10     C302             Yuexi County AA~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; # ... with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></a>
@@ -130,17 +130,17 @@
 <a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt; # A tibble: 17,368 x 13</span></a>
 <a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt;    name_company sector technology production_unit  year production</span></a>
 <a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt;  1 aba hydropo… power  hydrocap   MW               2013    133340.</span></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt;  2 aba hydropo… power  hydrocap   MW               2014    131582.</span></a>
-<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">#&gt;  3 aba hydropo… power  hydrocap   MW               2015    129824.</span></a>
-<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co">#&gt;  4 aba hydropo… power  hydrocap   MW               2016    128065.</span></a>
-<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="co">#&gt;  5 aba hydropo… power  hydrocap   MW               2017    126307.</span></a>
-<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="co">#&gt;  6 aba hydropo… power  hydrocap   MW               2018    124549.</span></a>
-<a class="sourceLine" id="cb3-34" data-line-number="34"><span class="co">#&gt;  7 aba hydropo… power  hydrocap   MW               2019    122790.</span></a>
-<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">#&gt;  8 aba hydropo… power  hydrocap   MW               2020    121032.</span></a>
-<a class="sourceLine" id="cb3-36" data-line-number="36"><span class="co">#&gt;  9 aba hydropo… power  hydrocap   MW               2021    119274.</span></a>
-<a class="sourceLine" id="cb3-37" data-line-number="37"><span class="co">#&gt; 10 aba hydropo… power  hydrocap   MW               2022    117515.</span></a>
-<a class="sourceLine" id="cb3-38" data-line-number="38"><span class="co">#&gt; # … with 17,358 more rows, and 7 more variables: emission_factor &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt;  1 aba hydropo~ power  hydrocap   MW               2013    133340.</span></a>
+<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt;  2 aba hydropo~ power  hydrocap   MW               2014    131582.</span></a>
+<a class="sourceLine" id="cb3-30" data-line-number="30"><span class="co">#&gt;  3 aba hydropo~ power  hydrocap   MW               2015    129824.</span></a>
+<a class="sourceLine" id="cb3-31" data-line-number="31"><span class="co">#&gt;  4 aba hydropo~ power  hydrocap   MW               2016    128065.</span></a>
+<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="co">#&gt;  5 aba hydropo~ power  hydrocap   MW               2017    126307.</span></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33"><span class="co">#&gt;  6 aba hydropo~ power  hydrocap   MW               2018    124549.</span></a>
+<a class="sourceLine" id="cb3-34" data-line-number="34"><span class="co">#&gt;  7 aba hydropo~ power  hydrocap   MW               2019    122790.</span></a>
+<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="co">#&gt;  8 aba hydropo~ power  hydrocap   MW               2020    121032.</span></a>
+<a class="sourceLine" id="cb3-36" data-line-number="36"><span class="co">#&gt;  9 aba hydropo~ power  hydrocap   MW               2021    119274.</span></a>
+<a class="sourceLine" id="cb3-37" data-line-number="37"><span class="co">#&gt; 10 aba hydropo~ power  hydrocap   MW               2022    117515.</span></a>
+<a class="sourceLine" id="cb3-38" data-line-number="38"><span class="co">#&gt; # ... with 17,358 more rows, and 7 more variables: emission_factor &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb3-39" data-line-number="39"><span class="co">#&gt; #   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, number_of_assets &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb3-40" data-line-number="40"><span class="co">#&gt; #   is_ultimate_owner &lt;lgl&gt;, is_ultimate_listed_owner &lt;lgl&gt;,</span></a>
 <a class="sourceLine" id="cb3-41" data-line-number="41"><span class="co">#&gt; #   ald_timestamp &lt;chr&gt;</span></a></code></pre></div>
@@ -178,27 +178,27 @@
 <li>Spell out numbers to increase their importance.</li>
 </ul>
 <!-- end list --><div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/match_name.html">match_name</a></span>(your_loanbook, your_ald)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 576 x 29</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 502 x 29</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  1 L170    C203             Tesla Inc        &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  2 L180    C217             Weichai Power C… &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  2 L180    C217             Weichai Power C~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
 <a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;  3 L181    C218             Wheego           &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;  4 L195    C313             Zhengzhou Yuton… &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;  4 L195    C313             Zhengzhou Yuton~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
 <a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;  5 L174    C211             Tvr              &lt;NA&gt;             &lt;NA&gt;            </span></a>
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;  6 L198    C317             Ziyang Nanjun    &lt;NA&gt;             &lt;NA&gt;            </span></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;  7 L193    C310             Zamyad           &lt;NA&gt;             &lt;NA&gt;            </span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;  8 L165    C195             Sunwin Bus       &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  9 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  9 L154    C171             Shandong Tangju~ &lt;NA&gt;             &lt;NA&gt;            </span></a>
 <a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 10 L164    C193             Subaru Corp      &lt;NA&gt;             &lt;NA&gt;            </span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; # … with 566 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; # ... with 492 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt; #   alias &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</span></a></code></pre></div>
 <p><code><a href="reference/match_name.html">match_name()</a></code> defaults to scoring matches between <code>alias_*</code> strings that belong to the same sector. Using <code>by_sector = FALSE</code> removes this limitation – increasing computation time, and the number of matches with a low score.</p>
@@ -209,7 +209,7 @@
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co"># Compare</span></a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw"><a href="reference/match_name.html">match_name</a></span>(your_loanbook, your_ald, <span class="dt">by_sector =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>()</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; [1] 576</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; [1] 502</span></a></code></pre></div>
 <p><code>min_score</code> allows you to pick rows of a minimum <code>score</code> and above.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">matched &lt;-<span class="st"> </span><span class="kw"><a href="reference/match_name.html">match_name</a></span>(your_loanbook, your_ald, <span class="dt">min_score =</span> <span class="fl">0.9</span>)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(matched<span class="op">$</span>score)</a>
@@ -250,25 +250,25 @@
 <h3 class="hasAnchor">
 <a href="#pick-validated-matches-and-prioritize-by-level" class="anchor"></a>6. Pick validated matches and prioritize by level</h3>
 <p>The <code>matched</code> dataset may have multiple matches per loan. To get the best match only, use <code>priorityze()</code> – it picks rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority()</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">some_interesting_columns &lt;-<span class="st"> </span><span class="kw">vars</span>(id, level, <span class="kw">starts_with</span>(<span class="st">"alias"</span>), score)</a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">some_interesting_columns &lt;-<span class="st"> </span><span class="kw">vars</span>(id_2dii, level, <span class="kw">starts_with</span>(<span class="st">"alias"</span>), score)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">matched <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/prioritize.html">prioritize</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; # A tibble: 541 x 5</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt;    id    level          alias                    alias_ald                 score</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;                    &lt;chr&gt;                     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;  1 DL167 direct_loanta… shaanxiauto              shaanxiauto                   1</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  2 DL168 direct_loanta… shandongauto             shandongauto                  1</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  3 DL169 direct_loanta… shandongkama             shandongkama                  1</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  4 DL170 direct_loanta… shandongtangjunouling    shandongtangjunouling         1</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  5 DL172 direct_loanta… shanghaiautomotiveindus… shanghaiautomotiveindust…     1</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  6 DL172 direct_loanta… shanghaiautomotiveindus… shanghaiautomotiveindust…     1</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  7 DL175 direct_loanta… shanxidayun              shanxidayun                   1</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  8 DL177 direct_loanta… shenyangpolarsun         shenyangpolarsun              1</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  9 DL179 direct_loanta… shuanghuanauto           shuanghuanauto                1</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; 10 DL181 direct_loanta… sichuanauto              sichuanauto                   1</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; # … with 531 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; # A tibble: 267 x 5</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt;    id_2dii level         alias                    alias_ald                score</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;                    &lt;chr&gt;                    &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;  1 DL167   direct_loant~ shaanxiauto              shaanxiauto                  1</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  2 DL168   direct_loant~ shandongauto             shandongauto                 1</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  3 DL169   direct_loant~ shandongkama             shandongkama                 1</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  4 DL170   direct_loant~ shandongtangjunouling    shandongtangjunouling        1</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  5 DL172   direct_loant~ shanghaiautomotiveindus~ shanghaiautomotiveindus~     1</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  6 DL175   direct_loant~ shanxidayun              shanxidayun                  1</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  7 DL177   direct_loant~ shenyangpolarsun         shenyangpolarsun             1</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  8 DL179   direct_loant~ shuanghuanauto           shuanghuanauto               1</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  9 DL181   direct_loant~ sichuanauto              sichuanauto                  1</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; 10 DL183   direct_loant~ singulato                singulato                    1</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; # ... with 257 more rows</span></a></code></pre></div>
 <p>The default priority is set internally via <code>prioritize_levels()</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="reference/prioritize_level.html">prioritize_level</a></span>(matched)</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></a></code></pre></div>
@@ -276,20 +276,20 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">matched <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/prioritize.html">prioritize</a></span>(<span class="dt">priority =</span> rev) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; # A tibble: 541 x 5</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;    id    level           alias                    alias_ald                score</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;           &lt;chr&gt;                    &lt;chr&gt;                    &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt;  1 UP23  ultimate_parent astonmartin              astonmartin                  1</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt;  2 UP25  ultimate_parent avtozaz                  avtozaz                      1</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt;  3 UP36  ultimate_parent bogdan                   bogdan                       1</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt;  4 UP52  ultimate_parent chauto                   chauto                       1</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;  5 UP53  ultimate_parent chehejia                 chehejia                     1</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt;  6 UP58  ultimate_parent chtcauto                 chtcauto                     1</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt;  7 UP80  ultimate_parent dongfenghonda            dongfenghonda                1</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt;  8 UP79  ultimate_parent dongfengluxgen           dongfengluxgen               1</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt;  9 UP89  ultimate_parent electricmobilitysolutio… electricmobilitysolutio…     1</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; 10 UP94  ultimate_parent faradayfuture            faradayfuture                1</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; # … with 531 more rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; # A tibble: 267 x 5</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt;    id_2dii level           alias                   alias_ald               score</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;                   &lt;chr&gt;                   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt;  1 UP23    ultimate_parent astonmartin             astonmartin                 1</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt;  2 UP25    ultimate_parent avtozaz                 avtozaz                     1</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt;  3 UP36    ultimate_parent bogdan                  bogdan                      1</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt;  4 UP52    ultimate_parent chauto                  chauto                      1</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;  5 UP53    ultimate_parent chehejia                chehejia                    1</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt;  6 UP58    ultimate_parent chtcauto                chtcauto                    1</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt;  7 UP80    ultimate_parent dongfenghonda           dongfenghonda               1</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt;  8 UP79    ultimate_parent dongfengluxgen          dongfengluxgen              1</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt;  9 UP89    ultimate_parent electricmobilitysoluti~ electricmobilitysoluti~     1</span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; 10 UP94    ultimate_parent faradayfuture           faradayfuture               1</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; # ... with 257 more rows</span></a></code></pre></div>
 </div>
 </div>
 </div>
