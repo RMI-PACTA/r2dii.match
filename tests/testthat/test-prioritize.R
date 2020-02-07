@@ -1,27 +1,16 @@
 library(dplyr)
 library(r2dii.dataraw)
 
-test_that("prioritize w/ 2 identical rows except for sector yields 2 rows", {
-  out <- prioritize(fake_matched(sector = c("shipping", "automotive")))
-  expect_equal(nrow(out), 2L)
-})
-
-test_that("prioritize w/ 2 identical rows except for sector_ald yields 2 rows", {
-  out <- prioritize(fake_matched(sector_ald = c("shipping", "automotive")))
-  expect_equal(nrow(out), 2L)
-})
-
-test_that("prioritize w/ full demo datasets throws no error", {
-  expect_error(
+test_that("w/ full demo datasets throws no error", {
+  expect_no_error(
     loanbook_demo %>%
       slice(4:5) %>%
       match_name(ald_demo) %>%
-      prioritize(priority = "ultimate_parent"),
-    NA
+      prioritize(priority = "ultimate_parent")
   )
 })
 
-test_that("prioritize errors gracefully if data lacks crucial columns", {
+test_that("errors gracefully if data lacks crucial columns", {
   expect_error(prioritize(fake_matched()), NA)
 
   expect_error(
@@ -46,7 +35,7 @@ test_that("prioritize errors gracefully if data lacks crucial columns", {
   )
 })
 
-test_that("prioritize errors gracefully with bad `priority`", {
+test_that("errors gracefully with bad `priority`", {
   expect_warning(
     prioritize(fake_matched(), priority = c("bad1", "bab2")),
     "[Ii]gnoring.*levels"
@@ -57,12 +46,12 @@ test_that("prioritize errors gracefully with bad `priority`", {
   )
 })
 
-test_that("prioritize picks score equal to 1", {
+test_that("picks score equal to 1", {
   matched <- fake_matched(score = c(1, 0.9))
   expect_equal(min(prioritize(matched)$score), 1)
 })
 
-test_that("prioritize picks the highetst level per id_loan", {
+test_that("picks the highetst level per id_loan", {
   # styler: off
   id_level <- tibble::tribble(
     ~id_loan,                 ~level,
@@ -80,7 +69,7 @@ test_that("prioritize picks the highetst level per id_loan", {
   )
 })
 
-test_that("prioritize takes a `priority` function or lambda", {
+test_that("takes a `priority` function or lambda", {
   matched <- fake_matched(level = c("direct_loantaker", "ultimate_parent"))
   out <- prioritize(matched, priority = NULL)
   expect_equal(out$level, "direct_loantaker")
@@ -94,14 +83,14 @@ test_that("prioritize takes a `priority` function or lambda", {
   expect_equal(out$level, "ultimate_parent")
 })
 
-test_that("prioritize is sensitive to `priority`", {
+test_that("is sensitive to `priority`", {
   expect_equal(
     prioritize(fake_matched(level = c("z", "a")), priority = "z")$level,
     "z"
   )
 })
 
-test_that("prioritize ignores existing groups", {
+test_that("ignores existing groups", {
   # styler: off
   matched <- tibble::tribble(
     ~id_loan, ~other_id, ~level,
@@ -121,7 +110,7 @@ test_that("prioritize ignores existing groups", {
   )
 })
 
-test_that("prioritize previous preserves groups", {
+test_that("previous preserves groups", {
   matched <- fake_matched(other_id = 1:4) %>%
     group_by(other_id, score)
 
@@ -172,12 +161,11 @@ test_that("prioritize_at with grouped data picks one row per group", {
   expect_equal(out$y, c("a", "z"))
 })
 
-test_that("prioritize does not warn if a group has not all priority items", {
-  expect_warning(
+test_that("does not warn if a group has not all priority items", {
+  expect_no_warning(
     fake_matched(level = c("a", "z"), new = level) %>%
       group_by(new) %>%
-      prioritize(priority = c("z", "a")),
-    NA
+      prioritize(priority = c("z", "a"))
   )
 })
 
@@ -188,11 +176,12 @@ test_that("w/ id_loan at level direct* & ultimate* picks only direct* (#106)", {
 
 test_that("output is independent from the row-order of the input (#113)", {
   # styler: off
+  # Could use fake_matched() but the data is clearer this way
   matched_direct <- tibble::tribble(
     ~id_loan,   ~id,             ~level, ~score,      ~sector,  ~sector_ald,
-    "A",   "D", "direct_loantaker",      1, "automotive", "automotive",
-    "A",   "U",  "ultimate_parent",      1, "automotive", "automotive",
-    "B",   "U",  "ultimate_parent",      1, "automotive", "automotive",
+         "A",   "D", "direct_loantaker",      1, "automotive", "automotive",
+         "A",   "U",  "ultimate_parent",      1, "automotive", "automotive",
+         "B",   "U",  "ultimate_parent",      1, "automotive", "automotive",
   )
   # styler: on
 
@@ -201,5 +190,21 @@ test_that("output is independent from the row-order of the input (#113)", {
   testthat::expect_equal(
     prioritize(matched_direct)$id_loan,
     prioritize(matched_invert)$id_loan
+  )
+})
+
+test_that("errors if score=1 & values by id_loan+level are duplicated (#114)", {
+  valid <- fake_matched(score = 0:1)
+  expect_no_error(prioritize(valid))
+
+  invalid <- fake_matched(score = c(1, 1))
+  expect_error(
+    class = "duplicated_score1_by_id_loan_by_level",
+    prioritize(invalid)
+  )
+
+  verify_output(
+    test_path("output", "prioritize-duplicated_score1_by_id_loan_by_level.txt"),
+    prioritize(invalid)
   )
 })
