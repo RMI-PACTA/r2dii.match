@@ -1,7 +1,6 @@
 #' @section Assigning aliases:
-#' The process to assign an alias for a `name_*` column (i.e. the process to
-#' create the `alias_*` columns) applies best practices
-#' commonly used in name matching algorithms:
+#' The transformation process used to compare names between loanbook and ald
+#' datasets applies best practices commonly used in name matching algorithms:
 #' * Remove special characters.
 #' * Replace language specific characters.
 #' * Abbreviate certain names to reduce their importance in the matching.

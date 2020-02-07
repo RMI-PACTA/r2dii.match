@@ -3,15 +3,14 @@
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' `name_direct_loantaker` and `name_ultimate_parent`) with names in an
 #' asset-level dataset (column `name_company`). The raw names are first
-#' transformed and stored in an `alias` column, then the similarity between
-#' the `alias` columns in each of the loanbook and ald datasets is scored
-#' using [stringdist::stringsim()].
+#' internally transformed then the similarity between transformed names in each
+#' of the loanbook and ald datasets is scored using [stringdist::stringsim()].
 #'
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param loanbook,ald Dataframes with `alias` and optionally `sector`
-#'   columns.
+#' @param loanbook,ald Dataframes structured like [r2dii.dataraw::loanbook_demo]
+#'   and [r2dii.dataraw::ald_demo].
 #' @param by_sector Should the combinations be done by sector?
 #' @param min_score A number (length-1) to set the minimum `score` values you
 #'   want to pick.
