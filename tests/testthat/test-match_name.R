@@ -258,10 +258,11 @@ test_that("takes `p`", {
 })
 
 test_that("takes `overwrite`", {
+  overwrite <- overwrite_demo
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = NULL),
-      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = overwrite_demo)
+      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = overwrite)
     )
   )
 })
