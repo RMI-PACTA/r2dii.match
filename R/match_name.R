@@ -96,7 +96,8 @@ match_name <- function(loanbook,
     left_join(loanbook_rowid, by = "rowid") %>%
     mutate(rowid = NULL) %>%
     reorder_names_as_in_loanbook(loanbook_rowid) %>%
-    unsuffix_and_regroup(old_groups)
+    unsuffix_and_regroup(old_groups) %>%
+    select(-.data$alias)
 }
 
 unsuffix_and_regroup <- function(data, old_groups) {
