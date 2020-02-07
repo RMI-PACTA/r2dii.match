@@ -189,10 +189,10 @@ test_that("w/ id_loan at level direct* & ultimate* picks only direct* (#106)", {
 test_that("output is independent from the row-order of the input (#113)", {
   # styler: off
   matched_direct <- tibble::tribble(
-    ~id_loan,   ~id,             ~level, ~score,      ~sector,  ~sector_ald,
-    "A",   "D", "direct_loantaker",      1, "automotive", "automotive",
-    "A",   "U",  "ultimate_parent",      1, "automotive", "automotive",
-    "B",   "U",  "ultimate_parent",      1, "automotive", "automotive",
+    ~id_loan,   ~id_2dii,             ~level, ~score,      ~sector,  ~sector_ald,
+         "A",        "D", "direct_loantaker",      1, "automotive", "automotive",
+         "A",        "U",  "ultimate_parent",      1, "automotive", "automotive",
+         "B",        "U",  "ultimate_parent",      1, "automotive", "automotive",
   )
   # styler: on
 

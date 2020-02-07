@@ -43,22 +43,22 @@ test_that("restructure_loanbook_for_matching outputs a tibble with expected name
   expect_is(out, "tbl_df")
   expect_named(
     out,
-    c("rowid", "level", "id", "name", "sector", "source", "alias")
+    c("rowid", "level", "id_2dii", "name", "sector", "source", "alias")
   )
 
   out2 <- restructure_loanbook_for_matching(loanbook_rowid, overwrite_demo)
   expect_is(out2, "tbl_df")
   expect_named(
     out2,
-    c("rowid", "level", "id", "name", "sector", "source", "alias")
+    c("rowid", "level", "id_2dii", "name", "sector", "source", "alias")
   )
 })
 
 test_that("restructure_loanbook_for_matching correctly overwrites name", {
   overwrite <- overwrite_demo
   out <- restructure_loanbook_for_matching(loanbook_rowid, overwrite_demo) %>%
-    filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    left_join(overwrite, by = c("id", "level"))
+    filter(id_2dii %in% overwrite$id_2dii & level %in% overwrite$level) %>%
+    left_join(overwrite, by = c("id_2dii", "level"))
 
   expect_equal(out$name.x, out$name.y)
 })
@@ -66,8 +66,8 @@ test_that("restructure_loanbook_for_matching correctly overwrites name", {
 test_that("restructure_loanbook_for_matching correctly overwrites sector", {
   overwrite <- overwrite_demo
   out <- restructure_loanbook_for_matching(loanbook_rowid, overwrite_demo) %>%
-    filter(id %in% overwrite$id & level %in% overwrite$level) %>%
-    left_join(overwrite, by = c("id", "level"))
+    filter(id_2dii %in% overwrite$id_2dii & level %in% overwrite$level) %>%
+    left_join(overwrite, by = c("id_2dii", "level"))
 
   expect_equal(out$sector.x, out$sector.y)
 })

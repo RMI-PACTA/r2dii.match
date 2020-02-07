@@ -88,7 +88,7 @@ match_name <- function(loanbook,
       return()
   }
 
-  preferred <- prefer_perfect_match_by(matched, .data$id)
+  preferred <- prefer_perfect_match_by(matched, .data$id_2dii)
 
   preferred %>%
     restore_cols_sector_name_from_ald(prep_ald, by_sector = by_sector) %>%
@@ -193,7 +193,7 @@ intersect_names_as_in <- function(data, reference) {
 
 names_added_by_match_name <- function() {
   c(
-    "id",
+    "id_2dii",
     "level",
     "sector",
     "sector_ald",
