@@ -28,7 +28,7 @@
 #'
 #' @return A dataframe with the same groups (if any) and columns as `loanbook`,
 #'   and the additional columns: `id_2dii`, `sector`, `sector_ald`, `source`,
-#'   `alias`, `alias_ald`, `score`, `name_ald`. The returned rows depend on the
+#'   `score`, `name_ald`. The returned rows depend on the
 #'   argument `min_value` and the result of the column `score` for each loan:
 #'   * If any row has `score` equal to 1, `match_name()` returns all rows where
 #'   `score` equals 1, dropping all other rows.
