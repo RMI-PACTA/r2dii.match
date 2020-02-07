@@ -77,23 +77,6 @@ commonly used in name matching algorithms:
 This function ignores but preserves existing groups them.
 }
 
-\examples{
-library(dplyr)
-library(r2dii.dataraw)
-
-mini_loanbook <- sample_n(loanbook_demo, 10)
-
-match_name(mini_loanbook, ald_demo)
-
-# May be a little slow
-\dontrun{
-match_name(
-  mini_loanbook, ald_demo,
-  min_score = 0.9,
-  by_sector = FALSE
-)
-}
-}
 \seealso{
 Other user-oriented: 
 \code{\link{prioritize}()}
