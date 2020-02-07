@@ -99,7 +99,7 @@ may_overwrite_name_and_sector <- function(data, overwrite) {
 
 overwrite_name_and_sector <- function(data, overwrite) {
   data %>%
-    left_join(overwrite, by = c("id", "level")) %>%
+    left_join(overwrite, by = c("id_2dii", "level")) %>%
     mutate(
       source = if_else(is.na(.data$source.y), .data$source.x, "manual"),
       sector = if_else(is.na(.data$sector.y), .data$sector.x, .data$sector.y),
@@ -164,7 +164,7 @@ check_prepare_loanbook_overwrite <- function(overwrite) {
 output_cols_for_prepare_loanbook <- function() {
   c(
     "level",
-    "id",
+    "id_2dii",
     "name",
     "sector",
     "source"
@@ -177,7 +177,7 @@ identify_loans_by_level <- function(data) {
       cols = tidyr::starts_with("id_"),
       names_to = "level",
       names_prefix = "id_",
-      values_to = "id"
+      values_to = "id_2dii"
     )
 }
 
