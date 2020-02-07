@@ -128,7 +128,6 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     sector_ald = "power",
     name = "Alpine Knits India Pvt. Limited",
     name_ald = "alpine knits india pvt. limited",
-    alias_ald = "alpineknitsindiapvt ltd",
     score = 1,
     source = "loanbook"
   )
@@ -173,7 +172,6 @@ expected_names_of_match_name_with_loanbook_demo <- c(
   "sector_ald",
   "name",
   "name_ald",
-  "alias_ald",
   "score",
   "source"
 )
