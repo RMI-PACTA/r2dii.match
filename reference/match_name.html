@@ -39,9 +39,8 @@
 <meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
 name_direct_loantaker and name_ultimate_parent) with names in an
 asset-level dataset (column name_company). The raw names are first
-transformed and stored in an alias column, then the similarity between
-the alias columns in each of the loanbook and ald datasets is scored
-using stringdist::stringsim()." />
+internally transformed then the similarity between transformed names in each
+of the loanbook and ald datasets is scored using stringdist::stringsim()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -125,9 +124,8 @@ using stringdist::stringsim()." />
     <p><code>match_name()</code> scores the match between names in a loanbook dataset (columns
 <code>name_direct_loantaker</code> and <code>name_ultimate_parent</code>) with names in an
 asset-level dataset (column <code>name_company</code>). The raw names are first
-transformed and stored in an <code>alias</code> column, then the similarity between
-the <code>alias</code> columns in each of the loanbook and ald datasets is scored
-using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim()</a></code>.</p>
+internally transformed then the similarity between transformed names in each
+of the loanbook and ald datasets is scored using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>match_name</span>(
@@ -145,8 +143,8 @@ using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdi
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>loanbook, ald</th>
-      <td><p>Dataframes with <code>alias</code> and optionally <code>sector</code>
-columns.</p></td>
+      <td><p>Dataframes structured like <a href='https://rdrr.io/pkg/r2dii.dataraw/man/loanbook_demo.html'>r2dii.dataraw::loanbook_demo</a>
+and <a href='https://rdrr.io/pkg/r2dii.dataraw/man/ald_demo.html'>r2dii.dataraw::ald_demo</a>.</p></td>
     </tr>
     <tr>
       <th>by_sector</th>
@@ -184,7 +182,7 @@ only <code>sector</code>, the value in the <code>name</code> column should be <c
 
     <p>A dataframe with the same groups (if any) and columns as <code>loanbook</code>,
 and the additional columns: <code>id_2dii</code>, <code>sector</code>, <code>sector_ald</code>, <code>source</code>,
-<code>alias</code>, <code>alias_ald</code>, <code>score</code>, <code>name_ald</code>. The returned rows depend on the
+<code>score</code>, <code>name_ald</code>. The returned rows depend on the
 argument <code>min_value</code> and the result of the column <code>score</code> for each loan:</p><ul>
 <li><p>If any row has <code>score</code> equal to 1, <code>match_name()</code> returns all rows where
 <code>score</code> equals 1, dropping all other rows.</p></li>
@@ -198,9 +196,8 @@ names -- for type stability.</p>
 
     
 
-<p>The process to assign an alias for a <code>name_*</code> column (i.e. the process to
-create the <code>alias_*</code> columns) applies best practices
-commonly used in name matching algorithms:</p><ul>
+<p>The transformation process used to compare names between loanbook and ald
+datasets applies best practices commonly used in name matching algorithms:</p><ul>
 <li><p>Remove special characters.</p></li>
 <li><p>Replace language specific characters.</p></li>
 <li><p>Abbreviate certain names to reduce their importance in the matching.</p></li>
@@ -226,7 +223,7 @@ commonly used in name matching algorithms:</p><ul>
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>r2dii.dataraw</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: r2dii.utils</span></div><div class='input'>
 <span class='no'>mini_loanbook</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample.html'>sample_n</a></span>(<span class='no'>loanbook_demo</span>, <span class='fl'>10</span>)
 
-<span class='fu'>match_name</span>(<span class='no'>mini_loanbook</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 17 x 29
+<span class='fu'>match_name</span>(<span class='no'>mini_loanbook</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 17 x 27
 #&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
 #&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
 #&gt;  1 L173    C207             Toyota Motor Co… &lt;NA&gt;             &lt;NA&gt;            
@@ -246,7 +243,7 @@ commonly used in name matching algorithms:</p><ul>
 #&gt; 15 L47     C257             Yolo County Flo… IP3              Yolo Regional D…
 #&gt; 16 L24     C282             Ypfb Corporacion &lt;NA&gt;             &lt;NA&gt;            
 #&gt; 17 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; # … with 24 more variables: id_ultimate_parent &lt;chr&gt;,
+#&gt; # … with 22 more variables: id_ultimate_parent &lt;chr&gt;,
 #&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
 #&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
 #&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
@@ -255,7 +252,7 @@ commonly used in name matching algorithms:</p><ul>
 #&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
 #&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,
 #&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
-#&gt; #   alias &lt;chr&gt;, alias_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;</div><div class='input'>
+#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</div><div class='input'>
 <span class='co'># May be a little slow</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>match_name</span>(
