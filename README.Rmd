@@ -157,7 +157,7 @@ matched <- read_csv("matched_edited.csv")
 The `matched` dataset may have multiple matches per loan. To get the best match only, use `priorityze()` -- it picks rows where `score` is 1 and `level` per loan is of highest `priority()`. 
 
 ```{r}
-some_interesting_columns <- vars(id, level, starts_with("alias"), score)
+some_interesting_columns <- vars(id_2dii, level, starts_with("alias"), score)
 
 matched %>% 
   prioritize() %>% 

@@ -122,7 +122,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
     sector_classification_system = "NACE",
     sector_classification_direct_loantaker = 3511,
-    id = "UP1",
+    id_2dii = "UP1",
     level = "ultimate_parent",
     sector = "power",
     sector_ald = "power",
@@ -168,7 +168,7 @@ expected_names_of_match_name_with_loanbook_demo <- c(
   "lei_direct_loantaker",
   "isin_direct_loantaker",
 
-  "id",
+  "id_2dii",
   "level",
   "sector",
   "sector_ald",
@@ -258,10 +258,11 @@ test_that("takes `p`", {
 })
 
 test_that("takes `overwrite`", {
+  overwrite <- overwrite_demo
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = NULL),
-      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = overwrite_demo)
+      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = overwrite)
     )
   )
 })
@@ -346,7 +347,7 @@ test_that("preserves groups", {
 test_that("outputs id consistent with level", {
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
   expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
-  expect_equal(out$id, c("UP1", "DL1"))
+  expect_equal(out$id_2dii, c("UP1", "DL1"))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {

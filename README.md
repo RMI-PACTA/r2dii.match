@@ -57,19 +57,19 @@ package](https://2degreesinvesting.github.io/r2dii.dataraw)).
 ``` r
 loanbook_demo
 #> # A tibble: 320 x 19
-#>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+#>    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
-#>  1 L1      C294             Yuamen Xinneng … <NA>             <NA>            
-#>  2 L2      C293             Yuamen Changyua… <NA>             <NA>            
-#>  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
-#>  4 L4      C299             Yudaksel Holdin… <NA>             <NA>            
-#>  5 L5      C305             Yukon Energy Co… <NA>             <NA>            
-#>  6 L6      C304             Yukon Developme… <NA>             <NA>            
-#>  7 L7      C227             Yaugoa-Zapadnay… <NA>             <NA>            
-#>  8 L8      C303             Yueyang City Co… <NA>             <NA>            
+#>  1 L1      C294             Yuamen Xinneng ~ <NA>             <NA>            
+#>  2 L2      C293             Yuamen Changyua~ <NA>             <NA>            
+#>  3 L3      C292             Yuama Ethanol L~ IP5              Yuama Inc.      
+#>  4 L4      C299             Yudaksel Holdin~ <NA>             <NA>            
+#>  5 L5      C305             Yukon Energy Co~ <NA>             <NA>            
+#>  6 L6      C304             Yukon Developme~ <NA>             <NA>            
+#>  7 L7      C227             Yaugoa-Zapadnay~ <NA>             <NA>            
+#>  8 L8      C303             Yueyang City Co~ <NA>             <NA>            
 #>  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
-#> 10 L10     C302             Yuexi County AA… <NA>             <NA>            
-#> # … with 310 more rows, and 14 more variables: id_ultimate_parent <chr>,
+#> 10 L10     C302             Yuexi County AA~ <NA>             <NA>            
+#> # ... with 310 more rows, and 14 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -82,17 +82,17 @@ ald_demo
 #> # A tibble: 17,368 x 13
 #>    name_company sector technology production_unit  year production
 #>    <chr>        <chr>  <chr>      <chr>           <dbl>      <dbl>
-#>  1 aba hydropo… power  hydrocap   MW               2013    133340.
-#>  2 aba hydropo… power  hydrocap   MW               2014    131582.
-#>  3 aba hydropo… power  hydrocap   MW               2015    129824.
-#>  4 aba hydropo… power  hydrocap   MW               2016    128065.
-#>  5 aba hydropo… power  hydrocap   MW               2017    126307.
-#>  6 aba hydropo… power  hydrocap   MW               2018    124549.
-#>  7 aba hydropo… power  hydrocap   MW               2019    122790.
-#>  8 aba hydropo… power  hydrocap   MW               2020    121032.
-#>  9 aba hydropo… power  hydrocap   MW               2021    119274.
-#> 10 aba hydropo… power  hydrocap   MW               2022    117515.
-#> # … with 17,358 more rows, and 7 more variables: emission_factor <dbl>,
+#>  1 aba hydropo~ power  hydrocap   MW               2013    133340.
+#>  2 aba hydropo~ power  hydrocap   MW               2014    131582.
+#>  3 aba hydropo~ power  hydrocap   MW               2015    129824.
+#>  4 aba hydropo~ power  hydrocap   MW               2016    128065.
+#>  5 aba hydropo~ power  hydrocap   MW               2017    126307.
+#>  6 aba hydropo~ power  hydrocap   MW               2018    124549.
+#>  7 aba hydropo~ power  hydrocap   MW               2019    122790.
+#>  8 aba hydropo~ power  hydrocap   MW               2020    121032.
+#>  9 aba hydropo~ power  hydrocap   MW               2021    119274.
+#> 10 aba hydropo~ power  hydrocap   MW               2022    117515.
+#> # ... with 17,358 more rows, and 7 more variables: emission_factor <dbl>,
 #> #   country_of_domicile <chr>, plant_location <chr>, number_of_assets <dbl>,
 #> #   is_ultimate_owner <lgl>, is_ultimate_listed_owner <lgl>,
 #> #   ald_timestamp <chr>
@@ -155,27 +155,27 @@ name matching algorithms, such as:
 
 ``` r
 match_name(your_loanbook, your_ald)
-#> # A tibble: 576 x 29
-#>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+#> # A tibble: 502 x 29
+#>    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
 #>  1 L170    C203             Tesla Inc        <NA>             <NA>            
-#>  2 L180    C217             Weichai Power C… <NA>             <NA>            
+#>  2 L180    C217             Weichai Power C~ <NA>             <NA>            
 #>  3 L181    C218             Wheego           <NA>             <NA>            
-#>  4 L195    C313             Zhengzhou Yuton… <NA>             <NA>            
+#>  4 L195    C313             Zhengzhou Yuton~ <NA>             <NA>            
 #>  5 L174    C211             Tvr              <NA>             <NA>            
 #>  6 L198    C317             Ziyang Nanjun    <NA>             <NA>            
 #>  7 L193    C310             Zamyad           <NA>             <NA>            
 #>  8 L165    C195             Sunwin Bus       <NA>             <NA>            
-#>  9 L154    C171             Shandong Tangju… <NA>             <NA>            
+#>  9 L154    C171             Shandong Tangju~ <NA>             <NA>            
 #> 10 L164    C193             Subaru Corp      <NA>             <NA>            
-#> # … with 566 more rows, and 24 more variables: id_ultimate_parent <chr>,
+#> # ... with 492 more rows, and 24 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
 #> #   sector_classification_input_type <chr>,
 #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id <chr>,
+#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
 #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
 #> #   alias <chr>, alias_ald <chr>, score <dbl>, source <chr>
 ```
@@ -193,7 +193,7 @@ match_name(your_loanbook, your_ald, by_sector = FALSE) %>%
 # Compare
 match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
   nrow()
-#> [1] 576
+#> [1] 502
 ```
 
 `min_score` allows you to pick rows of a minimum `score` and above.
@@ -246,25 +246,25 @@ best match only, use `priorityze()` – it picks rows where `score` is 1
 and `level` per loan is of highest `priority()`.
 
 ``` r
-some_interesting_columns <- vars(id, level, starts_with("alias"), score)
+some_interesting_columns <- vars(id_2dii, level, starts_with("alias"), score)
 
 matched %>% 
   prioritize() %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 541 x 5
-#>    id    level          alias                    alias_ald                 score
-#>    <chr> <chr>          <chr>                    <chr>                     <dbl>
-#>  1 DL167 direct_loanta… shaanxiauto              shaanxiauto                   1
-#>  2 DL168 direct_loanta… shandongauto             shandongauto                  1
-#>  3 DL169 direct_loanta… shandongkama             shandongkama                  1
-#>  4 DL170 direct_loanta… shandongtangjunouling    shandongtangjunouling         1
-#>  5 DL172 direct_loanta… shanghaiautomotiveindus… shanghaiautomotiveindust…     1
-#>  6 DL172 direct_loanta… shanghaiautomotiveindus… shanghaiautomotiveindust…     1
-#>  7 DL175 direct_loanta… shanxidayun              shanxidayun                   1
-#>  8 DL177 direct_loanta… shenyangpolarsun         shenyangpolarsun              1
-#>  9 DL179 direct_loanta… shuanghuanauto           shuanghuanauto                1
-#> 10 DL181 direct_loanta… sichuanauto              sichuanauto                   1
-#> # … with 531 more rows
+#> # A tibble: 267 x 5
+#>    id_2dii level         alias                    alias_ald                score
+#>    <chr>   <chr>         <chr>                    <chr>                    <dbl>
+#>  1 DL167   direct_loant~ shaanxiauto              shaanxiauto                  1
+#>  2 DL168   direct_loant~ shandongauto             shandongauto                 1
+#>  3 DL169   direct_loant~ shandongkama             shandongkama                 1
+#>  4 DL170   direct_loant~ shandongtangjunouling    shandongtangjunouling        1
+#>  5 DL172   direct_loant~ shanghaiautomotiveindus~ shanghaiautomotiveindus~     1
+#>  6 DL175   direct_loant~ shanxidayun              shanxidayun                  1
+#>  7 DL177   direct_loant~ shenyangpolarsun         shenyangpolarsun             1
+#>  8 DL179   direct_loant~ shuanghuanauto           shuanghuanauto               1
+#>  9 DL181   direct_loant~ sichuanauto              sichuanauto                  1
+#> 10 DL183   direct_loant~ singulato                singulato                    1
+#> # ... with 257 more rows
 ```
 
 The default priority is set internally via `prioritize_levels()`.
@@ -282,18 +282,18 @@ priority.
 matched %>% 
   prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 541 x 5
-#>    id    level           alias                    alias_ald                score
-#>    <chr> <chr>           <chr>                    <chr>                    <dbl>
-#>  1 UP23  ultimate_parent astonmartin              astonmartin                  1
-#>  2 UP25  ultimate_parent avtozaz                  avtozaz                      1
-#>  3 UP36  ultimate_parent bogdan                   bogdan                       1
-#>  4 UP52  ultimate_parent chauto                   chauto                       1
-#>  5 UP53  ultimate_parent chehejia                 chehejia                     1
-#>  6 UP58  ultimate_parent chtcauto                 chtcauto                     1
-#>  7 UP80  ultimate_parent dongfenghonda            dongfenghonda                1
-#>  8 UP79  ultimate_parent dongfengluxgen           dongfengluxgen               1
-#>  9 UP89  ultimate_parent electricmobilitysolutio… electricmobilitysolutio…     1
-#> 10 UP94  ultimate_parent faradayfuture            faradayfuture                1
-#> # … with 531 more rows
+#> # A tibble: 267 x 5
+#>    id_2dii level           alias                   alias_ald               score
+#>    <chr>   <chr>           <chr>                   <chr>                   <dbl>
+#>  1 UP23    ultimate_parent astonmartin             astonmartin                 1
+#>  2 UP25    ultimate_parent avtozaz                 avtozaz                     1
+#>  3 UP36    ultimate_parent bogdan                  bogdan                      1
+#>  4 UP52    ultimate_parent chauto                  chauto                      1
+#>  5 UP53    ultimate_parent chehejia                chehejia                    1
+#>  6 UP58    ultimate_parent chtcauto                chtcauto                    1
+#>  7 UP80    ultimate_parent dongfenghonda           dongfenghonda               1
+#>  8 UP79    ultimate_parent dongfengluxgen          dongfengluxgen              1
+#>  9 UP89    ultimate_parent electricmobilitysoluti~ electricmobilitysoluti~     1
+#> 10 UP94    ultimate_parent faradayfuture           faradayfuture               1
+#> # ... with 257 more rows
 ```

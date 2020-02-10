@@ -38,7 +38,7 @@ only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 }
 \value{
 A dataframe with the same groups (if any) and columns as \code{loanbook},
-and the additional columns: \code{id}, \code{sector}, \code{sector_ald}, \code{source},
+and the additional columns: \code{id_2dii}, \code{sector}, \code{sector_ald}, \code{source},
 \code{alias}, \code{alias_ald}, \code{score}, \code{name_ald}. The returned rows depend on the
 argument \code{min_value} and the result of the column \code{score} for each loan:
 \itemize{

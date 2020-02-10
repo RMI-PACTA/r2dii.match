@@ -88,7 +88,7 @@ fake_ald <- function(name_company = NULL,
 #' See `fake_lbk()`
 #' @noRd
 fake_matched <- function(id_loan = NULL,
-                         id = NULL,
+                         id_2dii = NULL,
                          level = NULL,
                          score = NULL,
                          sector = NULL,
@@ -96,7 +96,7 @@ fake_matched <- function(id_loan = NULL,
                          ...) {
   tibble::tibble(
     id_loan = id_loan %||% "L162",
-    id = id %||% "UP1",
+    id_2dii = id_2dii %||% "UP1",
     level = level %||% "ultimate_parent",
     score = score %||% 1,
     sector = sector %||% "automotive",
