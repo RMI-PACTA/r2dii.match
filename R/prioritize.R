@@ -49,7 +49,8 @@
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
   data %>%
-    check_crucial_names(c("id_loan", "level", "score", "sector", "sector_ald"))
+    check_crucial_names(c("id_loan", "level", "score", "sector", "sector_ald")) %>%
+    check_duplicated_score1_by_id_loan_by_level()
 
   priority <- set_priority(data, priority = priority)
 
@@ -62,6 +63,26 @@ prioritize <- function(data, priority = NULL) {
     ungroup()
 
   group_by(out, !!!old_groups)
+}
+
+check_duplicated_score1_by_id_loan_by_level <- function(data) {
+  is_duplicated <- data %>%
+    filter(.data$score == 1) %>%
+    select(.data$id_loan, .data$level) %>%
+    duplicated()
+
+  if (!any(is_duplicated)) {
+    return(invisible(data))
+  }
+
+  abort(
+    class = "duplicated_score1_by_id_loan_by_level",
+    message = glue(
+      "`data` where `score` is `1` must be unique by `id_loan` by `level`.
+     Duplicated rows: {commas(rownames(data)[is_duplicated])}.
+     Have you ensured that only one ald-name per loanbook-name is set to `1`?"
+    )
+  )
 }
 
 set_priority <- function(data, priority) {
