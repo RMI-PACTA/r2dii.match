@@ -92,18 +92,20 @@ your_ald <- ald_demo
 
 ### 2. Score the goodness of the match between the loanbook and ald datasets
 
-`match_name()` scores the match between names in a loanbook dataset (lbk) and names in an asset-level dataset (ald). The names come from the columns `name_direct_loantaker` and `name_ultimate_parent` of the loanbook dataset, and from the column `name_company` of the a asset-level dataset. The raw names are first transformed and stored in the columns `alias` and `alias_ald`. Then the similarity between `alias` and `alias_ald` is scored using `stringdist::stringsim()`. The process to create the `alias_*` columns applies best-practices commonly used in name matching algorithms, such as:
+`match_name()` scores the match between names in a loanbook dataset (lbk) and names in an asset-level dataset (ald). The names come from the columns `name_direct_loantaker` and `name_ultimate_parent` of the loanbook dataset, and from the column `name_company` of the a asset-level dataset. The raw names are internally transformed applying best-practices commonly used in name matching algorithms, such as:
 
 * Remove special characters.
 * Replace language specific characters.
 * Abbreviate certain names to reduce their importance in the matching.
 * Spell out numbers to increase their importance.
 
+Then, the similarity  is scored between the internally-transformed names from the loanbook versus ald datasets. The scoring algorithm is `stringdist::stringsim()`.
+
 ```{r}
 match_name(your_loanbook, your_ald)
 ```
 
-`match_name()` defaults to scoring matches between `alias_*` strings that belong to the same sector. Using `by_sector = FALSE` removes this limitation -- increasing computation time, and the number of matches with a low score.
+`match_name()` defaults to scoring matches between name strings that belong to the same sector. Using `by_sector = FALSE` removes this limitation -- increasing computation time, and the number of matches with a low score.
 
 ```{r}
 match_name(your_loanbook, your_ald, by_sector = FALSE) %>% 
@@ -135,7 +137,7 @@ matched %>%
 
 * Open _matched.csv_ with any spreadsheet editor (e.g. MS Excel, Google Sheets).
 
-* Visually compare `alias` and `alias_ald`, along with the loanbook sector.
+* Visually compare names from loanbook versus ald datasets, along with the loanbook sector.
 
 * Edit the data manually:
     * If you are happy with the match, set the `score` value to `1`.
@@ -157,7 +159,7 @@ matched <- read_csv("matched_edited.csv")
 The `matched` dataset may have multiple matches per loan. To get the best match only, use `priorityze()` -- it picks rows where `score` is 1 and `level` per loan is of highest `priority()`. 
 
 ```{r}
-some_interesting_columns <- vars(id_2dii, level, starts_with("alias"), score)
+some_interesting_columns <- vars(id_2dii, level, score)
 
 matched %>% 
   prioritize() %>% 

@@ -140,22 +140,21 @@ your_ald <- ald_demo
 (lbk) and names in an asset-level dataset (ald). The names come from the
 columns `name_direct_loantaker` and `name_ultimate_parent` of the
 loanbook dataset, and from the column `name_company` of the a
-asset-level dataset. The raw names are first transformed and stored in
-the columns `alias` and `alias_ald`. Then the similarity between `alias`
-and `alias_ald` is scored using `stringdist::stringsim()`. The process
-to create the `alias_*` columns applies best-practices commonly used in
-name matching algorithms, such as:
+asset-level dataset. The raw names are internally transformed applying
+best-practices commonly used in name matching algorithms, such as:
 
   - Remove special characters.
   - Replace language specific characters.
   - Abbreviate certain names to reduce their importance in the matching.
   - Spell out numbers to increase their importance.
 
-<!-- end list -->
+Then, the similarity is scored between the internally-transformed names
+from the loanbook versus ald datasets. The scoring algorithm is
+`stringdist::stringsim()`.
 
 ``` r
 match_name(your_loanbook, your_ald)
-#> # A tibble: 502 x 29
+#> # A tibble: 502 x 27
 #>    id_loan id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
 #>  1 L170    C203             Tesla Inc        <NA>             <NA>            
@@ -168,7 +167,7 @@ match_name(your_loanbook, your_ald)
 #>  8 L165    C195             Sunwin Bus       <NA>             <NA>            
 #>  9 L154    C171             Shandong Tangju~ <NA>             <NA>            
 #> 10 L164    C193             Subaru Corp      <NA>             <NA>            
-#> # ... with 492 more rows, and 24 more variables: id_ultimate_parent <chr>,
+#> # ... with 492 more rows, and 22 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -177,11 +176,11 @@ match_name(your_loanbook, your_ald)
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
 #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
 #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#> #   alias <chr>, alias_ald <chr>, score <dbl>, source <chr>
+#> #   score <dbl>, source <chr>
 ```
 
-`match_name()` defaults to scoring matches between `alias_*` strings
-that belong to the same sector. Using `by_sector = FALSE` removes this
+`match_name()` defaults to scoring matches between name strings that
+belong to the same sector. Using `by_sector = FALSE` removes this
 limitation – increasing computation time, and the number of matches with
 a low score.
 
@@ -219,8 +218,8 @@ matched %>%
   - Open *matched.csv* with any spreadsheet editor (e.g. MS Excel,
     Google Sheets).
 
-  - Visually compare `alias` and `alias_ald`, along with the loanbook
-    sector.
+  - Visually compare names from loanbook versus ald datasets, along with
+    the loanbook sector.
 
   - Edit the data manually:
     
@@ -246,24 +245,24 @@ best match only, use `priorityze()` – it picks rows where `score` is 1
 and `level` per loan is of highest `priority()`.
 
 ``` r
-some_interesting_columns <- vars(id_2dii, level, starts_with("alias"), score)
+some_interesting_columns <- vars(id_2dii, level, score)
 
 matched %>% 
   prioritize() %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 267 x 5
-#>    id_2dii level         alias                    alias_ald                score
-#>    <chr>   <chr>         <chr>                    <chr>                    <dbl>
-#>  1 DL167   direct_loant~ shaanxiauto              shaanxiauto                  1
-#>  2 DL168   direct_loant~ shandongauto             shandongauto                 1
-#>  3 DL169   direct_loant~ shandongkama             shandongkama                 1
-#>  4 DL170   direct_loant~ shandongtangjunouling    shandongtangjunouling        1
-#>  5 DL172   direct_loant~ shanghaiautomotiveindus~ shanghaiautomotiveindus~     1
-#>  6 DL175   direct_loant~ shanxidayun              shanxidayun                  1
-#>  7 DL177   direct_loant~ shenyangpolarsun         shenyangpolarsun             1
-#>  8 DL179   direct_loant~ shuanghuanauto           shuanghuanauto               1
-#>  9 DL181   direct_loant~ sichuanauto              sichuanauto                  1
-#> 10 DL183   direct_loant~ singulato                singulato                    1
+#> # A tibble: 267 x 3
+#>    id_2dii level            score
+#>    <chr>   <chr>            <dbl>
+#>  1 DL167   direct_loantaker     1
+#>  2 DL168   direct_loantaker     1
+#>  3 DL169   direct_loantaker     1
+#>  4 DL170   direct_loantaker     1
+#>  5 DL172   direct_loantaker     1
+#>  6 DL175   direct_loantaker     1
+#>  7 DL177   direct_loantaker     1
+#>  8 DL179   direct_loantaker     1
+#>  9 DL181   direct_loantaker     1
+#> 10 DL183   direct_loantaker     1
 #> # ... with 257 more rows
 ```
 
@@ -282,18 +281,18 @@ priority.
 matched %>% 
   prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
-#> # A tibble: 267 x 5
-#>    id_2dii level           alias                   alias_ald               score
-#>    <chr>   <chr>           <chr>                   <chr>                   <dbl>
-#>  1 UP23    ultimate_parent astonmartin             astonmartin                 1
-#>  2 UP25    ultimate_parent avtozaz                 avtozaz                     1
-#>  3 UP36    ultimate_parent bogdan                  bogdan                      1
-#>  4 UP52    ultimate_parent chauto                  chauto                      1
-#>  5 UP53    ultimate_parent chehejia                chehejia                    1
-#>  6 UP58    ultimate_parent chtcauto                chtcauto                    1
-#>  7 UP80    ultimate_parent dongfenghonda           dongfenghonda               1
-#>  8 UP79    ultimate_parent dongfengluxgen          dongfengluxgen              1
-#>  9 UP89    ultimate_parent electricmobilitysoluti~ electricmobilitysoluti~     1
-#> 10 UP94    ultimate_parent faradayfuture           faradayfuture               1
+#> # A tibble: 267 x 3
+#>    id_2dii level           score
+#>    <chr>   <chr>           <dbl>
+#>  1 UP23    ultimate_parent     1
+#>  2 UP25    ultimate_parent     1
+#>  3 UP36    ultimate_parent     1
+#>  4 UP52    ultimate_parent     1
+#>  5 UP53    ultimate_parent     1
+#>  6 UP58    ultimate_parent     1
+#>  7 UP80    ultimate_parent     1
+#>  8 UP79    ultimate_parent     1
+#>  9 UP89    ultimate_parent     1
+#> 10 UP94    ultimate_parent     1
 #> # ... with 257 more rows
 ```

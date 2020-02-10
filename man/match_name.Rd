@@ -15,8 +15,8 @@ match_name(
 )
 }
 \arguments{
-\item{loanbook, ald}{Dataframes with \code{alias} and optionally \code{sector}
-columns.}
+\item{loanbook, ald}{Dataframes structured like \link[r2dii.dataraw:loanbook_demo]{r2dii.dataraw::loanbook_demo}
+and \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.}
 
 \item{by_sector}{Should the combinations be done by sector?}
 
@@ -39,7 +39,7 @@ only \code{sector}, the value in the \code{name} column should be \code{NA}.}
 \value{
 A dataframe with the same groups (if any) and columns as \code{loanbook},
 and the additional columns: \code{id_2dii}, \code{sector}, \code{sector_ald}, \code{source},
-\code{alias}, \code{alias_ald}, \code{score}, \code{name_ald}. The returned rows depend on the
+\code{score}, \code{name_ald}. The returned rows depend on the
 argument \code{min_value} and the result of the column \code{score} for each loan:
 \itemize{
 \item If any row has \code{score} equal to 1, \code{match_name()} returns all rows where
@@ -55,15 +55,13 @@ names -- for type stability.
 \code{match_name()} scores the match between names in a loanbook dataset (columns
 \code{name_direct_loantaker} and \code{name_ultimate_parent}) with names in an
 asset-level dataset (column \code{name_company}). The raw names are first
-transformed and stored in an \code{alias} column, then the similarity between
-the \code{alias} columns in each of the loanbook and ald datasets is scored
-using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
+internally transformed then the similarity between transformed names in each
+of the loanbook and ald datasets is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
 \section{Assigning aliases}{
 
-The process to assign an alias for a \verb{name_*} column (i.e. the process to
-create the \verb{alias_*} columns) applies best practices
-commonly used in name matching algorithms:
+The transformation process used to compare names between loanbook and ald
+datasets applies best practices commonly used in name matching algorithms:
 \itemize{
 \item Remove special characters.
 \item Replace language specific characters.
