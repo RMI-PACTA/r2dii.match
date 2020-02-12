@@ -1,7 +1,7 @@
 #' Match a loanbook and asset-level datasets (ald) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
-#' `name_direct_loantaker` and `name_ultimate_parent`) with names in an
+#' can be `name_direct_loantaker`, `name_intermediate_parent_*`and `name_ultimate_parent`) with names in an
 #' asset-level dataset (column `name_company`). The raw names are first
 #' internally transformed then the similarity between transformed names in each
 #' of the loanbook and ald datasets is scored using [stringdist::stringsim()].
@@ -21,21 +21,32 @@
 #' @inheritParams stringdist::stringdist
 #' @param overwrite A dataframe used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
-#'   only `sector`, the value in the `name` column should be `NA`.
+#'   only `sector`, the value in the `name` column should be `NA` and
+#'   vice-versa. This file can be used to manually match entities to ald.
 #'
 #' @family user-oriented
 #'
 #' @return A dataframe with the same groups (if any) and columns as `loanbook`,
-#'   and the additional columns: `id_2dii`, `sector`, `sector_ald`, `source`,
-#'   `score`, `name_ald`. The returned rows depend on the
-#'   argument `min_value` and the result of the column `score` for each loan:
-#'   * If any row has `score` equal to 1, `match_name()` returns all rows where
-#'   `score` equals 1, dropping all other rows.
-#'   * If no row has `score` equal to 1, `match_name()` returns all rows where
-#'   `score` is equal to or greater than `min_score`.
+#'   and the additional columns:
+#'   * `id_2dii` - an id used internally by `match_name()` to distinguish
+#'   entities
+#'   * `level` - the level of granularity that the loan was matched at
+#'   (e.g `direct_loantaker` or `ultimate_parent`)
+#'   * `sector` - the sector of the `loanbook` company
+#'   * `sector_ald` - the sector of the `ald` company
+#'   * `name` - the name of the `loanbook` company
+#'   * `name_ald` - the name of the `ald` company
+#'   * `score` - the score of the match (manually set this to `1`
+#'   prior to calling `prioritize()` to validate the match)
+#'   * `source` - determines the source of the match. (equal to `loanbook` unless
+#'   the match is from `overwrite`
 #'
-#' If there is no match the output is a 0-row tibble with the expected column
-#' names -- for type stability.
+#'   The returned rows depend on the argument `min_value` and the result of the column `score` for each loan:
+#'   * If any row has `score` equal to 1, `match_name()` returns all rows where `score`
+#'   equals 1, dropping all other rows.
+#'   * If no row has `score` equal to 1,`match_name()` returns all rows where `score` is equal to or greater than
+#'   `min_score`. * If there is no match the output is a 0-row tibble with the
+#'   expected column names -- for type stability.
 #'
 #' @export
 #'
