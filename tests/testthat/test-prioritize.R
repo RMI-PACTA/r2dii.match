@@ -209,7 +209,8 @@ test_that("errors if score=1 & values by id_loan+level are duplicated (#114)", {
   )
 })
 
-test_that("passes if score=1 & values by id_loan are duplicated for distinct levels (#122)", {
+test_that("passes if score=1 & values by id_loan are duplicated for distinct
+          levels (#122)", {
   id_level_score <- tibble::tribble(
     ~id_loan, ~id_2dii, ~level, ~score,
     "L1", 1, "direct_loantaker", 1,
