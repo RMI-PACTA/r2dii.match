@@ -211,19 +211,12 @@ test_that("errors if score=1 & values by id_loan+level are duplicated (#114)", {
 
 test_that("passes if score=1 & values by id_loan are duplicated for distinct
           levels (#122)", {
-  id_level_score <- tibble::tribble(
-    ~id_loan, ~id_2dii, ~level, ~score,
-    "L1", 1, "direct_loantaker", 1,
-    "L1", 2, "intermediate_parent", 1,
-    "L1", 3, "ultimate_parent", 1
-  )
-
-
   valid <- fake_matched(
-    id_loan = id_level_score$id_loan,
-    id_2dii = id_level_score$id_2dii,
-    level = id_level_score$level,
-    score = id_level_score$score
+    score = 1,
+    id_loan = "L1",
+    level = c("direct_loantaker", "intermediate_parent", "ultimate_parent"),
+    id_2dii = c("dl", "ip", "up")
   )
+
   expect_no_error(prioritize(valid))
 })
