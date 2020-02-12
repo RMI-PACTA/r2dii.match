@@ -32,28 +32,41 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 
 \item{overwrite}{A dataframe used to overwrite the \code{sector} and/or \code{name}
 columns of a particular direct loantaker or ultimate parent. To overwrite
-only \code{sector}, the value in the \code{name} column should be \code{NA}.}
+only \code{sector}, the value in the \code{name} column should be \code{NA} and
+vice-versa. This file can be used to manually match entities to ald.}
 
 \item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 }
 \value{
 A dataframe with the same groups (if any) and columns as \code{loanbook},
-and the additional columns: \code{id_2dii}, \code{sector}, \code{sector_ald}, \code{source},
-\code{score}, \code{name_ald}. The returned rows depend on the
-argument \code{min_value} and the result of the column \code{score} for each loan:
+and the additional columns:
 \itemize{
-\item If any row has \code{score} equal to 1, \code{match_name()} returns all rows where
-\code{score} equals 1, dropping all other rows.
-\item If no row has \code{score} equal to 1, \code{match_name()} returns all rows where
-\code{score} is equal to or greater than \code{min_score}.
+\item \code{id_2dii} - an id used internally by the \code{match_name()} to distinguish
+entities
+\item \code{level} - the level of granularity that the loan was matched at
+(e.g \code{direct_loantaker} or \code{ultimate_parent})
+\item \code{sector} - the loan sector, as determined by the \code{loanbook}
+\item \code{sector_ald} - the sector of the ald company
+\item \code{name} - the name of the company in the \code{loanbook} that was matched
+\item \code{name_ald} - the name of the company in the \code{ald} that was matched
+\item \code{score} - the score of the match (manually set this to \code{0} or \code{1} to
+validate the match)
+\item \code{source} - determines the source of the match. (equal to \code{loanbook} unless
+the match is from \code{overwrite}
 }
 
-If there is no match the output is a 0-row tibble with the expected column
-names -- for type stability.
+The returned rows depend on the argument \code{min_value} and the result of the column \code{score} for each loan:
+\itemize{
+\item If any row has \code{score} equal to 1, \code{match_name()} returns all rows where \code{score}
+equals 1, dropping all other rows.
+\item If no row has \code{score} equal to 1,\code{match_name()} returns all rows where \code{score} is equal to or greater than
+\code{min_score}. * If there is no match the output is a 0-row tibble with the
+expected column names -- for type stability.
+}
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns
-\code{name_direct_loantaker} and \code{name_ultimate_parent}) with names in an
+can be \code{name_direct_loantaker}, \verb{name_intermediate_parent_*}and \code{name_ultimate_parent}) with names in an
 asset-level dataset (column \code{name_company}). The raw names are first
 internally transformed then the similarity between transformed names in each
 of the loanbook and ald datasets is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
