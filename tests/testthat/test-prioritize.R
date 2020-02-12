@@ -51,7 +51,7 @@ test_that("picks score equal to 1", {
   expect_equal(min(prioritize(matched)$score), 1)
 })
 
-test_that("picks the highetst level per id_loan", {
+test_that("picks the highest level per id_loan", {
   # styler: off
   id_level <- tibble::tribble(
     ~id_loan,                 ~level,
@@ -207,4 +207,21 @@ test_that("errors if score=1 & values by id_loan+level are duplicated (#114)", {
     test_path("output", "prioritize-duplicated_score1_by_id_loan_by_level.txt"),
     prioritize(invalid)
   )
+})
+
+test_that("passes if score=1 & values by id_loan are duplicated for distinct levels (#122)", {
+  id_level_score <- tibble::tribble(
+     ~id_loan, ~id_2dii,                ~level, ~score,
+         "L1",        1,    "direct_loantaker",      1,
+         "L1",        2, "intermediate_parent",      1,
+         "L1",        3,     "ultimate_parent",      1
+     )
+
+
+  valid <- fake_matched(id_loan = id_level_score$id_loan,
+                        id_2dii = id_level_score$id_2dii,
+                        level = id_level_score$level,
+                        score = id_level_score$score)
+  expect_no_error(prioritize(valid))
+
 })
