@@ -173,26 +173,22 @@ columns of a particular direct loantaker or ultimate parent. To overwrite
 only <code>sector</code>, the value in the <code>name</code> column should be <code>NA</code> and
 vice-versa. This file can be used to manually match entities to ald.</p></td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments are passed on to <a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim</a>.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A dataframe with the same groups (if any) and columns as <code>loanbook</code>,
 and the additional columns:</p><ul>
-<li><p><code>id_2dii</code> - an id used internally by the <code>match_name()</code> to distinguish
+<li><p><code>id_2dii</code> - an id used internally by <code>match_name()</code> to distinguish
 entities</p></li>
 <li><p><code>level</code> - the level of granularity that the loan was matched at
 (e.g <code>direct_loantaker</code> or <code>ultimate_parent</code>)</p></li>
-<li><p><code>sector</code> - the loan sector, as determined by the <code>loanbook</code></p></li>
-<li><p><code>sector_ald</code> - the sector of the ald company</p></li>
-<li><p><code>name</code> - the name of the company in the <code>loanbook</code> that was matched</p></li>
-<li><p><code>name_ald</code> - the name of the company in the <code>ald</code> that was matched</p></li>
-<li><p><code>score</code> - the score of the match (manually set this to <code>0</code> or <code>1</code> to
-validate the match)</p></li>
+<li><p><code>sector</code> - the sector of the <code>loanbook</code> company</p></li>
+<li><p><code>sector_ald</code> - the sector of the <code>ald</code> company</p></li>
+<li><p><code>name</code> - the name of the <code>loanbook</code> company</p></li>
+<li><p><code>name_ald</code> - the name of the <code>ald</code> company</p></li>
+<li><p><code>score</code> - the score of the match (manually set this to <code>1</code>
+prior to calling <code><a href='prioritize.html'>prioritize()</a></code> to validate the match)</p></li>
 <li><p><code>source</code> - determines the source of the match. (equal to <code>loanbook</code> unless
 the match is from <code>overwrite</code></p></li>
 </ul>
