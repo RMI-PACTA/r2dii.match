@@ -17,7 +17,6 @@
 #' @param method Method for distance calculation. One of `c("osa", "lv", "dl",
 #'   "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")`. See
 #'   [stringdist::stringdist-metrics].
-#' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #' @inheritParams stringdist::stringdist
 #' @param overwrite A dataframe used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite

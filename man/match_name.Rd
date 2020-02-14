@@ -41,16 +41,16 @@ vice-versa. This file can be used to manually match entities to ald.}
 A dataframe with the same groups (if any) and columns as \code{loanbook},
 and the additional columns:
 \itemize{
-\item \code{id_2dii} - an id used internally by the \code{match_name()} to distinguish
+\item \code{id_2dii} - an id used internally by \code{match_name()} to distinguish
 entities
 \item \code{level} - the level of granularity that the loan was matched at
 (e.g \code{direct_loantaker} or \code{ultimate_parent})
-\item \code{sector} - the loan sector, as determined by the \code{loanbook}
-\item \code{sector_ald} - the sector of the ald company
-\item \code{name} - the name of the company in the \code{loanbook} that was matched
-\item \code{name_ald} - the name of the company in the \code{ald} that was matched
-\item \code{score} - the score of the match (manually set this to \code{0} or \code{1} to
-validate the match)
+\item \code{sector} - the sector of the \code{loanbook} company
+\item \code{sector_ald} - the sector of the \code{ald} company
+\item \code{name} - the name of the \code{loanbook} company
+\item \code{name_ald} - the name of the \code{ald} company
+\item \code{score} - the score of the match (manually set this to \code{1}
+prior to calling \code{prioritize()} to validate the match)
 \item \code{source} - determines the source of the match. (equal to \code{loanbook} unless
 the match is from \code{overwrite}
 }
