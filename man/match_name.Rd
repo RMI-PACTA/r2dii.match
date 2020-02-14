@@ -34,8 +34,6 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match entities to ald.}
-
-\item{...}{Additional arguments are passed on to \link[stringdist:stringsim]{stringdist::stringsim}.}
 }
 \value{
 A dataframe with the same groups (if any) and columns as \code{loanbook},
