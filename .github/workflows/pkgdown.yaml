@@ -14,7 +14,6 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages("remotes")
-          install.packages("ps")
           remotes::install_deps(dependencies = TRUE)
           remotes::install_github("jimhester/pkgdown@github-actions-deploy2")
         shell: Rscript {0}
