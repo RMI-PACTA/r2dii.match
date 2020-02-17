@@ -28,14 +28,17 @@ The goal of r2dii.match is to match generic loanbook data with physical asset le
 
 ## Installation
 
-Install the development version of r2dii.match from GitHub with:
+Before you install r2dii.match you may want to:
+
+* [Try an rstudio.cloud project that has r2dii.match already installed](https://rstudio.cloud/project/954051).
+* [Learn how to minimize installation errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
+
+When you are ready, install the development version of r2dii.match from GitHub with:
 
 ```r
 # install.packages("devtools")
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
-
-[How to minimize installation errors?](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation)
 
 ## Example
 
