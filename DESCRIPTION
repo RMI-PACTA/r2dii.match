@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Match Loanbook with Asset Level Data
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: 
     c(person(given = "Mauro",
              family = "Lepore",
