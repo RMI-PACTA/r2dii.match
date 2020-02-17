@@ -50,8 +50,14 @@
 #' @export
 #'
 #' @examples
-#' library(dplyr)
+#' if (!requireNamespace("r2dii.dataraw", quietly = TRUE)) {
+#'   stop(
+#'   "r2dii.dataraw must be installed. You can install it with:\n",
+#'    "remotes::install_github('2degreesinvesting/r2dii.dataraw')"
+#'  )
+#' }
 #' library(r2dii.dataraw)
+#' library(dplyr)
 #'
 #' mini_loanbook <- sample_n(loanbook_demo, 10)
 #'
