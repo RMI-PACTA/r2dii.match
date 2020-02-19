@@ -35,7 +35,7 @@ loanbook_demo
 ald_demo
 ```
 
-For the purpsoe of this walkthrough, you may use these datasets as a template:
+For the purpose of this walkthrough, you may use these datasets as a template:
 
 * Write _loanbook\_demo.csv_ and _ald\_demo.csv_ with:
 
