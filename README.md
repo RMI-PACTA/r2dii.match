@@ -1,15 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-``` r
-library(r2dii.match)
-library(r2dii.dataraw)
-#> Loading required package: r2dii.utils
-suppressPackageStartupMessages(
-  library(tidyverse)
-)
-```
-
 # <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
 
 <!-- badges: start -->
@@ -47,7 +38,16 @@ GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
-## Usage
+## Example
+
+``` r
+library(r2dii.match)
+library(r2dii.dataraw)
+#> Loading required package: r2dii.utils
+suppressPackageStartupMessages(
+  library(tidyverse)
+)
+```
 
 Matching is achieved in two main steps:
 
