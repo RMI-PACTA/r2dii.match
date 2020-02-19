@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
 <!-- badges: end -->
 
-The goal of r2dii.match is to match generic loanbook data with physical asset level data (ald).
+The goal of r2dii.match is to match counterparties from a generic loanbook data with physical asset level data (ald).
 
 ## Installation
 
@@ -42,8 +42,6 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 
 ## Example
 
-We'll use required packages from r2dii, and some convenient packages from the tidyverse.
-
 ```{r}
 library(r2dii.match)
 library(r2dii.dataraw)
@@ -52,136 +50,28 @@ suppressPackageStartupMessages(
 )
 ```
 
-The process for matching loanbook and ald datasets has multiple steps:
+Matching is achieved in two main steps:
 
-### 1. Create two datasets: [loanbook](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_description.html)
+### 1. Run fuzzy matching
 
-Start by creating datasets like [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_demo.html) and [`ald_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_demo.html) (from the [r2dii.dataraw package](https://2degreesinvesting.github.io/r2dii.dataraw)).
-
-```{r}
-loanbook_demo
-
-ald_demo
-```
-
-You may use these datasets as a template:
-
-* Write _loanbook\_demo.csv_ and _ald\_demo.csv_ with:
+`match_name()` will extract all unique counterparty names from the columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*` and run fuzzy matching against all company names in the `ald`:
 
 ```r
-# Writting to current working directory 
-loanbook_demo %>% 
-  write_csv(path = "loanbook_demo.csv")
+match_result <- match_name(loanbook_demo, ald_demo)
+match_result 
 
-ald_demo %>% 
-  write_csv(path = "ald_demo.csv")
 ```
 
-* For each dataset, replace our demo data with your data.
-* Save each dataset as, say, _your\_loanbook.csv_ and _your\_ald.csv_.
-* Read your datasets back into R with:
+### 2. Prioritize validated matches
+
+The user should then manually validate `match_result`, ensuring that the `score` value is only equal to `1` for perfect matches. 
+Once validated, the `prioritize()` function, will choose only the valid matches, prioritizing (by default) `direct_loantaker` matches over `ultimate_parent` matches: 
 
 ```r
-# Reading from current working directory 
-your_loanbook <- read_csv("your_loanbook.csv")
-your_ald <- read_csv("your_ald.csv")
+priotize(match_result)
+
 ```
 
-Here we'll continue to use our `*_demo` datasets, pretending they contain the data of your own.
+The result is a dataset, with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.
 
-```{r}
-# WARNING: Skip this to avoid overwriting your data with our demo data
-your_loanbook <- loanbook_demo
-your_ald <- ald_demo
-```
-
-### 2. Score the goodness of the match between the loanbook and ald datasets
-
-`match_name()` scores the match between names in a loanbook dataset (lbk) and names in an asset-level dataset (ald). The names come from the columns `name_direct_loantaker` and `name_ultimate_parent` of the loanbook dataset, and from the column `name_company` of the a asset-level dataset. The raw names are internally transformed applying best-practices commonly used in name matching algorithms, such as:
-
-* Remove special characters.
-* Replace language specific characters.
-* Abbreviate certain names to reduce their importance in the matching.
-* Spell out numbers to increase their importance.
-
-Then, the similarity  is scored between the internally-transformed names from the loanbook versus ald datasets. The scoring algorithm is `stringdist::stringsim()`.
-
-```{r}
-match_name(your_loanbook, your_ald)
-```
-
-`match_name()` defaults to scoring matches between name strings that belong to the same sector. Using `by_sector = FALSE` removes this limitation -- increasing computation time, and the number of matches with a low score.
-
-```{r}
-match_name(your_loanbook, your_ald, by_sector = FALSE) %>% 
-  nrow()
-
-# Compare
-match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
-  nrow()
-```
-
-`min_score` allows you to pick rows of a minimum `score` and above.
-
-```{r}
-matched <- match_name(your_loanbook, your_ald, min_score = 0.9)
-range(matched$score)
-```
-
-### 3. Write the output of the previous step into a .csv file
-
-Write the output of the previous step into a .csv file with:
-
-```r
-# Writting to current working directory 
-matched %>%
-  write_csv("matched.csv")
-```
-
-### 4. Compare, edit, and save the data manually
-
-* Open _matched.csv_ with any spreadsheet editor (e.g. MS Excel, Google Sheets).
-
-* Visually compare names from loanbook versus ald datasets, along with the loanbook sector.
-
-* Edit the data manually:
-    * If you are happy with the match, set the `score` value to `1`.
-    * Otherwise set or leave the `score` value to anything other than `1`.
-
-* Save the edited file as, say, _matched_edited.csv_.
-
-### 5. Re-read the data from the previous step
-
-Re-read the data from the previous step with:
-
-```r
-# Reading from current working directory 
-matched <- read_csv("matched_edited.csv")
-```
-
-### 6. Pick validated matches and prioritize by level
-
-The `matched` dataset may have multiple matches per loan. To get the best match only, use `priorityze()` -- it picks rows where `score` is 1 and `level` per loan is of highest `priority()`. 
-
-```{r}
-some_interesting_columns <- vars(id_2dii, level, score)
-
-matched %>% 
-  prioritize() %>% 
-  select(!!! some_interesting_columns)
-```
-
-The default priority is set internally via `prioritize_levels()`.
-
-```{r}
-prioritize_level(matched)
-```
-
-You may use a different priority. One way to do that is to pass a function to `priority`. For example, use `rev` to reverse the default priority.
-
-```{r}
-matched %>% 
-  prioritize(priority = rev) %>% 
-  select(!!! some_interesting_columns)
-```
-
+For a more detailed walkthrough of the functionality [see the documentation](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii.match.html)
