@@ -7,7 +7,10 @@
 prioritize(data, priority = NULL)
 }
 \arguments{
-\item{data}{A  dataframe, commonly the output of \code{\link[=match_name]{match_name()}}.}
+\item{data}{A  dataframe like the validated output of \code{\link[=match_name]{match_name()}}. Ensure
+the output of \code{\link[=match_name]{match_name()}} has been manually validated, and the score of
+all correct matches has been set to \code{1}, otherwise matching coverage may be
+poor.}
 
 \item{priority}{One of:
 \itemize{

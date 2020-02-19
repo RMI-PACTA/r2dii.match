@@ -2,7 +2,10 @@
 #'
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param data A  dataframe, commonly the output of [match_name()].
+#' @param data A  dataframe like the validated output of [match_name()]. Ensure
+#'   the output of [match_name()] has been manually validated, and the score of
+#'   all correct matches has been set to `1`, otherwise matching coverage may be
+#'   poor.
 #' @param priority One of:
 #'   * `NULL`: defaults to the default level priority as returned by
 #'   [prioritize_level()].
