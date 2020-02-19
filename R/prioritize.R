@@ -2,10 +2,8 @@
 #'
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param data A  dataframe like the validated output of [match_name()]. Ensure
-#'   the output of [match_name()] has been manually validated, and the score of
-#'   all correct matches has been set to `1`, otherwise matching coverage may be
-#'   poor.
+#' @param data A dataframe like the validated output of [match_name()]. See
+#'  _Details_ on how to validate `data`.
 #' @param priority One of:
 #'   * `NULL`: defaults to the default level priority as returned by
 #'   [prioritize_level()].
@@ -14,8 +12,11 @@
 #'   * A quosure-style lambda function, e.g. `~ rev(.x)`.
 #'
 #' @seealso [match_name()], [prioritize_level()].
-#'
 #' @family user-oriented
+#'
+#' @details
+#' **How to validate `data`**
+#' @includeRmd man-roxygen/validate-matches.Rmd
 #'
 #' @return A dataframe with a single row per loan, where `score` is 1 and
 #'   priority level is highest.

@@ -7,10 +7,8 @@
 prioritize(data, priority = NULL)
 }
 \arguments{
-\item{data}{A  dataframe like the validated output of \code{\link[=match_name]{match_name()}}. Ensure
-the output of \code{\link[=match_name]{match_name()}} has been manually validated, and the score of
-all correct matches has been set to \code{1}, otherwise matching coverage may be
-poor.}
+\item{data}{A dataframe like the validated output of \code{\link[=match_name]{match_name()}}. See
+\emph{Details} on how to validate \code{data}.}
 
 \item{priority}{One of:
 \itemize{
@@ -27,6 +25,35 @@ priority level is highest.
 }
 \description{
 Pick rows where \code{score} is 1 and \code{level} per loan is of highest \code{priority}
+}
+\details{
+\strong{How to validate \code{data}}
+
+Write the output of \code{match_name()} into a .csv file with:\if{html}{\out{<div class="r">}}\preformatted{# Writting to current working directory
+matched \%>\%
+  write_csv("matched.csv")
+}\if{html}{\out{</div>}}
+
+Compare, edit, and save the data manually:
+\itemize{
+\item Open \emph{matched.csv} with any spreadsheet editor (e.g. MS Excel,
+Google Sheets).
+\item Compare the columns \code{name} and \code{name_ald} manually to determine if
+the match is valid. Other information can be used in conjunction
+with just the names to ensure the two entities match (sector,
+internal information on the company structure, etc.)
+\item Edit the data:
+\itemize{
+\item If you are happy with the match, set the \code{score} value to \code{1}.
+\item Otherwise set or leave the \code{score} value to anything other than
+\code{1}.
+}
+\item Save the edited file as, say, \emph{valid_matches.csv}.
+}
+
+Re-read the edited file (validated) with:\if{html}{\out{<div class="r">}}\preformatted{# Reading from current working directory
+valid_matches <- read_csv("valid_matches.csv")
+}\if{html}{\out{</div>}}
 }
 \section{Handling grouped data}{
 
