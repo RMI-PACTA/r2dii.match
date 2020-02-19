@@ -13,13 +13,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(r2dii.match)
-library(r2dii.dataraw)
-suppressPackageStartupMessages(
-  library(tidyverse)
-)
-```
 # <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
 
 <!-- badges: start -->
@@ -47,7 +40,15 @@ When you are ready, install the development version of r2dii.match from GitHub w
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
-## Usage
+## Example
+
+```{r}
+library(r2dii.match)
+library(r2dii.dataraw)
+suppressPackageStartupMessages(
+  library(tidyverse)
+)
+```
 
 Matching is achieved in two main steps:
 
@@ -60,6 +61,7 @@ match_result <- match_name(loanbook_demo, ald_demo)
 match_result 
 
 ```
+
 ### 2. Prioritize validated matches
 
 The user should then manually validate `match_result`, ensuring that the `score` value is only equal to `1` for perfect matches. 
