@@ -48,8 +48,11 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
 ## Usage
+
 Matching is achieved in two main steps:
+
 ### 1. Run fuzzy matching
+
 `match_name()` will extract all unique counterparty names from the columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*` and run fuzzy matching against all company names in the `ald`:
 
 ```r
@@ -58,6 +61,7 @@ match_result
 
 ```
 ### 2. Prioritize validated matches
+
 The user should then manually validate `match_result`, ensuring that the `score` value is only equal to `1` for perfect matches. 
 Once validated, the `prioritize()` function, will choose only the valid matches, prioritizing (by default) `direct_loantaker` matches over `ultimate_parent` matches: 
 
