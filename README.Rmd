@@ -45,9 +45,6 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 ```{r}
 library(r2dii.match)
 library(r2dii.dataraw)
-suppressPackageStartupMessages(
-  library(tidyverse)
-)
 ```
 
 Matching is achieved in two main steps:
@@ -65,11 +62,10 @@ match_result
 
 The user should then manually validate the output of [match_name()], ensuring that the value of the column `score` is equal to `1` for perfect matches only.
 
-
 Once validated, the `prioritize()` function, will choose only the valid matches, prioritizing (by default) `direct_loantaker` matches over `ultimate_parent` matches: 
 
 ```{r}
-priotize(match_result)
+prioritize(match_result)
 ```
 
 The result is a dataset, with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.

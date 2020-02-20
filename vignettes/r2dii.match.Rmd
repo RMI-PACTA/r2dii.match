@@ -11,17 +11,15 @@ knitr::opts_chunk$set(
 
 The package r2dii.match helps you to match counterparties from a loanbook to companies in a physical-asset database. Each section below shows you how.
 
-
 ## Setup
 
-We use the package r2dii.match to access the most important functions you'll learn about. We also use example datasets from the package r2dii.dataraw, and optional but convenient functions from the tidyverse.
+We use the package r2dii.match to access the most important functions you'll learn about. We also use example datasets from the package r2dii.dataraw, and optional but convenient functions from the packages dplyr and readr.
 
 ```{r}
 library(r2dii.match)
 library(r2dii.dataraw)
-suppressPackageStartupMessages(
-  library(tidyverse)
-)
+library(dplyr)
+library(readr)
 ```
 
 ## Format input data [loanbook](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_description.html)

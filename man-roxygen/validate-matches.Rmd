@@ -3,7 +3,7 @@ Write the output of `match_name()` into a .csv file with:
 ```r
 # Writting to current working directory
 matched %>%
-  write_csv("matched.csv")
+  readr::write_csv("matched.csv")
 ```
 
 Compare, edit, and save the data manually:
@@ -19,5 +19,5 @@ Re-read the edited file (validated) with:
 
 ```r
 # Reading from current working directory
-valid_matches <- read_csv("valid_matches.csv")
+valid_matches <- readr::read_csv("valid_matches.csv")
 ```
