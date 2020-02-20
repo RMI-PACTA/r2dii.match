@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -238,36 +238,36 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
 <span class='no'>mini_loanbook</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample.html'>sample_n</a></span>(<span class='no'>loanbook_demo</span>, <span class='fl'>10</span>)
 
-<span class='fu'>match_name</span>(<span class='no'>mini_loanbook</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; # A tibble: 17 x 27
+<span class='fu'>match_name</span>(<span class='no'>mini_loanbook</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 17 x 27</span><span>
 #&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
-#&gt;  1 L173    C207             Toyota Motor Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  2 L197    C316             Zil              &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  3 L173    C207             Toyota Motor Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  4 L197    C316             Zil              &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  5 L201    C104             Inner Mongolia … &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  6 L47     C257             Yolo County Flo… IP3              Yolo Regional D…
-#&gt;  7 L55     C249             Yiyang Baoyuan … &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  8 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  9 L77     C146             Nanjing Guodian… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 10 L63     C241             Yingjiang Mengd… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 11 L77     C146             Nanjing Guodian… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 12 L63     C241             Yingjiang Mengd… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 13 L55     C249             Yiyang Baoyuan … &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 14 L47     C257             Yolo County Flo… IP3              Yolo Regional D…
-#&gt; 15 L47     C257             Yolo County Flo… IP3              Yolo Regional D…
-#&gt; 16 L24     C282             Ypfb Corporacion &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 17 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; # … with 22 more variables: id_ultimate_parent &lt;chr&gt;,
-#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
-#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
-#&gt; #   sector_classification_input_type &lt;chr&gt;,
-#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
-#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,
-#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
-#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</div><div class='input'>
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span> L173    C207             Toyota Motor Co… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 2</span><span> L197    C316             Zil              </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 3</span><span> L173    C207             Toyota Motor Co… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 4</span><span> L197    C316             Zil              </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 5</span><span> L201    C104             Inner Mongolia … </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 6</span><span> L47     C257             Yolo County Flo… IP3              Yolo Regional D…
+#&gt; </span><span style='color: #555555;'> 7</span><span> L55     C249             Yiyang Baoyuan … </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 8</span><span> L5      C305             Yukon Energy Co… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 9</span><span> L77     C146             Nanjing Guodian… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>10</span><span> L63     C241             Yingjiang Mengd… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>11</span><span> L77     C146             Nanjing Guodian… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>12</span><span> L63     C241             Yingjiang Mengd… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>13</span><span> L55     C249             Yiyang Baoyuan … </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>14</span><span> L47     C257             Yolo County Flo… IP3              Yolo Regional D…
+#&gt; </span><span style='color: #555555;'>15</span><span> L47     C257             Yolo County Flo… IP3              Yolo Regional D…
+#&gt; </span><span style='color: #555555;'>16</span><span> L24     C282             Ypfb Corporacion </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>17</span><span> L5      C305             Yukon Energy Co… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'># … with 22 more variables: id_ultimate_parent </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   name_ultimate_parent </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, loan_size_outstanding </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   loan_size_outstanding_currency </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, loan_size_credit_limit </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   loan_size_credit_limit_currency </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector_classification_system </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   sector_classification_input_type </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   sector_classification_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, fi_type </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   flag_project_finance_loan </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name_project </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,
+#&gt; #   lei_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, isin_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, id_2dii </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   level </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector_ald </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name_ald </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   score </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, source </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
 <span class='co'># May be a little slow</span>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>match_name</span>(
@@ -275,9 +275,9 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
   <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )
-}</div></pre>
+}</div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -298,7 +298,7 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>
