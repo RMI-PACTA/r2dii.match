@@ -8,8 +8,6 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
-[![Travis build
-status](https://travis-ci.org/2DegreesInvesting/r2dii.match.svg?branch=master)](https://travis-ci.org/2DegreesInvesting/r2dii.match)
 [![Coveralls test
 coverage](https://coveralls.io/repos/github/2DegreesInvesting/r2dii.match/badge.svg)](https://coveralls.io/r/2DegreesInvesting/r2dii.match?branch=master)
 [![Codecov test
@@ -123,4 +121,4 @@ The result is a dataset, with identical columns to the input loanbook,
 and added columns bridging all matched loans to their ald counterpart.
 
 For a more detailed walkthrough of the functionality [Get
-started](FIXME)).
+started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii.match.html)).
