@@ -119,7 +119,7 @@ matched <- match_name(
 
 ## Validate matches
 
-```{r child="../common-docs/validate-matches.md"}
+```{r child="_validate-matches.md"}
 
 ```
 

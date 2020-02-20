@@ -10,5 +10,6 @@
 ^common-docs$
 ^man-roxygen$
 ^r2dii\.match\.Rproj$
+^vignettes/_validate-matches\.md$
 ^vignettes/articles$
-
+^vignettes/intro\.Rmd$

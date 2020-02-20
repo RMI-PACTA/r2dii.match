@@ -16,7 +16,7 @@
 #'
 #' @details
 #' **How to validate `data`**
-#' @includeRmd common-docs/validate-matches.md
+#' @includeRmd vignettes/_validate-matches.md
 #'
 #' @return A dataframe with a single row per loan, where `score` is 1 and
 #'   priority level is highest.
