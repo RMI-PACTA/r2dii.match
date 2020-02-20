@@ -16,7 +16,7 @@
 #'
 #' @details
 #' **How to validate `data`**
-#' @includeRmd man-roxygen/validate-matches.Rmd
+#' @includeRmd common-docs/validate-matches.Rmd
 #'
 #' @return A dataframe with a single row per loan, where `score` is 1 and
 #'   priority level is highest.
