@@ -127,7 +127,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A  dataframe, commonly the output of <code><a href='match_name.html'>match_name()</a></code>.</p></td>
+      <td><p>A dataframe like the validated output of <code><a href='match_name.html'>match_name()</a></code>. See
+<em>Details</em> on how to validate <code>data</code>.</p></td>
     </tr>
     <tr>
       <th>priority</th>
@@ -145,6 +146,31 @@
 
     <p>A dataframe with a single row per loan, where <code>score</code> is 1 and
 priority level is highest.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><strong>How to validate <code>data</code></strong></p>
+<p>Write the output of <code><a href='match_name.html'>match_name()</a></code> into a .csv file with:<div class="r"></p><pre># Writting to current working directory
+matched %&gt;%
+  readr::write_csv("matched.csv")
+</pre><p></div></p>
+<p>Compare, edit, and save the data manually:</p><ul>
+<li><p>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel,
+Google Sheets).</p></li>
+<li><p>Compare the columns <code>name</code> and <code>name_ald</code> manually to determine if
+the match is valid. Other information can be used in conjunction
+with just the names to ensure the two entities match (sector,
+internal information on the company structure, etc.)</p></li>
+<li><p>Edit the data:</p><ul>
+<li><p>If you are happy with the match, set the <code>score</code> value to <code>1</code>.</p></li>
+<li><p>Otherwise set or leave the <code>score</code> value to anything other than
+<code>1</code>.</p></li>
+</ul></li>
+<li><p>Save the edited file as, say, <em>valid_matches.csv</em>.</p></li>
+</ul>
+
+<p>Re-read the edited file (validated) with:<div class="r"></p><pre># Reading from current working directory
+valid_matches &lt;- readr::read_csv("valid_matches.csv")
+</pre><p></div></p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
 
     
@@ -202,6 +228,7 @@ priority level is highest.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#handling-grouped-data">Handling grouped data</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
