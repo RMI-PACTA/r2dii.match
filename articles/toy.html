@@ -255,6 +255,34 @@
 <span id="cb9-3"><a href="#cb9-3"></a>)</span></code></pre></div>
 </div>
 </div>
+<div id="validate-matches" class="section level2">
+<h2 class="hasAnchor">
+<a href="#validate-matches" class="anchor"></a>Validate matches</h2>
+<p>Write the output of <code><a href="../reference/match_name.html">match_name()</a></code> into a .csv file with:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Writting to current working directory</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>matched <span class="op">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span>(<span class="st">"matched.csv"</span>)</span></code></pre></div>
+<p>Compare, edit, and save the data manually:</p>
+<ul>
+<li>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel, Google Sheets).</li>
+<li>Compare the columns <code>name</code> and <code>name_ald</code> manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)</li>
+<li>Edit the data:
+<ul>
+<li>If you are happy with the match, set the <code>score</code> value to <code>1</code>.</li>
+<li>Otherwise set or leave the <code>score</code> value to anything other than <code>1</code>.</li>
+</ul>
+</li>
+<li>Save the edited file as, say, <em>valid_matches.csv</em>.</li>
+</ul>
+<p>Re-read the edited file (validated) with:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Reading from current working directory</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>valid_matches &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="st">"valid_matches.csv"</span>)</span></code></pre></div>
+</div>
+<div id="prioritize-validated-matches-by-level" class="section level2">
+<h2 class="hasAnchor">
+<a href="#prioritize-validated-matches-by-level" class="anchor"></a>Prioritize validated matches by level</h2>
+<p>The validated dataset may have multiple matches per loan. Consider the case where a loan is given to “Acme Power USA”, a subsidiary of “Acme Power Co.”. There may be both “Acme Power USA” and “Acme Power Co.” in the <code>ald</code>, and so there could be two valid matches for this loan. To get the best match only, use <code><a href="../reference/prioritize.html">prioritize()</a></code> – it picks rows where <code>score</code> is 2 and <code>level</code> per loan is of highest <code>priority()</code>:</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -266,6 +294,8 @@
 <li><a href="#setup">Setup</a></li>
       <li><a href="#format-input-data-loanbook-and-asset-level-data-ald">Format input data <span>loanbook</span> and <span>asset-level data (ald)</span></a></li>
       <li><a href="#score-the-goodness-of-the-match-between-the-loanbook-and-ald-datasets">Score the goodness of the match between the loanbook and ald datasets</a></li>
+      <li><a href="#validate-matches">Validate matches</a></li>
+      <li><a href="#prioritize-validated-matches-by-level">Prioritize validated matches by level</a></li>
       </ul>
 </div>
       </div>
