@@ -1,0 +1,158 @@
+---
+title: "Introduction to r2dii.match"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The package r2dii.match helps you to match counterparties from a loanbook to companies in a physical-asset database. Each section below shows you how.
+
+## Setup
+
+We use the package r2dii.match to access the most important functions you'll learn about. We also use example datasets from the package r2dii.dataraw, and optional but convenient functions from the packages dplyr and readr.
+
+```{r}
+library(r2dii.match)
+library(r2dii.dataraw)
+library(dplyr)
+library(readr)
+```
+
+## Format input data [loanbook](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_description.html)
+
+We need two datasets: a "loanbook" and an "asset-level dataset" (ald). These should be formatted like:  [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_demo.html) and [`ald_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_demo.html) (from the [r2dii.dataraw package](https://2degreesinvesting.github.io/r2dii.dataraw)).
+
+(A note on sector classification: Matches are preferred when the sector from the `loanbook` matches the sector from the `ald`. The `loanbook` sector is determined internally using the `sector_classification_system` and `sector_classification_direct_loantaker` columns. Currently, `sector_classification_system` must be either `ISIC` or `NACE`. If you would like to use a different classification system, please raise an issue in [r2dii.dataraw](https://github.com/2DegreesInvesting/r2dii.dataraw) and we can incorporate it.)
+
+```{r}
+loanbook_demo
+
+ald_demo
+```
+
+If you want to use `loanbook_demo` and `ald_demo` as template to create your own datasets, do this:
+
+* Write _loanbook\_demo.csv_ and _ald\_demo.csv_ with:
+
+```r
+# Writting to current working directory 
+loanbook_demo %>% 
+  write_csv(path = "loanbook_demo.csv")
+
+ald_demo %>% 
+  write_csv(path = "ald_demo.csv")
+```
+
+* For each dataset, replace our demo data with your data.
+* Save each dataset as, for example, _your\_loanbook.csv_ and _your\_ald.csv_.
+* Read your datasets back into R with:
+
+```r
+# Reading from current working directory 
+your_loanbook <- read_csv("your_loanbook.csv")
+your_ald <- read_csv("your_ald.csv")
+```
+
+Here we continue to use the `*_demo` datasets, pretending they contain the data of your own.
+
+```{r}
+# WARNING: Skip this to avoid overwriting your data with our demo data
+your_loanbook <- loanbook_demo
+your_ald <- ald_demo
+```
+
+## Score the goodness of the match between the loanbook and ald datasets
+
+`match_name()` scores the match between names in a loanbook dataset (lbk) and names in an asset-level dataset (ald). The names come from the columns `name_direct_loantaker`, `name_intermediate_parent_*` and `name_ultimate_parent` of the loanbook dataset, and from the column `name_company` of the a asset-level dataset. There can be any number of `name_intermediate_parent_*` columns, where `*` indicates the level up the corporate tree from `direct_loantaker`. 
+
+The raw names are internally transformed applying best-practices commonly used in name matching algorithms, such as:
+
+* Remove special characters.
+* Replace language specific characters.
+* Abbreviate certain names to reduce their importance in the matching.
+* Removing corporate suffixes when necessary.
+* Spell out numbers to increase their importance.
+
+The similarity is then scored between the internally-transformed names of the loanbook against the ald. (For more information on the scoring algorithm used, see: `stringdist::stringsim()`).
+
+```{r}
+match_name(your_loanbook, your_ald)
+```
+
+`match_name()` defaults to scoring matches between name strings that belong to the same sector. Using `by_sector = FALSE` removes this limitation -- increasing computation time, and the number of potentially incorrect matches to manually validate.
+
+```{r}
+match_name(your_loanbook, your_ald, by_sector = FALSE) %>% 
+  nrow()
+
+# Compare
+match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
+  nrow()
+```
+
+`min_score` allows you to minimum threshold `score`.
+
+```{r}
+matched <- match_name(your_loanbook, your_ald, min_score = 0.9)
+range(matched$score)
+```
+
+### Maybe overwrite matches
+
+If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `ald` and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to [`overwrite_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/overwrite_demo.html), where: 
+
+* `level` indicates the level that the manual match should be added to (e.g. `direct_loantaker`)
+* `id_2dii` is the id of the loanbook company you would like to match (from the output of `match_name()`)
+* `name` is the ald company you would like to manually link to
+* `sector` optionally you can also overwrite the sector.
+* `source` this can be used later to determine where all manual matches came from. 
+
+```{r}
+matched <- match_name(
+  your_loanbook, your_ald, min_score = 0.9, overwrite = overwrite_demo
+)
+```
+
+## Validate matches
+
+```{r child="../common-docs/validate-matches.md"}
+
+```
+
+## Prioritize validated matches by level
+
+The validated dataset may have multiple matches per loan. Consider the case where a loan is given to "Acme Power USA", a subsidiary of "Acme Power Co.". There may be both "Acme Power USA" and "Acme Power Co." in the `ald`, and so there could be two valid matches for this loan. To get the best match only, use `prioritize()` -- it picks rows where `score` is 2 and `level` per loan is of highest `priority()`:
+
+```{r}
+# Using an example of valid matches stored in r2dii.analysis
+path <- system.file("extdata", "valid_matches.csv", package = "r2dii.analysis")
+valid_matches <- suppressMessages(read_csv(path))
+
+some_interesting_columns <- vars(id_2dii, level, score)
+
+valid_matches %>% 
+  prioritize() %>% 
+  select(!!! some_interesting_columns)
+```
+
+By default, highest priority refers to the most granular match (`direct_loantaker`). The default priority is set internally via `prioritize_levels()`.
+
+```{r}
+prioritize_level(matched)
+```
+
+You may use a different priority. One way to do that is to pass a function to `priority`. For example, use `rev` to reverse the default priority.
+
+```{r}
+matched %>% 
+  prioritize(priority = rev) %>% 
+  select(!!! some_interesting_columns)
+```
+
+## Next: Analyze
+
+Once you achieve enough matching coverage, you can analyze the output of `prioritize()` with the package [r2dii.analysis](https://github.com/2DegreesInvesting/r2dii.analysis).
