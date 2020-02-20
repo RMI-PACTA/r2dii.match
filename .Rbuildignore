@@ -11,3 +11,4 @@
 ^man-roxygen$
 ^r2dii\.match\.Rproj$
 ^vignettes/articles$
+^r2dii\.match\.Rmd$
