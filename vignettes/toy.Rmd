@@ -93,3 +93,27 @@ match_name(your_loanbook, your_ald, by_sector = FALSE) %>%
 match_name(your_loanbook, your_ald, by_sector = TRUE) %>% 
   nrow()
 ```
+
+`min_score` allows you to minimum threshold `score`.
+
+```{r}
+matched <- match_name(your_loanbook, your_ald, min_score = 0.9)
+range(matched$score)
+```
+
+### Maybe overwrite matches
+
+If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `ald` and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to [`overwrite_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/overwrite_demo.html), where: 
+
+* `level` indicates the level that the manual match should be added to (e.g. `direct_loantaker`)
+* `id_2dii` is the id of the loanbook company you would like to match (from the output of `match_name()`)
+* `name` is the ald company you would like to manually link to
+* `sector` optionally you can also overwrite the sector.
+* `source` this can be used later to determine where all manual matches came from. 
+
+```{r}
+matched <- match_name(
+  your_loanbook, your_ald, min_score = 0.9, overwrite = overwrite_demo
+)
+```
+
