@@ -13,4 +13,4 @@
 ^\.github/workflows/R-CMD-check\.yaml$
 ^\.github/workflows/pr-commands\.yaml$
 ^\.github/workflows/pkgdown\.yaml$
-^vignettes/r2dii-match\.Rmd$
+^vignettes/r2dii.match\.Rmd$
