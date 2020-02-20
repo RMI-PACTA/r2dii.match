@@ -31,7 +31,7 @@ Pick rows where \code{score} is 1 and \code{level} per loan is of highest \code{
 
 Write the output of \code{match_name()} into a .csv file with:\if{html}{\out{<div class="r">}}\preformatted{# Writting to current working directory
 matched \%>\%
-  write_csv("matched.csv")
+  readr::write_csv("matched.csv")
 }\if{html}{\out{</div>}}
 
 Compare, edit, and save the data manually:
@@ -52,7 +52,7 @@ internal information on the company structure, etc.)
 }
 
 Re-read the edited file (validated) with:\if{html}{\out{<div class="r">}}\preformatted{# Reading from current working directory
-valid_matches <- read_csv("valid_matches.csv")
+valid_matches <- readr::read_csv("valid_matches.csv")
 }\if{html}{\out{</div>}}
 }
 \section{Handling grouped data}{
