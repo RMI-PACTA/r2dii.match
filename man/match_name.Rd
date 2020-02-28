@@ -93,6 +93,8 @@ if (!requireNamespace("r2dii.dataraw", quietly = TRUE)) {
    "remotes::install_github('2degreesinvesting/r2dii.dataraw')"
  )
 }
+# r2dii.dataraw is changing rapidly; ensure you have the latest version
+remotes::update_packages("r2dii.dataraw", upgrade = "ask")
 library(r2dii.dataraw)
 library(dplyr)
 

@@ -5,6 +5,7 @@ counterparty
 csv
 dataraw
 dii
+dplyr
 funder
 https
 Jaro
@@ -15,9 +16,9 @@ Loanbook
 loantaker
 ORCID
 quosure
+readr
 rstudio
 stringdist
 tibble
-tidyverse
 walkthrough
 Winkler
