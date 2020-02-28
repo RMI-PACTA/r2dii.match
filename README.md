@@ -38,6 +38,8 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 
 ``` r
 library(r2dii.match)
+# r2dii.dataraw is changing rapidly; ensure you have the latest version
+remotes::update_packages("r2dii.dataraw", upgrade = "ask")
 library(r2dii.dataraw)
 #> Loading required package: r2dii.utils
 ```
@@ -115,7 +117,7 @@ prioritize(match_result)
 #> #   score <dbl>, source <chr>
 ```
 
-The result is a dataset, with identical columns to the input loanbook,
+The result is a dataset with identical columns to the input loanbook,
 and added columns bridging all matched loans to their ald counterpart.
 
 For a more detailed walkthrough of the functionality [Get

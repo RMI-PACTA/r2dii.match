@@ -17,6 +17,9 @@ We use the package r2dii.match to access the most important functions you'll lea
 
 ```{r}
 library(r2dii.match)
+
+# r2dii.dataraw is changing rapidly; ensure you have the latest version
+remotes::update_packages("r2dii.dataraw", upgrade = "ask")
 library(r2dii.dataraw)
 library(dplyr)
 library(readr)
