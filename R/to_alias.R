@@ -1,4 +1,4 @@
-#' Assign an additional name to an entity
+#' Simplfy a company name, to be used for matching.
 #'
 #' * `to_alias()` takes any character vector and creates an alias by
 #' transforming the input (a) to lower case; (b) to latin-ascii characters; and
@@ -9,6 +9,9 @@
 #' * `from_name_to_alias()` outputs a table giving default strings used to
 #' convert from a name to its alias. You may amend this table and pass it to
 #' `to_alias()` via the `from_to` argument.
+#' * `get_ownership_type()` outputs a vector giving default strings dropped when
+#' the `remove_ownership` argument is `TRUE`. You may amend this table and pass it to
+#' `to_alias()` via the `ownership` argument.
 #'
 #' @template alias-assign
 #'
@@ -29,6 +32,8 @@
 #' * `from_name_to_alias()` returns a [dplyr::tibble] with columns `from` and
 #' `to`.
 #'
+#' @export
+#'
 #' @examples
 #' library(dplyr)
 #'
@@ -48,9 +53,9 @@
 #'   remove_ownership = TRUE
 #' )
 #'
-#' from_name_to_alias()
+#' r2dii.match:::from_name_to_alias()
 #'
-#' append_replacements <- from_name_to_alias() %>%
+#' append_replacements <- r2dii.match:::from_name_to_alias() %>%
 #'   add_row(
 #'     .before = 1,
 #'     from = c("AA", "BB"), to = c("alpha", "beta")
@@ -59,7 +64,7 @@
 #'
 #' # And in combination with `to_alias()`
 #' to_alias(c("AA", "BB", "1"), from_to = append_replacements)
-#' @noRd
+
 to_alias <- function(x,
                      from_to = NULL,
                      ownership = NULL,
@@ -131,7 +136,7 @@ replace_abbrev <- function(text, abr, fixed = FALSE) {
 }
 
 # Source: @jdhoffa https://github.com/2DegreesInvesting/r2dii.dataraw/pull/8
-#' @noRd
+
 from_name_to_alias <- function() {
   # styler: off
   tribble(
