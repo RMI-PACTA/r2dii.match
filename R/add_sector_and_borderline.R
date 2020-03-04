@@ -140,10 +140,8 @@ check_is_attached <- function(pkg) {
   is_attached <- any(grepl(pkg, search()))
 
   if (!is_attached) {
-    stop(
-      sprintf("%s must be attached.\nRun `library(%s)`.", pkg, pkg),
-      call. = FALSE
-    )
+    package <- sub("package:", "", pkg)
+    abort(glue("{package} must be attached.\nRun `library({package})`."))
   }
 
   invisible(pkg)

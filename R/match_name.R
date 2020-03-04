@@ -52,9 +52,9 @@
 #' @examples
 #' if (!requireNamespace("r2dii.dataraw", quietly = TRUE)) {
 #'   stop(
-#'   "r2dii.dataraw must be installed. You can install it with:\n",
-#'    "remotes::install_github('2degreesinvesting/r2dii.dataraw')"
-#'  )
+#'     "r2dii.dataraw must be installed. You can install it with:\n",
+#'     "remotes::install_github('2degreesinvesting/r2dii.dataraw')"
+#'   )
 #' }
 #' # r2dii.dataraw is changing rapidly; ensure you have the latest version
 #' remotes::update_packages("r2dii.dataraw", upgrade = "ask")

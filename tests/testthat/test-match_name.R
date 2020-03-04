@@ -1,3 +1,17 @@
+# Before attaching r2dii.dataraw generally, for all other tests
+test_that("errors if r2dii.dataraw isn't attached", {
+  withr::with_namespace("r2dii.dataraw", {
+    if ("package:r2dii.dataraw" %in% search()) {
+      detach("package:r2dii.dataraw")
+    }
+
+    expect_error(
+      match_name(fake_lbk(), fake_ald()),
+      "library.r2dii.dataraw"
+    )
+  })
+})
+
 library(dplyr)
 library(r2dii.dataraw)
 
