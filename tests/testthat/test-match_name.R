@@ -198,6 +198,7 @@ test_that("w/ loanbook that matches nothing, yields expected", {
     out,
     expected_names_of_match_name_with_loanbook_demo
   )
+  expect_false(any(c("alias", "alias_ald") %in% names(out)))
 })
 
 test_that("w/ 2 lbk rows matching 2 ald rows, yields expected names", {

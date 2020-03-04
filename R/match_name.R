@@ -100,9 +100,10 @@ match_name <- function(loanbook,
   no_match <- identical(nrow(matched), 0L)
   if (no_match) {
     warning("Found no match.", call. = FALSE)
-    named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
+    out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
       unsuffix_and_regroup(old_groups) %>%
-      return()
+      select(-.data$alias, -.data$alias_ald)
+    return(out)
   }
 
   preferred <- prefer_perfect_match_by(matched, .data$id_2dii)
