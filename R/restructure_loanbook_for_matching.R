@@ -182,9 +182,12 @@ identify_loans_by_level <- function(data) {
 }
 
 identify_loans_by_name <- function(data) {
+  cols <- extract_level_names(data, prefix = "name_")
+
   data %>%
+    purrr::modify_at(cols, as.character) %>%
     tidyr::pivot_longer(
-      cols = extract_level_names(data, prefix = "name_"),
+      cols = cols,
       names_to = "level2",
       names_prefix = "name_",
       values_to = "name"
