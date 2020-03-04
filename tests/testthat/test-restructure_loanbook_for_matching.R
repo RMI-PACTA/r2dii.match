@@ -3,7 +3,7 @@ library(r2dii.dataraw)
 loanbook_rowid <- loanbook_demo %>%
   tibble::rowid_to_column()
 
-test_that("restructure_loanbook_for_matching warns overwriting id_ vars", {
+test_that("warns overwriting id_ vars", {
   expect_message(
     restructure_loanbook_for_matching(loanbook_rowid),
     "Uniquifying.*id_direct_loantaker"
@@ -15,7 +15,7 @@ test_that("restructure_loanbook_for_matching warns overwriting id_ vars", {
   )
 })
 
-test_that("restructure_loanbook_for_matching may input add_sector_and_borderline(data)", {
+test_that("may input add_sector_and_borderline(data)", {
   expect_warning(
     out <- restructure_loanbook_for_matching(
       add_sector_and_borderline(loanbook_rowid)
@@ -26,7 +26,7 @@ test_that("restructure_loanbook_for_matching may input add_sector_and_borderline
   expect_equal(out, restructure_loanbook_for_matching(loanbook_rowid))
 })
 
-test_that("restructure_loanbook_for_matching errors gracefully with bad input", {
+test_that("errors gracefully with bad input", {
   expect_error(
     restructure_loanbook_for_matching("bad"),
     "data.frame.*is not TRUE"
@@ -38,34 +38,33 @@ test_that("restructure_loanbook_for_matching errors gracefully with bad input", 
   )
 })
 
-test_that("restructure_loanbook_for_matching outputs a tibble with expected names", {
+test_that("outputs a tibble with expected names", {
   out <- restructure_loanbook_for_matching(loanbook_rowid)
   expect_is(out, "tbl_df")
   expect_named(
     out,
     c("rowid", "level", "id_2dii", "name", "sector", "source", "alias")
   )
-
-  out2 <- restructure_loanbook_for_matching(loanbook_rowid, overwrite_demo)
-  expect_is(out2, "tbl_df")
-  expect_named(
-    out2,
-    c("rowid", "level", "id_2dii", "name", "sector", "source", "alias")
-  )
 })
 
-test_that("restructure_loanbook_for_matching correctly overwrites name", {
+test_that("correctly overwrites name", {
   overwrite <- overwrite_demo
-  out <- restructure_loanbook_for_matching(loanbook_rowid, overwrite_demo) %>%
+
+  out <- suppressWarnings(
+      restructure_loanbook_for_matching(loanbook_rowid, overwrite)
+    ) %>%
     filter(id_2dii %in% overwrite$id_2dii & level %in% overwrite$level) %>%
     left_join(overwrite, by = c("id_2dii", "level"))
 
   expect_equal(out$name.x, out$name.y)
 })
 
-test_that("restructure_loanbook_for_matching correctly overwrites sector", {
+test_that("correctly overwrites sector", {
   overwrite <- overwrite_demo
-  out <- restructure_loanbook_for_matching(loanbook_rowid, overwrite_demo) %>%
+
+  out <- suppressWarnings(
+      restructure_loanbook_for_matching(loanbook_rowid, overwrite)
+    ) %>%
     filter(id_2dii %in% overwrite$id_2dii & level %in% overwrite$level) %>%
     left_join(overwrite, by = c("id_2dii", "level"))
 

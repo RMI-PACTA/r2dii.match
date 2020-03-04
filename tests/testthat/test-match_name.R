@@ -269,12 +269,24 @@ test_that("takes `p`", {
 })
 
 test_that("takes `overwrite`", {
-  overwrite <- overwrite_demo
+  lbk <- slice(loanbook_demo, 4:25)
+
   expect_false(
     identical(
-      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = NULL),
-      match_name(slice(loanbook_demo, 4:25), ald_demo, overwrite = overwrite)
+      match_name(lbk, ald_demo, overwrite = NULL),
+      suppressWarnings(match_name(lbk, ald_demo, overwrite = overwrite_demo))
     )
+  )
+})
+
+test_that("warns overwrite", {
+  expect_warning(
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+  )
+
+  verify_output(
+    test_path("output", "match_name-overwrite_warning.txt"),
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 })
 
