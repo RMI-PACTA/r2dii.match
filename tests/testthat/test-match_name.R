@@ -510,3 +510,10 @@ test_that("w/ overwrite with missing names errors gracefully", {
     )
   )
 })
+
+test_that("with bad input errors gracefully", {
+  bad_loanbook <- loanbook_demo %>%
+    mutate(name_direct_loantaker = as.numeric(12))
+
+  expect_no_error(match_name(bad_loanbook, ald_demo))
+})
