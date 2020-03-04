@@ -149,11 +149,11 @@ restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
 }
 
 suffix_names <- function(data, suffix, names = NULL) {
-  if (is.null(names)) {
-    return(suffix_all_names(data, suffix))
-  } else {
-    suffix_some_names(data, suffix, names)
-  }
+  ifelse(
+    is.null(names),
+    return(suffix_all_names(data, suffix)),
+    return(suffix_some_names(data, suffix, names))
+  )
 }
 
 suffix_all_names <- function(data, suffix) {
