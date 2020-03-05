@@ -12,10 +12,7 @@
 #'   all IDs, and with elements already manually overwritten.
 #'
 #' @examples
-#' library(r2dii.dataraw)
-#'
-#' ald_demo %>%
-#'   restructure_ald_for_matching()
+#' restructure_ald_for_matching(r2dii.dataraw::ald_demo)
 #' @noRd
 restructure_ald_for_matching <- function(data) {
   data %>%

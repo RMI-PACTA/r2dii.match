@@ -23,10 +23,8 @@
 #'
 #' @examples
 #' library(dplyr)
-#' # Must be attached
-#' library(r2dii.dataraw)
 #'
-#' out <- add_sector_and_borderline(loanbook_demo)
+#' out <- add_sector_and_borderline(r2dii.dataraw::loanbook_demo)
 #' new_columns <- setdiff(names(out), names(loanbook_demo))
 #'
 #' out %>%
