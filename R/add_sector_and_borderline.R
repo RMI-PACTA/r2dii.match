@@ -117,14 +117,13 @@ sector_classification_df <- function() {
   pkg <- "package:r2dii.dataraw"
   check_is_attached(pkg)
 
-  enlist_datasets(pkg, pattern = "_classification$") %>%
+  pkg %>%
+    enlist_datasets(pattern = "_classification$") %>%
     purrr::imap(~ mutate(.x, code_system = toupper(.y))) %>%
-    purrr::map(~ select(
-      .,
-      .data$sector, .data$borderline,
-      # Required in `by` below
-      .data$code, .data$code_system
-    )) %>%
+    purrr::map(
+      select,
+      .data$sector, .data$borderline, .data$code, .data$code_system
+    ) %>%
     # Coerce every column to character for more robust reduce() and join()
     purrr::map(~ purrr::modify(.x, as.character)) %>%
     # Collapse the list of dataframes to a single, row-bind dataframe
