@@ -4,9 +4,9 @@ sector_classification_df <- function() {
 
   pkg %>%
     enlist_datasets(pattern = "_classification$") %>%
-    purrr::imap(~ mutate(.x, code_system = toupper(.y))) %>%
+    purrr::imap(~ dplyr::mutate(.x, code_system = toupper(.y))) %>%
     purrr::map(
-      select,
+      dplyr::select,
       .data$sector, .data$borderline, .data$code, .data$code_system
     ) %>%
     # Coerce every column to character for more robust reduce() and join()
@@ -17,7 +17,7 @@ sector_classification_df <- function() {
     # Avoid duplicates
     unique() %>%
     # Reformat code_system
-    mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
+    dplyr::mutate(code_system = gsub("_CLASSIFICATION", "", .data$code_system))
 }
 
 check_is_attached <- function(pkg) {
@@ -25,7 +25,7 @@ check_is_attached <- function(pkg) {
 
   if (!is_attached) {
     package <- sub("package:", "", pkg)
-    abort(glue("{package} must be attached.\nRun `library({package})`."))
+    rlang::abort(glue::glue("{package} must be attached.\nRun `library({package})`."))
   }
 
   invisible(pkg)
