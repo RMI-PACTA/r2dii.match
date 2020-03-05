@@ -1,13 +1,13 @@
 library(r2dii.dataraw)
 
-test_that("add_sector_and_borderline()$borderline is of type logical", {
+test_that("$borderline is of type logical", {
   expect_is(
     add_sector_and_borderline(loanbook_demo)$borderline,
     "logical"
   )
 })
 
-test_that("add_sector_and_borderline outputs known output", {
+test_that("outputs known output", {
   expect_known_output(
     add_sector_and_borderline(loanbook_demo),
     "ref-add_sector_and_borderline",
@@ -15,14 +15,14 @@ test_that("add_sector_and_borderline outputs known output", {
   )
 })
 
-test_that("add_sector_and_borderline returns a tibble dataframe", {
+test_that("returns a tibble dataframe", {
   expect_is(
     add_sector_and_borderline(loanbook_demo),
     "tbl_df"
   )
 })
 
-test_that("add_sector_and_borderline adds two columns: `sector` and `borderline`", {
+test_that("adds two columns: `sector` and `borderline`", {
   expect_false(has_name(loanbook_demo, "sector"))
   expect_false(has_name(loanbook_demo, "borderline"))
 
@@ -33,7 +33,7 @@ test_that("add_sector_and_borderline adds two columns: `sector` and `borderline`
   )
 })
 
-test_that("add_sector_and_borderline added columns return acceptable values", {
+test_that("added columns return acceptable values", {
   acceptable_sectors <- c(
     "automotive",
     "aviation",
@@ -54,7 +54,7 @@ test_that("add_sector_and_borderline added columns return acceptable values", {
   )
 })
 
-test_that("add_sector_and_borderline preserves typeof() input columns", {
+test_that("preserves typeof() input columns", {
   out <- add_sector_and_borderline(loanbook_demo)
 
   expect_equal(
@@ -63,12 +63,12 @@ test_that("add_sector_and_borderline preserves typeof() input columns", {
   )
 })
 
-test_that("add_sector_and_borderline outputs no missing value of `sector`", {
+test_that("outputs no missing value of `sector`", {
   out <- add_sector_and_borderline(loanbook_demo)
   expect_false(any(is.na(out$sector)))
 })
 
-test_that("add_sector_and_borderline outputs no missing value of `borderline`", {
+test_that("outputs no missing value of `borderline`", {
   out <- add_sector_and_borderline(loanbook_demo)
   expect_false(any(is.na(out$borderline)))
 })
