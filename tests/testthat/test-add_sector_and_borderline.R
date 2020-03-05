@@ -72,10 +72,3 @@ test_that("add_sector_and_borderline outputs no missing value of `borderline`", 
   out <- add_sector_and_borderline(loanbook_demo)
   expect_false(any(is.na(out$borderline)))
 })
-
-test_that("check_is_attached works as expected", {
-  expect_error(
-    check_is_attached("nonexistent"),
-    "nonexistent must be attached"
-  )
-})
