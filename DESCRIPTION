@@ -49,6 +49,7 @@ Imports:
     glue,
     magrittr,
     purrr,
+    r2dii.dataraw,
     r2dii.utils,
     rlang,
     stats,
@@ -59,7 +60,6 @@ Imports:
     tidyselect
 Suggests: 
     covr,
-    r2dii.dataraw,
     readr,
     remotes,
     rmarkdown,

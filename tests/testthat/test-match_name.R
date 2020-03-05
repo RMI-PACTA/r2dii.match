@@ -1,17 +1,3 @@
-# Before attaching r2dii.dataraw generally, for all other tests
-test_that("errors if r2dii.dataraw isn't attached", {
-  withr::with_namespace("r2dii.dataraw", {
-    if ("package:r2dii.dataraw" %in% search()) {
-      detach("package:r2dii.dataraw")
-    }
-
-    expect_error(
-      match_name(fake_lbk(), fake_ald()),
-      "library.r2dii.dataraw"
-    )
-  })
-})
-
 library(dplyr)
 library(r2dii.dataraw)
 
@@ -99,7 +85,7 @@ test_that("`by_sector = TRUE` yields only matching sectors", {
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
-  # Lookup code to sectors via sector_classification_df()$code
+  # Lookup code to sectors via r2dii.dataraw::sector_classification_df()$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -116,7 +102,7 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
-  # Lookup code to sectors via sector_classification_df()$code
+  # Lookup code to sectors via r2dii.dataraw::sector_classification_df()$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
