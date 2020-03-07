@@ -15,8 +15,8 @@ match_name(
 )
 }
 \arguments{
-\item{loanbook, ald}{Dataframes structured like \link[r2dii.dataraw:loanbook_demo]{r2dii.dataraw::loanbook_demo}
-and \link[r2dii.dataraw:ald_demo]{r2dii.dataraw::ald_demo}.}
+\item{loanbook, ald}{Dataframes structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
+and \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
 \item{by_sector}{Should the combinations be done by sector?}
 
@@ -87,15 +87,15 @@ This function ignores but preserves existing groups them.
 }
 
 \examples{
-if (!requireNamespace("r2dii.dataraw", quietly = TRUE)) {
+if (!requireNamespace("r2dii.data", quietly = TRUE)) {
   stop(
-    "r2dii.dataraw must be installed. You can install it with:\n",
-    "remotes::install_github('2degreesinvesting/r2dii.dataraw')"
+    "r2dii.data must be installed. You can install it with:\n",
+    "remotes::install_github('2degreesinvesting/r2dii.data')"
   )
 }
-# r2dii.dataraw is changing rapidly; ensure you have the latest version
-remotes::update_packages("r2dii.dataraw", upgrade = "ask")
-library(r2dii.dataraw)
+# r2dii.data is changing rapidly; ensure you have the latest version
+remotes::update_packages("r2dii.data", upgrade = "ask")
+library(r2dii.data)
 library(dplyr)
 
 mini_loanbook <- sample_n(loanbook_demo, 10)

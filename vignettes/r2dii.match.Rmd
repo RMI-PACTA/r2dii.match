@@ -13,23 +13,23 @@ The package r2dii.match helps you to match counterparties from a loanbook to com
 
 ## Setup
 
-We use the package r2dii.match to access the most important functions you'll learn about. We also use example datasets from the package r2dii.dataraw, and optional but convenient functions from the packages dplyr and readr.
+We use the package r2dii.match to access the most important functions you'll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.
 
 ```{r}
 library(r2dii.match)
 
-# r2dii.dataraw is changing rapidly; ensure you have the latest version
-remotes::update_packages("r2dii.dataraw", upgrade = "ask")
-library(r2dii.dataraw)
+# r2dii.data is changing rapidly; ensure you have the latest version
+remotes::update_packages("r2dii.data", upgrade = "ask")
+library(r2dii.data)
 library(dplyr)
 library(readr)
 ```
 
-## Format input data [loanbook](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_description.html)
+## Format input data [loanbook](https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.data/reference/ald_description.html)
 
-We need two datasets: a "loanbook" and an "asset-level dataset" (ald). These should be formatted like:  [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_demo.html) and [`ald_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_demo.html) (from the [r2dii.dataraw package](https://2degreesinvesting.github.io/r2dii.dataraw)).
+We need two datasets: a "loanbook" and an "asset-level dataset" (ald). These should be formatted like:  [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html) and [`ald_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/ald_demo.html) (from the [r2dii.data package](https://2degreesinvesting.github.io/r2dii.data)).
 
-(A note on sector classification: Matches are preferred when the sector from the `loanbook` matches the sector from the `ald`. The `loanbook` sector is determined internally using the `sector_classification_system` and `sector_classification_direct_loantaker` columns. Currently, `sector_classification_system` must be either `ISIC` or `NACE`. If you would like to use a different classification system, please raise an issue in [r2dii.dataraw](https://github.com/2DegreesInvesting/r2dii.dataraw) and we can incorporate it.)
+(A note on sector classification: Matches are preferred when the sector from the `loanbook` matches the sector from the `ald`. The `loanbook` sector is determined internally using the `sector_classification_system` and `sector_classification_direct_loantaker` columns. Currently, `sector_classification_system` must be either `ISIC` or `NACE`. If you would like to use a different classification system, please raise an issue in [r2dii.data](https://github.com/2DegreesInvesting/r2dii.data) and we can incorporate it.)
 
 ```{r}
 loanbook_demo
@@ -106,7 +106,7 @@ range(matched$score)
 
 ### Maybe overwrite matches
 
-If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `ald` and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to [`overwrite_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/overwrite_demo.html), where: 
+If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `ald` and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to [`overwrite_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/overwrite_demo.html), where: 
 
 * `level` indicates the level that the manual match should be added to (e.g. `direct_loantaker`)
 * `id_2dii` is the id of the loanbook company you would like to match (from the output of `match_name()`)

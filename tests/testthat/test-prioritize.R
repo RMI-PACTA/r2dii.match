@@ -1,5 +1,5 @@
 library(dplyr)
-library(r2dii.dataraw)
+library(r2dii.data)
 
 test_that("w/ full demo datasets throws no error", {
   expect_no_error(
