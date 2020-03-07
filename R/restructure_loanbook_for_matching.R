@@ -91,6 +91,16 @@ may_overwrite_name_and_sector <- function(data, overwrite) {
     return(data)
   }
 
+  warn(
+    message = glue(
+      "You should only overwrite a sector at the level of the 'direct
+      loantaker' (DL). If you overwrite a sector at the level of the 'ultimate
+      parent' (UP) you consequently overwrite all children of that sector,
+      which most likely is a mistake."
+    ),
+    class = "overwrite_warning"
+  )
+
   overwrite_name_and_sector(data, overwrite = overwrite)
 }
 

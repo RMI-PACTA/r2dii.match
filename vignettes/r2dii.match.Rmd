@@ -106,7 +106,11 @@ range(matched$score)
 
 ### Maybe overwrite matches
 
-If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `ald` and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to [`overwrite_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/overwrite_demo.html), where: 
+If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `ald` and find a company you would like to match to your loanbook. Once a match is found, use a spreadsheet to write a .csv file similar to [`overwrite_demo`](https://2degreesinvesting.github.io/r2dii.dataraw/reference/overwrite_demo.html):
+
+```{r}
+overwrite_demo
+```
 
 * `level` indicates the level that the manual match should be added to (e.g. `direct_loantaker`)
 * `id_2dii` is the id of the loanbook company you would like to match (from the output of `match_name()`)
@@ -119,6 +123,8 @@ matched <- match_name(
   your_loanbook, your_ald, min_score = 0.9, overwrite = overwrite_demo
 )
 ```
+
+Notice the warning.
 
 ## Validate matches
 
