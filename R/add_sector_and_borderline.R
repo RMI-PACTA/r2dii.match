@@ -14,7 +14,7 @@
 #' grid/network to Power, general mining to coal mining).
 #'
 #' For a list of sector classification systems see
-#' [r2dii.dataraw::classification_bridge].
+#' [r2dii.data::classification_bridge].
 #'
 #' @param data A loanbook dataframe.
 #'
@@ -24,7 +24,7 @@
 #' @examples
 #' library(dplyr)
 #'
-#' out <- add_sector_and_borderline(r2dii.dataraw::loanbook_demo)
+#' out <- add_sector_and_borderline(r2dii.data::loanbook_demo)
 #' new_columns <- setdiff(names(out), names(loanbook_demo))
 #'
 #' out %>%
@@ -43,7 +43,7 @@ add_sector_and_borderline <- function(data) {
     check_classification(column = "sector_classification_direct_loantaker")
 
   out <- left_join(
-    checked, r2dii.dataraw::sector_classification_df(),
+    checked, r2dii.data::sector_classification_df(),
     by = set_names(c("code_system", "code"), crucial)
   )
 
@@ -52,7 +52,7 @@ add_sector_and_borderline <- function(data) {
 
 check_classification <- function(data,
                                  column,
-                                 classification = r2dii.dataraw::sector_classification_df()) {
+                                 classification = r2dii.data::sector_classification_df()) {
   # To call columns from both data and classification with the same colname
   reference <- rename_as_loanbook(classification)
 

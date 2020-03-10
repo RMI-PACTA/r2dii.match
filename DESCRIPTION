@@ -49,7 +49,7 @@ Imports:
     glue,
     magrittr,
     purrr,
-    r2dii.dataraw,
+    r2dii.data,
     r2dii.utils,
     rlang,
     stats,
@@ -66,7 +66,7 @@ Suggests:
     testthat (>= 2.1.0),
     withr
 Remotes: 
-    2degreesinvesting/r2dii.dataraw,
+    2degreesinvesting/r2dii.data,
     2degreesinvesting/r2dii.utils
 Encoding: UTF-8
 Language: en-US

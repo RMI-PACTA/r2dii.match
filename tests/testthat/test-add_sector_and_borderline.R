@@ -1,4 +1,4 @@
-library(r2dii.dataraw)
+library(r2dii.data)
 
 test_that("$borderline is of type logical", {
   expect_is(

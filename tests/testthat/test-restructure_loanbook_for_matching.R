@@ -1,4 +1,4 @@
-library(r2dii.dataraw)
+library(r2dii.data)
 
 loanbook_rowid <- loanbook_demo %>%
   tibble::rowid_to_column()

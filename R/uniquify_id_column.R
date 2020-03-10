@@ -9,14 +9,14 @@
 #' @param data A loanbook dataframe.
 #' @param id_column A String giving the name of an `id_` column.
 #'
-#' @seealso [r2dii.dataraw::loanbook_description],
-#'   [r2dii.dataraw::loanbook_demo].
+#' @seealso [r2dii.data::loanbook_description],
+#'   [r2dii.data::loanbook_demo].
 #'
 #' @return A loanbook dataframe with adjusted ids.
 #'
 #' @examples
 #' library(dplyr)
-#' library(r2dii.dataraw)
+#' library(r2dii.data)
 #'
 #' loanbook_demo %>%
 #'   select(id_direct_loantaker, everything()) %>%
