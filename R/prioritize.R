@@ -105,13 +105,12 @@ set_priority <- function(data, priority) {
   known_levels <- sort(unique(data$level))
   unknown_levels <- setdiff(priority, known_levels)
   if (!identical(unknown_levels, character(0))) {
-    warning(
+    rlang::warn(
       glue(
         "Ignoring `priority` levels not found in data: \\
         {paste0(unknown_levels, collapse = ', ')}
         Did you mean to use one of: {paste0(known_levels, collapse = ', ')}?"
-      ),
-      call. = FALSE
+      )
     )
   }
 

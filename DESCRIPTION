@@ -48,7 +48,6 @@ Imports:
     magrittr,
     purrr,
     r2dii.data,
-    r2dii.utils,
     rlang,
     stats,
     stringdist,
@@ -65,7 +64,6 @@ Suggests:
     withr
 Remotes: 
     2degreesinvesting/r2dii.data,
-    2degreesinvesting/r2dii.utils
 Encoding: UTF-8
 Language: en-US
 LazyData: true

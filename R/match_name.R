@@ -91,7 +91,7 @@ match_name <- function(loanbook,
 
   no_match <- identical(nrow(matched), 0L)
   if (no_match) {
-    warning("Found no match.", call. = FALSE)
+    rlang::warn("Found no match.")
     out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
       unsuffix_and_regroup(old_groups) %>%
       select(-.data$alias, -.data$alias_ald)
