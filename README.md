@@ -39,7 +39,7 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 ``` r
 library(r2dii.match)
 # r2dii.data is changing rapidly; ensure you have the latest version
-remotes::update_packages("r2dii.data", upgrade = "ask")
+if (interactive()) remotes::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 ```
 

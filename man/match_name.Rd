@@ -87,14 +87,6 @@ This function ignores but preserves existing groups them.
 }
 
 \examples{
-if (!requireNamespace("r2dii.data", quietly = TRUE)) {
-  stop(
-    "r2dii.data must be installed. You can install it with:\n",
-    "remotes::install_github('2degreesinvesting/r2dii.data')"
-  )
-}
-# r2dii.data is changing rapidly; ensure you have the latest version
-remotes::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 library(dplyr)
 
