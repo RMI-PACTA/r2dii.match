@@ -7,7 +7,7 @@
 #'
 #' @seealso [match_name].
 #'
-#' @return A [dplyr::tibble].
+#' @return A [tibble::tibble].
 #'
 #' @examples
 #' library(dplyr)

@@ -26,7 +26,7 @@
 #'
 #' @return
 #' * `to_alias()` returns a character string.
-#' * `from_name_to_alias()` returns a [dplyr::tibble] with columns `from` and
+#' * `from_name_to_alias()` returns a [tibble::tibble] with columns `from` and
 #' `to`.
 #'
 #' @examples

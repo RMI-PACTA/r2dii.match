@@ -56,13 +56,10 @@ Imports:
     tidyselect
 Suggests: 
     covr,
-    readr,
-    remotes,
     rmarkdown,
-    testthat (>= 2.1.0),
-    withr
+    testthat (>= 2.1.0)
 Remotes: 
-    2degreesinvesting/r2dii.data,
+    2degreesinvesting/r2dii.data
 Encoding: UTF-8
 Language: en-US
 LazyData: true

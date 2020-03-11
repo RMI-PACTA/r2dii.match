@@ -132,7 +132,7 @@ test_that("from_name_to_alias outputs the expectes tibble", {
 #  "(pte)",                "",
 #
 # styler: off
-pacta_data_name_reductions <- dplyr::tribble(
+pacta_data_name_reductions <- tibble::tribble(
                              ~From,               ~To,
                            " and ",             " & ",
                            " och ",             " & ",
