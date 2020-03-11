@@ -123,28 +123,6 @@ test_that("match_all_agains_all passes arguments to score_string_similarity", {
   )
 })
 
-test_that("match_all_agains_all passes arguments to stringdist::stringdist", {
-  x <- tibble(sector = "A", alias = "a")
-  y <- tibble(sector = "A", alias = "ab")
-
-  expect_false(
-    identical(
-      score_alias_similarity(x, y, weight = c(0.1, 0.1, 0.1)),
-      score_alias_similarity(x, y, weight = c(0.5, 0.5, 0.5))
-    )
-  )
-})
-
-test_that("score_alias_similarity checks used dots", {
-  x <- tibble(sector = "A", alias = "a")
-  y <- tibble(sector = "A", alias = "a")
-
-  expect_error(
-    class = "rlib_error_dots_unused",
-    score_alias_similarity(x, y, bad_argument = "bad_argument")
-  )
-})
-
 test_that("score_alias_similarity w/ same `alias` in 2 sectors and
           by_sector = TRUE outputs no `NA`", {
   x <- tibble(sector = c("A", "B"), alias = "a")

@@ -44,7 +44,6 @@ Depends:
     R (>= 3.3)
 Imports: 
     dplyr,
-    ellipsis,
     forcats,
     glue,
     magrittr,
