@@ -139,9 +139,10 @@ test_that("score_alias_similarity checks used dots", {
   x <- tibble(sector = "A", alias = "a")
   y <- tibble(sector = "A", alias = "a")
 
-  # Not checking `class` because it caused unexpected error on TravisCI when
-  # R version was other than release and oldrel
-  expect_error(score_alias_similarity(x, y, bad_argument = "bad_argument"))
+  expect_error(
+    class = "rlib_error_dots_unused",
+    score_alias_similarity(x, y, bad_argument = "bad_argument")
+  )
 })
 
 test_that("score_alias_similarity w/ same `alias` in 2 sectors and
