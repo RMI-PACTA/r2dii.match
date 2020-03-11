@@ -119,7 +119,7 @@ fake_matched <- function(id_loan = NULL,
 #' [dput()], `datapaste::df_paste()`, or `datapasta::tribble_paste()`.
 #'
 #' @param loanbook A loanbook dataframe.
-#' @param ... The slice of rows you want. Passes to [dplyr::slice()]
+#' @param ... The slice of rows you want. Passed to [dplyr::slice()]
 #' @param vars A vector of column names to select from loanbook. Defaults to the
 #'   crucial columns for `match_name()`.
 #' @param alias_ald A dataframe like `ald_demo` with the additional column
