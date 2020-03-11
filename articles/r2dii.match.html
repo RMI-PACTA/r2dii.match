@@ -90,30 +90,29 @@
 <div id="setup" class="section level2">
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
-<p>We use the package r2dii.match to access the most important functions you’ll learn about. We also use example datasets from the package r2dii.dataraw, and optional but convenient functions from the packages dplyr and readr.</p>
+<p>We use the package r2dii.match to access the most important functions you’ll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.match)</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># r2dii.dataraw is changing rapidly; ensure you have the latest version</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/update_packages.html">update_packages</a></span>(<span class="st">"r2dii.dataraw"</span>, <span class="dt">upgrade =</span> <span class="st">"ask"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.dataraw)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#&gt; Loading required package: r2dii.utils</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#&gt; </span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt; </span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">#&gt;     filter, lag</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt; </span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readr)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># r2dii.data is changing rapidly; ensure you have the latest version</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) remotes<span class="op">::</span><span class="kw"><a href="https://remotes.r-lib.org/reference/update_packages.html">update_packages</a></span>(<span class="st">"r2dii.data"</span>, <span class="dt">upgrade =</span> <span class="st">"ask"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(r2dii.data)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#&gt; </span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; </span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt;     filter, lag</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#&gt; </span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(readr)</span></code></pre></div>
 </div>
 <div id="format-input-data-loanbook-and-asset-level-data-ald" class="section level2">
 <h2 class="hasAnchor">
-<a href="#format-input-data-loanbook-and-asset-level-data-ald" class="anchor"></a>Format input data <a href="https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_description.html">loanbook</a> and <a href="https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_description.html">asset-level data (ald)</a>
+<a href="#format-input-data-loanbook-and-asset-level-data-ald" class="anchor"></a>Format input data <a href="https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_description.html">loanbook</a> and <a href="https://2degreesinvesting.github.io/r2dii.data/reference/ald_description.html">asset-level data (ald)</a>
 </h2>
-<p>We need two datasets: a “loanbook” and an “asset-level dataset” (ald). These should be formatted like: <a href="https://2degreesinvesting.github.io/r2dii.dataraw/reference/loanbook_demo.html"><code>loanbook_demo</code></a> and <a href="https://2degreesinvesting.github.io/r2dii.dataraw/reference/ald_demo.html"><code>ald_demo</code></a> (from the <a href="https://2degreesinvesting.github.io/r2dii.dataraw">r2dii.dataraw package</a>).</p>
-<p>(A note on sector classification: Matches are preferred when the sector from the <code>loanbook</code> matches the sector from the <code>ald</code>. The <code>loanbook</code> sector is determined internally using the <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> columns. Currently, <code>sector_classification_system</code> must be either <code>ISIC</code> or <code>NACE</code>. If you would like to use a different classification system, please raise an issue in <a href="https://github.com/2DegreesInvesting/r2dii.dataraw">r2dii.dataraw</a> and we can incorporate it.)</p>
+<p>We need two datasets: a “loanbook” and an “asset-level dataset” (ald). These should be formatted like: <a href="https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html"><code>loanbook_demo</code></a> and <a href="https://2degreesinvesting.github.io/r2dii.data/reference/ald_demo.html"><code>ald_demo</code></a> (from the <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data package</a>).</p>
+<p>(A note on sector classification: Matches are preferred when the sector from the <code>loanbook</code> matches the sector from the <code>ald</code>. The <code>loanbook</code> sector is determined internally using the <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> columns. Currently, <code>sector_classification_system</code> must be either <code>ISIC</code> or <code>NACE</code>. If you would like to use a different classification system, please raise an issue in <a href="https://github.com/2DegreesInvesting/r2dii.data">r2dii.data</a> and we can incorporate it.)</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>loanbook_demo</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; # A tibble: 320 x 19</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
@@ -231,13 +230,7 @@
 <div id="maybe-overwrite-matches" class="section level3">
 <h3 class="hasAnchor">
 <a href="#maybe-overwrite-matches" class="anchor"></a>Maybe overwrite matches</h3>
-<p>If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by <code><a href="../reference/match_name.html">match_name()</a></code>. To do this, manually inspect the <code>ald</code> and find a company you would like to match to your loanbook. Once a match is found, use a spreadsheet to write a .csv file similar to <a href="https://2degreesinvesting.github.io/r2dii.dataraw/reference/overwrite_demo.html"><code>overwrite_demo</code></a>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>overwrite_demo</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt; # A tibble: 2 x 5</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt;   level            id_2dii name         sector source</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; </span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; 1 direct_loantaker DL294   bee handshoe coal   manual</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; 2 ultimate_parent  UP15    alpine india power  manual</span></span></code></pre></div>
+<p>If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by <code><a href="../reference/match_name.html">match_name()</a></code>. To do this, manually inspect the <code>ald</code> and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to <a href="https://2degreesinvesting.github.io/r2dii.data/reference/overwrite_demo.html"><code>overwrite_demo</code></a>, where:</p>
 <ul>
 <li>
 <code>level</code> indicates the level that the manual match should be added to (e.g. <code>direct_loantaker</code>)</li>
@@ -250,13 +243,13 @@
 <li>
 <code>source</code> this can be used later to determine where all manual matches came from.</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>matched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/match_name.html">match_name</a></span>(</span>
-<span id="cb10-2"><a href="#cb10-2"></a>  your_loanbook, your_ald, <span class="dt">min_score =</span> <span class="fl">0.9</span>, <span class="dt">overwrite =</span> overwrite_demo</span>
-<span id="cb10-3"><a href="#cb10-3"></a>)</span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt; Warning: You should only overwrite a sector at the level of the 'direct</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; loantaker' (DL). If you overwrite a sector at the level of the 'ultimate</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; parent' (UP) you consequently overwrite all children of that sector,</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt; which most likely is a mistake.</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>matched &lt;-<span class="st"> </span><span class="kw"><a href="../reference/match_name.html">match_name</a></span>(</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  your_loanbook, your_ald, <span class="dt">min_score =</span> <span class="fl">0.9</span>, <span class="dt">overwrite =</span> overwrite_demo</span>
+<span id="cb9-3"><a href="#cb9-3"></a>)</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt; Warning: You should only overwrite a sector at the level of the 'direct</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; loantaker' (DL). If you overwrite a sector at the level of the 'ultimate</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; parent' (UP) you consequently overwrite all children of that sector,</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; which most likely is a mistake.</span></span></code></pre></div>
 <p>Notice the warning.</p>
 </div>
 </div>
@@ -264,9 +257,9 @@
 <h2 class="hasAnchor">
 <a href="#validate-matches" class="anchor"></a>Validate matches</h2>
 <p>Write the output of <code><a href="../reference/match_name.html">match_name()</a></code> into a .csv file with:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Writting to current working directory</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>matched <span class="op">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span>(<span class="st">"matched.csv"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Writting to current working directory</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>matched <span class="op">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span>(<span class="st">"matched.csv"</span>)</span></code></pre></div>
 <p>Compare, edit, and save the data manually:</p>
 <ul>
 <li>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel, Google Sheets).</li>
@@ -280,56 +273,56 @@
 <li>Save the edited file as, say, <em>valid_matches.csv</em>.</li>
 </ul>
 <p>Re-read the edited file (validated) with:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Reading from current working directory</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>valid_matches &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="st">"valid_matches.csv"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Reading from current working directory</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>valid_matches &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="st">"valid_matches.csv"</span>)</span></code></pre></div>
 </div>
 <div id="prioritize-validated-matches-by-level" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prioritize-validated-matches-by-level" class="anchor"></a>Prioritize validated matches by level</h2>
 <p>The validated dataset may have multiple matches per loan. Consider the case where a loan is given to “Acme Power USA”, a subsidiary of “Acme Power Co.”. There may be both “Acme Power USA” and “Acme Power Co.” in the <code>ald</code>, and so there could be two valid matches for this loan. To get the best match only, use <code><a href="../reference/prioritize.html">prioritize()</a></code> – it picks rows where <code>score</code> is 2 and <code>level</code> per loan is of highest <code>priority()</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Pretend we validated the matched dataset</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>valid_matches &lt;-<span class="st"> </span>matched</span>
-<span id="cb13-3"><a href="#cb13-3"></a></span>
-<span id="cb13-4"><a href="#cb13-4"></a>some_interesting_columns &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(id_2dii, level, score)</span>
-<span id="cb13-5"><a href="#cb13-5"></a></span>
-<span id="cb13-6"><a href="#cb13-6"></a>valid_matches <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-7"><a href="#cb13-7"></a><span class="st">  </span><span class="kw"><a href="../reference/prioritize.html">prioritize</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</span>
-<span id="cb13-9"><a href="#cb13-9"></a><span class="co">#&gt; # A tibble: 267 x 3</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co">#&gt;    id_2dii level            score</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;</span></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="co">#&gt;  1 DL167   direct_loantaker     1</span></span>
-<span id="cb13-13"><a href="#cb13-13"></a><span class="co">#&gt;  2 DL168   direct_loantaker     1</span></span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="co">#&gt;  3 DL169   direct_loantaker     1</span></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt;  4 DL170   direct_loantaker     1</span></span>
-<span id="cb13-16"><a href="#cb13-16"></a><span class="co">#&gt;  5 DL172   direct_loantaker     1</span></span>
-<span id="cb13-17"><a href="#cb13-17"></a><span class="co">#&gt;  6 DL175   direct_loantaker     1</span></span>
-<span id="cb13-18"><a href="#cb13-18"></a><span class="co">#&gt;  7 DL177   direct_loantaker     1</span></span>
-<span id="cb13-19"><a href="#cb13-19"></a><span class="co">#&gt;  8 DL179   direct_loantaker     1</span></span>
-<span id="cb13-20"><a href="#cb13-20"></a><span class="co">#&gt;  9 DL181   direct_loantaker     1</span></span>
-<span id="cb13-21"><a href="#cb13-21"></a><span class="co">#&gt; 10 DL183   direct_loantaker     1</span></span>
-<span id="cb13-22"><a href="#cb13-22"></a><span class="co">#&gt; # … with 257 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Pretend we validated the matched dataset</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>valid_matches &lt;-<span class="st"> </span>matched</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a>some_interesting_columns &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(id_2dii, level, score)</span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a>valid_matches <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="st">  </span><span class="kw"><a href="../reference/prioritize.html">prioritize</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; # A tibble: 267 x 3</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt;    id_2dii level            score</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt;  1 DL167   direct_loantaker     1</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt;  2 DL168   direct_loantaker     1</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt;  3 DL169   direct_loantaker     1</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt;  4 DL170   direct_loantaker     1</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt;  5 DL172   direct_loantaker     1</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="co">#&gt;  6 DL175   direct_loantaker     1</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt;  7 DL177   direct_loantaker     1</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="co">#&gt;  8 DL179   direct_loantaker     1</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;  9 DL181   direct_loantaker     1</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; 10 DL183   direct_loantaker     1</span></span>
+<span id="cb12-22"><a href="#cb12-22"></a><span class="co">#&gt; # … with 257 more rows</span></span></code></pre></div>
 <p>By default, highest priority refers to the most granular match (<code>direct_loantaker</code>). The default priority is set internally via <code>prioritize_levels()</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw"><a href="../reference/prioritize_level.html">prioritize_level</a></span>(matched)</span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="../reference/prioritize_level.html">prioritize_level</a></span>(matched)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></span></code></pre></div>
 <p>You may use a different priority. One way to do that is to pass a function to <code>priority</code>. For example, use <code>rev</code> to reverse the default priority.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>matched <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw"><a href="../reference/prioritize.html">prioritize</a></span>(<span class="dt">priority =</span> rev) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#&gt; # A tibble: 267 x 3</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#&gt;    id_2dii level           score</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt;  1 UP23    ultimate_parent     1</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="co">#&gt;  2 UP25    ultimate_parent     1</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a><span class="co">#&gt;  3 UP36    ultimate_parent     1</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt;  4 UP52    ultimate_parent     1</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt;  5 UP53    ultimate_parent     1</span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt;  6 UP58    ultimate_parent     1</span></span>
-<span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt;  7 UP79    ultimate_parent     1</span></span>
-<span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt;  8 UP80    ultimate_parent     1</span></span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt;  9 UP89    ultimate_parent     1</span></span>
-<span id="cb15-16"><a href="#cb15-16"></a><span class="co">#&gt; 10 UP94    ultimate_parent     1</span></span>
-<span id="cb15-17"><a href="#cb15-17"></a><span class="co">#&gt; # … with 257 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>matched <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="st">  </span><span class="kw"><a href="../reference/prioritize.html">prioritize</a></span>(<span class="dt">priority =</span> rev) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!!!</span><span class="st"> </span>some_interesting_columns)</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#&gt; # A tibble: 267 x 3</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt;    id_2dii level           score</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt;  1 UP23    ultimate_parent     1</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt;  2 UP25    ultimate_parent     1</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#&gt;  3 UP36    ultimate_parent     1</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co">#&gt;  4 UP52    ultimate_parent     1</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">#&gt;  5 UP53    ultimate_parent     1</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#&gt;  6 UP58    ultimate_parent     1</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="co">#&gt;  7 UP79    ultimate_parent     1</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#&gt;  8 UP80    ultimate_parent     1</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt;  9 UP89    ultimate_parent     1</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="co">#&gt; 10 UP94    ultimate_parent     1</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a><span class="co">#&gt; # … with 257 more rows</span></span></code></pre></div>
 </div>
 <div id="next-analyze" class="section level2">
 <h2 class="hasAnchor">
