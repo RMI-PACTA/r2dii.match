@@ -49,7 +49,6 @@ Imports:
     purrr,
     r2dii.data,
     rlang,
-    stats,
     stringdist,
     stringi,
     tibble,
