@@ -9,8 +9,8 @@
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param loanbook,ald Dataframes structured like [r2dii.dataraw::loanbook_demo]
-#'   and [r2dii.dataraw::ald_demo].
+#' @param loanbook,ald Dataframes structured like [r2dii.data::loanbook_demo]
+#'   and [r2dii.data::ald_demo].
 #' @param by_sector Should the combinations be done by sector?
 #' @param min_score A number (length-1) to set the minimum `score` values you
 #'   want to pick.
@@ -50,15 +50,7 @@
 #' @export
 #'
 #' @examples
-#' if (!requireNamespace("r2dii.dataraw", quietly = TRUE)) {
-#'   stop(
-#'     "r2dii.dataraw must be installed. You can install it with:\n",
-#'     "remotes::install_github('2degreesinvesting/r2dii.dataraw')"
-#'   )
-#' }
-#' # r2dii.dataraw is changing rapidly; ensure you have the latest version
-#' remotes::update_packages("r2dii.dataraw", upgrade = "ask")
-#' library(r2dii.dataraw)
+#' library(r2dii.data)
 #' library(dplyr)
 #'
 #' mini_loanbook <- sample_n(loanbook_demo, 10)

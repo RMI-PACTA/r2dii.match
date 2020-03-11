@@ -22,8 +22,8 @@
 #' code wants to inspect the data being tested, they need to jump to the
 #' function definition or call them interactively.
 #'
-#' @seealso `mini_lbk()`, `mini_ald()`, [r2dii.dataraw::loanbook_demo]
-#'   [r2dii.dataraw::ald_demo]
+#' @seealso `mini_lbk()`, `mini_ald()`, [r2dii.data::loanbook_demo]
+#'   [r2dii.data::ald_demo]
 #'
 #'
 #' @return A dataframe
@@ -156,7 +156,7 @@ mini_ald <- function(loanbook, alias_ald = NULL) {
 #' A dataframe identical to `ald_demo` with the additional column `alias_ald`
 #' @noRd
 alias_ald <- function() {
-  r2dii.dataraw::ald_demo %>%
+  r2dii.data::ald_demo %>%
     dplyr::select(crucial_ald()) %>%
     dplyr::mutate(alias_ald = to_alias(.data$name_company)) %>%
     unique()

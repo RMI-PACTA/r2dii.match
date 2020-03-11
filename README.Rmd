@@ -42,9 +42,9 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 
 ```{r}
 library(r2dii.match)
-# r2dii.dataraw is changing rapidly; ensure you have the latest version
-remotes::update_packages("r2dii.dataraw", upgrade = "ask")
-library(r2dii.dataraw)
+# r2dii.data is changing rapidly; ensure you have the latest version
+if (interactive()) remotes::update_packages("r2dii.data", upgrade = "ask")
+library(r2dii.data)
 ```
 
 Matching is achieved in two main steps:

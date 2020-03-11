@@ -6,13 +6,13 @@
 #'
 #' @param data A dataframe. Should be an asset-level dataset.
 #'
-#' @seealso [r2dii.dataraw::ald_demo] `to_alias()`.
+#' @seealso [r2dii.data::ald_demo] `to_alias()`.
 #'
 #' @return A dataframe with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
 #'
 #' @examples
-#' restructure_ald_for_matching(r2dii.dataraw::ald_demo)
+#' restructure_ald_for_matching(r2dii.data::ald_demo)
 #' @noRd
 restructure_ald_for_matching <- function(data) {
   data %>%
@@ -31,13 +31,13 @@ restructure_ald_for_matching <- function(data) {
 #'
 #' @inheritParams match_name
 #'
-#' @seealso [r2dii.dataraw::loanbook_description]
+#' @seealso [r2dii.data::loanbook_description]
 #'
 #' @return A dataframe with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
 #'
 #' @examples
-#' library(r2dii.dataraw)
+#' library(r2dii.data)
 #'
 #' lbk <- tibble::rowid_to_column(loanbook_demo)
 #'
