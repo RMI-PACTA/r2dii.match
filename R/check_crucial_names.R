@@ -59,7 +59,7 @@ abort_missing_names <- function(missing_names) {
     "missing_names",
     message = glue(
       "Must have missing names:
-    {usethis::ui_field(missing_names)}"
+      {paste0('`', missing_names, '`', collapse = ', ')}"
     )
   )
 }
