@@ -4,9 +4,9 @@
 \name{r2dii.match-package}
 \alias{r2dii.match}
 \alias{r2dii.match-package}
-\title{r2dii.match: Tools to Match a Loanbook with Asset Level Data}
+\title{r2dii.match: Tools to Match a Loan Book with Asset Level Data}
 \description{
-Tools to match a loanbook with asset level data.
+Tools to match a loan book with asset level data.
     For more information visit <https://2degrees-investing.org/>.
 }
 \seealso{
