@@ -37,12 +37,8 @@ test_that("errors gracefully if data lacks crucial columns", {
 
 test_that("errors gracefully with bad `priority`", {
   expect_warning(
-    prioritize(fake_matched(), priority = c("bad1", "bab2")),
-    "[Ii]gnoring.*levels"
-  )
-  expect_warning(
-    prioritize(fake_matched(), priority = c("bad1", "bab2")),
-    "[Uu]nknown.*bad1.*bab2"
+    prioritize(fake_matched(), priority = c("bad1", "bad2")),
+    "[Ii]gnoring.*levels.*bad1.*bad2"
   )
 })
 
