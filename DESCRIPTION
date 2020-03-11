@@ -1,5 +1,5 @@
 Package: r2dii.match
-Title: Match Loanbook with Asset Level Data
+Title: Tools to Match a Loanbook with Asset Level Data
 Version: 0.0.0.9005
 Authors@R: 
     c(person(given = "Mauro",
@@ -34,8 +34,8 @@ Authors@R:
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
-Description: Match loanbook with asset level data. For more
-    information visit <https://2degrees-investing.org/>.
+Description: Tools to match a loanbook with asset level data.
+    For more information visit <https://2degrees-investing.org/>.
 License: GPL-3
 URL: https://github.com/2DegreesInvesting/r2dii.match
 BugReports: 

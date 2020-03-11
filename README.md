@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
+# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Tools to match a loanbook with asset level data
 
 <!-- badges: start -->
 
@@ -14,8 +14,8 @@ coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/grap
 status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
 <!-- badges: end -->
 
-The goal of r2dii.match is to match counterparties from a generic
-loanbook data with physical asset level data (ald).
+The goal of r2dii.match is to provide tools to match counterparties from
+a generic loanbook with physical asset level data.
 
 ## Installation
 
