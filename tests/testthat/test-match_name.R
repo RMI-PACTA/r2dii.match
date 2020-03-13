@@ -85,7 +85,7 @@ test_that("`by_sector = TRUE` yields only matching sectors", {
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
-  # Lookup code to sectors via r2dii.data::sector_classification_df()$code
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -102,7 +102,7 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
-  # Lookup code to sectors via r2dii.data::sector_classification_df()$code
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 

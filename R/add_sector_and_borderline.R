@@ -43,7 +43,7 @@ add_sector_and_borderline <- function(data) {
     check_classification(column = "sector_classification_direct_loantaker")
 
   out <- left_join(
-    checked, r2dii.data::sector_classification_df(),
+    checked, r2dii.data::sector_classifications,
     by = set_names(c("code_system", "code"), crucial)
   )
 
@@ -52,7 +52,7 @@ add_sector_and_borderline <- function(data) {
 
 check_classification <- function(data,
                                  column,
-                                 classification = r2dii.data::sector_classification_df()) {
+                                 classification = r2dii.data::sector_classifications) {
   # To call columns from both data and classification with the same colname
   reference <- rename_as_loanbook(classification)
 
