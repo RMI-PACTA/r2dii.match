@@ -515,3 +515,10 @@ test_that("with bad input errors gracefully", {
 
   expect_no_error(match_name(bad_loanbook, ald_demo))
 })
+
+test_that("with name_intermediate but not id_intermediate throws an error", {
+  expect_error(
+    class = "has_name_but_not_id",
+    match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
+  )
+})
