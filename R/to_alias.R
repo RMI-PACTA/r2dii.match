@@ -91,7 +91,7 @@ to_alias <- function(x,
   out <- gsub("-", " ", out)
   out <- gsub("[[:space:]]", "", out)
   out <- gsub("[^[:alnum:][:space:]$]", "", out)
-  out <- gsub("$", " ", out, fixed = T)
+  out <- gsub("$", " ", out, fixed = TRUE)
 
   out
 }
