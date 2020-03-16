@@ -6,16 +6,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>r2dii.match: Match Loanbook with Asset Level Data — r2dii.match-package • r2dii.match</title>
+<title>r2dii.match: Tools to Match a Loan Book with Asset Level Data — r2dii.match-package • r2dii.match</title>
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
@@ -35,10 +35,14 @@
 
 
 
-<meta property="og:title" content="r2dii.match: Match Loanbook with Asset Level Data — r2dii.match-package" />
-<meta property="og:description" content="Match loanbook with asset level data. For more
-    information visit &amp;lt;https://2degrees-investing.org/&amp;gt;." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="r2dii.match: Tools to Match a Loan Book with Asset Level Data — r2dii.match-package" />
+<meta property="og:description" content="These tools allow you to match a loan book with
+    asset level data.  This implements in R the first step of the software
+    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
+    free tool that calculates the alignment between financial assets and
+    climate scenarios (&amp;lt;https://2degrees-investing.org/&amp;gt;).  Financial
+    institutions use 'PACTA' to study how their capital allocation impacts
+    the climate." />
 
 
 
@@ -115,14 +119,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>r2dii.match: Match Loanbook with Asset Level Data</h1>
+    <h1>r2dii.match: Tools to Match a Loan Book with Asset Level Data</h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/r2dii.match-package.R'><code>R/r2dii.match-package.R</code></a></small>
     <div class="hidden name"><code>r2dii.match-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Match loanbook with asset level data. For more
-    information visit &lt;https://2degrees-investing.org/&gt;.</p>
+    <p>These tools allow you to match a loan book with
+    asset level data.  This implements in R the first step of the software
+    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
+    free tool that calculates the alignment between financial assets and
+    climate scenarios (&lt;https://2degrees-investing.org/&gt;).  Financial
+    institutions use 'PACTA' to study how their capital allocation impacts
+    the climate.</p>
     </div>
 
 
@@ -144,17 +153,18 @@
     </ul>
 
     <h2>Author</h2>
-    <p><strong>Maintainer</strong>: Mauro Lepore <a href='mailto:maurolepore@gmail.com'>maurolepore@gmail.com</a> (<a href='https://orcid.org/0000-0002-1986-7988'>ORCID</a>)</p>
+    <p><strong>Maintainer</strong>: Mauro Lepore <a href='mailto:maurolepore@gmail.com'>maurolepore@gmail.com</a> (<a href='https://orcid.org/0000-0002-1986-7988'>ORCID</a>) [contractor]</p>
 <p>Authors:</p><ul>
-<li><p>Klaus Hagedorn <a href='mailto:klaus@2degrees-investing.org'>klaus@2degrees-investing.org</a></p></li>
-<li><p>George Harris <a href='mailto:george@2degrees-investing.org'>george@2degrees-investing.org</a></p></li>
 <li><p>Jackson Hoffart <a href='mailto:jackson@2degrees-investing.org'>jackson@2degrees-investing.org</a> (<a href='https://orcid.org/0000-0002-8600-5042'>ORCID</a>)</p></li>
-<li><p>Daan Koopman <a href='mailto:daan@2degrees-investing.org'>daan@2degrees-investing.org</a></p></li>
-<li><p>Florence Palandri <a href='mailto:florence@2degrees-investing.org'>florence@2degrees-investing.org</a></p></li>
-<li><p>Evgeny Petrovsky [contractor]</p></li>
+<li><p>Klaus Hagedorn <a href='mailto:klaus@2degrees-investing.org'>klaus@2degrees-investing.org</a></p></li>
+<li><p>Evgeny Petrovsky</p></li>
 </ul>
 
 <p>Other contributors:</p><ul>
+<li><p>George Harris <a href='mailto:george@2degrees-investing.org'>george@2degrees-investing.org</a> [reviewer]</p></li>
+<li><p>Daan Koopman <a href='mailto:daan@2degrees-investing.org'>daan@2degrees-investing.org</a> [reviewer]</p></li>
+<li><p>Clare Murray <a href='mailto:clare@2degrees-investing.org'>clare@2degrees-investing.org</a> [reviewer]</p></li>
+<li><p>Florence Palandri <a href='mailto:florence@2degrees-investing.org'>florence@2degrees-investing.org</a> [reviewer]</p></li>
 <li><p>2 Degrees Investing Initiative <a href='mailto:contact@2degrees-investing.org'>contact@2degrees-investing.org</a> [copyright holder, funder]</p></li>
 </ul>
 
@@ -165,7 +175,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.linkedin.com/in/mauro-lepore/'>Mauro Lepore</a>, Klaus Hagedorn, George Harris, Jackson Hoffart, Daan Koopman, Florence Palandri, Evgeny Petrovsky, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
+  <p>Developed by <a href='https://www.linkedin.com/in/mauro-lepore/'>Mauro Lepore</a>, Jackson Hoffart, Klaus Hagedorn, Evgeny Petrovsky, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
 </div>
 
 <div class="pkgdown">

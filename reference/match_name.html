@@ -10,12 +10,12 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
@@ -37,11 +37,11 @@
 
 <meta property="og:title" content="Match a loanbook and asset-level datasets (ald) by the <code>name_*</code> columns — match_name" />
 <meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
-can be name_direct_loantaker, name_intermediate_parent_*and name_ultimate_parent) with names in an
-asset-level dataset (column name_company). The raw names are first
-internally transformed then the similarity between transformed names in each
-of the loanbook and ald datasets is scored using stringdist::stringsim()." />
-<meta name="twitter:card" content="summary" />
+can be name_direct_loantaker, name_intermediate_parent_*and
+name_ultimate_parent) with names in an asset-level dataset (column
+name_company). The raw names are first internally transformed then the
+similarity between transformed names in each of the loanbook and ald datasets
+is scored using stringdist::stringsim()." />
 
 
 
@@ -125,10 +125,11 @@ of the loanbook and ald datasets is scored using stringdist::stringsim()." />
 
     <div class="ref-description">
     <p><code>match_name()</code> scores the match between names in a loanbook dataset (columns
-can be <code>name_direct_loantaker</code>, <code>name_intermediate_parent_*</code>and <code>name_ultimate_parent</code>) with names in an
-asset-level dataset (column <code>name_company</code>). The raw names are first
-internally transformed then the similarity between transformed names in each
-of the loanbook and ald datasets is scored using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim()</a></code>.</p>
+can be <code>name_direct_loantaker</code>, <code>name_intermediate_parent_*</code>and
+<code>name_ultimate_parent</code>) with names in an asset-level dataset (column
+<code>name_company</code>). The raw names are first internally transformed then the
+similarity between transformed names in each of the loanbook and ald datasets
+is scored using <code><a href='https://rdrr.io/pkg/stringdist/man/stringsim.html'>stringdist::stringsim()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>match_name</span>(
@@ -192,18 +193,17 @@ entities</p></li>
 <li><p><code>name_ald</code> - the name of the <code>ald</code> company</p></li>
 <li><p><code>score</code> - the score of the match (manually set this to <code>1</code>
 prior to calling <code><a href='prioritize.html'>prioritize()</a></code> to validate the match)</p></li>
-<li><p><code>source</code> - determines the source of the match. (equal to <code>loanbook</code> unless
-the match is from <code>overwrite</code></p></li>
+<li><p><code>source</code> - determines the source of the match. (equal to <code>loanbook</code>
+unless the match is from <code>overwrite</code></p></li>
 </ul>
 
-<p>The returned rows depend on the argument <code>min_value</code> and the result of the column <code>score</code> for each loan:</p><ul>
-<li><p>If any row has <code>score</code> equal to 1, <code>match_name()</code> returns all rows where <code>score</code>
-equals 1, dropping all other rows.</p></li>
-<li><p>If no row has <code>score</code> equal to 1,<code>match_name()</code> returns all rows where <code>score</code> is equal to or greater than
-<code>min_score</code>. * If there is no match the output is a 0-row tibble with the
-expected column names -- for type stability.</p></li>
-</ul>
-
+<p>The returned rows depend on the argument <code>min_value</code> and the result of the
+column <code>score</code> for each loan: * If any row has <code>score</code> equal to 1,
+<code>match_name()</code> returns all rows where <code>score</code> equals 1, dropping all other
+rows. * If no row has <code>score</code> equal to 1,<code>match_name()</code> returns all rows
+where <code>score</code> is equal to or greater than <code>min_score</code>. * If there is no
+match the output is a 0-row tibble with the expected column names -- for
+type stability.</p>
     <h2 class="hasAnchor" id="assigning-aliases"><a class="anchor" href="#assigning-aliases"></a>Assigning aliases</h2>
 
     
@@ -266,14 +266,38 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 #&gt; #   lei_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, isin_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, id_2dii </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
 #&gt; #   level </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector_ald </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name_ald </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
 #&gt; #   score </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, source </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
-<span class='co'># May be a little slow</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>match_name</span>(
   <span class='no'>mini_loanbook</span>, <span class='no'>ald_demo</span>,
   <span class='kw'>min_score</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)
-}</div></span></pre>
+  <span class='kw'>by_sector</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 15 x 27</span><span>
+#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           
+#&gt; </span><span style='color: #555555;'> 1</span><span> L173    C207             Toyota Motor Co… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 2</span><span> L197    C316             Zil              </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 3</span><span> L173    C207             Toyota Motor Co… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 4</span><span> L197    C316             Zil              </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 5</span><span> L201    C104             Inner Mongolia … </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 6</span><span> L47     C257             Yolo County Flo… IP3              Yolo Regional D…
+#&gt; </span><span style='color: #555555;'> 7</span><span> L55     C249             Yiyang Baoyuan … </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 8</span><span> L5      C305             Yukon Energy Co… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'> 9</span><span> L77     C146             Nanjing Guodian… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>10</span><span> L63     C241             Yingjiang Mengd… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>11</span><span> L77     C146             Nanjing Guodian… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>12</span><span> L63     C241             Yingjiang Mengd… </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>13</span><span> L55     C249             Yiyang Baoyuan … </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'>14</span><span> L47     C257             Yolo County Flo… IP3              Yolo Regional D…
+#&gt; </span><span style='color: #555555;'>15</span><span> L24     C282             Ypfb Corporacion </span><span style='color: #BB0000;'>NA</span><span>               </span><span style='color: #BB0000;'>NA</span><span>              
+#&gt; </span><span style='color: #555555;'># … with 22 more variables: id_ultimate_parent </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   name_ultimate_parent </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, loan_size_outstanding </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   loan_size_outstanding_currency </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, loan_size_credit_limit </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>,
+#&gt; #   loan_size_credit_limit_currency </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector_classification_system </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   sector_classification_input_type </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   sector_classification_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, fi_type </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   flag_project_finance_loan </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name_project </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,
+#&gt; #   lei_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, isin_direct_loantaker </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, id_2dii </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   level </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, sector_ald </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, name_ald </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,
+#&gt; #   score </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, source </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
@@ -292,7 +316,7 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.linkedin.com/in/mauro-lepore/'>Mauro Lepore</a>, Klaus Hagedorn, George Harris, Jackson Hoffart, Daan Koopman, Florence Palandri, Evgeny Petrovsky, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
+  <p>Developed by <a href='https://www.linkedin.com/in/mauro-lepore/'>Mauro Lepore</a>, Jackson Hoffart, Klaus Hagedorn, Evgeny Petrovsky, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
 </div>
 
 <div class="pkgdown">
