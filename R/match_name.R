@@ -1,10 +1,11 @@
 #' Match a loanbook and asset-level datasets (ald) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
-#' can be `name_direct_loantaker`, `name_intermediate_parent_*`and `name_ultimate_parent`) with names in an
-#' asset-level dataset (column `name_company`). The raw names are first
-#' internally transformed then the similarity between transformed names in each
-#' of the loanbook and ald datasets is scored using [stringdist::stringsim()].
+#' can be `name_direct_loantaker`, `name_intermediate_parent_*`and
+#' `name_ultimate_parent`) with names in an asset-level dataset (column
+#' `name_company`). The raw names are first internally transformed then the
+#' similarity between transformed names in each of the loanbook and ald datasets
+#' is scored using [stringdist::stringsim()].
 #'
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
@@ -40,12 +41,13 @@
 #'   * `source` - determines the source of the match. (equal to `loanbook` unless
 #'   the match is from `overwrite`
 #'
-#'   The returned rows depend on the argument `min_value` and the result of the column `score` for each loan:
-#'   * If any row has `score` equal to 1, `match_name()` returns all rows where `score`
-#'   equals 1, dropping all other rows.
-#'   * If no row has `score` equal to 1,`match_name()` returns all rows where `score` is equal to or greater than
-#'   `min_score`. * If there is no match the output is a 0-row tibble with the
-#'   expected column names -- for type stability.
+#'   The returned rows depend on the argument `min_value` and the result of the
+#'   column `score` for each loan: * If any row has `score` equal to 1,
+#'   `match_name()` returns all rows where `score` equals 1, dropping all other
+#'   rows. * If no row has `score` equal to 1,`match_name()` returns all rows
+#'   where `score` is equal to or greater than `min_score`. * If there is no
+#'   match the output is a 0-row tibble with the expected column names -- for
+#'   type stability.
 #'
 #' @export
 #'
