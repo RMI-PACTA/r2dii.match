@@ -39,3 +39,10 @@ test_that("uniquify_id_column prints its output (fix not returned result)", {
   )
   expect_false(identical(out, character(0)))
 })
+
+test_that("warns unknown intermediate column", {
+  expect_warning(
+    uniquify_id_column(fake_lbk(), "unknown_intermediate_column"),
+    "unknown_intermediate_column.*not.*found"
+  )
+})
