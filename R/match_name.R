@@ -155,15 +155,6 @@ some_is_one <- function(x) {
   any(x == 1L) & x == 1L
 }
 
-names_matching <- function(x, level) {
-  pattern <- paste0(glue("^name_{level}.*_lbk$"), collapse = "|")
-  grep(pattern, names(x), value = TRUE)
-}
-
-remove_suffix <- function(data, suffix) {
-  set_names(data, ~ sub(suffix, "", .x))
-}
-
 reorder_names_as_in_loanbook <- function(data, loanbook) {
   names_in_loanbook <- data %>%
     intersect_names_as_in(reference = loanbook)
