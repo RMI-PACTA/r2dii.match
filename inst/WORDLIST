@@ -3,9 +3,7 @@ Codecov
 counterparties
 counterparty
 csv
-dataraw
 dii
-DL
 dplyr
 funder
 https
@@ -13,9 +11,10 @@ Jaro
 lbk
 lifecycle
 loanbook
-Loanbook
 loantaker
 ORCID
+PACTA
+PACTA’
 quosure
 readr
 rstudio

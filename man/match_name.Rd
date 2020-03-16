@@ -49,25 +49,25 @@ entities
 \item \code{name_ald} - the name of the \code{ald} company
 \item \code{score} - the score of the match (manually set this to \code{1}
 prior to calling \code{prioritize()} to validate the match)
-\item \code{source} - determines the source of the match. (equal to \code{loanbook} unless
-the match is from \code{overwrite}
+\item \code{source} - determines the source of the match. (equal to \code{loanbook}
+unless the match is from \code{overwrite}
 }
 
-The returned rows depend on the argument \code{min_value} and the result of the column \code{score} for each loan:
-\itemize{
-\item If any row has \code{score} equal to 1, \code{match_name()} returns all rows where \code{score}
-equals 1, dropping all other rows.
-\item If no row has \code{score} equal to 1,\code{match_name()} returns all rows where \code{score} is equal to or greater than
-\code{min_score}. * If there is no match the output is a 0-row tibble with the
-expected column names -- for type stability.
-}
+The returned rows depend on the argument \code{min_value} and the result of the
+column \code{score} for each loan: * If any row has \code{score} equal to 1,
+\code{match_name()} returns all rows where \code{score} equals 1, dropping all other
+rows. * If no row has \code{score} equal to 1,\code{match_name()} returns all rows
+where \code{score} is equal to or greater than \code{min_score}. * If there is no
+match the output is a 0-row tibble with the expected column names -- for
+type stability.
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns
-can be \code{name_direct_loantaker}, \verb{name_intermediate_parent_*}and \code{name_ultimate_parent}) with names in an
-asset-level dataset (column \code{name_company}). The raw names are first
-internally transformed then the similarity between transformed names in each
-of the loanbook and ald datasets is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
+can be \code{name_direct_loantaker}, \verb{name_intermediate_parent_*}and
+\code{name_ultimate_parent}) with names in an asset-level dataset (column
+\code{name_company}). The raw names are first internally transformed then the
+similarity between transformed names in each of the loanbook and ald datasets
+is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
 \section{Assigning aliases}{
 
@@ -94,14 +94,11 @@ mini_loanbook <- sample_n(loanbook_demo, 10)
 
 match_name(mini_loanbook, ald_demo)
 
-# May be a little slow
-\dontrun{
 match_name(
   mini_loanbook, ald_demo,
   min_score = 0.9,
-  by_sector = FALSE
+  by_sector = TRUE
 )
-}
 }
 \seealso{
 Other user-oriented: 

@@ -76,7 +76,7 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
 
 may_add_sector_and_borderline <- function(data) {
   if (already_has_sector_and_borderline(data)) {
-    warning("Using existing columns `sector` and `borderline`.", call. = FALSE)
+    rlang::warn("Using existing columns `sector` and `borderline`.")
     data2 <- data
   } else {
     message("Adding new columns `sector` and `borderline`.")

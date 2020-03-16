@@ -1,10 +1,11 @@
 #' Match a loanbook and asset-level datasets (ald) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
-#' can be `name_direct_loantaker`, `name_intermediate_parent_*`and `name_ultimate_parent`) with names in an
-#' asset-level dataset (column `name_company`). The raw names are first
-#' internally transformed then the similarity between transformed names in each
-#' of the loanbook and ald datasets is scored using [stringdist::stringsim()].
+#' can be `name_direct_loantaker`, `name_intermediate_parent_*`and
+#' `name_ultimate_parent`) with names in an asset-level dataset (column
+#' `name_company`). The raw names are first internally transformed then the
+#' similarity between transformed names in each of the loanbook and ald datasets
+#' is scored using [stringdist::stringsim()].
 #'
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
@@ -37,15 +38,16 @@
 #'   * `name_ald` - the name of the `ald` company
 #'   * `score` - the score of the match (manually set this to `1`
 #'   prior to calling `prioritize()` to validate the match)
-#'   * `source` - determines the source of the match. (equal to `loanbook` unless
-#'   the match is from `overwrite`
+#'   * `source` - determines the source of the match. (equal to `loanbook`
+#'   unless the match is from `overwrite`
 #'
-#'   The returned rows depend on the argument `min_value` and the result of the column `score` for each loan:
-#'   * If any row has `score` equal to 1, `match_name()` returns all rows where `score`
-#'   equals 1, dropping all other rows.
-#'   * If no row has `score` equal to 1,`match_name()` returns all rows where `score` is equal to or greater than
-#'   `min_score`. * If there is no match the output is a 0-row tibble with the
-#'   expected column names -- for type stability.
+#'   The returned rows depend on the argument `min_value` and the result of the
+#'   column `score` for each loan: * If any row has `score` equal to 1,
+#'   `match_name()` returns all rows where `score` equals 1, dropping all other
+#'   rows. * If no row has `score` equal to 1,`match_name()` returns all rows
+#'   where `score` is equal to or greater than `min_score`. * If there is no
+#'   match the output is a 0-row tibble with the expected column names -- for
+#'   type stability.
 #'
 #' @export
 #'
@@ -57,14 +59,11 @@
 #'
 #' match_name(mini_loanbook, ald_demo)
 #'
-#' # May be a little slow
-#' \dontrun{
 #' match_name(
 #'   mini_loanbook, ald_demo,
 #'   min_score = 0.9,
-#'   by_sector = FALSE
+#'   by_sector = TRUE
 #' )
-#' }
 match_name <- function(loanbook,
                        ald,
                        by_sector = TRUE,
@@ -91,7 +90,7 @@ match_name <- function(loanbook,
 
   no_match <- identical(nrow(matched), 0L)
   if (no_match) {
-    warning("Found no match.", call. = FALSE)
+    rlang::warn("Found no match.")
     out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
       unsuffix_and_regroup(old_groups) %>%
       select(-.data$alias, -.data$alias_ald)
@@ -132,30 +131,13 @@ minimum_names_of_match_name <- function(loanbook) {
 
 restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
   out <- matched %>%
-    left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
+    left_join(rlang::set_names(prep_ald, paste0, "_ald"), by = "alias_ald")
 
   if (!by_sector) {
     return(out)
   }
 
   out %>% filter(.data$sector == .data$sector_ald)
-}
-
-suffix_names <- function(data, suffix, names = NULL) {
-  ifelse(
-    is.null(names),
-    return(suffix_all_names(data, suffix)),
-    return(suffix_some_names(data, suffix, names))
-  )
-}
-
-suffix_all_names <- function(data, suffix) {
-  set_names(data, paste0, suffix)
-}
-
-suffix_some_names <- function(data, suffix, names) {
-  newnames_oldnames <- set_names(names, paste0, suffix)
-  rename(data, !!!newnames_oldnames)
 }
 
 prefer_perfect_match_by <- function(data, ...) {
@@ -171,15 +153,6 @@ none_is_one <- function(x) {
 
 some_is_one <- function(x) {
   any(x == 1L) & x == 1L
-}
-
-names_matching <- function(x, level) {
-  pattern <- paste0(glue("^name_{level}.*_lbk$"), collapse = "|")
-  grep(pattern, names(x), value = TRUE)
-}
-
-remove_suffix <- function(data, suffix) {
-  set_names(data, ~ sub(suffix, "", .x))
 }
 
 reorder_names_as_in_loanbook <- function(data, loanbook) {

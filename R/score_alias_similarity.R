@@ -7,7 +7,7 @@
 #'
 #' @seealso [match_name].
 #'
-#' @return A [dplyr::tibble].
+#' @return A [tibble::tibble].
 #'
 #' @examples
 #' library(dplyr)
@@ -28,26 +28,22 @@
 #' @noRd
 score_alias_similarity <- function(loanbook,
                                    ald,
-                                   ...,
                                    by_sector = TRUE,
                                    method = "jw",
                                    p = 0.1) {
-  ellipsis::check_dots_used()
-
   if (by_sector) {
     out <- expand_alias_by_sector(loanbook, ald)
   } else {
     out <- cross_alias(loanbook, ald)
   }
 
-  out <- out %>%
-    left_join(loanbook, by = c("alias_lbk" = "alias"))
+  out <- left_join(out, loanbook, by = c("alias_lbk" = "alias"))
 
   unique(
     mutate(
       out,
       score = score_string_similarity(
-        out$alias_lbk, out$alias_ald, ...,
+        out$alias_lbk, out$alias_ald,
         method = method, p = p
       )
     )

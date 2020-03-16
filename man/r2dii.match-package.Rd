@@ -4,10 +4,15 @@
 \name{r2dii.match-package}
 \alias{r2dii.match}
 \alias{r2dii.match-package}
-\title{r2dii.match: Match Loanbook with Asset Level Data}
+\title{r2dii.match: Tools to Match a Loan Book with Asset Level Data}
 \description{
-Match loanbook with asset level data. For more
-    information visit <https://2degrees-investing.org/>.
+These tools allow you to match a loan book with
+    asset level data.  This implements in R the first step of the software
+    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
+    free tool that calculates the alignment between financial assets and
+    climate scenarios (<https://2degrees-investing.org/>).  Financial
+    institutions use 'PACTA' to study how their capital allocation impacts
+    the climate.
 }
 \seealso{
 Useful links:
@@ -18,20 +23,21 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Mauro Lepore \email{maurolepore@gmail.com} (\href{https://orcid.org/0000-0002-1986-7988}{ORCID})
+\strong{Maintainer}: Mauro Lepore \email{maurolepore@gmail.com} (\href{https://orcid.org/0000-0002-1986-7988}{ORCID}) [contractor]
 
 Authors:
 \itemize{
-  \item Klaus Hagedorn \email{klaus@2degrees-investing.org}
-  \item George Harris \email{george@2degrees-investing.org}
   \item Jackson Hoffart \email{jackson@2degrees-investing.org} (\href{https://orcid.org/0000-0002-8600-5042}{ORCID})
-  \item Daan Koopman \email{daan@2degrees-investing.org}
-  \item Florence Palandri \email{florence@2degrees-investing.org}
-  \item Evgeny Petrovsky [contractor]
+  \item Klaus Hagedorn \email{klaus@2degrees-investing.org}
+  \item Evgeny Petrovsky
 }
 
 Other contributors:
 \itemize{
+  \item George Harris \email{george@2degrees-investing.org} [reviewer]
+  \item Daan Koopman \email{daan@2degrees-investing.org} [reviewer]
+  \item Clare Murray \email{clare@2degrees-investing.org} [reviewer]
+  \item Florence Palandri \email{florence@2degrees-investing.org} [reviewer]
   \item 2 Degrees Investing Initiative \email{contact@2degrees-investing.org} [copyright holder, funder]
 }
 

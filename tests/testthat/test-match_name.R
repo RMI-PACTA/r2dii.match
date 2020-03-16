@@ -1,9 +1,9 @@
 library(dplyr)
 library(r2dii.data)
 
-test_that("w/ non-NA only at intermediate level yields matches at
-          only at intermediate level only", {
-  lbk <- tibble(
+test_that("w/ non-NA only at intermediate level yields matches at intermediate
+          level only", {
+  lbk <- tibble::tibble(
     id_intermediate_parent_999 = "IP8",
     name_intermediate_parent_999 = "Nanco Hosiery Mills",
 
@@ -85,7 +85,7 @@ test_that("`by_sector = TRUE` yields only matching sectors", {
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
-  # Lookup code to sectors via r2dii.data::sector_classification_df()$code
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -102,7 +102,7 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
-  # Lookup code to sectors via r2dii.data::sector_classification_df()$code
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
@@ -514,4 +514,11 @@ test_that("with bad input errors gracefully", {
     mutate(name_direct_loantaker = as.numeric(12))
 
   expect_no_error(match_name(bad_loanbook, ald_demo))
+})
+
+test_that("with name_intermediate but not id_intermediate throws an error", {
+  expect_error(
+    class = "has_name_but_not_id",
+    match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
+  )
 })

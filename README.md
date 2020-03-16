@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Match loanbook with asset level data
+# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Tools to match a loanbook with asset level data
 
 <!-- badges: start -->
 
@@ -14,8 +14,12 @@ coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/grap
 status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
 <!-- badges: end -->
 
-The goal of r2dii.match is to match counterparties from a generic
-loanbook data with physical asset level data (ald).
+These tools allow you to match a loan book with asset level data. This
+implements in R the first step of the software ‘PACTA’ (Paris Agreement
+Capital Transition Assessment), which is a free tool that calculates the
+alignment between financial assets and climate scenarios
+(<https://2degrees-investing.org/>). Financial institutions use ‘PACTA’
+to study how their capital allocation impacts the climate.
 
 ## Installation
 
@@ -39,7 +43,7 @@ devtools::install_github("2DegreesInvesting/r2dii.match")
 ``` r
 library(r2dii.match)
 # r2dii.data is changing rapidly; ensure you have the latest version
-if (interactive()) remotes::update_packages("r2dii.data", upgrade = "ask")
+# remotes::update_packages("r2dii.data", upgrade = "ask")
 library(r2dii.data)
 ```
 

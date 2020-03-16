@@ -53,7 +53,9 @@
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
   data %>%
-    check_crucial_names(c("id_loan", "level", "score", "sector", "sector_ald")) %>%
+    check_crucial_names(
+      c("id_loan", "level", "score", "sector", "sector_ald")
+    ) %>%
     check_duplicated_score1_by_id_loan_by_level()
 
   priority <- set_priority(data, priority = priority)
@@ -105,12 +107,12 @@ set_priority <- function(data, priority) {
   known_levels <- sort(unique(data$level))
   unknown_levels <- setdiff(priority, known_levels)
   if (!identical(unknown_levels, character(0))) {
-    warning(
+    rlang::warn(
       glue(
-        "Ignoring `priority` levels not found in data.
+        "Ignoring `priority` levels not found in data: \\
+        {paste0(unknown_levels, collapse = ', ')}
         Did you mean to use one of: {paste0(known_levels, collapse = ', ')}?"
-      ),
-      call. = FALSE
+      )
     )
   }
 
@@ -183,10 +185,10 @@ prioritize_level <- function(data) {
 #' @noRd
 prioritize_at <- function(data, .at, priority = NULL) {
   data %>%
-    dplyr::arrange_at(.at, .funs = prioritize_impl, priority = priority) %>%
+    dplyr::arrange_at(.at, .funs = relevel2, new_levels = priority) %>%
     dplyr::filter(dplyr::row_number() == 1L)
 }
 
-prioritize_impl <- function(x, priority) {
-  forcats::fct_relevel(x, priority)
+relevel2 <- function(f, new_levels) {
+  factor(f, levels = c(new_levels, setdiff(levels(f), new_levels)))
 }

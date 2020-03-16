@@ -9,7 +9,6 @@
 #'
 #' @inheritParams match_name
 #' @inheritParams stringdist::stringdist
-#' @param ... Additional arguments are passed on to [stringdist::stringsim].
 #'
 #' @seealso [stringdist::stringsim], [stringdist::stringdist].
 #'
@@ -28,7 +27,6 @@
 #'
 #' score_string_similarity(c("fewer", "items", "get", "recycled"), "recycled")
 #' @noRd
-score_string_similarity <- function(a, b, ..., method = "jw", p = 0.1) {
-  ellipsis::check_dots_used()
-  stringdist::stringsim(a, b, ..., method = method, p = p)
+score_string_similarity <- function(a, b, method = "jw", p = 0.1) {
+  stringdist::stringsim(a, b, method = method, p = p)
 }

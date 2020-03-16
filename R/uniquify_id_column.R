@@ -39,7 +39,7 @@
 #' @noRd
 uniquify_id_column <- function(data, id_column) {
   if (grepl("intermediate", id_column) && !has_name(data, id_column)) {
-    warning(id_column, " not found in `data`.", call. = FALSE)
+    rlang::warn(glue::glue(id_column, " not found in `data`."))
     return(data)
   }
 

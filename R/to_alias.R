@@ -12,7 +12,8 @@
 #'
 #' @template alias-assign
 #'
-#' @author person(given = "Evgeny", family = "Petrovsky", role = c("aut", "ctr"))
+#' @author person(given = "Evgeny", family = "Petrovsky", role = c("aut",
+#'   "ctr"))
 #'
 #' @param x Character string, commonly from the columns `name_direct_loantaker`
 #'   or `name_ultimate_parent` of a loanbook dataset, or from the column
@@ -26,7 +27,7 @@
 #'
 #' @return
 #' * `to_alias()` returns a character string.
-#' * `from_name_to_alias()` returns a [dplyr::tibble] with columns `from` and
+#' * `from_name_to_alias()` returns a [tibble::tibble] with columns `from` and
 #' `to`.
 #'
 #' @examples
@@ -91,7 +92,7 @@ to_alias <- function(x,
   out <- gsub("-", " ", out)
   out <- gsub("[[:space:]]", "", out)
   out <- gsub("[^[:alnum:][:space:]$]", "", out)
-  out <- gsub("$", " ", out, fixed = T)
+  out <- gsub("$", " ", out, fixed = TRUE)
 
   out
 }
@@ -114,7 +115,7 @@ may_remove_ownership <- function(remove_ownership, ownership, .init) {
 
 replace_with_abbreviation <- function(replacement, .init) {
   replacement <- replacement %||% from_name_to_alias()
-  replacement <- stats::setNames(replacement, tolower(names(replacement)))
+  replacement <- rlang::set_names(replacement, tolower(names(replacement)))
 
   check_crucial_names(replacement, c("from", "to"))
 
