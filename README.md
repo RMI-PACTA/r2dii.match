@@ -14,8 +14,12 @@ coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/grap
 status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
 <!-- badges: end -->
 
-The goal of r2dii.match is to provide tools to match counterparties from
-a generic loanbook with physical asset level data.
+These tools allow you to match a loan book with asset level data. This
+implements in R the first step of the software ‘PACTA’ (Paris Agreement
+Capital Transition Assessment), which is a free tool that calculates the
+alignment between financial assets and climate scenarios
+(<https://2degrees-investing.org/>). Financial institutions use ‘PACTA’
+to study how their capital allocation impacts the climate.
 
 ## Installation
 

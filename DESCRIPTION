@@ -38,8 +38,13 @@ Authors@R:
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
-Description: Tools to match a loan book with asset level data.
-    For more information visit <https://2degrees-investing.org/>.
+Description: These tools allow you to match a loan book with
+    asset level data.  This implements in R the first step of the software
+    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
+    free tool that calculates the alignment between financial assets and
+    climate scenarios (<https://2degrees-investing.org/>).  Financial
+    institutions use 'PACTA' to study how their capital allocation impacts
+    the climate.
 License: GPL-3
 URL: https://github.com/2DegreesInvesting/r2dii.match
 BugReports: 
