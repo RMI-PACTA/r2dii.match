@@ -6,8 +6,13 @@
 \alias{r2dii.match-package}
 \title{r2dii.match: Tools to Match a Loan Book with Asset Level Data}
 \description{
-Tools to match a loan book with asset level data.
-    For more information visit <https://2degrees-investing.org/>.
+These tools allow you to match a loan book with
+    asset level data.  This implements in R the first step of the software
+    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
+    free tool that calculates the alignment between financial assets and
+    climate scenarios (<https://2degrees-investing.org/>).  Financial
+    institutions use 'PACTA' to study how their capital allocation impacts
+    the climate.
 }
 \seealso{
 Useful links:

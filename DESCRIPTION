@@ -66,6 +66,7 @@ Imports:
 Suggests: 
     covr,
     rmarkdown,
+    spelling,
     testthat (>= 2.1.0)
 Remotes: 
     2degreesinvesting/r2dii.data
