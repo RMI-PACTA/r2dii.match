@@ -51,8 +51,8 @@ test_that("correctly overwrites name", {
   overwrite <- overwrite_demo
 
   out <- suppressWarnings(
-      restructure_loanbook_for_matching(loanbook_rowid, overwrite)
-    ) %>%
+    restructure_loanbook_for_matching(loanbook_rowid, overwrite)
+  ) %>%
     filter(id_2dii %in% overwrite$id_2dii & level %in% overwrite$level) %>%
     left_join(overwrite, by = c("id_2dii", "level"))
 
@@ -63,8 +63,8 @@ test_that("correctly overwrites sector", {
   overwrite <- overwrite_demo
 
   out <- suppressWarnings(
-      restructure_loanbook_for_matching(loanbook_rowid, overwrite)
-    ) %>%
+    restructure_loanbook_for_matching(loanbook_rowid, overwrite)
+  ) %>%
     filter(id_2dii %in% overwrite$id_2dii & level %in% overwrite$level) %>%
     left_join(overwrite, by = c("id_2dii", "level"))
 
