@@ -131,17 +131,13 @@ minimum_names_of_match_name <- function(loanbook) {
 
 restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
   out <- matched %>%
-    left_join(suffix_all_names(prep_ald, "_ald"), by = "alias_ald")
+    left_join(rlang::set_names(prep_ald, paste0, "_ald"), by = "alias_ald")
 
   if (!by_sector) {
     return(out)
   }
 
   out %>% filter(.data$sector == .data$sector_ald)
-}
-
-suffix_all_names <- function(data, suffix) {
-  set_names(data, paste0, suffix)
 }
 
 prefer_perfect_match_by <- function(data, ...) {
