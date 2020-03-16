@@ -38,8 +38,8 @@
 #'   * `name_ald` - the name of the `ald` company
 #'   * `score` - the score of the match (manually set this to `1`
 #'   prior to calling `prioritize()` to validate the match)
-#'   * `source` - determines the source of the match. (equal to `loanbook` unless
-#'   the match is from `overwrite`
+#'   * `source` - determines the source of the match. (equal to `loanbook`
+#'   unless the match is from `overwrite`
 #'
 #'   The returned rows depend on the argument `min_value` and the result of the
 #'   column `score` for each loan: * If any row has `score` equal to 1,

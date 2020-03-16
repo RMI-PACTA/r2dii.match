@@ -52,7 +52,8 @@ add_sector_and_borderline <- function(data) {
 
 check_classification <- function(data,
                                  column,
-                                 classification = r2dii.data::sector_classifications) {
+                                 classification = NULL) {
+  classification <- classification %||% r2dii.data::sector_classifications
   # To call columns from both data and classification with the same colname
   reference <- rename_as_loanbook(classification)
 

@@ -12,7 +12,8 @@
 #'
 #' @template alias-assign
 #'
-#' @author person(given = "Evgeny", family = "Petrovsky", role = c("aut", "ctr"))
+#' @author person(given = "Evgeny", family = "Petrovsky", role = c("aut",
+#'   "ctr"))
 #'
 #' @param x Character string, commonly from the columns `name_direct_loantaker`
 #'   or `name_ultimate_parent` of a loanbook dataset, or from the column

@@ -1,9 +1,9 @@
-test_that("score_string_similarity with clearly extreeme cases returns 0 or 1", {
+test_that("with clearly extreeme cases returns 0 or 1", {
   expect_equal(score_string_similarity("aa", "aa"), 1L)
   expect_equal(score_string_similarity("aa", "bb"), 0L)
 })
 
-test_that("score_string_similarity cares not for the order of the string-elements", {
+test_that("cares not for the order of the string-elements", {
   expect_true(
     identical(
       score_string_similarity("ab", "ac"),
@@ -12,7 +12,7 @@ test_that("score_string_similarity cares not for the order of the string-element
   )
 })
 
-test_that("score_string_similarity output is as long as its longer input", {
+test_that("output is as long as its longer input", {
   out <- score_string_similarity(
     c("long", "vector"),
     "short"

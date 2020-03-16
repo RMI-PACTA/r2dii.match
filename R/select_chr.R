@@ -17,7 +17,7 @@
 #' x
 #'
 #' # You can select elements from a caracter vector in many ways. All the
-#' # tidyselect (available via dplyr) helpers that work with dplyr::selec() work here too.
+#' # tidyselect helpers that work with dplyr::selec() work here too.
 #' select_chr(
 #'   x,
 #'   matches("_3"),

@@ -53,7 +53,9 @@
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
   data %>%
-    check_crucial_names(c("id_loan", "level", "score", "sector", "sector_ald")) %>%
+    check_crucial_names(
+      c("id_loan", "level", "score", "sector", "sector_ald")
+    ) %>%
     check_duplicated_score1_by_id_loan_by_level()
 
   priority <- set_priority(data, priority = priority)

@@ -49,8 +49,8 @@ entities
 \item \code{name_ald} - the name of the \code{ald} company
 \item \code{score} - the score of the match (manually set this to \code{1}
 prior to calling \code{prioritize()} to validate the match)
-\item \code{source} - determines the source of the match. (equal to \code{loanbook} unless
-the match is from \code{overwrite}
+\item \code{source} - determines the source of the match. (equal to \code{loanbook}
+unless the match is from \code{overwrite}
 }
 
 The returned rows depend on the argument \code{min_value} and the result of the
