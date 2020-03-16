@@ -131,7 +131,7 @@ minimum_names_of_match_name <- function(loanbook) {
 
 restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
   out <- matched %>%
-    left_join(suffix_names(prep_ald, "_ald"), by = "alias_ald")
+    left_join(suffix_all_names(prep_ald, "_ald"), by = "alias_ald")
 
   if (!by_sector) {
     return(out)
@@ -140,21 +140,8 @@ restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
   out %>% filter(.data$sector == .data$sector_ald)
 }
 
-suffix_names <- function(data, suffix, names = NULL) {
-  ifelse(
-    is.null(names),
-    return(suffix_all_names(data, suffix)),
-    return(suffix_some_names(data, suffix, names))
-  )
-}
-
 suffix_all_names <- function(data, suffix) {
   set_names(data, paste0, suffix)
-}
-
-suffix_some_names <- function(data, suffix, names) {
-  newnames_oldnames <- set_names(names, paste0, suffix)
-  rename(data, !!!newnames_oldnames)
 }
 
 prefer_perfect_match_by <- function(data, ...) {
