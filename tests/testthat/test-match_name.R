@@ -1,9 +1,9 @@
 library(dplyr)
 library(r2dii.data)
 
-test_that("w/ non-NA only at intermediate level yields matches at
-          only at intermediate level only", {
-  lbk <- tibble(
+test_that("w/ non-NA only at intermediate level yields matches at intermediate
+          level only", {
+  lbk <- tibble::tibble(
     id_intermediate_parent_999 = "IP8",
     name_intermediate_parent_999 = "Nanco Hosiery Mills",
 
