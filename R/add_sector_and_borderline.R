@@ -79,8 +79,6 @@ abort_all_sector_classification_is_unknown <- function(column, known) {
       {collapse2(known)}"
     )
   )
-
-  invisible(column)
 }
 
 warn_some_sector_classification_is_unknown <- function(column, unknown) {
