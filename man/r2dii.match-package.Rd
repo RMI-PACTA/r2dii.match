@@ -4,15 +4,17 @@
 \name{r2dii.match-package}
 \alias{r2dii.match}
 \alias{r2dii.match-package}
-\title{r2dii.match: Tools to Match a Loan Book with Asset Level Data}
+\title{r2dii.match: Tools to Align Financial Markets with Climate Goals}
 \description{
-These tools allow you to match a loan book with
-    asset level data.  This implements in R the first step of the software
-    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
-    free tool that calculates the alignment between financial assets and
-    climate scenarios (<https://2degrees-investing.org/>).  Financial
-    institutions use 'PACTA' to study how their capital allocation impacts
-    the climate.
+These tools implement in R a fundamental part of
+    the software 'PACTA' (Paris Agreement Capital Transition Assessment),
+    which is a free tool that calculates the alignment between financial
+    assets and climate scenarios (<https://2degrees-investing.org/>).
+    Financial institutions use 'PACTA' to study how their capital
+    allocation impacts the climate. This package matches data from
+    financial portfolios to data from market-intelligence databases (e.g.
+    wind turbine power plant capacities), which is the first step to
+    assess if a financial portfolio aligns with climate goals.
 }
 \seealso{
 Useful links:
