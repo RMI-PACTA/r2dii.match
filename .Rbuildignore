@@ -1,5 +1,3 @@
-^renv$
-^renv\.lock$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^\.Rproj\.user$
