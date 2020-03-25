@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>r2dii.match: Tools to Match a Loan Book with Asset Level Data — r2dii.match-package • r2dii.match</title>
+<title>r2dii.match: Tools to Align Financial Markets with Climate Goals — r2dii.match-package • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -17,16 +17,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,14 +39,16 @@
 
 
 
-<meta property="og:title" content="r2dii.match: Tools to Match a Loan Book with Asset Level Data — r2dii.match-package" />
-<meta property="og:description" content="These tools allow you to match a loan book with
-    asset level data.  This implements in R the first step of the software
-    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
-    free tool that calculates the alignment between financial assets and
-    climate scenarios (&amp;lt;https://2degrees-investing.org/&amp;gt;).  Financial
-    institutions use 'PACTA' to study how their capital allocation impacts
-    the climate." />
+<meta property="og:title" content="r2dii.match: Tools to Align Financial Markets with Climate Goals — r2dii.match-package" />
+<meta property="og:description" content="These tools implement in R a fundamental part of
+    the software 'PACTA' (Paris Agreement Capital Transition Assessment),
+    which is a free tool that calculates the alignment between financial
+    assets and climate scenarios (&amp;lt;https://2degrees-investing.org/&amp;gt;).
+    Financial institutions use 'PACTA' to study how their capital
+    allocation impacts the climate. This package matches data from
+    financial portfolios to data from market-intelligence databases (e.g.
+    wind turbine power plant capacities), which is the first step to
+    assess if a financial portfolio aligns with climate goals." />
 
 
 
@@ -60,7 +66,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -87,10 +93,19 @@
   </a>
 </li>
 <li>
-  <a href="../articles/r2dii.match.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/r2dii.match.html">Introduction to r2dii.match</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -119,19 +134,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>r2dii.match: Tools to Match a Loan Book with Asset Level Data</h1>
+    <h1>r2dii.match: Tools to Align Financial Markets with Climate Goals</h1>
     <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/r2dii.match-package.R'><code>R/r2dii.match-package.R</code></a></small>
     <div class="hidden name"><code>r2dii.match-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These tools allow you to match a loan book with
-    asset level data.  This implements in R the first step of the software
-    'PACTA' (Paris Agreement Capital Transition Assessment), which is a
-    free tool that calculates the alignment between financial assets and
-    climate scenarios (&lt;https://2degrees-investing.org/&gt;).  Financial
-    institutions use 'PACTA' to study how their capital allocation impacts
-    the climate.</p>
+    <p>These tools implement in R a fundamental part of
+    the software 'PACTA' (Paris Agreement Capital Transition Assessment),
+    which is a free tool that calculates the alignment between financial
+    assets and climate scenarios (&lt;https://2degrees-investing.org/&gt;).
+    Financial institutions use 'PACTA' to study how their capital
+    allocation impacts the climate. This package matches data from
+    financial portfolios to data from market-intelligence databases (e.g.
+    wind turbine power plant capacities), which is the first step to
+    assess if a financial portfolio aligns with climate goals.</p>
     </div>
 
 
@@ -147,35 +164,16 @@
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p><strong>Maintainer</strong>: Mauro Lepore <a href='mailto:maurolepore@gmail.com'>maurolepore@gmail.com</a> (<a href='https://orcid.org/0000-0002-1986-7988'>ORCID</a>) [contractor]</p>
-<p>Authors:</p><ul>
-<li><p>Jackson Hoffart <a href='mailto:jackson@2degrees-investing.org'>jackson@2degrees-investing.org</a> (<a href='https://orcid.org/0000-0002-8600-5042'>ORCID</a>)</p></li>
-<li><p>Klaus Hagedorn <a href='mailto:klaus@2degrees-investing.org'>klaus@2degrees-investing.org</a></p></li>
-<li><p>Evgeny Petrovsky</p></li>
-</ul>
-
-<p>Other contributors:</p><ul>
-<li><p>George Harris <a href='mailto:george@2degrees-investing.org'>george@2degrees-investing.org</a> [reviewer]</p></li>
-<li><p>Daan Koopman <a href='mailto:daan@2degrees-investing.org'>daan@2degrees-investing.org</a> [reviewer]</p></li>
-<li><p>Clare Murray <a href='mailto:clare@2degrees-investing.org'>clare@2degrees-investing.org</a> [reviewer]</p></li>
-<li><p>Florence Palandri <a href='mailto:florence@2degrees-investing.org'>florence@2degrees-investing.org</a> [reviewer]</p></li>
-<li><p>2 Degrees Investing Initiative <a href='mailto:contact@2degrees-investing.org'>contact@2degrees-investing.org</a> [copyright holder, funder]</p></li>
-</ul>
-
-
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://www.linkedin.com/in/mauro-lepore/'>Mauro Lepore</a>, Jackson Hoffart, Klaus Hagedorn, Evgeny Petrovsky, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
+  <p>Developed by <a href='https://www.linkedin.com/in/mauro-lepore/'>Mauro Lepore</a>, Jackson Hoffart, Klaus Hagedorn, <a href='https://2degrees-investing.org/'>2 Degrees Investing Initiative</a>.</p>
 </div>
 
 <div class="pkgdown">
