@@ -116,11 +116,11 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
 
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
+    sector_classification_system = "NACE",
     id_ultimate_parent = "UP15",
     name_ultimate_parent = "Alpine Knits India Pvt. Limited",
     id_direct_loantaker = "C294",
     name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
-    sector_classification_system = "NACE",
     sector_classification_direct_loantaker = 3511,
     id_2dii = "UP1",
     level = "ultimate_parent",
