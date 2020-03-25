@@ -72,6 +72,6 @@ group_indices_of <- function(data, column) {
   data %>%
     dplyr::group_by(
       !!rlang::sym(col_name), .data$sector_classification_direct_loantaker
-  ) %>%
-  dplyr::group_indices()
+    ) %>%
+    dplyr::group_indices()
 }
