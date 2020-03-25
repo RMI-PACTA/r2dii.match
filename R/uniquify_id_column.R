@@ -68,7 +68,10 @@ snakecase_initial <- function(x) {
 # Unique combination of `column` & `sector_classification_direct_loantaker`
 group_indices_of <- function(data, column) {
   col_name <- replace_prefix(column, to = "name")
-  dplyr::group_indices(
-    data, !!rlang::sym(col_name), .data$sector_classification_direct_loantaker
-  )
+
+  data %>%
+    dplyr::group_by(
+      !!rlang::sym(col_name), .data$sector_classification_direct_loantaker
+  ) %>%
+  dplyr::group_indices()
 }
