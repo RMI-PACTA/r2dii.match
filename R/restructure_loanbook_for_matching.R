@@ -181,7 +181,7 @@ output_cols_for_prepare_loanbook <- function() {
 identify_loans_by_level <- function(data) {
   data %>%
     tidyr::pivot_longer(
-      cols = tidyr::starts_with("id_"),
+      cols = tidyselect::starts_with("id_"),
       names_to = "level",
       names_prefix = "id_",
       values_to = "id_2dii"
