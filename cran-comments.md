@@ -10,15 +10,6 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 4 notes
+0 errors | 0 warnings | 1 notes
 
 * New submission
-* Version contains large components (0.0.0.9005)
-* Unknown, possibly mis-spelled, fields in DESCRIPTION:
-   'Remotes'
-* Strong dependencies not in mainstream repositories:
-   r2dii.data
-
-## Downstream dependencies
-
-TODO once r2dii.data is published
