@@ -12,17 +12,19 @@ status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-projec
 coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master)
 [![R build
 status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
+[![Travis build
+status](https://travis-ci.org/2DegreesInvesting/r2dii.match.svg?branch=master)](https://travis-ci.org/2DegreesInvesting/r2dii.match)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of the software ‘PACTA’
 (Paris Agreement Capital Transition Assessment), which is a free tool
-that calculates the alignment between financial assets and climate
+that calculates the alignment between financial portfolios and climate
 scenarios (<https://2degrees-investing.org/>). Financial institutions
 use ‘PACTA’ to study how their capital allocation impacts the climate.
-This package matches data from financial portfolios to data from
-market-intelligence databases (e.g. wind turbine power plant
-capacities), which is the first step to assess if a financial portfolio
-aligns with climate goals.
+This package matches data from financial portfolios to asset level data
+from market-intelligence databases (e.g. power plant capacities,
+emission factors, etc.). This is the first step to assess if a financial
+portfolio aligns with climate goals.
 
 ## Installation
 
