@@ -1,5 +1,10 @@
 #' Pick rows where `score` is 1 and `level` per loan is of highest `priority`
 #'
+#' When multiple perfect matches are found per loan (eg. a match at
+#' `direct_loantaker` level and `ultimate_parent` level), we must prioritize the
+#' desired match. By default, the highest `priority` is the most granular match
+#' (ie. `direct_loantaker`).
+#'
 #' @template ignores-but-preserves-existing-groups
 #'
 #' @param data A dataframe like the validated output of [match_name()]. See
