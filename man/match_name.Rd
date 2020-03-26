@@ -18,10 +18,11 @@ match_name(
 \item{loanbook, ald}{Dataframes structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
 and \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{by_sector}{Should the combinations be done by sector?}
+\item{by_sector}{Should names only be compared if entities belong to the same
+\code{sector}?}
 
-\item{min_score}{A number (length-1) to set the minimum \code{score} values you
-want to pick.}
+\item{min_score}{A number between 0-1, to set the minimum \code{score} threshold.
+A \code{score} of 1 is a perfect match.}
 
 \item{method}{Method for distance calculation. One of \code{c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")}. See
 \link[stringdist:stringdist-metrics]{stringdist::stringdist-metrics}.}
@@ -65,8 +66,8 @@ type stability.
 \code{match_name()} scores the match between names in a loanbook dataset (columns
 can be \code{name_direct_loantaker}, \verb{name_intermediate_parent_*}and
 \code{name_ultimate_parent}) with names in an asset-level dataset (column
-\code{name_company}). The raw names are first internally transformed then the
-similarity between transformed names in each of the loanbook and ald datasets
+\code{name_company}). The raw names are first internally transformed, and aliases are assigned. The
+similarity between aliases in each of the loanbook and ald datasets
 is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
 \section{Assigning aliases}{
@@ -83,7 +84,7 @@ datasets applies best practices commonly used in name matching algorithms:
 
 \section{Handling grouped data}{
 
-This function ignores but preserves existing groups them.
+This function ignores but preserves existing groups.
 }
 
 \examples{
