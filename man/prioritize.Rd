@@ -24,7 +24,10 @@ A dataframe with a single row per loan, where \code{score} is 1 and
 priority level is highest.
 }
 \description{
-Pick rows where \code{score} is 1 and \code{level} per loan is of highest \code{priority}
+When multiple perfect matches are found per loan (e.g. a match at
+\code{direct_loantaker} level and \code{ultimate_parent} level), we must prioritize the
+desired match. By default, the highest \code{priority} is the most granular match
+(i.e. \code{direct_loantaker}).
 }
 \details{
 \strong{How to validate \code{data}}
@@ -57,7 +60,7 @@ valid_matches <- readr::read_csv("valid_matches.csv")
 }
 \section{Handling grouped data}{
 
-This function ignores but preserves existing groups them.
+This function ignores but preserves existing groups.
 }
 
 \examples{

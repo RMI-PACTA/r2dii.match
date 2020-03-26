@@ -3,18 +3,20 @@
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' can be `name_direct_loantaker`, `name_intermediate_parent_*`and
 #' `name_ultimate_parent`) with names in an asset-level dataset (column
-#' `name_company`). The raw names are first internally transformed then the
-#' similarity between transformed names in each of the loanbook and ald datasets
-#' is scored using [stringdist::stringsim()].
+#' `name_company`). The raw names are first internally transformed, and aliases
+#' are assigned. The similarity between aliases in each of the loanbook and ald
+#' datasets is scored using [stringdist::stringsim()].
+#'
 #'
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
 #' @param loanbook,ald Dataframes structured like [r2dii.data::loanbook_demo]
 #'   and [r2dii.data::ald_demo].
-#' @param by_sector Should the combinations be done by sector?
-#' @param min_score A number (length-1) to set the minimum `score` values you
-#'   want to pick.
+#' @param by_sector Should names only be compared if companies belong to the same
+#'   `sector`?
+#' @param min_score A number between 0-1, to set the minimum `score` threshold.
+#'   A `score` of 1 is a perfect match.
 #' @param method Method for distance calculation. One of `c("osa", "lv", "dl",
 #'   "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")`. See
 #'   [stringdist::stringdist-metrics].
@@ -22,14 +24,14 @@
 #' @param overwrite A dataframe used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
-#'   vice-versa. This file can be used to manually match entities to ald.
+#'   vice-versa. This file can be used to manually match loanbook companies to ald.
 #'
 #' @family user-oriented
 #'
 #' @return A dataframe with the same groups (if any) and columns as `loanbook`,
 #'   and the additional columns:
 #'   * `id_2dii` - an id used internally by `match_name()` to distinguish
-#'   entities
+#'   companies
 #'   * `level` - the level of granularity that the loan was matched at
 #'   (e.g `direct_loantaker` or `ultimate_parent`)
 #'   * `sector` - the sector of the `loanbook` company
