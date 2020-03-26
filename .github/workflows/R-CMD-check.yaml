@@ -65,6 +65,8 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages("r2dii.data", repos = "https://cran.rstudio.com/")
+          install.packages("dplyr", repos = "https://cran.rstudio.com/")
+          install.packages("tidyr", repos = "https://cran.rstudio.com/")
           library(remotes)
           deps <- readRDS("depends.Rds")
           deps[["installed"]] <- vapply(deps[["package"]], remotes:::local_sha, character(1))
