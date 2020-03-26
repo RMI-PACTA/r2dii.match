@@ -24,10 +24,10 @@ A dataframe with a single row per loan, where \code{score} is 1 and
 priority level is highest.
 }
 \description{
-When multiple perfect matches are found per loan (eg. a match at
+When multiple perfect matches are found per loan (e.g. a match at
 \code{direct_loantaker} level and \code{ultimate_parent} level), we must prioritize the
 desired match. By default, the highest \code{priority} is the most granular match
-(ie. \code{direct_loantaker}).
+(i.e. \code{direct_loantaker}).
 }
 \details{
 \strong{How to validate \code{data}}
