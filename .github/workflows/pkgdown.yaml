@@ -39,6 +39,7 @@ jobs:
       - name: Deploy package
         run: |
           options(repos = c(CRAN = "https://cran.rstudio.com/"))
+          install.packages("fs")
           install.packages("pkgdown")
           pkgdown::deploy_to_branch(new_process = FALSE)
         shell: Rscript {0}
