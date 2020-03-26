@@ -64,12 +64,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          install.packages("r2dii.data")
           library(remotes)
           deps <- readRDS("depends.Rds")
           deps[["installed"]] <- vapply(deps[["package"]], remotes:::local_sha, character(1))
           update(deps)
           remotes::install_cran("rcmdcheck")
-          install.packages("r2dii.data")
         shell: Rscript {0}
 
       - name: Check
