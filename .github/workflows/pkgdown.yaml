@@ -29,9 +29,10 @@ jobs:
 
       - name: Install dependencies
         run: |
+          options(repos = c(CRAN = "https://cran.rstudio.com/"))
+          install.packages("pkgdown")
           install.packages("remotes")
           remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown", repos = "https://cran.rstudio.com/")
         shell: Rscript {0}
 
       - name: Install package
