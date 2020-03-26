@@ -18,7 +18,7 @@ match_name(
 \item{loanbook, ald}{Dataframes structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
 and \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{by_sector}{Should names only be compared if entities belong to the same
+\item{by_sector}{Should names only be compared if companies belong to the same
 \code{sector}?}
 
 \item{min_score}{A number between 0-1, to set the minimum \code{score} threshold.
@@ -34,14 +34,14 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 \item{overwrite}{A dataframe used to overwrite the \code{sector} and/or \code{name}
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA} and
-vice-versa. This file can be used to manually match entities to ald.}
+vice-versa. This file can be used to manually match loanbook companies to ald.}
 }
 \value{
 A dataframe with the same groups (if any) and columns as \code{loanbook},
 and the additional columns:
 \itemize{
 \item \code{id_2dii} - an id used internally by \code{match_name()} to distinguish
-entities
+companies
 \item \code{level} - the level of granularity that the loan was matched at
 (e.g \code{direct_loantaker} or \code{ultimate_parent})
 \item \code{sector} - the sector of the \code{loanbook} company
