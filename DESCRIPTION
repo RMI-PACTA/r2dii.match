@@ -16,6 +16,13 @@ Authors@R:
              family = "Hagedorn",
              role = "aut",
              email = "klaus@2degrees-investing.org"),
+      person(given = "Florence",
+             family = "Palandri",
+             role = "aut",
+             email = "florence@2degrees-investing.org"),
+      person(given = "Evgeny",
+             family = "Petrovsky",
+             role = "aut"),
       person(given = "2 Degrees Investing Initiative",
              role = c("cph", "fnd"),
              email = "contact@2degrees-investing.org"))
