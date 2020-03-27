@@ -84,7 +84,6 @@ For a more detailed walkthrough of the functionality [Get started](https://2degr
 
 ## Acknowledgements
 
-
 ```{r echo=FALSE}
 thank <- function(x) {
   x <- sort(x)
@@ -94,12 +93,10 @@ thank <- function(x) {
 contributors <- c(
   "Clare2D",
   "cjyetman",
-  "EvgenyPetrovsky",
-  "fpalandri",
   "georgeharris2deg",
   "koopmand",
   "vintented"
 )
 ```
 
-A big thanks to all `r length(contributors)` contributors who helped with ideas, code, or reviews. `r thank(contributors)`
+A big thanks to all `r length(contributors)` contributors who helped with ideas, code, or reviews: `r thank(contributors)`.

@@ -133,11 +133,9 @@ started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii.match.ht
 
 ## Acknowledgements
 
-A big thanks to all 7 contributors who helped with ideas, code, or
-reviews. [cjyetman](https://github.com/cjyetman),
+A big thanks to all 5 contributors who helped with ideas, code, or
+reviews: [cjyetman](https://github.com/cjyetman),
 [Clare2D](https://github.com/Clare2D),
-[EvgenyPetrovsky](https://github.com/EvgenyPetrovsky),
-[fpalandri](https://github.com/fpalandri),
 [georgeharris2deg](https://github.com/georgeharris2deg),
 [koopmand](https://github.com/koopmand),
-[vintented](https://github.com/vintented)
+[vintented](https://github.com/vintented).
