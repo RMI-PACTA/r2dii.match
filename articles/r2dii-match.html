@@ -268,7 +268,7 @@
 <p>Write the output of <code><a href="../reference/match_name.html">match_name()</a></code> into a .csv file with:</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Writting to current working directory</span>
 <span class="no">matched</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span>(<span class="st">"matched.csv"</span>)</pre></body></html></div>
+  <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">write_csv</span>(<span class="st">"matched.csv"</span>)</pre></body></html></div>
 <p>Compare, edit, and save the data manually:</p>
 <ul>
 <li>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel, Google Sheets).</li>
@@ -283,7 +283,7 @@
 </ul>
 <p>Re-read the edited file (validated) with:</p>
 <div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Reading from current working directory</span>
-<span class="no">valid_matches</span> <span class="kw">&lt;-</span> <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="st">"valid_matches.csv"</span>)</pre></body></html></div>
+<span class="no">valid_matches</span> <span class="kw">&lt;-</span> <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">read_csv</span>(<span class="st">"valid_matches.csv"</span>)</pre></body></html></div>
 </div>
 <div id="prioritize-validated-matches-by-level" class="section level2">
 <h2 class="hasAnchor">
@@ -355,7 +355,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
 </div>
 
       </footer>
