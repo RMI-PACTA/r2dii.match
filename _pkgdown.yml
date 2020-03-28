@@ -23,6 +23,25 @@ navbar:
 
   type: default
 
+  left:
+
+
+  - text: "Get started"
+    href: articles/r2dii-match.html
+
+  - text: "Reference"
+    href: reference/index.html
+
+  - text: "News"
+    menu:
+    - text: "Release notes"
+    - text: "r2dii.match 0.0.1"
+      href: https://2degreesinvesting.github.io/r2dii/articles/r2dii-match-0-0-1.html
+      href: news/index.html
+    - text: "----------------------"
+    - text: "Change log"
+      href: news/index.html
+
   right:
     - icon: fa-gavel
       href: https://github.com/maurolepore

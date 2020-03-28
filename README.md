@@ -35,8 +35,14 @@ Before you install r2dii.match you may want to:
   - [Learn how to minimize installation
     errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
-When you are ready, install the development version of r2dii.match from
-GitHub with:
+When you are ready, install the released version of r2dii.match from
+CRAN with:
+
+``` r
+# install.packages("r2dii.match")
+```
+
+Or install the development version of r2dii.match from GitHub with:
 
 ``` r
 # install.packages("devtools")
