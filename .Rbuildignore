@@ -12,3 +12,4 @@
 ^vignettes/r2dii\.match\.Rmd$
 ^cran-comments\.md$
 ^\.travis\.yml$
+^vignettes/r2dii-match\.Rmd$
