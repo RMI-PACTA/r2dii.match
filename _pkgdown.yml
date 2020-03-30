@@ -24,8 +24,6 @@ navbar:
   type: default
 
   left:
-
-
   - text: "Get started"
     href: articles/r2dii-match.html
 
@@ -48,4 +46,6 @@ navbar:
     - icon: fa-github
       href: https://github.com/2DegreesInvesting/r2dii.match
 
+    - text: r2dii
+      href: https://2degreesinvesting.github.io/r2dii/index.html
 
