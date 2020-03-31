@@ -64,7 +64,7 @@ type stability.
 }
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns
-can be \code{name_direct_loantaker}, \verb{name_intermediate_parent_*}and
+can be \code{name_direct_loantaker}, \verb{name_intermediate_parent*} and
 \code{name_ultimate_parent}) with names in an asset-level dataset (column
 \code{name_company}). The raw names are first internally transformed, and aliases
 are assigned. The similarity between aliases in each of the loanbook and ald
