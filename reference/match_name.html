@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="Match a loanbook and asset-level datasets (ald) by the <code>name_*</code> columns — match_name" />
 <meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
-can be name_direct_loantaker, name_intermediate_parent_*and
+can be name_direct_loantaker, name_intermediate_parent* and
 name_ultimate_parent) with names in an asset-level dataset (column
 name_company). The raw names are first internally transformed, and aliases
 are assigned. The similarity between aliases in each of the loanbook and ald
@@ -143,7 +143,7 @@ datasets is scored using stringdist::stringsim()." />
 
     <div class="ref-description">
     <p><code>match_name()</code> scores the match between names in a loanbook dataset (columns
-can be <code>name_direct_loantaker</code>, <code>name_intermediate_parent_*</code>and
+can be <code>name_direct_loantaker</code>, <code>name_intermediate_parent*</code> and
 <code>name_ultimate_parent</code>) with names in an asset-level dataset (column
 <code>name_company</code>). The raw names are first internally transformed, and aliases
 are assigned. The similarity between aliases in each of the loanbook and ald
