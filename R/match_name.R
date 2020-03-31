@@ -1,12 +1,11 @@
 #' Match a loanbook and asset-level datasets (ald) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
-#' can be `name_direct_loantaker`, `name_intermediate_parent_*`and
+#' can be `name_direct_loantaker`, `name_intermediate_parent*` and
 #' `name_ultimate_parent`) with names in an asset-level dataset (column
 #' `name_company`). The raw names are first internally transformed, and aliases
 #' are assigned. The similarity between aliases in each of the loanbook and ald
 #' datasets is scored using [stringdist::stringsim()].
-#'
 #'
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
