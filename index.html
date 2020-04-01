@@ -103,7 +103,7 @@
 <a href="#-tools-to-align-financial-markets-with-climate-goals" class="anchor"></a><img src="https://i.imgur.com/3jITMq8.png" align="right" height="40"> Tools to Align Financial Markets with Climate Goals</h1></div>
 <!-- badges: start -->
 
-<p>These tools implement in R a fundamental part of the software ‘PACTA’ (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>). Financial institutions use ‘PACTA’ to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
+<p>These tools implement in R a fundamental part of the software âPACTAâ (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>). Financial institutions use âPACTAâ to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g.Â power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -135,19 +135,19 @@
 <div class="sourceCode" id="cb4"><pre class="r"><span class="no">match_result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span>(<span class="no">loanbook_demo</span>, <span class="no">ald_demo</span>)
 <span class="no">match_result</span>
 <span class="co">#&gt; # A tibble: 502 x 27</span>
-<span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
+<span class="co">#&gt;    id_loan id_direct_loantâ¦ name_direct_loaâ¦ id_intermediateâ¦ name_intermediaâ¦</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L170    C203             Tesla Inc        &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L180    C217             Weichai Power C… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L180    C217             Weichai Power Câ¦ &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  3 L181    C218             Wheego           &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 L195    C313             Zhengzhou Yuton… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  4 L195    C313             Zhengzhou Yutonâ¦ &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  5 L174    C211             Tvr              &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  6 L198    C317             Ziyang Nanjun    &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  7 L193    C310             Zamyad           &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  8 L165    C195             Sunwin Bus       &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L154    C171             Shandong Tangjuâ¦ &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 L164    C193             Subaru Corp      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 492 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # â¦ with 492 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -165,19 +165,19 @@
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
 <div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="reference/prioritize.html">prioritize</a></span>(<span class="no">match_result</span>)
 <span class="co">#&gt; # A tibble: 267 x 27</span>
-<span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
+<span class="co">#&gt;    id_loan id_direct_loantâ¦ name_direct_loaâ¦ id_intermediateâ¦ name_intermediaâ¦</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  2 L152    C169             Shandong Auto    &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  3 L153    C170             Shandong Kama    &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  4 L154    C171             Shandong Tangjuâ¦ &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L155    C173             Shanghai Automoâ¦ &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  6 L156    C176             Shanxi Dayun     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L157    C178             Shenyang Polars… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L157    C178             Shenyang Polarsâ¦ &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  8 L158    C180             Shuanghuan Auto  &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L159    C182             Sichuan Auto     &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 L160    C184             Singulato        &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 257 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # â¦ with 257 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -241,6 +241,7 @@
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="lifecycle"></a></li>
 <li><a href="https://CRAN.R-project.org/package=r2dii.match"><img src="https://www.r-pkg.org/badges/version/r2dii.match" alt="CRAN status"></a></li>
+<li><a href="https://CRAN.R-project.org/package=r2dii.match"><img src="https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match"></a></li>
 <li><a href="https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master"><img src="https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://github.com/2DegreesInvesting/r2dii.match/actions"><img src="https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
