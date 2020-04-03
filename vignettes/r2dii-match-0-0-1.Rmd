@@ -1,0 +1,73 @@
+---
+title: "r2dii.match 0.0.1"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+We're happy to announce that r2dii.match is now on CRAN. 
+
+r2dii.match matches data from financial portfolios to asset level data from
+market-intelligence databases (e.g. power plant capacities, emission factors,
+etc.). This is the first step to assess if a financial portfolio aligns with
+climate goals. For details see the package's 
+[website](https://2degreesinvesting.github.io/r2dii.match/) and
+<https://2degrees-investing.org/>.
+
+Install r2dii.match with:
+
+```r
+install.packages("r2dii.match")
+```
+
+And use it with:
+
+```{r setup}
+library(r2dii.match)
+```
+
+[`match_name()`](https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html) matches a loanbook and asset-level dataset (ald). Let's try it with [demo datasets from the package r2dii.data](https://2degreesinvesting.github.io/r2dii.data/reference/index.html).
+
+```{r}
+# install.packages("r2dii.data")
+library(r2dii.data)
+
+loanbook_demo
+ald_demo
+
+matched <- match_name(loanbook_demo, ald_demo)
+matched
+```
+
+Next you should validate the matched data ([learn how](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html)).
+
+Finally, [`prioritize()`](https://2degreesinvesting.github.io/r2dii.match/reference/prioritize.html) takes matched data and picks rows of highest priority.
+
+```{r}
+prioritize(matched)
+```
+
+We look forward to [your feedback](https://github.com/2DegreesInvesting/r2dii.match/issues).
+
+## Acknowledgements
+
+```{r echo=FALSE}
+thank <- function(x) {
+  x <- sort(x)
+  paste0("[", x, "]", sprintf("(https://github.com/%s)", x), collapse = ", ")
+}
+
+contributors <- c(
+  "Clare2D",
+  "cjyetman",
+  "georgeharris2deg",
+  "koopmand",
+  "vintented"
+)
+```
+
+A big thanks to all `r length(contributors)` contributors who helped with ideas, code, or reviews: `r thank(contributors)`.

@@ -1,0 +1,135 @@
+We’re happy to announce that r2dii.match is now on CRAN.
+
+r2dii.match matches data from financial portfolios to asset level data
+from market-intelligence databases (e.g. power plant capacities,
+emission factors, etc.). This is the first step to assess if a financial
+portfolio aligns with climate goals. For details see the package’s
+[website](https://2degreesinvesting.github.io/r2dii.match/) and
+<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>.
+
+Install r2dii.match with:
+
+    install.packages("r2dii.match")
+
+And use it with:
+
+    library(r2dii.match)
+
+[`match_name()`](https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html)
+matches a loanbook and asset-level dataset (ald). Let’s try it with
+[demo datasets from the package
+r2dii.data](https://2degreesinvesting.github.io/r2dii.data/reference/index.html).
+
+    # install.packages("r2dii.data")
+    library(r2dii.data)
+
+    loanbook_demo
+    #> # A tibble: 320 x 19
+    #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+    #>    <chr>   <chr>            <chr>            <chr>            <chr>           
+    #>  1 L1      C294             Yuamen Xinneng … <NA>             <NA>            
+    #>  2 L2      C293             Yuamen Changyua… <NA>             <NA>            
+    #>  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
+    #>  4 L4      C299             Yudaksel Holdin… <NA>             <NA>            
+    #>  5 L5      C305             Yukon Energy Co… <NA>             <NA>            
+    #>  6 L6      C304             Yukon Developme… <NA>             <NA>            
+    #>  7 L7      C227             Yaugoa-Zapadnay… <NA>             <NA>            
+    #>  8 L8      C303             Yueyang City Co… <NA>             <NA>            
+    #>  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
+    #> 10 L10     C302             Yuexi County AA… <NA>             <NA>            
+    #> # … with 310 more rows, and 14 more variables: id_ultimate_parent <chr>,
+    #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+    #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+    #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+    #> #   sector_classification_input_type <chr>,
+    #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
+    #> #   flag_project_finance_loan <chr>, name_project <lgl>,
+    #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>
+    ald_demo
+    #> # A tibble: 17,368 x 13
+    #>    name_company sector technology production_unit  year production emission_factor
+    #>    <chr>        <chr>  <chr>      <chr>           <dbl>      <dbl>           <dbl>
+    #>  1 aba hydropo… power  hydrocap   MW               2013    133340.              NA
+    #>  2 aba hydropo… power  hydrocap   MW               2014    131582.              NA
+    #>  3 aba hydropo… power  hydrocap   MW               2015    129824.              NA
+    #>  4 aba hydropo… power  hydrocap   MW               2016    128065.              NA
+    #>  5 aba hydropo… power  hydrocap   MW               2017    126307.              NA
+    #>  6 aba hydropo… power  hydrocap   MW               2018    124549.              NA
+    #>  7 aba hydropo… power  hydrocap   MW               2019    122790.              NA
+    #>  8 aba hydropo… power  hydrocap   MW               2020    121032.              NA
+    #>  9 aba hydropo… power  hydrocap   MW               2021    119274.              NA
+    #> 10 aba hydropo… power  hydrocap   MW               2022    117515.              NA
+    #> # … with 17,358 more rows, and 6 more variables: country_of_domicile <chr>,
+    #> #   plant_location <chr>, number_of_assets <dbl>, is_ultimate_owner <lgl>,
+    #> #   is_ultimate_listed_owner <lgl>, ald_timestamp <chr>
+
+    matched <- match_name(loanbook_demo, ald_demo)
+    matched
+    #> # A tibble: 502 x 27
+    #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+    #>    <chr>   <chr>            <chr>            <chr>            <chr>           
+    #>  1 L170    C203             Tesla Inc        <NA>             <NA>            
+    #>  2 L180    C217             Weichai Power C… <NA>             <NA>            
+    #>  3 L181    C218             Wheego           <NA>             <NA>            
+    #>  4 L195    C313             Zhengzhou Yuton… <NA>             <NA>            
+    #>  5 L174    C211             Tvr              <NA>             <NA>            
+    #>  6 L198    C317             Ziyang Nanjun    <NA>             <NA>            
+    #>  7 L193    C310             Zamyad           <NA>             <NA>            
+    #>  8 L165    C195             Sunwin Bus       <NA>             <NA>            
+    #>  9 L154    C171             Shandong Tangju… <NA>             <NA>            
+    #> 10 L164    C193             Subaru Corp      <NA>             <NA>            
+    #> # … with 492 more rows, and 22 more variables: id_ultimate_parent <chr>,
+    #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+    #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+    #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+    #> #   sector_classification_input_type <chr>,
+    #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
+    #> #   flag_project_finance_loan <chr>, name_project <lgl>,
+    #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
+    #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
+    #> #   score <dbl>, source <chr>
+
+Next you should validate the matched data ([learn
+how](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html)).
+
+Finally,
+[`prioritize()`](https://2degreesinvesting.github.io/r2dii.match/reference/prioritize.html)
+takes matched data and picks rows of highest priority.
+
+    prioritize(matched)
+    #> # A tibble: 267 x 27
+    #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
+    #>    <chr>   <chr>            <chr>            <chr>            <chr>           
+    #>  1 L151    C168             Shaanxi Auto     <NA>             <NA>            
+    #>  2 L152    C169             Shandong Auto    <NA>             <NA>            
+    #>  3 L153    C170             Shandong Kama    <NA>             <NA>            
+    #>  4 L154    C171             Shandong Tangju… <NA>             <NA>            
+    #>  5 L155    C173             Shanghai Automo… <NA>             <NA>            
+    #>  6 L156    C176             Shanxi Dayun     <NA>             <NA>            
+    #>  7 L157    C178             Shenyang Polars… <NA>             <NA>            
+    #>  8 L158    C180             Shuanghuan Auto  <NA>             <NA>            
+    #>  9 L159    C182             Sichuan Auto     <NA>             <NA>            
+    #> 10 L160    C184             Singulato        <NA>             <NA>            
+    #> # … with 257 more rows, and 22 more variables: id_ultimate_parent <chr>,
+    #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+    #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+    #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+    #> #   sector_classification_input_type <chr>,
+    #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
+    #> #   flag_project_finance_loan <chr>, name_project <lgl>,
+    #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
+    #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
+    #> #   score <dbl>, source <chr>
+
+We look forward to [your
+feedback](https://github.com/2DegreesInvesting/r2dii.match/issues).
+
+Acknowledgements
+----------------
+
+A big thanks to all 5 contributors who helped with ideas, code, or
+reviews: [cjyetman](https://github.com/cjyetman),
+[Clare2D](https://github.com/Clare2D),
+[georgeharris2deg](https://github.com/georgeharris2deg),
+[koopmand](https://github.com/koopmand),
+[vintented](https://github.com/vintented).
