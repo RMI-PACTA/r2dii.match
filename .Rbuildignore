@@ -12,3 +12,5 @@
 ^vignettes/_validate-matches\.md$
 ^vignettes/articles$
 ^vignettes/r2dii-match\.Rmd$
+^vignettes$
+^vignettes/r2dii-match-0-0-1\.Rmd$
