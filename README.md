@@ -15,8 +15,6 @@ coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/grap
 status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
 <!-- badges: end -->
 
-**Tools to Align Financial Markets with Climate Goals**
-
 These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
