@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# <img src="https://i.imgur.com/3jITMq8.png" align="right" height=40 /> Tools to Align Financial Markets with Climate Goals
+# r2dii.match <a href='https://github.com/2DegreesInvesting/r2dii.match'><img src='https://imgur.com/A5ASZPE.png' align='right' height='43' /></a>
 
 <!-- badges: start -->
 
