@@ -180,19 +180,14 @@ output_cols_for_prepare_loanbook <- function() {
 
 identify_loans_by_level <- function(data) {
   data %>%
-    FIXME_spec_tbl_df() %>%
+    # https://bit.ly/avoid-cant-combine-spec-tbl-df
+    as.data.frame() %>%
     tidyr::pivot_longer(
       cols = tidyselect::starts_with("id_"),
       names_to = "level",
       names_prefix = "id_",
       values_to = "id_2dii"
     )
-}
-
-# https://community.rstudio.com/t/cant-combine-1-spec-tbl-df-and-2-tbl-df/60505
-FIXME_spec_tbl_df <- function(data) {
-  class(data) <- class(data)[!class(data) %in% "spec_tbl_df"]
-  data
 }
 
 identify_loans_by_name <- function(data) {
