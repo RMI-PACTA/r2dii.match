@@ -54,7 +54,8 @@ Imports:
     stringi,
     tibble,
     tidyr,
-    tidyselect
+    tidyselect,
+    vctrs (>= 0.2.99.9011)
 Suggests: 
     covr,
     rmarkdown,
@@ -62,6 +63,7 @@ Suggests:
     testthat (>= 2.1.0)
 Remotes: 
     r-lib/rlang,
+    r-lib/vctrs,
     tidyverse/dplyr
 Encoding: UTF-8
 Language: en-US
