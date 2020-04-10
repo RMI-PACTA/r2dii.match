@@ -157,10 +157,9 @@ prioritize_level <- function(data) {
 #' Pick rows from a dataframe based on a priority set at some columns
 #'
 #' @param data A dataframe.
-#' @param .at Most commonly, a character vector of one column name. For more
-#'   general usage see the `.vars` argument to [dplyr::arrange_at()].
+#' @inheritParams dplyr::across
 #' @param priority Most commonly, a character vector of the priority to
-#'   re-order the column(x) given by `.at`.
+#'   re-order `.cols`.
 #'
 #' @return A dataframe, commonly with less rows than the input.
 #'
@@ -188,7 +187,7 @@ prioritize_level <- function(data) {
 #'   arrange(x) %>%
 #'   ungroup()
 #' @noRd
-prioritize_across <- function(data, .at, priority = NULL, .cols = .at) {
+prioritize_across <- function(data, .cols, priority = NULL) {
   data %>%
     dplyr::arrange(dplyr::across(.cols = .cols, .fns = relevel2, new_levels = priority)) %>%
     dplyr::filter(dplyr::row_number() == 1L)
