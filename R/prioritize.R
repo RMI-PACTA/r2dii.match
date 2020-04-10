@@ -188,12 +188,6 @@ prioritize_level <- function(data) {
 #'   arrange(x) %>%
 #'   ungroup()
 #' @noRd
-prioritize_at <- function(data, .at, priority = NULL) {
-  data %>%
-    dplyr::arrange_at(.at, .funs = relevel2, new_levels = priority) %>%
-    dplyr::filter(dplyr::row_number() == 1L)
-}
-
 prioritize_across <- function(data, .at, priority = NULL) {
   data %>%
     dplyr::arrange(dplyr::across(.cols = .at, .fns = relevel2, new_levels = priority)) %>%
