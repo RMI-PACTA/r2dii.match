@@ -70,7 +70,7 @@ prioritize <- function(data, priority = NULL) {
 
   out <- perfect_matches %>%
     group_by(.data$id_loan, .data$sector, .data$sector_ald) %>%
-    prioritize_across(.at = "level", priority = priority) %>%
+    prioritize_across(.cols = "level", priority = priority) %>%
     ungroup()
 
   group_by(out, !!!old_groups)
@@ -184,13 +184,13 @@ prioritize_level <- function(data) {
 #'
 #' data %>%
 #'   group_by(x) %>%
-#'   prioritize_across(.at = "y", priority = c("z", "a")) %>%
+#'   prioritize_across(.cols = "y", priority = c("z", "a")) %>%
 #'   arrange(x) %>%
 #'   ungroup()
 #' @noRd
 prioritize_across <- function(data, .at, priority = NULL, .cols = .at) {
   data %>%
-    dplyr::arrange(dplyr::across(.cols = .at, .fns = relevel2, new_levels = priority)) %>%
+    dplyr::arrange(dplyr::across(.cols = .cols, .fns = relevel2, new_levels = priority)) %>%
     dplyr::filter(dplyr::row_number() == 1L)
 }
 
