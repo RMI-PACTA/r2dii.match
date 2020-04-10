@@ -165,7 +165,7 @@ datasets is scored using <code><a href='https://rdrr.io/pkg/stringdist/man/strin
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>loanbook, ald</th>
-      <td><p>Dataframes structured like <a href='https://rdrr.io/pkg/r2dii.data/man/loanbook_demo.html'>r2dii.data::loanbook_demo</a>
+      <td><p>data frames structured like <a href='https://rdrr.io/pkg/r2dii.data/man/loanbook_demo.html'>r2dii.data::loanbook_demo</a>
 and <a href='https://rdrr.io/pkg/r2dii.data/man/ald_demo.html'>r2dii.data::ald_demo</a>.</p></td>
     </tr>
     <tr>
@@ -191,7 +191,7 @@ Jaro-distance is returned. Applies only to <code>method='jw'</code>.</p></td>
     </tr>
     <tr>
       <th>overwrite</th>
-      <td><p>A dataframe used to overwrite the <code>sector</code> and/or <code>name</code>
+      <td><p>A data frame used to overwrite the <code>sector</code> and/or <code>name</code>
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only <code>sector</code>, the value in the <code>name</code> column should be <code>NA</code> and
 vice-versa. This file can be used to manually match loanbook companies to ald.</p></td>
@@ -200,7 +200,7 @@ vice-versa. This file can be used to manually match loanbook companies to ald.</
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with the same groups (if any) and columns as <code>loanbook</code>,
+    <p>A data frame with the same groups (if any) and columns as <code>loanbook</code>,
 and the additional columns:</p><ul>
 <li><p><code>id_2dii</code> - an id used internally by <code>match_name()</code> to distinguish
 companies</p></li>
