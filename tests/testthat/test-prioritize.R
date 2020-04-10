@@ -140,7 +140,7 @@ test_that("prioritize_level otputs expected vector", {
 
 test_that("prioritize_across with ungrouped data picks the highest priority row", {
   out <- tibble(x = c("a", "z")) %>%
-    prioritize_across(.at = "x", priority = c("z", "a"))
+    prioritize_across(.cols = "x", priority = c("z", "a"))
 
   expect_equal(out$x, "z")
 })
@@ -151,7 +151,7 @@ test_that("prioritize_across with grouped data picks one row per group", {
     y = c("a", "a", "z")
   ) %>%
     group_by(x) %>%
-    prioritize_across(.at = "y", priority = c("z", "a")) %>%
+    prioritize_across(.cols = "y", priority = c("z", "a")) %>%
     arrange(x)
 
   expect_equal(out$y, c("a", "z"))
