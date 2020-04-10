@@ -91,7 +91,7 @@ This function ignores but preserves existing groups.
 library(r2dii.data)
 library(dplyr)
 
-mini_loanbook <- sample_n(loanbook_demo, 10)
+mini_loanbook <- slice_sample(loanbook_demo, n = 10)
 
 match_name(mini_loanbook, ald_demo)
 
