@@ -15,7 +15,7 @@ test_that("outputs known output", {
   )
 })
 
-test_that("returns a tibble dataframe", {
+test_that("returns a tibble data frame", {
   expect_is(
     add_sector_and_borderline(loanbook_demo),
     "tbl_df"

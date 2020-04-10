@@ -10,7 +10,7 @@
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param loanbook,ald Dataframes structured like [r2dii.data::loanbook_demo]
+#' @param loanbook,ald data frames structured like [r2dii.data::loanbook_demo]
 #'   and [r2dii.data::ald_demo].
 #' @param by_sector Should names only be compared if companies belong to the same
 #'   `sector`?
@@ -20,14 +20,14 @@
 #'   "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")`. See
 #'   [stringdist::stringdist-metrics].
 #' @inheritParams stringdist::stringdist
-#' @param overwrite A dataframe used to overwrite the `sector` and/or `name`
+#' @param overwrite A data frame used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to ald.
 #'
 #' @family user-oriented
 #'
-#' @return A dataframe with the same groups (if any) and columns as `loanbook`,
+#' @return A data frame with the same groups (if any) and columns as `loanbook`,
 #'   and the additional columns:
 #'   * `id_2dii` - an id used internally by `match_name()` to distinguish
 #'   companies

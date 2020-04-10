@@ -7,7 +7,7 @@
 prioritize_level(data)
 }
 \arguments{
-\item{data}{A dataframe, commonly the output of \code{\link[=match_name]{match_name()}}.}
+\item{data}{A data frame, commonly the output of \code{\link[=match_name]{match_name()}}.}
 }
 \value{
 A character vector of the default level priority per loan.

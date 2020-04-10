@@ -7,7 +7,7 @@
 prioritize(data, priority = NULL)
 }
 \arguments{
-\item{data}{A dataframe like the validated output of \code{\link[=match_name]{match_name()}}. See
+\item{data}{A data frame like the validated output of \code{\link[=match_name]{match_name()}}. See
 \emph{Details} on how to validate \code{data}.}
 
 \item{priority}{One of:
@@ -20,7 +20,7 @@ prioritize(data, priority = NULL)
 }}
 }
 \value{
-A dataframe with a single row per loan, where \code{score} is 1 and
+A data frame with a single row per loan, where \code{score} is 1 and
 priority level is highest.
 }
 \description{
