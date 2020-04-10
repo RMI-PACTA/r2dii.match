@@ -180,6 +180,8 @@ output_cols_for_prepare_loanbook <- function() {
 
 identify_loans_by_level <- function(data) {
   data %>%
+    # https://bit.ly/avoid-cant-combine-spec-tbl-df
+    as.data.frame() %>%
     tidyr::pivot_longer(
       cols = tidyselect::starts_with("id_"),
       names_to = "level",
