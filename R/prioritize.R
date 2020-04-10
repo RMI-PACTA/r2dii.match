@@ -70,7 +70,7 @@ prioritize <- function(data, priority = NULL) {
 
   out <- perfect_matches %>%
     group_by(.data$id_loan, .data$sector, .data$sector_ald) %>%
-    prioritize_at(.at = "level", priority = priority) %>%
+    prioritize_across(.at = "level", priority = priority) %>%
     ungroup()
 
   group_by(out, !!!old_groups)
@@ -176,15 +176,15 @@ prioritize_level <- function(data) {
 #' )
 #' # styler: on
 #'
-#' data %>% prioritize_at("y")
+#' data %>% prioritize_across("y")
 #'
 #' data %>%
 #'   group_by(x) %>%
-#'   prioritize_at("y")
+#'   prioritize_across("y")
 #'
 #' data %>%
 #'   group_by(x) %>%
-#'   prioritize_at(.at = "y", priority = c("z", "a")) %>%
+#'   prioritize_across(.at = "y", priority = c("z", "a")) %>%
 #'   arrange(x) %>%
 #'   ungroup()
 #' @noRd
