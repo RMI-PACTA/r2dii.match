@@ -54,7 +54,8 @@ Imports:
     stringi,
     tibble,
     tidyr,
-    tidyselect
+    tidyselect,
+    vctrs (>= 0.2.99.9011)
 Suggests: 
     covr,
     rmarkdown,
@@ -67,4 +68,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Remotes:  
     tidyverse/dplyr,
-    r-lib/rlang
+    r-lib/rlang,
+    r-lib/vctrs
