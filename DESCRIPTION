@@ -49,7 +49,7 @@ Imports:
     magrittr,
     purrr,
     r2dii.data,
-    rlang,
+    rlang (>= 0.4.5.9000),
     stringdist,
     stringi,
     tibble,
@@ -66,4 +66,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Remotes:  
-    tidyverse/dplyr
+    tidyverse/dplyr,
+    r-lib/rlang
