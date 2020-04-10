@@ -194,6 +194,12 @@ prioritize_at <- function(data, .at, priority = NULL) {
     dplyr::filter(dplyr::row_number() == 1L)
 }
 
+prioritize_across <- function(data, .at, priority = NULL) {
+  data %>%
+    dplyr::arrange_at(.at, .funs = relevel2, new_levels = priority) %>%
+    dplyr::filter(dplyr::row_number() == 1L)
+}
+
 relevel2 <- function(f, new_levels) {
   factor(f, levels = c(new_levels, setdiff(levels(f), new_levels)))
 }
