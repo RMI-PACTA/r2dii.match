@@ -16,9 +16,9 @@
 #' For a list of sector classification systems see
 #' [r2dii.data::classification_bridge].
 #'
-#' @param data A loanbook dataframe.
+#' @param data A loanbook data frame.
 #'
-#' @return A loanbook dataframe with additional `sector` and `borderline`
+#' @return A loanbook data frame with additional `sector` and `borderline`
 #'   columns.
 #'
 #' @examples

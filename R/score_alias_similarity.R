@@ -1,7 +1,7 @@
-#' Score similarity between `alias` values in two dataframes
+#' Score similarity between `alias` values in two data frames
 #'
 #' Apply `score_string_similarity()` to all combinations of `alias` values
-#' from two dataframes.
+#' from two data frames.
 #'
 #' @inheritParams match_name
 #'

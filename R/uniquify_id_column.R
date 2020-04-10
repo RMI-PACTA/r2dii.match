@@ -1,18 +1,18 @@
 #' Overwrite `id_direct_loantaker` and `id_ultimate_parent` with unique values
 #'
-#' Given a loanbook dataframe, this function overwrites columns
-#' `id_direct_loantaker` and `id_ultimate_parent` of a loanbook dataframe to
+#' Given a loanbook data frame, this function overwrites columns
+#' `id_direct_loantaker` and `id_ultimate_parent` of a loanbook data frame to
 #' generate values that are unique by every combination of the columns
 #' `name_ultimate_parent`, `name_direct_loantaker` and
 #' `sector_classification_direct_loantaker`.
 #'
-#' @param data A loanbook dataframe.
+#' @param data A loanbook data frame.
 #' @param id_column A String giving the name of an `id_` column.
 #'
 #' @seealso [r2dii.data::loanbook_description],
 #'   [r2dii.data::loanbook_demo].
 #'
-#' @return A loanbook dataframe with adjusted ids.
+#' @return A loanbook data frame with adjusted ids.
 #'
 #' @examples
 #' library(dplyr)
