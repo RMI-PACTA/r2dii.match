@@ -4,11 +4,11 @@
 #' the fuzzy matching process. Most notably, it outputs an the `alias` column
 #' from values in the `name_company` column.
 #'
-#' @param data A dataframe. Should be an asset-level dataset.
+#' @param data A data frame. Should be an asset-level dataset.
 #'
 #' @seealso [r2dii.data::ald_demo] `to_alias()`.
 #'
-#' @return A dataframe with unique combinations of `name` + `sector`, including
+#' @return A data frame with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
 #'
 #' @examples
@@ -33,7 +33,7 @@ restructure_ald_for_matching <- function(data) {
 #'
 #' @seealso [r2dii.data::loanbook_description]
 #'
-#' @return A dataframe with unique combinations of `name` + `sector`, including
+#' @return A data frame with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
 #'
 #' @examples

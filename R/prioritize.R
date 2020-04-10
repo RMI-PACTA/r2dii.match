@@ -7,7 +7,7 @@
 #'
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param data A dataframe like the validated output of [match_name()]. See
+#' @param data A data frame like the validated output of [match_name()]. See
 #'  _Details_ on how to validate `data`.
 #' @param priority One of:
 #'   * `NULL`: defaults to the default level priority as returned by
@@ -23,7 +23,7 @@
 #' **How to validate `data`**
 #' @includeRmd vignettes/_validate-matches.md
 #'
-#' @return A dataframe with a single row per loan, where `score` is 1 and
+#' @return A data frame with a single row per loan, where `score` is 1 and
 #'   priority level is highest.
 #'
 #' @export
@@ -126,7 +126,7 @@ set_priority <- function(data, priority) {
 
 #' Arrange unique `level` values in default order of `priority`
 #'
-#' @param data A dataframe, commonly the output of [match_name()].
+#' @param data A data frame, commonly the output of [match_name()].
 #'
 #' @return A character vector of the default level priority per loan.
 #'
@@ -154,14 +154,14 @@ prioritize_level <- function(data) {
   )
 }
 
-#' Pick rows from a dataframe based on a priority set at some columns
+#' Pick rows from a data frame based on a priority set at some columns
 #'
 #' @param data A dataframe.
 #' @inheritParams dplyr::across
 #' @param priority Most commonly, a character vector of the priority to
 #'   re-order `.cols`.
 #'
-#' @return A dataframe, commonly with less rows than the input.
+#' @return A data frame, commonly with less rows than the input.
 #'
 #' @examples
 #' library(dplyr)

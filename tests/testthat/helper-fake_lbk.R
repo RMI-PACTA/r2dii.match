@@ -26,7 +26,7 @@
 #'   [r2dii.data::ald_demo]
 #'
 #'
-#' @return A dataframe
+#' @return A data frame
 #'
 #' @examples
 #' fake_lbk()
@@ -115,20 +115,20 @@ fake_matched <- function(id_loan = NULL,
 #' you need to get the output of `match_name()` with a given loanbook data.
 #'
 #' You may transform the output of these functions into an explicit, text-based
-#' dataframe by piping the output of this function to functions such as
+#' data frame by piping the output of this function to functions such as
 #' [dput()], `datapaste::df_paste()`, or `datapasta::tribble_paste()`.
 #'
-#' @param loanbook A loanbook dataframe.
+#' @param loanbook A loanbook data frame.
 #' @param ... The slice of rows you want. Passed to [dplyr::slice()]
 #' @param vars A vector of column names to select from loanbook. Defaults to the
 #'   crucial columns for `match_name()`.
-#' @param alias_ald A dataframe like `ald_demo` with the additional column
+#' @param alias_ald A data frame like `ald_demo` with the additional column
 #'   `alias_ald`. By default this is calculated on the fly. But the process may
 #'   be a little time consuming, so you may want to store the value of
 #'   `alias_ald()` and reuse it later multiple times (avoiding re-calculating
 #'   it each time).
 #'
-#' @return A dataframe.
+#' @return A data frame.
 #'
 #' @seealso [dput()], `datapaste::df_paste()`, `datapasta::tribble_paste()`.
 #'
@@ -153,7 +153,7 @@ mini_ald <- function(loanbook, alias_ald = NULL) {
     filter(.data$alias_ald %in% pull_alias_ald(loanbook, .))
 }
 
-#' A dataframe identical to `ald_demo` with the additional column `alias_ald`
+#' A data frame identical to `ald_demo` with the additional column `alias_ald`
 #' @noRd
 alias_ald <- function() {
   r2dii.data::ald_demo %>%

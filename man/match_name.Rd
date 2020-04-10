@@ -15,7 +15,7 @@ match_name(
 )
 }
 \arguments{
-\item{loanbook, ald}{Dataframes structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
+\item{loanbook, ald}{data frames structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
 and \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
 \item{by_sector}{Should names only be compared if companies belong to the same
@@ -31,13 +31,13 @@ A \code{score} of 1 is a perfect match.}
 \code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
 Jaro-distance is returned. Applies only to \code{method='jw'}.}
 
-\item{overwrite}{A dataframe used to overwrite the \code{sector} and/or \code{name}
+\item{overwrite}{A data frame used to overwrite the \code{sector} and/or \code{name}
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to ald.}
 }
 \value{
-A dataframe with the same groups (if any) and columns as \code{loanbook},
+A data frame with the same groups (if any) and columns as \code{loanbook},
 and the additional columns:
 \itemize{
 \item \code{id_2dii} - an id used internally by \code{match_name()} to distinguish

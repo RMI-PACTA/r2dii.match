@@ -1,7 +1,7 @@
 #' Select elements from a vector using tidyselect helpers
 #'
 #' This function allows you to select elements of a character vector like
-#' [dplyr::select()] allows you to select columns of a dataframe -- via
+#' [dplyr::select()] allows you to select columns of a data frame -- via
 #' tidyselect helpers.
 #'
 #' @param x A character vector.

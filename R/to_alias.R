@@ -18,7 +18,7 @@
 #' @param x Character string, commonly from the columns `name_direct_loantaker`
 #'   or `name_ultimate_parent` of a loanbook dataset, or from the column
 #'   `name_company` of an asset-level dataset.
-#' @param from_to A dataframe with replacement rules to be applied, contains
+#' @param from_to A data frame with replacement rules to be applied, contains
 #'   columns `from` (for initial values) and `to` (for resulting values).
 #' @param ownership vector of company ownership types to be distinguished for
 #'   cut-off or separation.
