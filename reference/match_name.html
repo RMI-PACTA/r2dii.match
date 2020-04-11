@@ -253,7 +253,7 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
-<span class='no'>mini_loanbook</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample.html'>sample_n</a></span>(<span class='no'>loanbook_demo</span>, <span class='fl'>10</span>)
+<span class='no'>mini_loanbook</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice_sample</a></span>(<span class='no'>loanbook_demo</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
 <span class='fu'>match_name</span>(<span class='no'>mini_loanbook</span>, <span class='no'>ald_demo</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 17 x 27</span><span>
 #&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
