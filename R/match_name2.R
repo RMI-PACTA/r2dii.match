@@ -1,12 +1,17 @@
 match_name2 <- function(loanbook, ald, ...) {
+  match_name(loanbook = loanbook, ald = sanitize_ald(ald), ...)
+}
+
+sanitize_ald <- function(ald) {
   crucial <- c("name_company", "sector")
   is_ald <- all(purrr::map_lgl(crucial, ~rlang::has_name(ald, .x)))
+
   if (!is_ald) {
     undo <- function(x) rlang::set_names(names(x), unname(x))
     ald <- dplyr::rename(ald, dplyr::all_of(undo(new_names_from_old_names())))
   }
 
-  match_name(loanbook = loanbook, ald = ald, ...)
+  ald
 }
 
 
