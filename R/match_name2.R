@@ -30,22 +30,3 @@ new_names_from_old_names <- function() {
     "is_ultimate_owner" = "is_ultimate_owner"
   )
 }
-
-
-# # dplyr
-# # > [1] '0.8.99.9002'
-# ald_scenario_demo <- ald_demo %>%
-#   rename(all_of(x)) %>%
-#   select(-c(
-#     "number_of_assets",
-#     "is_ultimate_listed_owner",
-#     "ald_timestamp"
-#   )) %>%
-#   mutate(id_name = "company_name", .before = 1L) %>%
-#   mutate(
-#     ald_emission_factor_unit = glue::glue("{ald_sector} emission_factor"),
-#     .after = ald_emission_factor
-#   ) %>%
-#   inner_join(scenario_demo_2020_with_source, by = scenario_columns()) %>%
-#   pick_ald_location_in_region() %>%
-#   rename(scenario_region = region)
