@@ -116,6 +116,10 @@ sanitize_ald <- function(ald) {
 
   if (!is_ald) {
     undo <- function(x) rlang::set_names(names(x), unname(x))
+
+    crucial2 <- unname(undo(new_names_from_old_names())[crucial])
+    check_crucial_names(ald, crucial2)
+
     ald <- dplyr::rename(ald, dplyr::all_of(undo(new_names_from_old_names())))
   }
 

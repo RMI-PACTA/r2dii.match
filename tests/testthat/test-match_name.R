@@ -1,6 +1,25 @@
 library(dplyr)
 library(r2dii.data)
 
+# With ald_scenario_demo thoughtful ---------------------------------------
+
+# Thoughtful tests for difference behaviour with ald_demo vs. ald_scenario_demo.
+# Mindless tests might be at the end, as a copy of test developed for ald_demo.
+
+test_that("w/ ald_scenario_demo and missing crucial names errors gracefully", {
+  invalid <- function(data, x) dplyr::rename(data, bad = x)
+
+    expect_error(
+      class = "missing_names",
+      match_name(fake_lbk(), invalid(ald_scenario_demo, "id"))
+    )
+
+    expect_error(
+      class = "missing_names",
+      match_name(fake_lbk(), invalid(ald_scenario_demo, "ald_sector"))
+    )
+})
+
 # With ald_demo -----------------------------------------------------------
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
@@ -524,7 +543,7 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
 })
 
 
-# With ald_scenario_demo --------------------------------------------------
+# With ald_scenario_demo mindless -----------------------------------------
 
 # FIXME: DRY
 # This section duplicates the previous one, except it uses ald_scenario_demo
