@@ -23,7 +23,7 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
     alias_ald = c("nancohosierymills", "standardsolar inc")
   )
 
-  out <- match_name2(lbk, ald)
+  out <- match_name(lbk, ald)
   expect_equal(out$level, "intermediate_parent_999")
 })
 
@@ -43,7 +43,7 @@ test_that("w/ missing values at all levels outputs 0-row", {
     alias_ald = "any",
   )
 
-      out <- expect_warning(match_name2(lbk, ald), "no match")
+      out <- expect_warning(match_name(lbk, ald), "no match")
   expect_equal(nrow(out), 0L)
 })
 
@@ -66,14 +66,14 @@ test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
     alias_ald = "suzukimotor corp",
   )
 
-      out <- match_name2(lbk, ald, by_sector = FALSE)
+      out <- match_name(lbk, ald, by_sector = FALSE)
   expect_equal(nrow(out), 2L)
   out$sector
   expect_equal(out$sector_ald, sector_ald)
 })
 
 test_that("`by_sector = TRUE` yields only matching sectors", {
-      out <- match_name2(
+      out <- match_name(
     fake_lbk(),
     fake_ald(),
     by_sector = TRUE
@@ -90,7 +90,7 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
   sector_not_power <- "coal"
 
   expect_warning(
-        out <- match_name2(
+        out <- match_name(
       fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
       fake_ald(sector = sector_not_power),
       by_sector = TRUE
@@ -106,7 +106,7 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
   code_for_sector_power <- 27
   sector_not_power <- "coal"
 
-      out <- match_name2(
+      out <- match_name(
     fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
     fake_ald(sector = sector_not_power),
     by_sector = FALSE
@@ -133,12 +133,12 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   )
 
   expect_equal(
-        match_name2(fake_lbk(), fake_ald()),
+        match_name(fake_lbk(), fake_ald()),
     expected
   )
 })
 
-    expected_names_of_match_name2_with_loanbook_demo <- c(
+    expected_names_of_match_name_with_loanbook_demo <- c(
   "id_loan",
 
   "id_direct_loantaker",
@@ -177,26 +177,26 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 )
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
-      out <- match_name2(slice(loanbook_demo, 1L), fake_ald())
-      expect_named(out, expected_names_of_match_name2_with_loanbook_demo)
+      out <- match_name(slice(loanbook_demo, 1L), fake_ald())
+      expect_named(out, expected_names_of_match_name_with_loanbook_demo)
 })
 
 test_that("takes unprepared loanbook and ald datasets", {
-      expect_no_error(match_name2(slice(loanbook_demo, 1), ald_scenario_demo))
+      expect_no_error(match_name(slice(loanbook_demo, 1), ald_scenario_demo))
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
   # Matches cero row ...
   lbk2 <- slice(loanbook_demo, 2)
   expect_warning(
-        out <- match_name2(lbk2, ald_scenario_demo),
+        out <- match_name(lbk2, ald_scenario_demo),
     "no match"
   )
   expect_equal(nrow(out), 0L)
   # ... but preserves minimum expected names
   expect_named(
     out,
-        expected_names_of_match_name2_with_loanbook_demo
+        expected_names_of_match_name_with_loanbook_demo
   )
   expect_false(any(c("alias", "alias_ald") %in% names(out)))
 })
@@ -205,8 +205,8 @@ test_that("w/ 2 lbk rows matching 2 ald rows, yields expected names", {
   # Slice 5 once was problematic (#85)
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
-        match_name2(lbk45, ald_scenario_demo),
-        expected_names_of_match_name2_with_loanbook_demo
+        match_name(lbk45, ald_scenario_demo),
+        expected_names_of_match_name_with_loanbook_demo
   )
 })
 
@@ -214,22 +214,22 @@ test_that("w/ 1 lbk row matching ultimate, yields expected names", {
   lbk1 <- slice(loanbook_demo, 1)
 
   expect_named(
-        match_name2(lbk1, ald_scenario_demo),
-        expected_names_of_match_name2_with_loanbook_demo
+        match_name(lbk1, ald_scenario_demo),
+        expected_names_of_match_name_with_loanbook_demo
   )
 })
 
 test_that("takes `min_score`", {
   expect_no_error(
-        match_name2(slice(loanbook_demo, 1), ald_scenario_demo, min_score = 0.5)
+        match_name(slice(loanbook_demo, 1), ald_scenario_demo, min_score = 0.5)
   )
 })
 
 test_that("takes `by_sector`", {
   expect_false(
     identical(
-          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, by_sector = TRUE),
-          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, by_sector = FALSE)
+          match_name(slice(loanbook_demo, 4:15), ald_scenario_demo, by_sector = TRUE),
+          match_name(slice(loanbook_demo, 4:15), ald_scenario_demo, by_sector = FALSE)
     )
   )
 })
@@ -237,8 +237,8 @@ test_that("takes `by_sector`", {
 test_that("takes `method`", {
   expect_false(
     identical(
-          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, method = "jw"),
-          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, method = "osa")
+          match_name(slice(loanbook_demo, 4:15), ald_scenario_demo, method = "jw"),
+          match_name(slice(loanbook_demo, 4:15), ald_scenario_demo, method = "osa")
     )
   )
 })
@@ -248,8 +248,8 @@ test_that("takes `p`", {
 
   expect_false(
     identical(
-          match_name2(lbk45, ald_scenario_demo, p = 0.1),
-          match_name2(lbk45, ald_scenario_demo, p = 0.2)
+          match_name(lbk45, ald_scenario_demo, p = 0.1),
+          match_name(lbk45, ald_scenario_demo, p = 0.2)
     )
   )
 })
@@ -259,27 +259,27 @@ test_that("takes `overwrite`", {
 
   expect_false(
     identical(
-          match_name2(lbk, ald_scenario_demo, overwrite = NULL),
-          suppressWarnings(match_name2(lbk, ald_scenario_demo, overwrite = overwrite_demo))
+          match_name(lbk, ald_scenario_demo, overwrite = NULL),
+          suppressWarnings(match_name(lbk, ald_scenario_demo, overwrite = overwrite_demo))
     )
   )
 })
 
 test_that("warns overwrite", {
   expect_warning(
-        match_name2(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+        match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 
   verify_output(
-        test_path("output", "match_name2-overwrite_warning.txt"),
-        match_name2(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+        test_path("output", "match_name-overwrite_warning.txt"),
+        match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 })
 
 test_that("recovers `sector_lbk`", {
   expect_true(
     rlang::has_name(
-          match_name2(slice(loanbook_demo, 1), ald_scenario_demo),
+          match_name(slice(loanbook_demo, 1), ald_scenario_demo),
       "sector"
     )
   )
@@ -287,17 +287,17 @@ test_that("recovers `sector_lbk`", {
 
 test_that("recovers `sector_ald`", {
   expect_true(
-        rlang::has_name(match_name2(loanbook_demo, ald_scenario_demo), "sector_ald")
+        rlang::has_name(match_name(loanbook_demo, ald_scenario_demo), "sector_ald")
   )
 })
 
 test_that("outputs name from loanbook, not name.y (bug fix)", {
-      out <- match_name2(slice(loanbook_demo, 1), ald_scenario_demo)
+      out <- match_name(slice(loanbook_demo, 1), ald_scenario_demo)
   expect_false(has_name(out, "name.y"))
 })
 
 test_that("works with `min_score = 0` (bug fix)", {
-      expect_no_error(match_name2(slice(loanbook_demo, 1), ald_scenario_demo, min_score = 0))
+      expect_no_error(match_name(slice(loanbook_demo, 1), ald_scenario_demo, min_score = 0))
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
@@ -307,7 +307,7 @@ test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
     filter(name_direct_loantaker == this_name)
 
   nanimo_scores <- this_lbk %>%
-        match_name2(ald_scenario_demo) %>%
+        match_name(ald_scenario_demo) %>%
     mutate(alias = to_alias(name)) %>%
     filter(alias == this_alias) %>%
     pull(score)
@@ -337,8 +337,8 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
   )
 })
 
-    test_that("match_name2()$level lacks prefix 'name_' suffix '_lbk'", {
-      out <- match_name2(slice(loanbook_demo, 1), ald_scenario_demo)
+    test_that("match_name()$level lacks prefix 'name_' suffix '_lbk'", {
+      out <- match_name(slice(loanbook_demo, 1), ald_scenario_demo)
   expect_false(
     any(startsWith(unique(out$level), "name_"))
   )
@@ -351,17 +351,17 @@ test_that("preserves groups", {
   grouped_loanbook <- slice(loanbook_demo, 1) %>%
     group_by(id_loan)
 
-      expect_true(is_grouped_df(match_name2(grouped_loanbook, ald_scenario_demo)))
+      expect_true(is_grouped_df(match_name(grouped_loanbook, ald_scenario_demo)))
 })
 
 test_that("outputs id consistent with level", {
-      out <- slice(loanbook_demo, 5) %>% match_name2(ald_scenario_demo)
+      out <- slice(loanbook_demo, 5) %>% match_name(ald_scenario_demo)
   expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
   expect_equal(out$id_2dii, c("UP1", "DL1"))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
-      out <- match_name2(loanbook_demo, ald_scenario_demo)
+      out <- match_name(loanbook_demo, ald_scenario_demo)
   out_lbk_cols <- out %>%
     select(
       setdiff(
@@ -398,7 +398,7 @@ test_that("handles any number of intermediate_parent columns (#84)", {
     sector_classification_direct_loantaker = 3511
   )
 
-      out <- match_name2(lbk_mini, fake_ald())
+      out <- match_name(lbk_mini, fake_ald())
   output_levels <- unique(out$level)
   expect_length(output_levels, 5L)
 
@@ -411,14 +411,14 @@ test_that("warns/errors if some/all system classification is unknown", {
 
   expect_warning(
     class = "some_sector_classification_is_unknown",
-        match_name2(some_bad_system, fake_ald())
+        match_name(some_bad_system, fake_ald())
   )
 
   all_bad_system <- fake_lbk(sector_classification_system = c("bad", "bad"))
 
   expect_error(
     class = "all_sector_classification_is_unknown",
-        match_name2(all_bad_system, fake_ald())
+        match_name(all_bad_system, fake_ald())
   )
 
   bad <- -999
@@ -426,28 +426,28 @@ test_that("warns/errors if some/all system classification is unknown", {
 
   expect_warning(
     class = "some_sector_classification_is_unknown",
-        match_name2(some_bad_code, fake_ald()),
+        match_name(some_bad_code, fake_ald()),
   )
 
   all_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(bad, bad))
 
   expect_error(
     class = "all_sector_classification_is_unknown",
-        match_name2(all_bad_code, fake_ald()),
+        match_name(all_bad_code, fake_ald()),
   )
 
   verify_output(
-        test_path("output", "match_name2-sector_classification_is_unknown.txt"),
+        test_path("output", "match_name-sector_classification_is_unknown.txt"),
     {
       "# Error"
-          match_name2(all_bad_code, fake_ald())
+          match_name(all_bad_code, fake_ald())
 
-          match_name2(all_bad_system, fake_ald())
+          match_name(all_bad_system, fake_ald())
 
       "# Warning"
-          invisible(match_name2(some_bad_code, fake_ald()))
+          invisible(match_name(some_bad_code, fake_ald()))
 
-          invisible(match_name2(some_bad_system, fake_ald()))
+          invisible(match_name(some_bad_system, fake_ald()))
     }
   )
 })
@@ -460,7 +460,7 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
   expect_error_class_missing_names <- function(lbk = NULL, ald = NULL) {
     expect_error(
       class = "missing_names",
-          match_name2(lbk %||% fake_lbk(), ald %||% fake_ald())
+          match_name(lbk %||% fake_lbk(), ald %||% fake_ald())
     )
   }
 
@@ -479,7 +479,7 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
   )
 
   expect_error_class_missing_names(
-        match_name2(
+        match_name(
       # missing name_intermediate_parent (doesn't come with fake_lbk())
       fake_lbk(id_intermediate_parent = id_direct_loantaker),
       fake_ald()
@@ -489,7 +489,7 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
 
 test_that("w/ lbk with name_intermediate_* but missing id_intermediate_*", {
   expect_error(
-        match_name2(
+        match_name(
       class = "has_name_but_not_id",
       # missing id_intermediate_parent (doesn't come with fake_lbk())
       fake_lbk(name_intermediate_parent = name_direct_loantaker),
@@ -501,7 +501,7 @@ test_that("w/ lbk with name_intermediate_* but missing id_intermediate_*", {
 test_that("w/ overwrite with missing names errors gracefully", {
   expect_error(
     class = "missing_names",
-        match_name2(
+        match_name(
       fake_lbk(),
       overwrite = tibble(bad = 1),
       fake_ald()
@@ -513,12 +513,12 @@ test_that("with bad input errors gracefully", {
   bad_loanbook <- loanbook_demo %>%
     mutate(name_direct_loantaker = as.numeric(12))
 
-      expect_no_error(match_name2(bad_loanbook, ald_scenario_demo))
+      expect_no_error(match_name(bad_loanbook, ald_scenario_demo))
 })
 
 test_that("with name_intermediate but not id_intermediate throws an error", {
   expect_error(
     class = "has_name_but_not_id",
-        match_name2(fake_lbk(name_intermediate_parent = "a"), fake_ald())
+        match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
   )
 })
