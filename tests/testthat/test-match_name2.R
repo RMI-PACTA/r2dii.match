@@ -182,14 +182,14 @@ test_that("w/ 1 row of full loanbook_demo yields expected names", {
 })
 
 test_that("takes unprepared loanbook and ald datasets", {
-      expect_no_error(match_name2(slice(loanbook_demo, 1), ald_demo))
+      expect_no_error(match_name2(slice(loanbook_demo, 1), ald_scenario_demo))
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
   # Matches cero row ...
   lbk2 <- slice(loanbook_demo, 2)
   expect_warning(
-        out <- match_name2(lbk2, ald_demo),
+        out <- match_name2(lbk2, ald_scenario_demo),
     "no match"
   )
   expect_equal(nrow(out), 0L)
@@ -205,7 +205,7 @@ test_that("w/ 2 lbk rows matching 2 ald rows, yields expected names", {
   # Slice 5 once was problematic (#85)
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
-        match_name2(lbk45, ald_demo),
+        match_name2(lbk45, ald_scenario_demo),
         expected_names_of_match_name2_with_loanbook_demo
   )
 })
@@ -214,22 +214,22 @@ test_that("w/ 1 lbk row matching ultimate, yields expected names", {
   lbk1 <- slice(loanbook_demo, 1)
 
   expect_named(
-        match_name2(lbk1, ald_demo),
+        match_name2(lbk1, ald_scenario_demo),
         expected_names_of_match_name2_with_loanbook_demo
   )
 })
 
 test_that("takes `min_score`", {
   expect_no_error(
-        match_name2(slice(loanbook_demo, 1), ald_demo, min_score = 0.5)
+        match_name2(slice(loanbook_demo, 1), ald_scenario_demo, min_score = 0.5)
   )
 })
 
 test_that("takes `by_sector`", {
   expect_false(
     identical(
-          match_name2(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
-          match_name2(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
+          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, by_sector = TRUE),
+          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, by_sector = FALSE)
     )
   )
 })
@@ -237,8 +237,8 @@ test_that("takes `by_sector`", {
 test_that("takes `method`", {
   expect_false(
     identical(
-          match_name2(slice(loanbook_demo, 4:15), ald_demo, method = "jw"),
-          match_name2(slice(loanbook_demo, 4:15), ald_demo, method = "osa")
+          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, method = "jw"),
+          match_name2(slice(loanbook_demo, 4:15), ald_scenario_demo, method = "osa")
     )
   )
 })
@@ -248,8 +248,8 @@ test_that("takes `p`", {
 
   expect_false(
     identical(
-          match_name2(lbk45, ald_demo, p = 0.1),
-          match_name2(lbk45, ald_demo, p = 0.2)
+          match_name2(lbk45, ald_scenario_demo, p = 0.1),
+          match_name2(lbk45, ald_scenario_demo, p = 0.2)
     )
   )
 })
@@ -259,8 +259,8 @@ test_that("takes `overwrite`", {
 
   expect_false(
     identical(
-          match_name2(lbk, ald_demo, overwrite = NULL),
-          suppressWarnings(match_name2(lbk, ald_demo, overwrite = overwrite_demo))
+          match_name2(lbk, ald_scenario_demo, overwrite = NULL),
+          suppressWarnings(match_name2(lbk, ald_scenario_demo, overwrite = overwrite_demo))
     )
   )
 })
@@ -279,7 +279,7 @@ test_that("warns overwrite", {
 test_that("recovers `sector_lbk`", {
   expect_true(
     rlang::has_name(
-          match_name2(slice(loanbook_demo, 1), ald_demo),
+          match_name2(slice(loanbook_demo, 1), ald_scenario_demo),
       "sector"
     )
   )
@@ -287,17 +287,17 @@ test_that("recovers `sector_lbk`", {
 
 test_that("recovers `sector_ald`", {
   expect_true(
-        rlang::has_name(match_name2(loanbook_demo, ald_demo), "sector_ald")
+        rlang::has_name(match_name2(loanbook_demo, ald_scenario_demo), "sector_ald")
   )
 })
 
 test_that("outputs name from loanbook, not name.y (bug fix)", {
-      out <- match_name2(slice(loanbook_demo, 1), ald_demo)
+      out <- match_name2(slice(loanbook_demo, 1), ald_scenario_demo)
   expect_false(has_name(out, "name.y"))
 })
 
 test_that("works with `min_score = 0` (bug fix)", {
-      expect_no_error(match_name2(slice(loanbook_demo, 1), ald_demo, min_score = 0))
+      expect_no_error(match_name2(slice(loanbook_demo, 1), ald_scenario_demo, min_score = 0))
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
@@ -307,7 +307,7 @@ test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
     filter(name_direct_loantaker == this_name)
 
   nanimo_scores <- this_lbk %>%
-        match_name2(ald_demo) %>%
+        match_name2(ald_scenario_demo) %>%
     mutate(alias = to_alias(name)) %>%
     filter(alias == this_alias) %>%
     pull(score)
@@ -338,7 +338,7 @@ test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
 })
 
     test_that("match_name2()$level lacks prefix 'name_' suffix '_lbk'", {
-      out <- match_name2(slice(loanbook_demo, 1), ald_demo)
+      out <- match_name2(slice(loanbook_demo, 1), ald_scenario_demo)
   expect_false(
     any(startsWith(unique(out$level), "name_"))
   )
@@ -351,17 +351,17 @@ test_that("preserves groups", {
   grouped_loanbook <- slice(loanbook_demo, 1) %>%
     group_by(id_loan)
 
-      expect_true(is_grouped_df(match_name2(grouped_loanbook, ald_demo)))
+      expect_true(is_grouped_df(match_name2(grouped_loanbook, ald_scenario_demo)))
 })
 
 test_that("outputs id consistent with level", {
-      out <- slice(loanbook_demo, 5) %>% match_name2(ald_demo)
+      out <- slice(loanbook_demo, 5) %>% match_name2(ald_scenario_demo)
   expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
   expect_equal(out$id_2dii, c("UP1", "DL1"))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
-      out <- match_name2(loanbook_demo, ald_demo)
+      out <- match_name2(loanbook_demo, ald_scenario_demo)
   out_lbk_cols <- out %>%
     select(
       setdiff(
@@ -513,7 +513,7 @@ test_that("with bad input errors gracefully", {
   bad_loanbook <- loanbook_demo %>%
     mutate(name_direct_loantaker = as.numeric(12))
 
-      expect_no_error(match_name2(bad_loanbook, ald_demo))
+      expect_no_error(match_name2(bad_loanbook, ald_scenario_demo))
 })
 
 test_that("with name_intermediate but not id_intermediate throws an error", {
