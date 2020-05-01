@@ -1,7 +1,3 @@
-match_name2 <- function(loanbook, ald, ...) {
-  match_name(loanbook = loanbook, ald = sanitize_ald(ald), ...)
-}
-
 sanitize_ald <- function(ald) {
   crucial <- c("name_company", "sector")
   is_ald <- all(purrr::map_lgl(crucial, ~rlang::has_name(ald, .x)))
