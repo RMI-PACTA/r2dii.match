@@ -79,7 +79,7 @@ match_name <- function(loanbook,
   prep_lbk <- suppressMessages(
     restructure_loanbook_for_matching(loanbook_rowid, overwrite = overwrite)
   )
-  prep_ald <- restructure_ald_for_matching(ald)
+  prep_ald <- restructure_ald_for_matching(sanitize_ald(ald))
 
   matched <- score_alias_similarity(
     prep_lbk, prep_ald,
