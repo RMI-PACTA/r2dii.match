@@ -112,7 +112,7 @@ match_name <- function(loanbook,
 
 sanitize_ald <- function(ald) {
   crucial <- c("name_company", "sector")
-  is_ald <- all(purrr::map_lgl(crucial, ~rlang::has_name(ald, .x)))
+  is_ald <- all(purrr::map_lgl(crucial, ~ rlang::has_name(ald, .x)))
 
   if (!is_ald) {
     undo <- function(x) rlang::set_names(names(x), unname(x))

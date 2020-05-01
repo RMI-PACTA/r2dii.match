@@ -531,29 +531,29 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
           level only", {
-            lbk <- tibble::tibble(
-              id_intermediate_parent_999 = "IP8",
-              name_intermediate_parent_999 = "Nanco Hosiery Mills",
+  lbk <- tibble::tibble(
+    id_intermediate_parent_999 = "IP8",
+    name_intermediate_parent_999 = "Nanco Hosiery Mills",
 
-              id_ultimate_parent = NA_character_,
-              name_ultimate_parent = NA_character_,
+    id_ultimate_parent = NA_character_,
+    name_ultimate_parent = NA_character_,
 
-              id_direct_loantaker = NA_character_,
-              name_direct_loantaker = NA_character_,
+    id_direct_loantaker = NA_character_,
+    name_direct_loantaker = NA_character_,
 
-              sector_classification_system = "NACE",
-              sector_classification_direct_loantaker = 3511,
-            )
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 3511,
+  )
 
-            ald <- tibble(
-              name_company = c("nanco hosiery mills", "standard solar inc"),
-              sector = c("power", "power"),
-              alias_ald = c("nancohosierymills", "standardsolar inc")
-            )
+  ald <- tibble(
+    name_company = c("nanco hosiery mills", "standard solar inc"),
+    sector = c("power", "power"),
+    alias_ald = c("nancohosierymills", "standardsolar inc")
+  )
 
-            out <- match_name(lbk, ald)
-            expect_equal(out$level, "intermediate_parent_999")
-          })
+  out <- match_name(lbk, ald)
+  expect_equal(out$level, "intermediate_parent_999")
+})
 
 test_that("w/ missing values at all levels outputs 0-row", {
   lbk <- tibble(
@@ -613,34 +613,34 @@ test_that("`by_sector = TRUE` yields only matching sectors", {
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
-            # Lookup code to sectors via r2dii.data::sector_classifications$code
-            code_for_sector_power <- 27
-            sector_not_power <- "coal"
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
+  code_for_sector_power <- 27
+  sector_not_power <- "coal"
 
-            expect_warning(
-              out <- match_name(
-                fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
-                fake_ald(sector = sector_not_power),
-                by_sector = TRUE
-              ),
-              "no match"
-            )
-            expect_equal(nrow(out), 0L)
-          })
+  expect_warning(
+    out <- match_name(
+      fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
+      fake_ald(sector = sector_not_power),
+      by_sector = TRUE
+    ),
+    "no match"
+  )
+  expect_equal(nrow(out), 0L)
+})
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
-            # Lookup code to sectors via r2dii.data::sector_classifications$code
-            code_for_sector_power <- 27
-            sector_not_power <- "coal"
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
+  code_for_sector_power <- 27
+  sector_not_power <- "coal"
 
-            out <- match_name(
-              fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
-              fake_ald(sector = sector_not_power),
-              by_sector = FALSE
-            )
-            expect_equal(nrow(out), 1L)
-          })
+  out <- match_name(
+    fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
+    fake_ald(sector = sector_not_power),
+    by_sector = FALSE
+  )
+  expect_equal(nrow(out), 1L)
+})
 
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
@@ -1049,4 +1049,3 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
     match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
   )
 })
-
