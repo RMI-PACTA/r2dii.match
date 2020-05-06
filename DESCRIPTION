@@ -48,7 +48,7 @@ Imports:
     glue,
     magrittr,
     purrr,
-    r2dii.data,
+    r2dii.data (>= 0.0.3.9002),
     rlang (>= 0.4.5.9000),
     stringdist,
     stringi,
@@ -61,10 +61,11 @@ Suggests:
     rmarkdown,
     spelling,
     testthat (>= 2.1.0)
-Remotes: 
+Remotes:  
     r-lib/rlang,
     r-lib/vctrs,
-    tidyverse/dplyr
+    tidyverse/dplyr,
+    2DegreesInvesting/r2dii.data
 Encoding: UTF-8
 Language: en-US
 LazyData: true
