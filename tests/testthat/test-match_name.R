@@ -9,15 +9,15 @@ library(r2dii.data)
 test_that("w/ ald_scenario_demo and missing crucial names errors gracefully", {
   invalid <- function(data, x) dplyr::rename(data, bad = x)
 
-    expect_error(
-      class = "missing_names",
-      match_name(fake_lbk(), invalid(ald_scenario_demo, "id"))
-    )
+  expect_error(
+    class = "missing_names",
+    match_name(fake_lbk(), invalid(ald_scenario_demo, "id"))
+  )
 
-    expect_error(
-      class = "missing_names",
-      match_name(fake_lbk(), invalid(ald_scenario_demo, "ald_sector"))
-    )
+  expect_error(
+    class = "missing_names",
+    match_name(fake_lbk(), invalid(ald_scenario_demo, "ald_sector"))
+  )
 })
 
 # With ald_demo -----------------------------------------------------------
