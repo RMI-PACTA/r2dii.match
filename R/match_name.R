@@ -10,9 +10,8 @@
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param loanbook Data frame structured like [r2dii.data::loanbook_demo].
-#' @param ald Data frame structured like [r2dii.data::ald_demo] or
-#'   [r2dii.data::ald_scenario_demo].
+#' @param loanbook,ald data frames structured like [r2dii.data::loanbook_demo]
+#'   and [r2dii.data::ald_demo].
 #' @param by_sector Should names only be compared if companies belong to the same
 #'   `sector`?
 #' @param min_score A number between 0-1, to set the minimum `score` threshold.
@@ -80,7 +79,7 @@ match_name <- function(loanbook,
   prep_lbk <- suppressMessages(
     restructure_loanbook_for_matching(loanbook_rowid, overwrite = overwrite)
   )
-  prep_ald <- restructure_ald_for_matching(sanitize_ald(ald))
+  prep_ald <- restructure_ald_for_matching(ald)
 
   matched <- score_alias_similarity(
     prep_lbk, prep_ald,
@@ -109,38 +108,6 @@ match_name <- function(loanbook,
     reorder_names_as_in_loanbook(loanbook_rowid) %>%
     unsuffix_and_regroup(old_groups) %>%
     select(-.data$alias, -.data$alias_ald)
-}
-
-sanitize_ald <- function(ald) {
-  crucial <- c("name_company", "sector")
-  is_ald <- all(purrr::map_lgl(crucial, ~ rlang::has_name(ald, .x)))
-
-  if (!is_ald) {
-    undo <- function(x) rlang::set_names(names(x), unname(x))
-
-    crucial2 <- unname(undo(new_names_from_old_names())[crucial])
-    check_crucial_names(ald, crucial2)
-
-    ald <- dplyr::rename(ald, dplyr::all_of(undo(new_names_from_old_names())))
-  }
-
-  ald
-}
-
-# Used in r2dii.data 0.0.3.9001 to create ald_scenario_demo from ald_demo (old)
-new_names_from_old_names <- function() {
-  c(
-    "id" = "name_company",
-    "ald_sector" = "sector",
-    "technology" = "technology",
-    "ald_production_unit" = "production_unit",
-    "year" = "year",
-    "ald_production" = "production",
-    "ald_emission_factor" = "emission_factor",
-    "domicile_region" = "country_of_domicile",
-    "ald_location" = "plant_location",
-    "is_ultimate_owner" = "is_ultimate_owner"
-  )
 }
 
 unsuffix_and_regroup <- function(data, old_groups) {

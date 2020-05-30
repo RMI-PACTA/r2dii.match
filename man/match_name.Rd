@@ -15,10 +15,8 @@ match_name(
 )
 }
 \arguments{
-\item{loanbook}{Data frame structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}.}
-
-\item{ald}{Data frame structured like \link[r2dii.data:ald_demo]{r2dii.data::ald_demo} or
-\link[r2dii.data:ald_scenario_demo]{r2dii.data::ald_scenario_demo}.}
+\item{loanbook, ald}{data frames structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
+and \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
 \item{by_sector}{Should names only be compared if companies belong to the same
 \code{sector}?}
