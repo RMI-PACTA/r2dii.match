@@ -136,7 +136,7 @@ The result is a dataset with identical columns to the input loanbook,
 and added columns bridging all matched loans to their ald counterpart.
 
 For a more detailed walkthrough of the functionality [Get
-started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii.match.html).
+started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
 
 ## Acknowledgements
 
