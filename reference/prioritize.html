@@ -75,7 +75,7 @@ desired match. By default, the highest priority is the most granular match
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9001</span>
       </span>
     </div>
 
@@ -176,7 +176,7 @@ priority level is highest.</p>
 
     <p><strong>How to validate <code>data</code></strong></p>
 <p>Write the output of <code><a href='match_name.html'>match_name()</a></code> into a .csv file with:<div class="r"></p><pre><span class='co'># Writting to current working directory</span>
-<span class='no'>matched</span> <span class='kw'>%&amp;gt;%</span>
+<span class='no'>matched</span> <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'>write_csv</span>(<span class='st'>"matched.csv"</span>)</pre><p></div></p>
 <p>Compare, edit, and save the data manually:</p><ul>
 <li><p>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel,
@@ -194,7 +194,7 @@ internal information on the company structure, etc.)</p></li>
 </ul>
 
 <p>Re-read the edited file (validated) with:<div class="r"></p><pre><span class='co'># Reading from current working directory</span>
-<span class='no'>valid_matches</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'>read_csv</span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
+<span class='no'>valid_matches</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'>read_csv</span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
 
     

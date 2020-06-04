@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9001</span>
       </span>
     </div>
 
@@ -149,9 +149,9 @@
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</span>
 
 <span class="no">ald_demo</span>
-<span class="co">#&gt; # A tibble: 17,368 x 13</span>
+<span class="co">#&gt; # A tibble: 17,368 x 14</span>
 <span class="co">#&gt;    name_company sector technology production_unit  year production</span>
-<span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;</span>
+<span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 aba hydropo… power  hydrocap   MW               2013    133340.</span>
 <span class="co">#&gt;  2 aba hydropo… power  hydrocap   MW               2014    131582.</span>
 <span class="co">#&gt;  3 aba hydropo… power  hydrocap   MW               2015    129824.</span>
@@ -162,10 +162,10 @@
 <span class="co">#&gt;  8 aba hydropo… power  hydrocap   MW               2020    121032.</span>
 <span class="co">#&gt;  9 aba hydropo… power  hydrocap   MW               2021    119274.</span>
 <span class="co">#&gt; 10 aba hydropo… power  hydrocap   MW               2022    117515.</span>
-<span class="co">#&gt; # … with 17,358 more rows, and 7 more variables: emission_factor &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, number_of_assets &lt;dbl&gt;,</span>
+<span class="co">#&gt; # … with 17,358 more rows, and 8 more variables: emission_factor &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, number_of_assets &lt;int&gt;,</span>
 <span class="co">#&gt; #   is_ultimate_owner &lt;lgl&gt;, is_ultimate_listed_owner &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   ald_timestamp &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt; #   ald_timestamp &lt;chr&gt;, ald_emission_factor_unit &lt;chr&gt;</span></pre></body></html></div>
 <p>If you want to use <code>loanbook_demo</code> and <code>ald_demo</code> as template to create your own datasets, do this:</p>
 <ul>
 <li>Write <em>loanbook_demo.csv</em> and <em>ald_demo.csv</em> with:</li>
