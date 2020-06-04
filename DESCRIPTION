@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Financial Portfolios with Climate Data
-Version: 0.0.1.9000
+Version: 0.0.1.9001
 Authors@R: 
     c(person(given = "Mauro",
              family = "Lepore",
@@ -37,35 +37,30 @@ Description: These tools implement in R a fundamental part of
     is the first step to assess if a financial portfolio aligns with
     climate goals.
 License: GPL-3
-URL: https://2degreesinvesting.github.io/r2dii.match,
+URL: https://2degreesinvesting.github.io/r2dii.match, 
     https://github.com/2DegreesInvesting/r2dii.match
 BugReports: 
     https://github.com/2DegreesInvesting/r2dii.match/issues
 Depends: 
     R (>= 3.4)
 Imports: 
-    dplyr (>= 0.8.99.9002),
+    dplyr,
     glue,
     magrittr,
     purrr,
     r2dii.data,
-    rlang (>= 0.4.5.9000),
+    rlang,
     stringdist,
     stringi,
     tibble,
     tidyr,
     tidyselect,
-    vctrs (>= 0.2.99.9011)
+    vctrs
 Suggests: 
     covr,
     rmarkdown,
     spelling,
     testthat (>= 2.1.0)
-Remotes: 
-    2DegreesInvesting/r2dii.data,
-    r-lib/rlang,
-    r-lib/vctrs,
-    tidyverse/dplyr
 Encoding: UTF-8
 Language: en-US
 LazyData: true

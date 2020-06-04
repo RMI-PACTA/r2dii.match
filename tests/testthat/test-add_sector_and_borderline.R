@@ -57,10 +57,9 @@ test_that("added columns return acceptable values", {
 test_that("preserves typeof() input columns", {
   out <- add_sector_and_borderline(loanbook_demo)
 
-  expect_equal(
-    purrr::map_chr(loanbook_demo, typeof),
-    purrr::map_chr(out[names(loanbook_demo)], typeof),
-  )
+  x <- unname(purrr::map_chr(loanbook_demo, typeof))
+  y <- unname(purrr::map_chr(out[names(loanbook_demo)], typeof))
+  expect_equal(x, y)
 })
 
 test_that("outputs no missing value of `sector`", {

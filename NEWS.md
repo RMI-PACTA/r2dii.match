@@ -1,10 +1,8 @@
-# r2dii.match 0.0.1.9000
+# r2dii.match (development version)
 
-## Internal
+# r2dii.match 0.0.1.9001
 
-* Prepare for dplyr 1: replace `dplyr::*_at(` with `dplyr::*(dplyr::across(`.
-* Replace `sample_n()` with `slice_sample()` (#194)
-* Added a `NEWS.md` file to track changes to the package.
+* This version includes only internal changes.
 
 # r2dii.match 0.0.1
 
