@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Financial Portfolios with Climate Data
-Version: 0.0.1.9000
+Version: 0.0.1.9001
 Authors@R: 
     c(person(given = "Mauro",
              family = "Lepore",
