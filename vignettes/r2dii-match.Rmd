@@ -154,7 +154,3 @@ matched %>%
   prioritize(priority = rev) %>% 
   select(!!! some_interesting_columns)
 ```
-
-## Next: Analyze
-
-Once you achieve enough matching coverage, you can analyze the output of `prioritize()` with the package [r2dii.analysis](https://github.com/2DegreesInvesting/r2dii.analysis).
