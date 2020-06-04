@@ -13,6 +13,8 @@ status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-projec
 coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master)
 [![R build
 status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
+[![R build
+status](https://github.com/2degreesinvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2degreesinvesting/r2dii.match/actions)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of the software PACTA
