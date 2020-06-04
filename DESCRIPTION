@@ -44,28 +44,23 @@ BugReports:
 Depends: 
     R (>= 3.4)
 Imports: 
-    dplyr (>= 0.8.99.9002),
+    dplyr,
     glue,
     magrittr,
     purrr,
     r2dii.data,
-    rlang (>= 0.4.5.9000),
+    rlang,
     stringdist,
     stringi,
     tibble,
     tidyr,
     tidyselect,
-    vctrs (>= 0.2.99.9011)
+    vctrs
 Suggests: 
     covr,
     rmarkdown,
     spelling,
     testthat (>= 2.1.0)
-Remotes: 
-    2DegreesInvesting/r2dii.data,
-    r-lib/rlang,
-    r-lib/vctrs,
-    tidyverse/dplyr
 Encoding: UTF-8
 Language: en-US
 LazyData: true
