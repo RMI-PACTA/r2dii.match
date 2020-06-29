@@ -55,6 +55,8 @@ Or install the development version of r2dii.match from GitHub with:
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
 
+[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
+
 ## Example
 
 ```{r}
