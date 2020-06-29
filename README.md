@@ -13,7 +13,7 @@ Installation
 
 Before you install r2dii.match you may want to:
 
--   [Try an rstudio.cloud project that has r2dii.match already installed](https://rstudio.cloud/project/954051).
+-   [Try an rstudio.cloud project that has r2dii.match already installed](https://rstudio.cloud/project/1424833).
 -   [Learn how to minimize installation errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
 When you are ready, install the released version of r2dii.match from CRAN with:
@@ -28,6 +28,8 @@ Or install the development version of r2dii.match from GitHub with:
 # install.packages("devtools")
 devtools::install_github("2DegreesInvesting/r2dii.match")
 ```
+
+[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 Example
 -------
