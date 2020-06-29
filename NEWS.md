@@ -1,6 +1,7 @@
 # r2dii.match (development version)
 
 * Enforce dplyr >= 0.8.5 (#216).
+* No longer import vctrs; it is unused.
 
 # r2dii.match 0.0.2
 
