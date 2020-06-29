@@ -457,28 +457,28 @@ test_that("warns/errors if some/all system classification is unknown", {
 test_that("w/ loanbook or ald with missing names errors gracefully", {
   invalid <- function(data, x) dplyr::rename(data, bad = x)
 
-  expect_error_class_missing_names <- function(lbk = NULL, ald = NULL) {
+  expect_error_missing_names <- function(lbk = NULL, ald = NULL) {
     expect_error(
       class = "missing_names",
       match_name(lbk %||% fake_lbk(), ald %||% fake_ald())
     )
   }
 
-  expect_error_class_missing_names(invalid(fake_ald(), "sector"))
+  expect_error_missing_names(invalid(fake_ald(), "sector"))
 
-  expect_error_class_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
-  expect_error_class_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
-  expect_error_class_missing_names(invalid(fake_lbk(), "id_direct_loantaker"))
-  expect_error_class_missing_names(invalid(fake_lbk(), "name_direct_loantaker"))
+  expect_error_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
+  expect_error_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
+  expect_error_missing_names(invalid(fake_lbk(), "id_direct_loantaker"))
+  expect_error_missing_names(invalid(fake_lbk(), "name_direct_loantaker"))
 
-  expect_error_class_missing_names(
+  expect_error_missing_names(
     invalid(fake_lbk(), "sector_classification_system")
   )
-  expect_error_class_missing_names(
+  expect_error_missing_names(
     invalid(fake_lbk(), "sector_classification_direct_loantaker")
   )
 
-  expect_error_class_missing_names(
+  expect_error_missing_names(
     match_name(
       # missing name_intermediate_parent (doesn't come with fake_lbk())
       fake_lbk(id_intermediate_parent = id_direct_loantaker),
