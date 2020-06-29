@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* Enforce dplyr >= 0.8.5 (#216).
+
 # r2dii.match 0.0.2
 
 This version includes only [internal changes](https://github.com/2DegreesInvesting/r2dii.match/releases/tag/v0.0.2). 
