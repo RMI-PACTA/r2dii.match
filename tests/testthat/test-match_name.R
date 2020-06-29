@@ -138,7 +138,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   )
 })
 
-expected_names_of_match_name_with_loanbook_demo <- c(
+expect_names_match_name <- c(
   "id_loan",
 
   "id_direct_loantaker",
@@ -178,7 +178,7 @@ expected_names_of_match_name_with_loanbook_demo <- c(
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
   out <- match_name(slice(loanbook_demo, 1L), fake_ald())
-  expect_named(out, expected_names_of_match_name_with_loanbook_demo)
+  expect_named(out, expect_names_match_name)
 })
 
 test_that("takes unprepared loanbook and ald datasets", {
@@ -196,7 +196,7 @@ test_that("w/ loanbook that matches nothing, yields expected", {
   # ... but preserves minimum expected names
   expect_named(
     out,
-    expected_names_of_match_name_with_loanbook_demo
+    expect_names_match_name
   )
   expect_false(any(c("alias", "alias_ald") %in% names(out)))
 })
@@ -206,7 +206,7 @@ test_that("w/ 2 lbk rows matching 2 ald rows, yields expected names", {
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
     match_name(lbk45, ald_demo),
-    expected_names_of_match_name_with_loanbook_demo
+    expect_names_match_name
   )
 })
 
@@ -215,7 +215,7 @@ test_that("w/ 1 lbk row matching ultimate, yields expected names", {
 
   expect_named(
     match_name(lbk1, ald_demo),
-    expected_names_of_match_name_with_loanbook_demo
+    expect_names_match_name
   )
 })
 
