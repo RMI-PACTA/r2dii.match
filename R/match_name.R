@@ -54,8 +54,8 @@
 #' @export
 #'
 #' @examples
+#' library(dplyr, warn.conflicts = FALSE)
 #' library(r2dii.data)
-#' library(dplyr)
 #'
 #' mini_loanbook <- sample_n(loanbook_demo, 10)
 #'

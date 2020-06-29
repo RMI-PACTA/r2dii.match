@@ -16,9 +16,7 @@ The package r2dii.match helps you to match counterparties from a loanbook to com
 We use the package r2dii.match to access the most important functions you'll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.
 
 ```{r}
-library(dplyr)
-# r2dii.data is changing rapidly; ensure you have the latest version
-# remotes::update_packages("r2dii.data", upgrade = "ask")
+library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 library(r2dii.match)
 ```
