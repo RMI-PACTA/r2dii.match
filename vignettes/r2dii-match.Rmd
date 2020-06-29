@@ -23,7 +23,7 @@ library(r2dii.data)
 library(r2dii.match)
 ```
 
-## Format input data [loanbook](https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_description.html) and [asset-level data (ald)](https://2degreesinvesting.github.io/r2dii.data/reference/ald_description.html)
+## Format input data loanbook and asset-level data (ald)
 
 We need two datasets: a "loanbook" and an "asset-level dataset" (ald). These should be formatted like:  [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html) and [`ald_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/ald_demo.html) (from the [r2dii.data package](https://2degreesinvesting.github.io/r2dii.data)).
 

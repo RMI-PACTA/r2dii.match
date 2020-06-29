@@ -9,8 +9,7 @@
 #' @param data A loanbook data frame.
 #' @param id_column A String giving the name of an `id_` column.
 #'
-#' @seealso [r2dii.data::loanbook_description],
-#'   [r2dii.data::loanbook_demo].
+#' @seealso [r2dii.data::loanbook_demo].
 #'
 #' @return A loanbook data frame with adjusted ids.
 #'

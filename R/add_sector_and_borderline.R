@@ -14,7 +14,7 @@
 #' grid/network to Power, general mining to coal mining).
 #'
 #' For a list of sector classification systems see
-#' [r2dii.data::classification_bridge].
+#' [r2dii.data::sector_classifications].
 #'
 #' @param data A loanbook data frame.
 #'
