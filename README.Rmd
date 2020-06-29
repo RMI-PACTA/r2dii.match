@@ -88,22 +88,3 @@ prioritize(match_result)
 The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.
 
 [Get started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
-
-## Acknowledgements
-
-```{r echo=FALSE}
-thank <- function(x) {
-  x <- sort(x)
-  paste0("[", x, "]", sprintf("(https://github.com/%s)", x), collapse = ", ")
-}
-
-contributors <- c(
-  "Clare2D",
-  "cjyetman",
-  "georgeharris2deg",
-  "koopmand",
-  "vintented"
-)
-```
-
-A big thanks to all `r length(contributors)` contributors who helped with ideas, code, or reviews: `r thank(contributors)`.
