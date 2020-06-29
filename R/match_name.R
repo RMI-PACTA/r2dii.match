@@ -12,8 +12,8 @@
 #'
 #' @param loanbook,ald data frames structured like [r2dii.data::loanbook_demo]
 #'   and [r2dii.data::ald_demo].
-#' @param by_sector Should names only be compared if companies belong to the same
-#'   `sector`?
+#' @param by_sector Should names only be compared if companies belong to the
+#'   same `sector`?
 #' @param min_score A number between 0-1, to set the minimum `score` threshold.
 #'   A `score` of 1 is a perfect match.
 #' @param method Method for distance calculation. One of `c("osa", "lv", "dl",
@@ -23,7 +23,8 @@
 #' @param overwrite A data frame used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
-#'   vice-versa. This file can be used to manually match loanbook companies to ald.
+#'   vice-versa. This file can be used to manually match loanbook companies to
+#'   ald.
 #'
 #' @family user-oriented
 #'
@@ -77,7 +78,7 @@ match_name <- function(loanbook,
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- suppressMessages(
-    restructure_loanbook_for_matching(loanbook_rowid, overwrite = overwrite)
+    restructure_loanbook(loanbook_rowid, overwrite = overwrite)
   )
   prep_ald <- restructure_ald_for_matching(ald)
 
@@ -101,7 +102,7 @@ match_name <- function(loanbook,
   preferred <- prefer_perfect_match_by(matched, .data$id_2dii)
 
   preferred %>%
-    restore_cols_sector_name_from_ald(prep_ald, by_sector = by_sector) %>%
+    restore_sector_name_ald(prep_ald, by_sector = by_sector) %>%
     # Restore columns from loanbook
     left_join(loanbook_rowid, by = "rowid") %>%
     mutate(rowid = NULL) %>%
@@ -130,7 +131,7 @@ minimum_names_of_match_name <- function(loanbook) {
   unique(c(names(loanbook), names_added_by_match_name()))
 }
 
-restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
+restore_sector_name_ald <- function(matched, prep_ald, by_sector) {
   out <- matched %>%
     left_join(rlang::set_names(prep_ald, paste0, "_ald"), by = "alias_ald")
 

@@ -61,7 +61,7 @@ prioritize <- function(data, priority = NULL) {
     check_crucial_names(
       c("id_loan", "level", "score", "sector", "sector_ald")
     ) %>%
-    check_duplicated_score1_by_id_loan_by_level()
+    check_duplicated_score1()
 
   priority <- set_priority(data, priority = priority)
 
@@ -76,7 +76,7 @@ prioritize <- function(data, priority = NULL) {
   group_by(out, !!!old_groups)
 }
 
-check_duplicated_score1_by_id_loan_by_level <- function(data) {
+check_duplicated_score1 <- function(data) {
   is_duplicated <- data %>%
     filter(.data$score == 1) %>%
     select(.data$id_loan, .data$level) %>%

@@ -18,8 +18,8 @@ match_name(
 \item{loanbook, ald}{data frames structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
 and \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
 
-\item{by_sector}{Should names only be compared if companies belong to the same
-\code{sector}?}
+\item{by_sector}{Should names only be compared if companies belong to the
+same \code{sector}?}
 
 \item{min_score}{A number between 0-1, to set the minimum \code{score} threshold.
 A \code{score} of 1 is a perfect match.}
@@ -34,7 +34,8 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 \item{overwrite}{A data frame used to overwrite the \code{sector} and/or \code{name}
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA} and
-vice-versa. This file can be used to manually match loanbook companies to ald.}
+vice-versa. This file can be used to manually match loanbook companies to
+ald.}
 }
 \value{
 A data frame with the same groups (if any) and columns as \code{loanbook},

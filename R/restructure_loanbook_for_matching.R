@@ -41,12 +41,12 @@ restructure_ald_for_matching <- function(data) {
 #'
 #' lbk <- tibble::rowid_to_column(loanbook_demo)
 #'
-#' restructure_loanbook_for_matching(lbk)
+#' restructure_loanbook(lbk)
 #'
-#' restructure_loanbook_for_matching(lbk, overwrite = overwrite_demo)
+#' restructure_loanbook(lbk, overwrite = overwrite_demo)
 #' @noRd
-restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
-  check_prepare_loanbook_overwrite(overwrite)
+restructure_loanbook <- function(data, overwrite = NULL) {
+  check_prep_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
   id_level <- extract_level_names(data, prefix = "id_")
@@ -68,14 +68,14 @@ restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
     identify_loans_by_level() %>%
     identify_loans_by_name() %>%
     mutate(source = "loanbook") %>%
-    select(.data$rowid, output_cols_for_prepare_loanbook()) %>%
+    select(.data$rowid, output_cols_for_prep_loanbook()) %>%
     distinct() %>%
     may_overwrite_name_and_sector(overwrite = overwrite) %>%
     add_alias()
 }
 
 may_add_sector_and_borderline <- function(data) {
-  if (already_has_sector_and_borderline(data)) {
+  if (has_sector_and_borderline(data)) {
     rlang::warn("Using existing columns `sector` and `borderline`.")
     data2 <- data
   } else {
@@ -115,7 +115,7 @@ overwrite_name_and_sector <- function(data, overwrite) {
     select(names(data))
 }
 
-already_has_sector_and_borderline <- function(data) {
+has_sector_and_borderline <- function(data) {
   has_name(data, "sector") & has_name(data, "borderline")
 }
 
@@ -136,13 +136,13 @@ check_prepare_loanbook_data <- function(data) {
   )
   check_crucial_names(data, crucial)
 
-  abort_if_has_intermediate_name_but_not_id(data)
+  abort_has_intermediate_not_id(data)
 
 
   invisible(data)
 }
 
-abort_if_has_intermediate_name_but_not_id <- function(data) {
+abort_has_intermediate_not_id <- function(data) {
   missing_id <- setdiff(
     sort(replace_prefix(extract_level_names(data, "name_"), to = "")),
     sort(replace_prefix(extract_level_names(data, "id_"), to = ""))
@@ -152,23 +152,23 @@ abort_if_has_intermediate_name_but_not_id <- function(data) {
     missing_columns <- paste0("id", missing_id, collapse = ", ")
     abort(
       class = "has_name_but_not_id",
-      glue("Must have missing columns:\n {missing_columns}")
+      sprintf("Must have missing columns:\n %s", missing_columns)
     )
   }
 }
 
-check_prepare_loanbook_overwrite <- function(overwrite) {
+check_prep_loanbook_overwrite <- function(overwrite) {
   if (is.null(overwrite)) {
     return(invisible(overwrite))
   }
 
   stopifnot(is.data.frame(overwrite))
-  check_crucial_names(overwrite, output_cols_for_prepare_loanbook())
+  check_crucial_names(overwrite, output_cols_for_prep_loanbook())
 
   invisible(overwrite)
 }
 
-output_cols_for_prepare_loanbook <- function() {
+output_cols_for_prep_loanbook <- function() {
   c(
     "level",
     "id_2dii",

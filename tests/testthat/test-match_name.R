@@ -138,7 +138,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   )
 })
 
-expected_names_of_match_name_with_loanbook_demo <- c(
+expect_names_match_name <- c(
   "id_loan",
 
   "id_direct_loantaker",
@@ -178,7 +178,7 @@ expected_names_of_match_name_with_loanbook_demo <- c(
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
   out <- match_name(slice(loanbook_demo, 1L), fake_ald())
-  expect_named(out, expected_names_of_match_name_with_loanbook_demo)
+  expect_named(out, expect_names_match_name)
 })
 
 test_that("takes unprepared loanbook and ald datasets", {
@@ -196,7 +196,7 @@ test_that("w/ loanbook that matches nothing, yields expected", {
   # ... but preserves minimum expected names
   expect_named(
     out,
-    expected_names_of_match_name_with_loanbook_demo
+    expect_names_match_name
   )
   expect_false(any(c("alias", "alias_ald") %in% names(out)))
 })
@@ -206,7 +206,7 @@ test_that("w/ 2 lbk rows matching 2 ald rows, yields expected names", {
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
     match_name(lbk45, ald_demo),
-    expected_names_of_match_name_with_loanbook_demo
+    expect_names_match_name
   )
 })
 
@@ -215,7 +215,7 @@ test_that("w/ 1 lbk row matching ultimate, yields expected names", {
 
   expect_named(
     match_name(lbk1, ald_demo),
-    expected_names_of_match_name_with_loanbook_demo
+    expect_names_match_name
   )
 })
 
@@ -370,11 +370,11 @@ test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
       )
     )
 
-  all_lbk_columns_contain_na_exclusively <- out_lbk_cols %>%
+  all_lbk_col_have_na_only <- out_lbk_cols %>%
     purrr::map_lgl(~ all(is.na(.x))) %>%
     all()
 
-  expect_false(all_lbk_columns_contain_na_exclusively)
+  expect_false(all_lbk_col_have_na_only)
 })
 
 test_that("handles any number of intermediate_parent columns (#84)", {
@@ -410,14 +410,14 @@ test_that("warns/errors if some/all system classification is unknown", {
   some_bad_system <- fake_lbk(sector_classification_system = c("NACE", "bad"))
 
   expect_warning(
-    class = "some_sector_classification_is_unknown",
+    class = "some_sec_classif_unknown",
     match_name(some_bad_system, fake_ald())
   )
 
   all_bad_system <- fake_lbk(sector_classification_system = c("bad", "bad"))
 
   expect_error(
-    class = "all_sector_classification_is_unknown",
+    class = "all_sec_classif_unknown",
     match_name(all_bad_system, fake_ald())
   )
 
@@ -425,20 +425,19 @@ test_that("warns/errors if some/all system classification is unknown", {
   some_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(35, bad))
 
   expect_warning(
-    class = "some_sector_classification_is_unknown",
+    class = "some_sec_classif_unknown",
     match_name(some_bad_code, fake_ald()),
   )
 
   all_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(bad, bad))
 
   expect_error(
-    class = "all_sector_classification_is_unknown",
+    class = "all_sec_classif_unknown",
     match_name(all_bad_code, fake_ald()),
   )
-
+  # styler: off
   verify_output(
-    test_path("output", "match_name-sector_classification_is_unknown.txt"),
-    {
+    test_path("output", "match_name-sec_classif_unknown.txt"), {
       "# Error"
       match_name(all_bad_code, fake_ald())
 
@@ -450,6 +449,7 @@ test_that("warns/errors if some/all system classification is unknown", {
       invisible(match_name(some_bad_system, fake_ald()))
     }
   )
+  # styler: on
 })
 
 # crucial names -----------------------------------------------------------
@@ -457,28 +457,28 @@ test_that("warns/errors if some/all system classification is unknown", {
 test_that("w/ loanbook or ald with missing names errors gracefully", {
   invalid <- function(data, x) dplyr::rename(data, bad = x)
 
-  expect_error_class_missing_names <- function(lbk = NULL, ald = NULL) {
+  expect_error_missing_names <- function(lbk = NULL, ald = NULL) {
     expect_error(
       class = "missing_names",
       match_name(lbk %||% fake_lbk(), ald %||% fake_ald())
     )
   }
 
-  expect_error_class_missing_names(invalid(fake_ald(), "sector"))
+  expect_error_missing_names(invalid(fake_ald(), "sector"))
 
-  expect_error_class_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
-  expect_error_class_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
-  expect_error_class_missing_names(invalid(fake_lbk(), "id_direct_loantaker"))
-  expect_error_class_missing_names(invalid(fake_lbk(), "name_direct_loantaker"))
+  expect_error_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
+  expect_error_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
+  expect_error_missing_names(invalid(fake_lbk(), "id_direct_loantaker"))
+  expect_error_missing_names(invalid(fake_lbk(), "name_direct_loantaker"))
 
-  expect_error_class_missing_names(
+  expect_error_missing_names(
     invalid(fake_lbk(), "sector_classification_system")
   )
-  expect_error_class_missing_names(
+  expect_error_missing_names(
     invalid(fake_lbk(), "sector_classification_direct_loantaker")
   )
 
-  expect_error_class_missing_names(
+  expect_error_missing_names(
     match_name(
       # missing name_intermediate_parent (doesn't come with fake_lbk())
       fake_lbk(id_intermediate_parent = id_direct_loantaker),
