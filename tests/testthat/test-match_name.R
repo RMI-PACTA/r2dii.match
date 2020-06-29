@@ -370,11 +370,11 @@ test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
       )
     )
 
-  all_lbk_columns_contain_na_exclusively <- out_lbk_cols %>%
+  all_lbk_col_have_na_only <- out_lbk_cols %>%
     purrr::map_lgl(~ all(is.na(.x))) %>%
     all()
 
-  expect_false(all_lbk_columns_contain_na_exclusively)
+  expect_false(all_lbk_col_have_na_only)
 })
 
 test_that("handles any number of intermediate_parent columns (#84)", {
@@ -435,10 +435,9 @@ test_that("warns/errors if some/all system classification is unknown", {
     class = "all_sec_classif_unknown",
     match_name(all_bad_code, fake_ald()),
   )
-
+  # styler: off
   verify_output(
-    test_path("output", "match_name-sec_classif_unknown.txt"),
-    {
+    test_path("output", "match_name-sec_classif_unknown.txt"), {
       "# Error"
       match_name(all_bad_code, fake_ald())
 
@@ -450,6 +449,7 @@ test_that("warns/errors if some/all system classification is unknown", {
       invisible(match_name(some_bad_system, fake_ald()))
     }
   )
+  # styler: on
 })
 
 # crucial names -----------------------------------------------------------
