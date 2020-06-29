@@ -140,7 +140,7 @@ test_that("score_alias_similarity outputs unique rows", {
     filter(name_direct_loantaker == "Tata Group")
 
   out <- score_alias_similarity(
-    restructure_loanbook_for_matching(lbk),
+    restructure_loanbook(lbk),
     restructure_ald_for_matching(ald_demo)
   )
 

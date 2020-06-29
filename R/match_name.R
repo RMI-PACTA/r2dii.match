@@ -78,7 +78,7 @@ match_name <- function(loanbook,
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- suppressMessages(
-    restructure_loanbook_for_matching(loanbook_rowid, overwrite = overwrite)
+    restructure_loanbook(loanbook_rowid, overwrite = overwrite)
   )
   prep_ald <- restructure_ald_for_matching(ald)
 

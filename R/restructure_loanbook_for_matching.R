@@ -41,11 +41,11 @@ restructure_ald_for_matching <- function(data) {
 #'
 #' lbk <- tibble::rowid_to_column(loanbook_demo)
 #'
-#' restructure_loanbook_for_matching(lbk)
+#' restructure_loanbook(lbk)
 #'
-#' restructure_loanbook_for_matching(lbk, overwrite = overwrite_demo)
+#' restructure_loanbook(lbk, overwrite = overwrite_demo)
 #' @noRd
-restructure_loanbook_for_matching <- function(data, overwrite = NULL) {
+restructure_loanbook <- function(data, overwrite = NULL) {
   check_prepare_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
