@@ -114,6 +114,10 @@ desired match. By default, the highest priority is the most granular match
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.banks">r2dii.banks</a>
+    </li>
+    <li class="divider"></li>
+    <li>
       <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
     </li>
     <li>
@@ -155,23 +159,23 @@ desired match. By default, the highest <code>priority</code> is the most granula
 (i.e. <code>direct_loantaker</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prioritize</span>(<span class='no'>data</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='kw'>data</span>, priority = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A data frame like the validated output of <code><a href='match_name.html'>match_name()</a></code>. See
+      <td><p>A data frame like the validated output of <code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name()</a></code>. See
 <em>Details</em> on how to validate <code>data</code>.</p></td>
     </tr>
     <tr>
       <th>priority</th>
       <td><p>One of:</p><ul>
 <li><p><code>NULL</code>: defaults to the default level priority as returned by
-<code><a href='prioritize_level.html'>prioritize_level()</a></code>.</p></li>
+<code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html'>prioritize_level()</a></code>.</p></li>
 <li><p>A character vector giving a custom priority.</p></li>
-<li><p>A function to apply to the output of <code><a href='prioritize_level.html'>prioritize_level()</a></code>, e.g. <code>rev</code>.</p></li>
+<li><p>A function to apply to the output of <code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html'>prioritize_level()</a></code>, e.g. <code>rev</code>.</p></li>
 <li><p>A quosure-style lambda function, e.g. <code>~ rev(.x)</code>.</p></li>
 </ul></td>
     </tr>
@@ -184,9 +188,9 @@ priority level is highest.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><strong>How to validate <code>data</code></strong></p>
-<p>Write the output of <code><a href='match_name.html'>match_name()</a></code> into a .csv file with:<div class="r"></p><pre><span class='co'># Writting to current working directory</span>
-<span class='no'>matched</span> <span class='kw'>%&amp;gt;%</span>
-  <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span>(<span class='st'>"matched.csv"</span>)</pre><p></div></p>
+<p>Write the output of <code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name()</a></code> into a .csv file with:<div class="r"></p><pre><span class='co'># Writting to current working directory</span>
+<span class='kw'>matched</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>readr</span>::<span class='fu'>write_csv</span>(<span class='st'>"matched.csv"</span>)</pre><p></div></p>
 <p>Compare, edit, and save the data manually:</p><ul>
 <li><p>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel,
 Google Sheets).</p></li>
@@ -203,7 +207,7 @@ internal information on the company structure, etc.)</p></li>
 </ul>
 
 <p>Re-read the edited file (validated) with:<div class="r"></p><pre><span class='co'># Reading from current working directory</span>
-<span class='no'>valid_matches</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
+<span class='kw'>valid_matches</span> <span class='op'>&lt;-</span> <span class='kw'>readr</span>::<span class='fu'>read_csv</span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
 
     
@@ -211,16 +215,16 @@ internal information on the company structure, etc.)</p></li>
 <p>This function ignores but preserves existing groups.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='match_name.html'>match_name()</a></code>, <code><a href='prioritize_level.html'>prioritize_level()</a></code>.</p>
+    <div class='dont-index'><p><code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name()</a></code>, <code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html'>prioritize_level()</a></code>.</p>
 <p>Other user-oriented: 
-<code><a href='match_name.html'>match_name</a>()</code></p></div>
+<code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
 
 <span class='co'># styler: off</span>
-<span class='no'>matched</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
-  ~<span class='no'>sector</span>, ~<span class='no'>sector_ald</span>,  ~<span class='no'>score</span>, ~<span class='no'>id_loan</span>,                ~<span class='no'>level</span>,
+<span class='kw'>matched</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span>(
+  <span class='op'>~</span><span class='kw'>sector</span>, <span class='op'>~</span><span class='kw'>sector_ald</span>,  <span class='op'>~</span><span class='kw'>score</span>, <span class='op'>~</span><span class='kw'>id_loan</span>,                <span class='op'>~</span><span class='kw'>level</span>,
    <span class='st'>"coal"</span>,      <span class='st'>"coal"</span>,       <span class='fl'>1</span>,     <span class='st'>"aa"</span>,     <span class='st'>"ultimate_parent"</span>,
    <span class='st'>"coal"</span>,      <span class='st'>"coal"</span>,       <span class='fl'>1</span>,     <span class='st'>"aa"</span>,    <span class='st'>"direct_loantaker"</span>,
    <span class='st'>"coal"</span>,      <span class='st'>"coal"</span>,       <span class='fl'>1</span>,     <span class='st'>"bb"</span>, <span class='st'>"intermediate_parent"</span>,
@@ -228,29 +232,29 @@ internal information on the company structure, etc.)</p></li>
 )
 <span class='co'># styler: on</span>
 
-<span class='fu'><a href='prioritize_level.html'>prioritize_level</a></span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; [1] "direct_loantaker"    "intermediate_parent" "ultimate_parent"    </div><div class='input'>
+<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html'>prioritize_level</a></span>(<span class='kw'>matched</span>)</div><div class='output co'>#&gt; [1] "direct_loantaker"    "intermediate_parent" "ultimate_parent"    </div><div class='input'>
 <span class='co'># Using default priority</span>
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 5</span><span>
+<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='kw'>matched</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
 #&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 aa      direct_loantaker   
 #&gt; </span><span style='color: #555555;'>2</span><span> coal   coal           1 bb      intermediate_parent</div><div class='input'>
 <span class='co'># Using the reverse of the default priority</span>
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>rev</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='kw'>matched</span>, priority = <span class='kw'>rev</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 aa      ultimate_parent
 #&gt; </span><span style='color: #555555;'>2</span><span> coal   coal           1 bb      ultimate_parent</div><div class='input'>
 <span class='co'># Same</span>
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> ~ <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='no'>.x</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='kw'>matched</span>, priority = <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span>(<span class='kw'>.x</span>))</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level          
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
 #&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 aa      ultimate_parent
 #&gt; </span><span style='color: #555555;'>2</span><span> coal   coal           1 bb      ultimate_parent</div><div class='input'>
 <span class='co'># Using a custom priority</span>
-<span class='no'>bad_idea</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"intermediate_parent"</span>, <span class='st'>"ultimate_parent"</span>, <span class='st'>"direct_loantaker"</span>)
+<span class='kw'>bad_idea</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"intermediate_parent"</span>, <span class='st'>"ultimate_parent"</span>, <span class='st'>"direct_loantaker"</span>)
 
-<span class='fu'>prioritize</span>(<span class='no'>matched</span>, <span class='kw'>priority</span> <span class='kw'>=</span> <span class='no'>bad_idea</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html'>prioritize</a></span>(<span class='kw'>matched</span>, priority = <span class='kw'>bad_idea</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level              
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
 #&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 bb      intermediate_parent
@@ -270,7 +274,7 @@ internal information on the company structure, etc.)</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

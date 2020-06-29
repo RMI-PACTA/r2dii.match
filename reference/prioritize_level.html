@@ -111,6 +111,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.banks">r2dii.banks</a>
+    </li>
+    <li class="divider"></li>
+    <li>
       <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
     </li>
     <li>
@@ -149,14 +153,14 @@
     <p>Arrange unique <code>level</code> values in default order of <code>priority</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>prioritize_level</span>(<span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html'>prioritize_level</a></span>(<span class='kw'>data</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>A data frame, commonly the output of <code><a href='match_name.html'>match_name()</a></code>.</p></td>
+      <td><p>A data frame, commonly the output of <code><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html'>match_name()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -165,8 +169,8 @@
     <p>A character vector of the default level priority per loan.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>matched</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
-  <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+    <pre class="examples"><div class='input'><span class='kw'>matched</span> <span class='op'>&lt;-</span> <span class='kw'>tibble</span>::<span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span>(
+  level = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
     <span class='st'>"intermediate_parent_1"</span>,
     <span class='st'>"direct_loantaker"</span>,
     <span class='st'>"direct_loantaker"</span>,
@@ -175,7 +179,7 @@
     <span class='st'>"intermediate_parent_2"</span>
   )
 )
-<span class='fu'>prioritize_level</span>(<span class='no'>matched</span>)</div><div class='output co'>#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "intermediate_parent_2"
+<span class='fu'><a href='https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html'>prioritize_level</a></span>(<span class='kw'>matched</span>)</div><div class='output co'>#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "intermediate_parent_2"
 #&gt; [4] "ultimate_parent"      </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -192,7 +196,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
