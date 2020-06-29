@@ -136,13 +136,13 @@ check_prepare_loanbook_data <- function(data) {
   )
   check_crucial_names(data, crucial)
 
-  abort_if_has_intermediate_name_but_not_id(data)
+  abort_has_intermediate_not_id(data)
 
 
   invisible(data)
 }
 
-abort_if_has_intermediate_name_but_not_id <- function(data) {
+abort_has_intermediate_not_id <- function(data) {
   missing_id <- setdiff(
     sort(replace_prefix(extract_level_names(data, "name_"), to = "")),
     sort(replace_prefix(extract_level_names(data, "id_"), to = ""))
