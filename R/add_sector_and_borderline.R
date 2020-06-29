@@ -66,12 +66,12 @@ check_classification <- function(data,
   unknown <- setdiff(unique(data[[column]]), reference[[column]])
   some_unknown <- !identical(unknown, character(0))
   if (some_unknown) {
-    warn_some_sector_classification_is_unknown(column, unknown)
+    warn_some_sec_classif_unknown(column, unknown)
   }
 
   invisible(data)
 }
-# --------------------------30
+
 abort_all_sec_classif_unknown <- function(column, known) {
   abort(
     class = "all_sec_classif_unknown",
@@ -82,9 +82,9 @@ abort_all_sec_classif_unknown <- function(column, known) {
   )
 }
 
-warn_some_sector_classification_is_unknown <- function(column, unknown) {
+warn_some_sec_classif_unknown <- function(column, unknown) {
   warn(
-    class = "some_sector_classification_is_unknown",
+    class = "some_sec_classif_unknown",
     message = glue(
       "Some `{column}` are unknown:
       {collapse2(unknown)}"
