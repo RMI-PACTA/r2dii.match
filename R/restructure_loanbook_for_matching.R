@@ -75,7 +75,7 @@ restructure_loanbook <- function(data, overwrite = NULL) {
 }
 
 may_add_sector_and_borderline <- function(data) {
-  if (already_has_sector_and_borderline(data)) {
+  if (has_sector_and_borderline(data)) {
     rlang::warn("Using existing columns `sector` and `borderline`.")
     data2 <- data
   } else {
@@ -115,7 +115,7 @@ overwrite_name_and_sector <- function(data, overwrite) {
     select(names(data))
 }
 
-already_has_sector_and_borderline <- function(data) {
+has_sector_and_borderline <- function(data) {
   has_name(data, "sector") & has_name(data, "borderline")
 }
 
