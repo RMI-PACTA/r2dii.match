@@ -46,7 +46,7 @@ restructure_ald_for_matching <- function(data) {
 #' restructure_loanbook(lbk, overwrite = overwrite_demo)
 #' @noRd
 restructure_loanbook <- function(data, overwrite = NULL) {
-  check_prepare_loanbook_overwrite(overwrite)
+  check_prep_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
   id_level <- extract_level_names(data, prefix = "id_")
@@ -152,12 +152,12 @@ abort_has_intermediate_not_id <- function(data) {
     missing_columns <- paste0("id", missing_id, collapse = ", ")
     abort(
       class = "has_name_but_not_id",
-      glue("Must have missing columns:\n {missing_columns}")
+      sprintf("Must have missing columns:\n %s", missing_columns)
     )
   }
 }
 
-check_prepare_loanbook_overwrite <- function(overwrite) {
+check_prep_loanbook_overwrite <- function(overwrite) {
   if (is.null(overwrite)) {
     return(invisible(overwrite))
   }
