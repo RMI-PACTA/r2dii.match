@@ -102,7 +102,7 @@ match_name <- function(loanbook,
   preferred <- prefer_perfect_match_by(matched, .data$id_2dii)
 
   preferred %>%
-    restore_cols_sector_name_from_ald(prep_ald, by_sector = by_sector) %>%
+    restore_sector_name_ald(prep_ald, by_sector = by_sector) %>%
     # Restore columns from loanbook
     left_join(loanbook_rowid, by = "rowid") %>%
     mutate(rowid = NULL) %>%
@@ -131,7 +131,7 @@ minimum_names_of_match_name <- function(loanbook) {
   unique(c(names(loanbook), names_added_by_match_name()))
 }
 
-restore_cols_sector_name_from_ald <- function(matched, prep_ald, by_sector) {
+restore_sector_name_ald <- function(matched, prep_ald, by_sector) {
   out <- matched %>%
     left_join(rlang::set_names(prep_ald, paste0, "_ald"), by = "alias_ald")
 
