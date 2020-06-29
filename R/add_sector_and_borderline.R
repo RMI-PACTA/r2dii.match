@@ -60,7 +60,7 @@ check_classification <- function(data,
   all_unknown <- !any(data[[column]] %in% reference[[column]])
   known <- unique(reference[[column]])
   if (all_unknown) {
-    abort_all_sec_class_unknown(column, known)
+    abort_all_sec_classif_unknown(column, known)
   }
 
   unknown <- setdiff(unique(data[[column]]), reference[[column]])
@@ -72,9 +72,9 @@ check_classification <- function(data,
   invisible(data)
 }
 # --------------------------30
-abort_all_sec_class_unknown <- function(column, known) {
+abort_all_sec_classif_unknown <- function(column, known) {
   abort(
-    class = "all_sec_class_unknown",
+    class = "all_sec_classif_unknown",
     message = glue(
       "Some `{column}` must be known, i.e. one of:
       {collapse2(known)}"

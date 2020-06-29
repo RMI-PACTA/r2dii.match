@@ -417,7 +417,7 @@ test_that("warns/errors if some/all system classification is unknown", {
   all_bad_system <- fake_lbk(sector_classification_system = c("bad", "bad"))
 
   expect_error(
-    class = "all_sec_class_unknown",
+    class = "all_sec_classif_unknown",
     match_name(all_bad_system, fake_ald())
   )
 
@@ -432,7 +432,7 @@ test_that("warns/errors if some/all system classification is unknown", {
   all_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(bad, bad))
 
   expect_error(
-    class = "all_sec_class_unknown",
+    class = "all_sec_classif_unknown",
     match_name(all_bad_code, fake_ald()),
   )
 
