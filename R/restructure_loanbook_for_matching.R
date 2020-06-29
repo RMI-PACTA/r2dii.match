@@ -68,7 +68,7 @@ restructure_loanbook <- function(data, overwrite = NULL) {
     identify_loans_by_level() %>%
     identify_loans_by_name() %>%
     mutate(source = "loanbook") %>%
-    select(.data$rowid, output_cols_for_prepare_loanbook()) %>%
+    select(.data$rowid, output_cols_for_prep_loanbook()) %>%
     distinct() %>%
     may_overwrite_name_and_sector(overwrite = overwrite) %>%
     add_alias()
@@ -163,12 +163,12 @@ check_prep_loanbook_overwrite <- function(overwrite) {
   }
 
   stopifnot(is.data.frame(overwrite))
-  check_crucial_names(overwrite, output_cols_for_prepare_loanbook())
+  check_crucial_names(overwrite, output_cols_for_prep_loanbook())
 
   invisible(overwrite)
 }
 
-output_cols_for_prepare_loanbook <- function() {
+output_cols_for_prep_loanbook <- function() {
   c(
     "level",
     "id_2dii",
