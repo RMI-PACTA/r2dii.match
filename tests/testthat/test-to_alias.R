@@ -1,6 +1,5 @@
-# Based on https://github.com/2DegreesInvesting/pacta/blob/master/
-#   tests/testthat/test-name-simplification.R
-
+# Based on https://github.com/2DegreesInvesting/pacta/
+# test-name-simplification.R
 test_that("to_alias with `NA` returns `NA_character`", {
   expect_equal(to_alias(NA), NA_character_)
 })
@@ -221,7 +220,7 @@ test_that("from_name_to_alias() is equal to its legacy in pacta", {
 })
 
 # pacta_data_ownership_types ----------------------------------------------
-# datapasta::dpasta(pacta_data_ownership_types)
+# Created with datapasta::dpasta(pacta_data_ownership_types)
 pacta_data_ownership_types <- c(
   "dac",
   "sas",

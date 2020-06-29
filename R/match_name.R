@@ -12,8 +12,8 @@
 #'
 #' @param loanbook,ald data frames structured like [r2dii.data::loanbook_demo]
 #'   and [r2dii.data::ald_demo].
-#' @param by_sector Should names only be compared if companies belong to the same
-#'   `sector`?
+#' @param by_sector Should names only be compared if companies belong to the
+#'   same `sector`?
 #' @param min_score A number between 0-1, to set the minimum `score` threshold.
 #'   A `score` of 1 is a perfect match.
 #' @param method Method for distance calculation. One of `c("osa", "lv", "dl",
@@ -23,7 +23,8 @@
 #' @param overwrite A data frame used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
-#'   vice-versa. This file can be used to manually match loanbook companies to ald.
+#'   vice-versa. This file can be used to manually match loanbook companies to
+#'   ald.
 #'
 #' @family user-oriented
 #'
