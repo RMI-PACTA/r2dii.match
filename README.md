@@ -138,12 +138,3 @@ and added columns bridging all matched loans to their ald counterpart.
 
 [Get
 started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
-
-## Acknowledgements
-
-A big thanks to all 5 contributors who helped with ideas, code, or
-reviews: [cjyetman](https://github.com/cjyetman),
-[Clare2D](https://github.com/Clare2D),
-[georgeharris2deg](https://github.com/georgeharris2deg),
-[koopmand](https://github.com/koopmand),
-[vintented](https://github.com/vintented).

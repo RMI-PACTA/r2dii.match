@@ -31,8 +31,6 @@ restructure_ald_for_matching <- function(data) {
 #'
 #' @inheritParams match_name
 #'
-#' @seealso [r2dii.data::loanbook_description]
-#'
 #' @return A data frame with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
 #'
