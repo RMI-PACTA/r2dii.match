@@ -116,7 +116,6 @@
 <p>We use the package r2dii.match to access the most important functions you’ll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts = <span class="fl">FALSE</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">readr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a></span>)
 </pre></div>
@@ -176,10 +175,10 @@
 <div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="co"># Writting to current working directory </span>
 <span class="kw">loanbook_demo</span> <span class="op">%&gt;%</span> 
-  <span class="fu">write_csv</span>(path = <span class="st">"loanbook_demo.csv"</span>)
+  <span class="kw">readr</span>::<span class="fu">write_csv</span>(path = <span class="st">"loanbook_demo.csv"</span>)
 
 <span class="kw">ald_demo</span> <span class="op">%&gt;%</span> 
-  <span class="fu">write_csv</span>(path = <span class="st">"ald_demo.csv"</span>)
+  <span class="kw">readr</span>::<span class="fu">write_csv</span>(path = <span class="st">"ald_demo.csv"</span>)
 </pre></div>
 <ul>
 <li>For each dataset, replace our demo data with your data.</li>
@@ -188,8 +187,8 @@
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit">
 <span class="co"># Reading from current working directory </span>
-<span class="kw">your_loanbook</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"your_loanbook.csv"</span>)
-<span class="kw">your_ald</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"your_ald.csv"</span>)
+<span class="kw">your_loanbook</span> <span class="op">&lt;-</span> <span class="kw">readr</span>::<span class="fu">read_csv</span>(<span class="st">"your_loanbook.csv"</span>)
+<span class="kw">your_ald</span> <span class="op">&lt;-</span> <span class="kw">readr</span>::<span class="fu">read_csv</span>(<span class="st">"your_ald.csv"</span>)
 </pre></div>
 <p>Here we continue to use the <code>*_demo</code> datasets, pretending they contain the data of your own.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
