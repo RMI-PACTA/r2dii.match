@@ -15,18 +15,8 @@ The package r2dii.match helps you to match counterparties from a loanbook to com
 
 We use the package r2dii.match to access the most important functions you'll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.
 
-```{r, echo=FALSE}
+```{r}
 library(dplyr, warn.conflicts = FALSE)
-# This package doesn't import or suggest readr; it's only used here as a demo
-# but the code isn't evaluated, so we don't readlly need to attach readr
-# library(readr)
-library(r2dii.data)
-library(r2dii.match)
-```
-
-```r
-library(dplyr, warn.conflicts = FALSE)
-library(readr)
 library(r2dii.data)
 library(r2dii.match)
 ```
@@ -50,10 +40,10 @@ If you want to use `loanbook_demo` and `ald_demo` as template to create your own
 ```r
 # Writting to current working directory 
 loanbook_demo %>% 
-  write_csv(path = "loanbook_demo.csv")
+  readr::write_csv(path = "loanbook_demo.csv")
 
 ald_demo %>% 
-  write_csv(path = "ald_demo.csv")
+  readr::write_csv(path = "ald_demo.csv")
 ```
 
 * For each dataset, replace our demo data with your data.
@@ -62,8 +52,8 @@ ald_demo %>%
 
 ```r
 # Reading from current working directory 
-your_loanbook <- read_csv("your_loanbook.csv")
-your_ald <- read_csv("your_ald.csv")
+your_loanbook <- readr::read_csv("your_loanbook.csv")
+your_ald <- readr::read_csv("your_ald.csv")
 ```
 
 Here we continue to use the `*_demo` datasets, pretending they contain the data of your own.
