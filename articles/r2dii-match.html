@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.9000</span>
       </span>
     </div>
 
@@ -115,25 +115,15 @@
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>We use the package r2dii.match to access the most important functions you’ll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
-<span class="co"># r2dii.data is changing rapidly; ensure you have the latest version</span>
-<span class="co"># remotes::update_packages("r2dii.data", upgrade = "ask")</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts = <span class="fl">FALSE</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">readr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a></span>)
 </pre></div>
 </div>
 <div id="format-input-data-loanbook-and-asset-level-data-ald" class="section level2">
 <h2 class="hasAnchor">
-<a href="#format-input-data-loanbook-and-asset-level-data-ald" class="anchor"></a>Format input data <a href="https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_description.html">loanbook</a> and <a href="https://2degreesinvesting.github.io/r2dii.data/reference/ald_description.html">asset-level data (ald)</a>
-</h2>
+<a href="#format-input-data-loanbook-and-asset-level-data-ald" class="anchor"></a>Format input data loanbook and asset-level data (ald)</h2>
 <p>We need two datasets: a “loanbook” and an “asset-level dataset” (ald). These should be formatted like: <a href="https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html"><code>loanbook_demo</code></a> and <a href="https://2degreesinvesting.github.io/r2dii.data/reference/ald_demo.html"><code>ald_demo</code></a> (from the <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data package</a>).</p>
 <p>(A note on sector classification: Matches are preferred when the sector from the <code>loanbook</code> matches the sector from the <code>ald</code>. The <code>loanbook</code> sector is determined internally using the <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> columns. Currently, <code>sector_classification_system</code> must be either <code>ISIC</code> or <code>NACE</code>. If you would like to use a different classification system, please raise an issue in <a href="https://github.com/2DegreesInvesting/r2dii.data">r2dii.data</a> and we can incorporate it.)</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
@@ -249,12 +239,12 @@
 </pre></div>
 <p><code><a href="../reference/match_name.html">match_name()</a></code> defaults to scoring matches between name strings that belong to the same sector. Using <code>by_sector = FALSE</code> removes this limitation – increasing computation time, and the number of potentially incorrect matches to manually validate.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="kw">your_loanbook</span>, <span class="kw">your_ald</span>, by_sector = <span class="fl">FALSE</span>) <span class="op">%&gt;%</span> 
+<span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="kw">your_loanbook</span>, <span class="kw">your_ald</span>, by_sector = <span class="fl">FALSE</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>()
 <span class="co">#&gt; [1] 673</span>
 
 <span class="co"># Compare</span>
-<span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="kw">your_loanbook</span>, <span class="kw">your_ald</span>, by_sector = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span> 
+<span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="kw">your_loanbook</span>, <span class="kw">your_ald</span>, by_sector = <span class="fl">TRUE</span>) <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>()
 <span class="co">#&gt; [1] 502</span>
 </pre></div>
@@ -282,7 +272,8 @@
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="kw">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span>(
-  <span class="kw">your_loanbook</span>, <span class="kw">your_ald</span>, min_score = <span class="fl">0.9</span>, overwrite = <span class="kw">overwrite_demo</span>
+  <span class="kw">your_loanbook</span>, <span class="kw">your_ald</span>,
+  min_score = <span class="fl">0.9</span>, overwrite = <span class="kw">overwrite_demo</span>
 )
 <span class="co">#&gt; Warning: You should only overwrite a sector at the level of the 'direct</span>
 <span class="co">#&gt; loantaker' (DL). If you overwrite a sector at the level of the 'ultimate</span>
@@ -329,9 +320,9 @@
 
 <span class="kw">some_interesting_columns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="kw">id_2dii</span>, <span class="kw">level</span>, <span class="kw">score</span>)
 
-<span class="kw">valid_matches</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span>() <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!</span><span class="op">!</span><span class="op">!</span> <span class="kw">some_interesting_columns</span>)
+<span class="kw">valid_matches</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span>() <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="kw">some_interesting_columns</span>)
 <span class="co">#&gt; # A tibble: 267 x 3</span>
 <span class="co">#&gt;    id_2dii level            score</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;</span>
@@ -354,9 +345,9 @@
 </pre></div>
 <p>You may use a different priority. One way to do that is to pass a function to <code>priority</code>. For example, use <code>rev</code> to reverse the default priority.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="kw">matched</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span>(priority = <span class="kw">rev</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!</span><span class="op">!</span><span class="op">!</span> <span class="kw">some_interesting_columns</span>)
+<span class="kw">matched</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span>(priority = <span class="kw">rev</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="kw">some_interesting_columns</span>)
 <span class="co">#&gt; # A tibble: 267 x 3</span>
 <span class="co">#&gt;    id_2dii level           score</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;</span>
