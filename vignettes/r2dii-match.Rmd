@@ -17,6 +17,7 @@ We use the package r2dii.match to access the most important functions you'll lea
 
 ```{r}
 library(dplyr, warn.conflicts = FALSE)
+library(readr)
 library(r2dii.data)
 library(r2dii.match)
 ```
