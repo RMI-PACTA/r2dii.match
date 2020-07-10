@@ -522,3 +522,9 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
     match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
   )
 })
+
+test_that("outputs unique rows", {
+  lbk <- loanbook_demo[1:3, ]
+  out <- match_name(rbind(lbk, lbk), ald_demo)
+  expect_false(anyDuplicated(out) > 0L)
+})

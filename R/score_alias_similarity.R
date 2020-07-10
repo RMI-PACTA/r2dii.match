@@ -39,13 +39,11 @@ score_alias_similarity <- function(loanbook,
 
   out <- left_join(out, loanbook, by = c("alias_lbk" = "alias"))
 
-  distinct(
-    mutate(
-      out,
-      score = score_string_similarity(
-        out$alias_lbk, out$alias_ald,
-        method = method, p = p
-      )
+  mutate(
+    out,
+    score = score_string_similarity(
+      out$alias_lbk, out$alias_ald,
+      method = method, p = p
     )
   )
 }
