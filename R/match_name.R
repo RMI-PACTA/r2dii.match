@@ -83,7 +83,8 @@ match_name <- function(loanbook,
   prep_ald <- restructure_ald_for_matching(ald)
 
   matched <- score_alias_similarity(
-    prep_lbk, prep_ald, by_sector = by_sector, method = method, p = p
+    prep_lbk, prep_ald,
+    by_sector = by_sector, method = method, p = p
   ) %>%
     filter(.data$score >= min_score)
 
