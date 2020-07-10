@@ -120,7 +120,7 @@ unsuffix_and_regroup <- function(data, old_groups) {
 pick_min_score <- function(data, min_score) {
   data %>%
     filter(.data$score >= min_score) %>%
-    unique()
+    distinct()
 }
 
 named_tibble <- function(names) {
