@@ -1,4 +1,4 @@
-> match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+> tibble::as_tibble(match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo))
 Warning: You should only overwrite a sector at the level of the 'direct
 loantaker' (DL). If you overwrite a sector at the level of the 'ultimate
 parent' (UP) you consequently overwrite all children of that sector,

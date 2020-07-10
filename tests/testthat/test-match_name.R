@@ -272,7 +272,9 @@ test_that("warns overwrite", {
 
   verify_output(
     test_path("output", "match_name-overwrite_warning.txt"),
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    tibble::as_tibble(
+      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    )
   )
 })
 
