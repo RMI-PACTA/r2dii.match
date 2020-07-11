@@ -272,7 +272,9 @@ test_that("warns overwrite", {
 
   verify_output(
     test_path("output", "match_name-overwrite_warning.txt"),
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    as.data.frame(
+      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    )
   )
 })
 
@@ -521,4 +523,10 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
     class = "has_name_but_not_id",
     match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
   )
+})
+
+test_that("outputs unique rows", {
+  lbk <- loanbook_demo[1:3, ]
+  out <- match_name(rbind(lbk, lbk), ald_demo)
+  expect_false(anyDuplicated(out) > 0L)
 })

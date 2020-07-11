@@ -132,17 +132,3 @@ test_that("score_alias_similarity w/ same `alias` in 2 sectors and
     tibble(alias_lbk = "a", alias_ald = "a", sector = c("A", "B"), score = 1)
   )
 })
-
-test_that("score_alias_similarity outputs unique rows", {
-  # Known problematic data
-  lbk <- loanbook_demo %>%
-    tibble::rowid_to_column() %>%
-    filter(name_direct_loantaker == "Tata Group")
-
-  out <- score_alias_similarity(
-    restructure_loanbook(lbk),
-    restructure_ald_for_matching(ald_demo)
-  )
-
-  expect_equal(nrow(out), nrow(unique(out)))
-})

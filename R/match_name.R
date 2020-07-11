@@ -84,43 +84,38 @@ match_name <- function(loanbook,
 
   matched <- score_alias_similarity(
     prep_lbk, prep_ald,
-    by_sector = by_sector,
-    method = method,
-    p = p
+    by_sector = by_sector, method = method, p = p
   ) %>%
-    pick_min_score(min_score)
+    filter(.data$score >= min_score)
 
   no_match <- identical(nrow(matched), 0L)
   if (no_match) {
     rlang::warn("Found no match.")
+
     out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
       unsuffix_and_regroup(old_groups) %>%
-      select(-.data$alias, -.data$alias_ald)
+      select(-.data$alias, -.data$alias_ald) %>%
+      distinct()
+
     return(out)
   }
 
-  preferred <- prefer_perfect_match_by(matched, .data$id_2dii)
-
-  preferred %>%
+  matched %>%
+    prefer_perfect_match_by(.data$id_2dii) %>%
     restore_sector_name_ald(prep_ald, by_sector = by_sector) %>%
     # Restore columns from loanbook
     left_join(loanbook_rowid, by = "rowid") %>%
     mutate(rowid = NULL) %>%
     reorder_names_as_in_loanbook(loanbook_rowid) %>%
     unsuffix_and_regroup(old_groups) %>%
-    select(-.data$alias, -.data$alias_ald)
+    select(-.data$alias, -.data$alias_ald) %>%
+    distinct()
 }
 
 unsuffix_and_regroup <- function(data, old_groups) {
   data %>%
     rename(alias = .data$alias_lbk) %>%
     dplyr::group_by(!!!old_groups)
-}
-
-pick_min_score <- function(data, min_score) {
-  data %>%
-    filter(.data$score >= min_score) %>%
-    unique()
 }
 
 named_tibble <- function(names) {

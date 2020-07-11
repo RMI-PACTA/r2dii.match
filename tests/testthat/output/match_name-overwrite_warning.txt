@@ -1,15 +1,17 @@
-> match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+> as.data.frame(match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo))
 Warning: You should only overwrite a sector at the level of the 'direct
 loantaker' (DL). If you overwrite a sector at the level of the 'ultimate
 parent' (UP) you consequently overwrite all children of that sector,
 which most likely is a mistake.
 
-# A tibble: 1 x 14
-  sector_classifi~ id_ultimate_par~ name_ultimate_p~ id_direct_loant~
-  <chr>            <chr>            <chr>            <chr>           
-1 NACE             UP15             Alpine Knits In~ C294            
-# ... with 10 more variables: name_direct_loantaker <chr>,
-#   sector_classification_direct_loantaker <dbl>, id_2dii <chr>, level <chr>,
-#   sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>, score <dbl>,
-#   source <chr>
+  sector_classification_system id_ultimate_parent
+1                         NACE               UP15
+             name_ultimate_parent id_direct_loantaker
+1 Alpine Knits India Pvt. Limited                C294
+                name_direct_loantaker sector_classification_direct_loantaker
+1 Yuamen Xinneng Thermal Power Co Ltd                                   3511
+  id_2dii           level sector sector_ald                            name
+1     UP1 ultimate_parent  power      power Alpine Knits India Pvt. Limited
+                         name_ald score   source
+1 alpine knits india pvt. limited     1 loanbook
 
