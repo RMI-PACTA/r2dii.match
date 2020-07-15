@@ -25,7 +25,13 @@ library(r2dii.match)
 
 We need two datasets: a "loanbook" and an "asset-level dataset" (ald). These should be formatted like:  [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html) and [`ald_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/ald_demo.html) (from the [r2dii.data package](https://2degreesinvesting.github.io/r2dii.data)).
 
-(A note on sector classification: Matches are preferred when the sector from the `loanbook` matches the sector from the `ald`. The `loanbook` sector is determined internally using the `sector_classification_system` and `sector_classification_direct_loantaker` columns. Currently, `sector_classification_system` must be either `ISIC` or `NACE`. If you would like to use a different classification system, please raise an issue in [r2dii.data](https://github.com/2DegreesInvesting/r2dii.data) and we can incorporate it.)
+A note on sector classification: Matches are preferred when the sector from the `loanbook` matches the sector from the `ald`. The `loanbook` sector is determined internally using the `sector_classification_system` and `sector_classification_direct_loantaker` columns. Currently, we only allow a couple specific values for `sector_classification_system`:
+```{r}
+sector_classifications$code_system %>% 
+  unique()
+```
+
+If you would like to use a different classification system, please raise an issue in [r2dii.data](https://github.com/2DegreesInvesting/r2dii.data) and we can incorporate it.
 
 ```{r}
 loanbook_demo
@@ -127,7 +133,7 @@ Notice the warning.
 
 ## Prioritize validated matches by level
 
-The validated dataset may have multiple matches per loan. Consider the case where a loan is given to "Acme Power USA", a subsidiary of "Acme Power Co.". There may be both "Acme Power USA" and "Acme Power Co." in the `ald`, and so there could be two valid matches for this loan. To get the best match only, use `prioritize()` -- it picks rows where `score` is 2 and `level` per loan is of highest `priority()`:
+The validated dataset may have multiple matches per loan. Consider the case where a loan is given to "Acme Power USA", a subsidiary of "Acme Power Co.". There may be both "Acme Power USA" and "Acme Power Co." in the `ald`, and so there could be two valid matches for this loan. To get the best match only, use `prioritize()` -- it picks rows where `score` is 1 and `level` per loan is of highest `priority()`:
 
 ```{r}
 # Pretend we validated the matched dataset
