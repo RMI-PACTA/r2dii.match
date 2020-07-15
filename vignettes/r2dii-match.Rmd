@@ -27,7 +27,7 @@ We need two datasets: a "loanbook" and an "asset-level dataset" (ald). These sho
 
 A note on sector classification: Matches are preferred when the sector from the `loanbook` matches the sector from the `ald`. The `loanbook` sector is determined internally using the `sector_classification_system` and `sector_classification_direct_loantaker` columns. Currently, we only allow a couple specific values for `sector_classification_system`:
 ```{r}
-sector_classifications$code_system %>% 
+sector_classifications$code_system %>%
   unique()
 ```
 
