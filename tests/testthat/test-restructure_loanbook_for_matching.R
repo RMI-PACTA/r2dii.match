@@ -3,26 +3,8 @@ library(r2dii.data)
 loanbook_rowid <- loanbook_demo %>%
   tibble::rowid_to_column()
 
-test_that("warns overwriting id_ vars", {
-  expect_message(
-    restructure_loanbook(loanbook_rowid),
-    "Uniquifying.*id_direct_loantaker"
-  )
-
-  expect_message(
-    restructure_loanbook(loanbook_rowid),
-    "Uniquifying.*id_ultimate_parent"
-  )
-})
-
 test_that("may input add_sector_and_borderline(data)", {
-  expect_warning(
-    out <- restructure_loanbook(
-      add_sector_and_borderline(loanbook_rowid)
-    ),
-    "Using existing columns `sector` and `borderline`."
-  )
-
+  out <- restructure_loanbook(add_sector_and_borderline(loanbook_rowid))
   expect_equal(out, restructure_loanbook(loanbook_rowid))
 })
 

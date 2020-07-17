@@ -100,20 +100,6 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
   expect_equal(nrow(out), 0L)
 })
 
-test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
-          a match", {
-  # Lookup code to sectors via r2dii.data::sector_classifications$code
-  code_for_sector_power <- 27
-  sector_not_power <- "coal"
-
-  out <- match_name(
-    fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
-    fake_ald(sector = sector_not_power),
-    by_sector = FALSE
-  )
-  expect_equal(nrow(out), 1L)
-})
-
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
     sector_classification_system = "NACE",
@@ -185,6 +171,18 @@ test_that("takes unprepared loanbook and ald datasets", {
   expect_no_error(match_name(slice(loanbook_demo, 1), ald_demo))
 })
 
+test_that("w/ loanbook that matches nothing, col types are correct", {
+  lbk2 <- slice(loanbook_demo, 2)
+  expect_warning(
+    out <- match_name(lbk2, ald_demo),
+    "no match"
+  )
+
+  types <- unique(purrr::map_chr(out, typeof))
+  more_types_than_just_character <- length(types) > 1L
+  expect_true(more_types_than_just_character)
+})
+
 test_that("w/ loanbook that matches nothing, yields expected", {
   # Matches cero row ...
   lbk2 <- slice(loanbook_demo, 2)
@@ -222,15 +220,6 @@ test_that("w/ 1 lbk row matching ultimate, yields expected names", {
 test_that("takes `min_score`", {
   expect_no_error(
     match_name(slice(loanbook_demo, 1), ald_demo, min_score = 0.5)
-  )
-})
-
-test_that("takes `by_sector`", {
-  expect_false(
-    identical(
-      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
-      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
-    )
   )
 })
 
@@ -358,8 +347,8 @@ test_that("preserves groups", {
 
 test_that("outputs id consistent with level", {
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
-  expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
-  expect_equal(out$id_2dii, c("UP1", "DL1"))
+  expect_equal(out$level, sort(c("ultimate_parent", "direct_loantaker")))
+  expect_equal(out$id_2dii, sort(c("UP1", "DL1")))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
@@ -523,10 +512,4 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
     class = "has_name_but_not_id",
     match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
   )
-})
-
-test_that("outputs unique rows", {
-  lbk <- loanbook_demo[1:3, ]
-  out <- match_name(rbind(lbk, lbk), ald_demo)
-  expect_false(anyDuplicated(out) > 0L)
 })

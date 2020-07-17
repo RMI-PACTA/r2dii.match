@@ -15,11 +15,11 @@
 #' restructure_ald_for_matching(r2dii.data::ald_demo)
 #' @noRd
 restructure_ald_for_matching <- function(data) {
-  data %>%
-    check_crucial_names(c("name_company", "sector")) %>%
-    select(name = .data$name_company, .data$sector) %>%
-    distinct() %>%
-    add_alias()
+  check_crucial_names(data, c("name_company", "sector"))
+
+  out <- select(data, name = .data$name_company, .data$sector)
+  out <- distinct(out)
+  add_alias(out)
 }
 
 #' Restructure  loanbook dataset (lbk) in preparation for fuzzy matching
@@ -48,7 +48,6 @@ restructure_loanbook <- function(data, overwrite = NULL) {
   check_prepare_loanbook_data(data)
 
   id_level <- extract_level_names(data, prefix = "id_")
-  message("Uniquifying: ", paste0(id_level, collapse = ", "))
   for (i in seq_along(id_level)) {
     data <- uniquify_id_column(data, id_column = id_level[i])
   }
@@ -56,28 +55,22 @@ restructure_loanbook <- function(data, overwrite = NULL) {
   name_level <- extract_level_names(data, prefix = "name_")
   important_columns <- c("rowid", id_level, name_level)
 
-  data %>%
-    may_add_sector_and_borderline() %>%
-    select(
-      .data$rowid,
-      important_columns,
-      .data$sector
-    ) %>%
-    identify_loans_by_level() %>%
-    identify_loans_by_name() %>%
-    mutate(source = "loanbook") %>%
-    select(.data$rowid, output_cols_for_prep_loanbook()) %>%
-    distinct() %>%
-    may_overwrite_name_and_sector(overwrite = overwrite) %>%
-    add_alias()
+  out <- may_add_sector_and_borderline(data)
+  out <- select(out, .data$rowid, important_columns, .data$sector)
+  out <- identify_loans_by_level(out)
+  out <- identify_loans_by_name(out)
+  out <- mutate(out, source = "loanbook")
+  out <- select(out, .data$rowid, output_cols_for_prep_loanbook())
+  out <- distinct(out)
+  out <- may_overwrite_name_and_sector(out, overwrite = overwrite)
+  out <- add_alias(out)
+  out
 }
 
 may_add_sector_and_borderline <- function(data) {
   if (has_sector_and_borderline(data)) {
-    rlang::warn("Using existing columns `sector` and `borderline`.")
     data2 <- data
   } else {
-    message("Adding new columns `sector` and `borderline`.")
     data2 <- add_sector_and_borderline(data)
   }
 
@@ -118,7 +111,8 @@ has_sector_and_borderline <- function(data) {
 }
 
 add_alias <- function(data) {
-  mutate(data, alias = to_alias(.data$name))
+  aliases <- to_alias(data[["name"]])
+  mutate(data, alias = aliases)
 }
 
 check_prepare_loanbook_data <- function(data) {
@@ -141,10 +135,9 @@ check_prepare_loanbook_data <- function(data) {
 }
 
 abort_has_intermediate_not_id <- function(data) {
-  missing_id <- setdiff(
-    sort(replace_prefix(extract_level_names(data, "name_"), to = "")),
-    sort(replace_prefix(extract_level_names(data, "id_"), to = ""))
-  )
+  x <- replace_prefix(extract_level_names(data, "name_"), to = "")
+  y <- replace_prefix(extract_level_names(data, "id_"), to = "")
+  missing_id <- setdiff(x, y)
 
   if (rlang::is_true(length(missing_id) > 0L)) {
     missing_columns <- paste0("id", missing_id, collapse = ", ")
