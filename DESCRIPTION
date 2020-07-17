@@ -44,14 +44,17 @@ BugReports:
 Depends: 
     R (>= 3.4)
 Imports: 
+    data.table,
     dplyr (>= 0.8.5),
     glue,
     magrittr,
     purrr,
     r2dii.data,
+    readr,
     rlang,
     stringdist,
     stringi,
+    stringr,
     tibble,
     tidyr,
     tidyselect
