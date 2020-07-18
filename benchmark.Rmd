@@ -1,0 +1,89 @@
+---
+title: "Benchmark `match_name()` in development vs. on CRAN"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  comment = "#>", 
+  collapse = TRUE, 
+  # Benchmark each run 
+  cache = FALSE
+)
+```
+
+```{r}
+library(r2dii.data)
+library(tidyverse)
+```
+
+Setup 2 different versions of `match_name`: (1) in development and (2) on cran.
+
+```{r}
+# The older version on CRAN
+packageVersion("r2dii.match")
+
+# Copy of match_name on CRAN
+cran <- r2dii.match::match_name
+
+# The newer version on the PR "profile"
+devtools::load_all()
+# The newer version in development
+packageVersion("r2dii.match")
+
+# Copy of match_name in development
+devel <- r2dii.match::match_name
+```
+
+
+
+Both versions have different source code.
+
+```{r}
+# Confirm the two versions of `match_name` are different
+identical(devel, cran)
+
+# Show some data.table code
+head(tail(devel, 20))
+
+# Show some dplyr code
+head(tail(cran, 20))
+```
+
+Version in development uses less memory and runs faster.
+
+```{r, cache=FALSE}
+benchmark <- bench::mark(
+  # Don't check that the output is identical; rows-order is different^[1]
+  check = FALSE,
+  iterations = 5,
+  out_devel = out_devel <- devel(loanbook_demo, ald_demo),
+  out_cran  = out_cran  <-  cran(loanbook_demo, ald_demo)
+)
+
+benchmark
+
+benchmark %>%
+  summarise(
+    # How many times less memory is allocating the version in development?^[2]
+    times_less_memory  = as.double(mem_alloc)[[2]]  / as.double(mem_alloc)[[1]],
+    # How many times faster is the version in development?
+    times_less_time    = as.double(total_time)[[2]] / as.double(total_time)[[1]]
+  )
+```
+
+
+
+Notes:
+
+* `[1]`: Caveat: If we reorder the rows in the same way, both outputs are equivalent.
+
+```{r}
+testthat::expect_equivalent(
+  out_devel %>% arrange(across(names(.))),
+  out_cran  %>% arrange(across(names(.)))
+)
+```
+
+* `[2]: In Rmarkdown I fail to get a result for `times_less_memory`; in the console I get `times_less_memory` of up to 5.5; and `times_less_time` of up to 9.
