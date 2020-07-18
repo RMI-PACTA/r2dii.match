@@ -36,8 +36,6 @@ packageVersion("r2dii.match")
 devel <- r2dii.match::match_name
 ```
 
-
-
 Both versions have different source code.
 
 ```{r}
@@ -51,7 +49,7 @@ head(tail(devel, 20))
 head(tail(cran, 20))
 ```
 
-Version in development uses less memory and runs faster.
+The version in development uses less memory and runs faster.
 
 ```{r, cache=FALSE}
 benchmark <- bench::mark(
@@ -72,8 +70,6 @@ benchmark %>%
     times_less_time    = as.double(total_time)[[2]] / as.double(total_time)[[1]]
   )
 ```
-
-
 
 Notes:
 

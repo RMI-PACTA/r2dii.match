@@ -75,7 +75,7 @@ head(tail(cran, 20))
 #> 11         method = method, p = p) %>% pick_min_score(min_score)
 ```
 
-Version in development uses less memory and runs faster.
+The version in development uses less memory and runs faster.
 
 ``` r
 benchmark <- bench::mark(
@@ -91,8 +91,8 @@ benchmark
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 out_devel   161.3ms    168ms     5.28         NA     4.23
-#> 2 out_cran       1.1s     1.2s     0.776        NA     5.90
+#> 1 out_devel  152.25ms 158.26ms     5.37         NA     4.30
+#> 2 out_cran      1.11s    1.22s     0.773        NA     5.88
 
 benchmark %>%
   summarise(
@@ -104,7 +104,7 @@ benchmark %>%
 #> # A tibble: 1 x 2
 #>   times_less_memory times_less_time
 #>               <dbl>           <dbl>
-#> 1                NA            6.81
+#> 1                NA            6.94
 ```
 
 Notes:
