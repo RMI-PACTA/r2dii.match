@@ -118,7 +118,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     source = "loanbook"
   )
 
-  expect_equal(
+  expect_equivalent(
     match_name(fake_lbk(), fake_ald()),
     expected
   )
@@ -308,23 +308,6 @@ test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
   )
   expect_true(
     all(nanimo_scores == 1)
-  )
-})
-
-test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
-  # styler: off
-  data <- tribble(
-    ~var,  ~score,
-        1,      1,
-        2,      1,
-        2,   0.99,
-        3,   0.99,
-  )
-  # styler: on
-
-  expect_equal(
-    prefer_perfect_match_by(data, var),
-    tibble(var = c(1, 2, 3), score = c(1, 1, 0.99))
   )
 })
 

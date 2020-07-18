@@ -81,63 +81,50 @@ match_name <- function(loanbook,
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
   prep_ald <- restructure_ald_for_matching(ald)
 
-  x <- expand_alias(prep_lbk, prep_ald)
+  a <- expand_alias(prep_lbk, prep_ald)
+  setDT(a)
 
-
-
-  setDT(x)
-
-  if (identical(nrow(x), 0L)) {
+  if (identical(nrow(a), 0L)) {
     rlang::warn("Found no match.")
     return(empty_loanbook_tibble(loanbook, old_groups))
   }
 
-  x <- x[ ,
-          score := stringdist::stringsim(
-           alias_lbk, alias_ald, method = method, p = p
-          )][score >= min_score]
+  a <- unique(a)[ ,
+                  score := stringdist::stringsim(
+                    alias_lbk, alias_ald, method = method, p = p
+                  )]
+  setkey(a, score)
+  a <- a[score >= min_score, ]
 
-  if (identical(nrow(x), 0L)) {
+  if (identical(nrow(a), 0L)) {
     rlang::warn("Found no match.")
     return(empty_loanbook_tibble(loanbook, old_groups))
   }
 
-  dty <- rename(prep_lbk, alias_lbk = .data$alias)
-  dty <- setDT(dty)
-  x <- unique(x)
-  matched <- x[dty, on = "alias_lbk", nomatch = 0]
-  matched <- tibble::as_tibble(matched)
+  l <- rename(prep_lbk, alias_lbk = .data$alias)
+  setDT(l)
+  matched <- a[l, on = "alias_lbk", nomatch = 0]
+  matched <- matched[ ,
+                      pick := none_is_one(score) | some_is_one(score),
+                      by = id_2dii][pick == TRUE][, pick := NULL]
 
-
-  out <- prefer_perfect_match_by(matched, .data$id_2dii)
-  # DT <- setDT(matched)
-  # out <- DT[all(score != 1L) | (any(score == 1L) & score == 1L),
-  #    lapply(.SD, identity),
-  #    by = id_2dii]
-  # out <- as_tibble(out)
-
-
-
-  # out <- restore_sector_name_ald(out, prep_ald, by_sector = by_sector)
   prep_ald <- rlang::set_names(prep_ald, paste0, "_ald")
-  out <- left_join(out, prep_ald, by = "alias_ald")
+  setDT(prep_ald)
+  matched <- prep_ald[matched, on = "alias_ald"]
 
   if (by_sector) {
-    out <- filter(out, .data$sector == .data$sector_ald)
+    matched <- matched[sector == sector_ald, ]
   }
 
-
-
   # Restore columns from loanbook
-  out <- left_join(out, loanbook_rowid, by = "rowid")
+  setDT(loanbook_rowid)
+  matched <- loanbook_rowid[matched, on = "rowid"]
+  matched <- matched[, rowid := NULL]
+  matched <- as_tibble(matched)
 
-  out <- mutate(out, rowid = NULL)
-
-
-
-  out <- reorder_names_as_in_loanbook(out, loanbook_rowid)
-  out <- unsuffix_and_regroup(out, old_groups)
-  select(out, -.data$alias, -.data$alias_ald)
+  matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
+  matched <- unsuffix_and_regroup(matched, old_groups)
+  select(matched, -.data$alias, -.data$alias_ald)
 }
 
 empty_loanbook_tibble <- function(loanbook, old_groups) {
@@ -183,8 +170,7 @@ expand_alias <- function(loanbook, ald) {
   # setnames(ald, old = "alias", new = "alias_ald")
   #
   # la <- loanbook[ald,
-  #                on = "sector",
-  #                allow.cartesian = TRUE][ ,
+  #                on = "sector"][ ,
   #                  CJ(alias_lbk, alias_ald, sorted = FALSE, unique = TRUE),
   #                  by = sector]
   # tibble::as_tibble(la)
@@ -211,26 +197,6 @@ named_tibble <- function(names) {
 
 minimum_names_of_match_name <- function(loanbook) {
   unique(c(names(loanbook), names_added_by_match_name()))
-}
-
-restore_sector_name_ald <- function(matched, prep_ald, by_sector) {
-  out <- left_join(
-    matched, rlang::set_names(prep_ald, paste0, "_ald"),
-    by = "alias_ald"
-  )
-
-  if (!by_sector) {
-    return(out)
-  }
-
-  filter(out, .data$sector == .data$sector_ald)
-}
-
-prefer_perfect_match_by <- function(data, ...) {
-  out <- data
-  out <- group_by(out, ...)
-  out <- filter(out, none_is_one(.data$score) | some_is_one(.data$score))
-  ungroup(out)
 }
 
 none_is_one <- function(x) {
