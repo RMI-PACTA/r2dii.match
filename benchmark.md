@@ -91,8 +91,8 @@ benchmark
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 out_devel  152.25ms 158.26ms     5.37         NA     4.30
-#> 2 out_cran      1.11s    1.22s     0.773        NA     5.88
+#> 1 out_devel  154.89ms 162.96ms     5.30         NA     4.24
+#> 2 out_cran      1.14s    1.24s     0.777        NA     5.91
 
 benchmark %>%
   summarise(
@@ -104,23 +104,22 @@ benchmark %>%
 #> # A tibble: 1 x 2
 #>   times_less_memory times_less_time
 #>               <dbl>           <dbl>
-#> 1                NA            6.94
+#> 1                NA            6.82
 ```
 
-Notes:
+-----
 
-  - `[1]`: Caveat: If we reorder the rows in the same way, both outputs
-    are equivalent.
-
-<!-- end list -->
+`[1]`: If we reorder the rows in the same way, both outputs are
+equivalent.
 
 ``` r
+# No output means that the two expressions are indeed equivalent
 testthat::expect_equivalent(
   out_devel %>% arrange(across(names(.))),
   out_cran  %>% arrange(across(names(.)))
 )
 ```
 
-  - `[2]: In Rmarkdown I fail to get a result for`times\_less\_memory`;
-    in the console I get`times\_less\_memory`of up to 5.5;
-    and`times\_less\_time\` of up to 9.
+`[2]`: In Rmarkdown I fail to get a result for `times_less_memory`; in
+the console I get `times_less_memory` of up to 5.5; and
+`times_less_time` of up to 9.

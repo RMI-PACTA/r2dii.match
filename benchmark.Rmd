@@ -71,15 +71,16 @@ benchmark %>%
   )
 ```
 
-Notes:
+----
 
-* `[1]`: Caveat: If we reorder the rows in the same way, both outputs are equivalent.
+`[1]`: If we reorder the rows in the same way, both outputs are equivalent.
 
 ```{r}
+# No output means that the two expressions are indeed equivalent
 testthat::expect_equivalent(
   out_devel %>% arrange(across(names(.))),
   out_cran  %>% arrange(across(names(.)))
 )
 ```
 
-* `[2]: In Rmarkdown I fail to get a result for `times_less_memory`; in the console I get `times_less_memory` of up to 5.5; and `times_less_time` of up to 9.
+`[2]`: In Rmarkdown I fail to get a result for `times_less_memory`; in the console I get `times_less_memory` of up to 5.5; and `times_less_time` of up to 9.
