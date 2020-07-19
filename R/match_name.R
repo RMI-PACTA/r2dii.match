@@ -136,8 +136,8 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
     select(-.data$alias, -.data$alias_ald)
 
   tmp <- tempfile()
-  write.csv(out, tmp, row.names = FALSE)
-  read.csv(tmp, stringsAsFactors = FALSE, colClasses = types) %>%
+  utils::write.csv(out, tmp, row.names = FALSE)
+  utils::read.csv(tmp, stringsAsFactors = FALSE, colClasses = types) %>%
     tibble::as_tibble()
 }
 

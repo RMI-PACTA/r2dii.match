@@ -55,7 +55,8 @@ Imports:
     stringi,
     tibble,
     tidyr,
-    tidyselect
+    tidyselect,
+    utils
 Suggests: 
     covr,
     rmarkdown,
