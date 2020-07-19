@@ -1,21 +1,45 @@
 Benchmark `match_name()` in development vs. on CRAN
 ================
 
+Some users
+[reported](https://github.com/2DegreesInvesting/r2dii.match/issues/214)
+that the
+[`match_name()`](https://2degreesinvesting.github.io/r2dii.match/)
+crashed with large files. However efficient, `match_name()` – and any
+function – will always have a limit to how much data you can feed it
+before your computer crashes. Although your data maybe too big to work
+with in your computer, you can still work with it in two ways: (1) Pick
+a smaller subset: For example, you may pick all rows from a specific
+sector (see
+[`filter()`](https://dplyr.tidyverse.org/reference/filter.html)), or you
+may pick a representative sample from all sectors (see
+[`slice_sample()`](https://dplyr.tidyverse.org/reference/slice.html));
+(2) Compute not on your local computer but on a more powerful server.
+For more details, watch RStudio’s webinar on [Working with Big Data in
+R](https://dplyr.tidyverse.org/reference/filter.html).
+
+However you use it, we want `match_name()` to take as little time and
+memory as it is reasonably possible. Here we compare two versions of
+`match_name()`: The version on CRAN versus the version in-development.
+Compared to the version on CRAN, the version in-development is now
+several times faster, and uses several times less memory. This document
+shows the details.
+
+-----
+
+Use some packages.
+
 ``` r
+library(bench)
+library(devtools)
+library(dplyr)
+library(fs)
 library(r2dii.data)
-library(tidyverse)
-#> ── Attaching packages ───────────────────── tidyverse 1.3.0 ──
-#> ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
-#> ✓ tibble  3.0.3     ✓ dplyr   1.0.0
-#> ✓ tidyr   1.1.0     ✓ stringr 1.4.0
-#> ✓ readr   1.3.1     ✓ forcats 0.5.0
-#> ── Conflicts ──────────────────────── tidyverse_conflicts() ──
-#> x dplyr::filter() masks stats::filter()
-#> x dplyr::lag()    masks stats::lag()
 ```
 
-Setup 2 different versions of `match_name`: (1) in development and (2)
-on cran.
+Let’s use different names to refer to each of the two versions of
+`match_name()` – the version in development (`devel`), and the one on
+CRAN (`cran`).
 
 ``` r
 # The older version on CRAN
@@ -26,19 +50,7 @@ packageVersion("r2dii.match")
 cran <- r2dii.match::match_name
 
 # The newer version on the PR "profile"
-devtools::load_all()
-#> Loading r2dii.match
-#> 
-#> Attaching package: 'testthat'
-#> The following object is masked from 'package:dplyr':
-#> 
-#>     matches
-#> The following object is masked from 'package:purrr':
-#> 
-#>     is_null
-#> The following object is masked from 'package:tidyr':
-#> 
-#>     matches
+suppressMessages(devtools::load_all(fs::path_home("git", "r2dii.match")))
 # The newer version in development
 packageVersion("r2dii.match")
 #> [1] '0.0.3.9000'
@@ -53,26 +65,6 @@ Both versions have different source code.
 # Confirm the two versions of `match_name` are different
 identical(devel, cran)
 #> [1] FALSE
-
-# Show some data.table code
-head(tail(devel, 20))
-#>                                                                                  
-#> 22     }                                                                         
-#> 23     l <- rename(prep_lbk, alias_lbk = .data$alias)                            
-#> 24     setDT(l)                                                                  
-#> 25     matched <- a[l, on = "alias_lbk", nomatch = 0]                            
-#> 26     matched <- matched[, `:=`(pick, none_is_one(score) | some_is_one(score)), 
-#> 27         by = id_2dii][pick == TRUE][, `:=`(pick, NULL)]
-
-# Show some dplyr code
-head(tail(cran, 20))
-#>                                                                                     
-#> 6      loanbook_rowid <- tibble::rowid_to_column(loanbook)                          
-#> 7      prep_lbk <- suppressMessages(restructure_loanbook(loanbook_rowid,            
-#> 8          overwrite = overwrite))                                                  
-#> 9      prep_ald <- restructure_ald_for_matching(ald)                                
-#> 10     matched <- score_alias_similarity(prep_lbk, prep_ald, by_sector = by_sector, 
-#> 11         method = method, p = p) %>% pick_min_score(min_score)
 ```
 
 The version in development uses less memory and runs faster.
@@ -91,8 +83,8 @@ benchmark
 #> # A tibble: 2 x 6
 #>   expression      min   median `itr/sec` mem_alloc `gc/sec`
 #>   <bch:expr> <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-#> 1 out_devel  154.89ms 162.96ms     5.30         NA     4.24
-#> 2 out_cran      1.14s    1.24s     0.777        NA     5.91
+#> 1 out_devel  165.09ms 170.65ms     4.66         NA    14.0 
+#> 2 out_cran      1.04s    1.21s     0.801        NA     8.17
 
 benchmark %>%
   summarise(
@@ -104,7 +96,7 @@ benchmark %>%
 #> # A tibble: 1 x 2
 #>   times_less_memory times_less_time
 #>               <dbl>           <dbl>
-#> 1                NA            6.82
+#> 1                NA            5.82
 ```
 
 -----

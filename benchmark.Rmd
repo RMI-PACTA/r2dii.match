@@ -3,22 +3,34 @@ title: "Benchmark `match_name()` in development vs. on CRAN"
 output: github_document
 ---
 
+Some users [reported](https://github.com/2DegreesInvesting/r2dii.match/issues/214) that the [`match_name()`](https://2degreesinvesting.github.io/r2dii.match/) crashed with large files. However efficient, `match_name()` -- and any function -- will always have a limit to how much data you can feed it before your computer crashes. Although your data maybe too big to work with in your computer, you can still work with it in two ways: (1) Pick a smaller subset: For example, you may pick all rows from a specific sector (see [`filter()`](https://dplyr.tidyverse.org/reference/filter.html)), or you may pick a representative sample from all sectors (see [`slice_sample()`](https://dplyr.tidyverse.org/reference/slice.html));
+(2) Compute not on your local computer but on a more powerful server. For more details, watch RStudio's webinar on [Working with Big Data in R](https://dplyr.tidyverse.org/reference/filter.html). 
+
+However you use it, we want `match_name()` to take as little time and memory as it is reasonably possible. Here we compare two versions of `match_name()`: The version on CRAN versus the version in-development. Compared to the version on CRAN, the version in-development is now several times faster, and uses several times less memory. This document shows the details.
+
+***
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE, 
   comment = "#>", 
   collapse = TRUE, 
   # Benchmark each run 
-  cache = FALSE
+  cache = T
 )
 ```
 
-```{r}
+Use some packages.
+
+```{r message=FALSE, warning=FALSE}
+library(bench)
+library(devtools)
+library(dplyr)
+library(fs)
 library(r2dii.data)
-library(tidyverse)
 ```
 
-Setup 2 different versions of `match_name`: (1) in development and (2) on cran.
+Let's use different names to refer to each of the two versions of `match_name()` -- the version in development (`devel`), and the one on CRAN (`cran`).
 
 ```{r}
 # The older version on CRAN
@@ -28,7 +40,7 @@ packageVersion("r2dii.match")
 cran <- r2dii.match::match_name
 
 # The newer version on the PR "profile"
-devtools::load_all()
+suppressMessages(devtools::load_all(fs::path_home("git", "r2dii.match")))
 # The newer version in development
 packageVersion("r2dii.match")
 
@@ -41,17 +53,11 @@ Both versions have different source code.
 ```{r}
 # Confirm the two versions of `match_name` are different
 identical(devel, cran)
-
-# Show some data.table code
-head(tail(devel, 20))
-
-# Show some dplyr code
-head(tail(cran, 20))
 ```
 
 The version in development uses less memory and runs faster.
 
-```{r, cache=FALSE}
+```{r}
 benchmark <- bench::mark(
   # Don't check that the output is identical; rows-order is different^[1]
   check = FALSE,
