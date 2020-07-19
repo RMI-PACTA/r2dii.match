@@ -129,17 +129,19 @@ match_name <- function(loanbook,
 
 empty_loanbook_tibble <- function(loanbook, old_groups) {
   types <- loanbook %>%
-    purrr::map(typeof) %>%
-    purrr::map(stringr::str_sub, 1, 1)
+    purrr::map_chr(typeof)
 
   out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
     unsuffix_and_regroup(old_groups) %>%
     select(-.data$alias, -.data$alias_ald)
 
-  readr::type_convert(out, types)
+  tmp <- tempfile()
+  write.csv(out, tmp, row.names = FALSE)
+  read.csv(tmp, stringsAsFactors = FALSE, colClasses = types) %>%
+    tibble::as_tibble()
 }
 
-
+# readr -------------------------------------------------------------------
 
 
 #' @examples
