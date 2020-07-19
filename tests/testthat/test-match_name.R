@@ -496,3 +496,14 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
     match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
   )
 })
+
+test_that("0-row output has expected column type", {
+  lbk <- slice(loanbook_demo, 2)
+  out <- match_name(lbk, ald_demo)
+
+  lbk_types <- purrr::map_chr(lbk, typeof)
+  out_types <- purrr::map_chr(out, typeof)
+
+  same <- intersect(names(out_types), names(lbk_types))
+  expect_identical(lbk_types[same], out_types[same])
+})

@@ -50,7 +50,6 @@ Imports:
     magrittr,
     purrr,
     r2dii.data,
-    readr,
     rlang,
     stringdist,
     stringi,
