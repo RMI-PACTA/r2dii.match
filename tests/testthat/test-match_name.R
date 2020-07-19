@@ -499,7 +499,11 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
 
 test_that("0-row output has expected column type", {
   lbk <- slice(loanbook_demo, 2)
+<<<<<<< HEAD
   out <- expect_warning(match_name(lbk, ald_demo), "no match")
+=======
+  out <- match_name(lbk, ald_demo)
+>>>>>>> profile
 
   lbk_types <- purrr::map_chr(lbk, typeof)
   out_types <- purrr::map_chr(out, typeof)
@@ -508,7 +512,9 @@ test_that("0-row output has expected column type", {
   expect_identical(lbk_types[same], out_types[same])
 })
 
+
 test_that("with loanbook_demo and ald_demo outputs known output", {
   out <- arrange(match_name(loanbook_demo, ald_demo), across())
   expect_known_value(out, "ref-match-name", update = FALSE)
 })
+
