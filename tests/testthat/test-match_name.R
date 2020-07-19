@@ -511,6 +511,11 @@ test_that("0-row output has expected column type", {
 
 test_that("with loanbook_demo and ald_demo outputs known output", {
   out <- arrange(match_name(loanbook_demo, ald_demo), across())
+
+  expect_known_output(
+    as.data.frame(out), "ref-match-name-output", print = TRUE, update = FALSE
+  )
+
   expect_known_value(out, "ref-match-name", update = FALSE)
 })
 
