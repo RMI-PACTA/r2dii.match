@@ -507,3 +507,8 @@ test_that("0-row output has expected column type", {
   same <- intersect(names(out_types), names(lbk_types))
   expect_identical(lbk_types[same], out_types[same])
 })
+
+test_that("with loanbook_demo and ald_demo outputs known output", {
+  out <- arrange(match_name(loanbook_demo, ald_demo), across())
+  expect_known_value(out, "ref-match-name", update = FALSE)
+})
