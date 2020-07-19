@@ -111,7 +111,7 @@ may_remove_ownership <- function(remove_ownership, ownership, .init) {
 
   out <- purrr::map(ownership, ~ paste_or_not(.x, remove_ownership))
   pat_rep <- purrr::set_names(purrr::map_chr(out, 2),purrr::map_chr(out, 1))
-  stringr::str_replace_all(.init, pat_rep)
+  reduce(out, replace_abbrev, .init = .init)
 }
 
 replace_with_abbreviation <- function(replacement, .init) {
