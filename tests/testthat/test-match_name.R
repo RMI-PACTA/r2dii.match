@@ -530,3 +530,8 @@ test_that("outputs unique rows", {
   out <- match_name(rbind(lbk, lbk), ald_demo)
   expect_false(anyDuplicated(out) > 0L)
 })
+
+test_that("with loanbook_demo and ald_demo outputs known output", {
+  out <- arrange(match_name(loanbook_demo, ald_demo), across())
+  expect_known_value(out, "ref-match-name", update = FALSE)
+})
