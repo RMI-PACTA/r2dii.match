@@ -138,7 +138,7 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)
   utils::read.csv(tmp, stringsAsFactors = FALSE, colClasses = types) %>%
-    tibble::as_tibble()
+    as_tibble()
 }
 
 # readr -------------------------------------------------------------------
@@ -175,7 +175,7 @@ expand_alias <- function(loanbook, ald) {
   #                on = "sector"][ ,
   #                  CJ(alias_lbk, alias_ald, sorted = FALSE, unique = TRUE),
   #                  by = sector]
-  # tibble::as_tibble(la)
+  # as_tibble(la)
 
   l <- dplyr::nest_by(select(loanbook, vars), .data$sector, .key = "alias_lbk")
   a <- dplyr::nest_by(select(ald, vars), .data$sector, .key = "alias_ald")
@@ -194,7 +194,8 @@ unsuffix_and_regroup <- function(data, old_groups) {
 }
 
 named_tibble <- function(names) {
-  dplyr::slice(tibble::as_tibble(set_names(as.list(names))), 0L)
+  # FIXME: Replace with tibble_row()?
+  dplyr::slice(as_tibble(set_names(as.list(names))), 0L)
 }
 
 minimum_names_of_match_name <- function(loanbook) {
