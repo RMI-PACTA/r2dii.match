@@ -17,6 +17,3 @@
 ^docs$
 ^revdep$
 ^CRAN-RELEASE$
-^benchmark\.Rmd$
-^benchmark\.md$
-^benchmark_cache$
