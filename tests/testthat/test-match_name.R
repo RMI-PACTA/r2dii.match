@@ -438,7 +438,7 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
     )
   }
 
-  expect_error_missing_names(invalid(fake_ald(), "sector"))
+  expect_error_missing_names(ald = invalid(fake_ald(), "sector"))
 
   expect_error_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
   expect_error_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
