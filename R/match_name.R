@@ -84,7 +84,7 @@ match_name <- function(loanbook,
   if (by_sector) {
     a <- expand_alias(prep_lbk, prep_ald)
   } else {
-    a <- cross_alias(prep_lbk, prep_ald)
+    a <- tidyr::crossing(alias_lbk = prep_lbk$alias, alias_ald = prep_ald$alias)
   }
 
   setDT(a)
@@ -157,16 +157,6 @@ expand_alias <- function(loanbook, ald) {
   purrr::map2_df(
     la$alias_lbk, la$alias_ald,
     ~tidyr::expand_grid(alias_lbk = .x$alias, alias_ald = .y$alias)
-  )
-}
-
-cross_alias <- function(loanbook, ald) {
-  check_crucial_names(loanbook, "alias")
-  check_crucial_names(ald, "alias")
-
-  tidyr::crossing(
-    alias_lbk = loanbook$alias,
-    alias_ald = ald$alias
   )
 }
 
