@@ -209,7 +209,6 @@ unsuffix_and_regroup <- function(data, old_groups) {
 }
 
 named_tibble <- function(names) {
-  # FIXME: Replace with tibble_row()?
   dplyr::slice(as_tibble(set_names(as.list(names))), 0L)
 }
 
