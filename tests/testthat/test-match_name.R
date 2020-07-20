@@ -519,3 +519,24 @@ test_that("with loanbook_demo and ald_demo outputs known output", {
   expect_known_value(out, "ref-match-name", update = FALSE)
 })
 
+test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields a match", {
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
+  code_for_sector_power <- 27
+  sector_not_power <- "coal"
+
+  out <- match_name(
+    fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
+    fake_ald(sector = sector_not_power),
+    by_sector = FALSE
+  )
+  expect_equal(nrow(out), 1L)
+})
+
+test_that("takes `by_sector`", {
+  expect_false(
+    identical(
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
+    )
+  )
+})
