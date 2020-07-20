@@ -148,40 +148,8 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
 # readr -------------------------------------------------------------------
 
-
-#' @examples
-#' library(dplyr)
-#' loanbook <- tibble(sector = c("A", "B", "B"), alias = c("xa", "xb", "xc"))
-#' ald <- tibble(sector = c("A", "B", "C"), alias = c("ya", "yb", "yc"))
-#' score_alias(loanbook, ald)
-#' @noRd
-score_alias <- function(loanbook, ald, method = "jw", p = 0.1) {
-  out <- expand_alias(loanbook, ald)
-  score <- stringdist::stringsim(
-    out$alias_lbk, out$alias_ald,method = method, p = p
-  )
-  mutate(out, score = score)
-}
-
 expand_alias <- function(loanbook, ald) {
   vars <- c("sector", "alias")
-
-  # FIXME
-  # browser()
-  # setDT(loanbook)
-  # loanbook <- loanbook[, ..vars]
-  # setnames(loanbook, old = "alias", new = "alias_lbk")
-  #
-  # setDT(ald)
-  # ald <- ald[, ..vars]
-  # setnames(ald, old = "alias", new = "alias_ald")
-  #
-  # la <- loanbook[ald,
-  #                on = "sector"][ ,
-  #                  CJ(alias_lbk, alias_ald, sorted = FALSE, unique = TRUE),
-  #                  by = sector]
-  # as_tibble(la)
-
   l <- dplyr::nest_by(select(loanbook, vars), .data$sector, .key = "alias_lbk")
   a <- dplyr::nest_by(select(ald, vars), .data$sector, .key = "alias_ald")
   la <- dplyr::inner_join(l, a, by = "sector")
