@@ -1,6 +1,8 @@
 library(dplyr)
 library(r2dii.data)
 
+ald_demo <- distinct(r2dii.data::ald_demo, name_company, sector)
+
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
           level only", {
   lbk <- tibble::tibble(
@@ -533,10 +535,19 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields a
 })
 
 test_that("takes `by_sector`", {
+  slice(loanbook_demo, 4:15)
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
       match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
     )
+  )
+})
+
+test_that("with duplicates in ald throws an error", {
+  duplicated <- rbind(fake_ald(), fake_ald())
+  expect_error(
+    class = "some_duplicated",
+    match_name(fake_lbk(), duplicated)
   )
 })

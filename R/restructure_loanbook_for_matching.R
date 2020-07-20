@@ -18,7 +18,13 @@ restructure_ald_for_matching <- function(data) {
   check_crucial_names(data, c("name_company", "sector"))
 
   out <- select(data, name = .data$name_company, .data$sector)
-  out <- distinct(out)
+  if (anyDuplicated(out) > 0L) {
+    abort(
+      class = "some_duplicated",
+      "In `ald`, all rows by `name_company` and `sector` must be distinct.
+      Do you need to run `dplyr::distinct(ald, name_company, sector)`?"
+    )
+  }
   add_alias(out)
 }
 

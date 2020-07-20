@@ -54,7 +54,7 @@ test_that("correctly overwrites sector", {
 })
 
 test_that("restructure_ald_for_matching outputs the expected tibble", {
-  out <- restructure_ald_for_matching(ald_demo)
+  out <- restructure_ald_for_matching(fake_ald())
   expect_is(out, "tbl_df")
   expect_named(out, c("name", "sector", "alias"))
 })
