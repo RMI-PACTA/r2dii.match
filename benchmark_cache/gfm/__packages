@@ -1,9 +1,0 @@
-base
-bench
-usethis
-devtools
-dplyr
-fs
-r2dii.data
-testthat
-r2dii.match
