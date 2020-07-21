@@ -498,6 +498,17 @@ test_that("0-row output has expected column type", {
   expect_identical(lbk_types[same], out_types[same])
 })
 
+test_that("w/ loanbook that matches nothing, col types are correct", {
+  lbk2 <- slice(loanbook_demo, 2)
+  expect_warning(
+    out <- match_name(lbk2, ald_demo),
+    "no match"
+  )
+
+  types <- unique(purrr::map_chr(out, typeof))
+  more_types_than_just_character <- length(types) > 1L
+  expect_true(more_types_than_just_character)
+})
 
 test_that("with loanbook_demo and ald_demo outputs known output", {
   out <- arrange(match_name(loanbook_demo, ald_demo), across())
@@ -530,18 +541,6 @@ test_that("takes `by_sector`", {
       match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
     )
   )
-})
-
-test_that("w/ loanbook that matches nothing, col types are correct", {
-  lbk2 <- slice(loanbook_demo, 2)
-  expect_warning(
-    out <- match_name(lbk2, ald_demo),
-    "no match"
-  )
-
-  types <- unique(purrr::map_chr(out, typeof))
-  more_types_than_just_character <- length(types) > 1L
-  expect_true(more_types_than_just_character)
 })
 
 test_that("with duplicates in ald throws an error", {
