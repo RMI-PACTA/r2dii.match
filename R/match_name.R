@@ -94,10 +94,13 @@ match_name <- function(loanbook,
     return(empty_loanbook_tibble(loanbook, old_groups))
   }
 
-  a <- unique(a)[ ,
-                  score := stringdist::stringsim(
-                    alias_lbk, alias_ald, method = method, p = p
-                  )]
+  a <- unique(a)[
+    ,
+    score := stringdist::stringsim(
+      alias_lbk, alias_ald,
+      method = method, p = p
+    )
+  ]
   setkey(a, score)
   a <- a[score >= min_score, ]
 
@@ -109,9 +112,10 @@ match_name <- function(loanbook,
   l <- rename(prep_lbk, alias_lbk = .data$alias)
   setDT(l)
   matched <- a[l, on = "alias_lbk", nomatch = 0]
-  matched <- matched[ ,
-                      pick := none_is_one(score) | some_is_one(score),
-                      by = id_2dii][pick == TRUE][, pick := NULL]
+  matched <- matched[,
+    pick := none_is_one(score) | some_is_one(score),
+    by = id_2dii
+  ][pick == TRUE][, pick := NULL]
 
   prep_ald <- rlang::set_names(prep_ald, paste0, "_ald")
   setDT(prep_ald)
@@ -159,7 +163,7 @@ expand_alias <- function(loanbook, ald) {
 
   purrr::map2_df(
     la$alias_lbk, la$alias_ald,
-    ~tidyr::expand_grid(alias_lbk = .x$alias, alias_ald = .y$alias)
+    ~ tidyr::expand_grid(alias_lbk = .x$alias, alias_ald = .y$alias)
   )
 }
 
