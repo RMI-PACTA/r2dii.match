@@ -1,6 +1,5 @@
 library(dplyr)
 library(r2dii.data)
-
 ald_demo <- distinct(r2dii.data::ald_demo, name_company, sector)
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
@@ -320,8 +319,8 @@ test_that("preserves groups", {
 
 test_that("outputs id consistent with level", {
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
-  expect_equal(out$level, sort(c("ultimate_parent", "direct_loantaker")))
-  expect_equal(out$id_2dii, sort(c("UP1", "DL1")))
+  expect_equal(out$level, c("direct_loantaker", "ultimate_parent"))
+  expect_equal(out$id_2dii, c("DL1", "UP1"))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
