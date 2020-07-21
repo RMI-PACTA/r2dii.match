@@ -69,7 +69,6 @@
 #' )
 match_name <- function(loanbook,
                        ald,
-                       # FIXME: Remove this argument
                        by_sector = TRUE,
                        min_score = 0.8,
                        method = "jw",
