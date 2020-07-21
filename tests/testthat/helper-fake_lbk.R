@@ -159,7 +159,7 @@ alias_ald <- function() {
   r2dii.data::ald_demo %>%
     dplyr::select(crucial_ald()) %>%
     dplyr::mutate(alias_ald = to_alias(.data$name_company)) %>%
-    unique()
+    dplyr::distinct()
 }
 
 pull_alias_ald <- function(loanbook, ald) {
