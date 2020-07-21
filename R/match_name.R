@@ -58,11 +58,12 @@
 #' library(r2dii.data)
 #'
 #' mini_loanbook <- sample_n(loanbook_demo, 10)
+#' ald <- distinct(ald_demo, name_company, sector)
 #'
-#' match_name(mini_loanbook, ald_demo)
+#' match_name(mini_loanbook, ald)
 #'
 #' match_name(
-#'   mini_loanbook, ald_demo,
+#'   mini_loanbook, ald,
 #'   min_score = 0.9,
 #'   by_sector = TRUE
 #' )
@@ -129,7 +130,10 @@ match_name <- function(loanbook,
 
   matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
   matched <- unsuffix_and_regroup(matched, old_groups)
-  select(matched, -.data$alias, -.data$alias_ald)
+  matched <- select(matched, -.data$alias, -.data$alias_ald)
+  attr(matched, ".internal.selfref") <- NULL
+
+  matched
 }
 
 empty_loanbook_tibble <- function(loanbook, old_groups) {

@@ -119,7 +119,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     source = "loanbook"
   )
 
-  expect_equivalent(
+  expect_equal(
     match_name(fake_lbk(), fake_ald()),
     expected
   )
@@ -499,12 +499,9 @@ test_that("0-row output has expected column type", {
 
 test_that("with loanbook_demo and ald_demo outputs known output", {
   out <- arrange(match_name(loanbook_demo, ald_demo), across())
-
-  expect_known_output(
-    as.data.frame(out), "ref-match-name-output", print = TRUE, update = FALSE
-  )
-
-  expect_known_value(out, "ref-match-name", update = FALSE)
+  expect_known_value(out, "ref-match-name", update = T)
+  # More informative when it fails
+  expect_equal(out, readRDS(test_path("ref-match-name")))
 })
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields a match", {
