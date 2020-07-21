@@ -547,7 +547,15 @@ test_that("takes `by_sector`", {
 test_that("with duplicates in ald throws an error", {
   duplicated <- rbind(fake_ald(), fake_ald())
   expect_error(
-    class = "some_duplicated",
+    class = "duplicated",
     match_name(fake_lbk(), duplicated)
   )
 })
+
+# test_that("with duplicates in loaonbook throws an error", {
+#   duplicated <- rbind(fake_ald(), fake_ald())
+#   expect_error(
+#     class = "duplicated",
+#     match_name(fake_lbk(), duplicated)
+#   )
+# })
