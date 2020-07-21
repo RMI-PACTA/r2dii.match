@@ -58,12 +58,11 @@
 #' library(r2dii.data)
 #'
 #' mini_loanbook <- sample_n(loanbook_demo, 10)
-#' ald <- distinct(ald_demo, name_company, sector)
 #'
-#' match_name(mini_loanbook, ald)
+#' match_name(mini_loanbook, ald_demo)
 #'
 #' match_name(
-#'   mini_loanbook, ald,
+#'   mini_loanbook, ald_demo,
 #'   min_score = 0.9,
 #'   by_sector = TRUE
 #' )

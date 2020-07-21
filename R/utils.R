@@ -32,15 +32,3 @@ crucial_lbk <- function() {
 crucial_ald <- function() {
   c("name_company", "sector")
 }
-
-abort_duplicated <- function(data) {
-  if (anyDuplicated(data) > 0L) {
-    abort(
-      class = "duplicated",
-      "In `ald`, all rows by `name_company` and `sector` must be distinct.
-        Do you need to run `dplyr::distinct(ald, name_company, sector)`?"
-    )
-  }
-
-  invisible(data)
-}

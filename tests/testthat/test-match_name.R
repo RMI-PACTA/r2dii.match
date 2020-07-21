@@ -1,6 +1,5 @@
 library(dplyr)
 library(r2dii.data)
-ald_demo <- distinct(r2dii.data::ald_demo, name_company, sector)
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
           level only", {
@@ -527,23 +526,8 @@ test_that("takes `by_sector`", {
   )
 })
 
-test_that("with duplicates in ald throws an error", {
-  duplicated <- rbind(fake_ald(), fake_ald())
-  expect_error(
-    class = "duplicated",
-    match_name(fake_lbk(), duplicated)
-  )
+test_that("w/ duplicates in ald throws now error; instead remove duplicates", {
+  dupl <- rbind(fake_ald(), fake_ald())
+  expect_error(out <- match_name(fake_lbk(), dupl), NA)
+  expect_equal(nrow(out), 1L)
 })
-
-# WIP
-# test_that("with duplicates in loaonbook throws an error", {
-#   duplicated <- rbind(fake_lbk(), fake_lbk())[crucial_lbk()]
-#   out1 <- distinct(match_name(duplicated, fake_ald()))
-#   out2 <- match_name(fake_lbk(), fake_ald())
-#   identical(out1, out2[names(out1)])
-#
-#   expect_error(
-#     class = "duplicated",
-#     match_name(duplicated, fake_ald())
-#   )
-# })

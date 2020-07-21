@@ -18,8 +18,7 @@ restructure_ald_for_matching <- function(data) {
   check_crucial_names(data, c("name_company", "sector"))
 
   out <- select(data, name = .data$name_company, .data$sector)
-  abort_duplicated(out)
-
+  out <- distinct(out)
   add_alias(out)
 }
 
