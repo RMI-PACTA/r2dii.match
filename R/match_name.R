@@ -134,6 +134,7 @@ match_name <- function(loanbook,
   matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
   matched <- unsuffix_and_regroup(matched, old_groups)
   matched <- select(matched, -.data$alias, -.data$alias_ald)
+  # Remove attribute added by data.table
   attr(matched, ".internal.selfref") <- NULL
 
   matched
@@ -170,11 +171,11 @@ expand_alias <- function(loanbook, ald) {
 unsuffix_and_regroup <- function(data, old_groups) {
   data %>%
     rename(alias = .data$alias_lbk) %>%
-    dplyr::group_by(!!!old_groups)
+    group_by(!!!old_groups)
 }
 
 named_tibble <- function(names) {
-  dplyr::slice(as_tibble(set_names(as.list(names))), 0L)
+  slice(as_tibble(set_names(as.list(names))), 0L)
 }
 
 minimum_names_of_match_name <- function(loanbook) {

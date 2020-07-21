@@ -141,8 +141,8 @@ fake_matched <- function(id_loan = NULL,
 #' @noRd
 mini_lbk <- function(loanbook, ..., vars = crucial_lbk()) {
   loanbook %>%
-    dplyr::slice(...) %>%
-    dplyr::select(vars, tidyselect::matches("intermediate"))
+    slice(...) %>%
+    select(vars, tidyselect::matches("intermediate"))
 }
 
 #' See `mini_lbk()`
@@ -157,14 +157,14 @@ mini_ald <- function(loanbook, alias_ald = NULL) {
 #' @noRd
 alias_ald <- function() {
   r2dii.data::ald_demo %>%
-    dplyr::select(crucial_ald()) %>%
-    dplyr::mutate(alias_ald = to_alias(.data$name_company)) %>%
-    dplyr::distinct()
+    select(crucial_ald()) %>%
+    mutate(alias_ald = to_alias(.data$name_company)) %>%
+    distinct()
 }
 
 pull_alias_ald <- function(loanbook, ald) {
   loanbook %>%
     match_name(ald) %>%
-    dplyr::select(dplyr::ends_with("ald")) %>%
-    dplyr::pull(.data$alias_ald)
+    select(dplyr::ends_with("ald")) %>%
+    pull(.data$alias_ald)
 }
