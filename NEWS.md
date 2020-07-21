@@ -1,7 +1,7 @@
 # r2dii.match (development version)
 
 * Lint.
-* `match_name()` now runs faster (#214).
+* `match_name()` now runs faster and uses less memory (@georgeharris2deg #214).
 
 # r2dii.match 0.0.3
 
