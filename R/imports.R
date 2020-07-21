@@ -4,7 +4,7 @@
 #' @importFrom purrr reduce
 #' @importFrom rlang has_name set_names warn abort
 #' @importFrom tibble tibble tribble as_tibble
-#' @import data.table
+#' @importFrom data.table setDT setkey :=
 NULL
 
 globalVariables(
