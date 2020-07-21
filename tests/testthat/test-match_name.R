@@ -173,18 +173,6 @@ test_that("takes unprepared loanbook and ald datasets", {
   expect_no_error(match_name(slice(loanbook_demo, 1), ald_demo))
 })
 
-test_that("w/ loanbook that matches nothing, col types are correct", {
-  lbk2 <- slice(loanbook_demo, 2)
-  expect_warning(
-    out <- match_name(lbk2, ald_demo),
-    "no match"
-  )
-
-  types <- unique(purrr::map_chr(out, typeof))
-  more_types_than_just_character <- length(types) > 1L
-  expect_true(more_types_than_just_character)
-})
-
 test_that("w/ loanbook that matches nothing, yields expected", {
   # Matches cero row ...
   lbk2 <- slice(loanbook_demo, 2)
@@ -544,6 +532,18 @@ test_that("takes `by_sector`", {
   )
 })
 
+test_that("w/ loanbook that matches nothing, col types are correct", {
+  lbk2 <- slice(loanbook_demo, 2)
+  expect_warning(
+    out <- match_name(lbk2, ald_demo),
+    "no match"
+  )
+
+  types <- unique(purrr::map_chr(out, typeof))
+  more_types_than_just_character <- length(types) > 1L
+  expect_true(more_types_than_just_character)
+})
+
 test_that("with duplicates in ald throws an error", {
   duplicated <- rbind(fake_ald(), fake_ald())
   expect_error(
@@ -552,10 +552,15 @@ test_that("with duplicates in ald throws an error", {
   )
 })
 
+# WIP
 # test_that("with duplicates in loaonbook throws an error", {
-#   duplicated <- rbind(fake_ald(), fake_ald())
+#   duplicated <- rbind(fake_lbk(), fake_lbk())[crucial_lbk()]
+#   out1 <- distinct(match_name(duplicated, fake_ald()))
+#   out2 <- match_name(fake_lbk(), fake_ald())
+#   identical(out1, out2[names(out1)])
+#
 #   expect_error(
 #     class = "duplicated",
-#     match_name(fake_lbk(), duplicated)
+#     match_name(duplicated, fake_ald())
 #   )
 # })
