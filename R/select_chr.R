@@ -33,6 +33,6 @@
 select_chr <- function(x, ...) {
   stopifnot(is.character(x))
 
-  x_df <- tibble::as_tibble(purrr::set_names(as.list(unique(x))))
+  x_df <- as_tibble(purrr::set_names(as.list(unique(x))))
   names(dplyr::select(x_df, ...))
 }

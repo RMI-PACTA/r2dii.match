@@ -100,20 +100,6 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
   expect_equal(nrow(out), 0L)
 })
 
-test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
-          a match", {
-  # Lookup code to sectors via r2dii.data::sector_classifications$code
-  code_for_sector_power <- 27
-  sector_not_power <- "coal"
-
-  out <- match_name(
-    fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
-    fake_ald(sector = sector_not_power),
-    by_sector = FALSE
-  )
-  expect_equal(nrow(out), 1L)
-})
-
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
     sector_classification_system = "NACE",
@@ -225,15 +211,6 @@ test_that("takes `min_score`", {
   )
 })
 
-test_that("takes `by_sector`", {
-  expect_false(
-    identical(
-      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
-      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
-    )
-  )
-})
-
 test_that("takes `method`", {
   expect_false(
     identical(
@@ -322,23 +299,6 @@ test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
   )
 })
 
-test_that("prefer_perfect_match_by prefers score == 1 if `var` group has any", {
-  # styler: off
-  data <- tribble(
-    ~var,  ~score,
-        1,      1,
-        2,      1,
-        2,   0.99,
-        3,   0.99,
-  )
-  # styler: on
-
-  expect_equal(
-    prefer_perfect_match_by(data, var),
-    tibble(var = c(1, 2, 3), score = c(1, 1, 0.99))
-  )
-})
-
 test_that("match_name()$level lacks prefix 'name_' suffix '_lbk'", {
   out <- match_name(slice(loanbook_demo, 1), ald_demo)
   expect_false(
@@ -358,8 +318,8 @@ test_that("preserves groups", {
 
 test_that("outputs id consistent with level", {
   out <- slice(loanbook_demo, 5) %>% match_name(ald_demo)
-  expect_equal(out$level, c("ultimate_parent", "direct_loantaker"))
-  expect_equal(out$id_2dii, c("UP1", "DL1"))
+  expect_equal(out$level, c("direct_loantaker", "ultimate_parent"))
+  expect_equal(out$id_2dii, c("DL1", "UP1"))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
@@ -466,7 +426,7 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
     )
   }
 
-  expect_error_missing_names(invalid(fake_ald(), "sector"))
+  expect_error_missing_names(ald = invalid(fake_ald(), "sector"))
 
   expect_error_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
   expect_error_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
@@ -525,13 +485,50 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
   )
 })
 
-test_that("outputs unique rows", {
-  lbk <- loanbook_demo[1:3, ]
-  out <- match_name(rbind(lbk, lbk), ald_demo)
-  expect_false(anyDuplicated(out) > 0L)
+test_that("0-row output has expected column type", {
+  lbk <- slice(loanbook_demo, 2)
+  out <- expect_warning(match_name(lbk, ald_demo), "no match")
+
+  lbk_types <- purrr::map_chr(lbk, typeof)
+  out_types <- purrr::map_chr(out, typeof)
+
+  same <- intersect(names(out_types), names(lbk_types))
+  expect_identical(lbk_types[same], out_types[same])
 })
 
 test_that("with loanbook_demo and ald_demo outputs known output", {
   out <- arrange(match_name(loanbook_demo, ald_demo), across())
   expect_known_value(out, "ref-match-name", update = FALSE)
+  # More informative when it fails
+  expect_equal(out, readRDS(test_path("ref-match-name")))
+})
+
+test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
+          a match", {
+  # Lookup code to sectors via r2dii.data::sector_classifications$code
+  code_for_sector_power <- 27
+  sector_not_power <- "coal"
+
+  out <- match_name(
+    fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
+    fake_ald(sector = sector_not_power),
+    by_sector = FALSE
+  )
+  expect_equal(nrow(out), 1L)
+})
+
+test_that("takes `by_sector`", {
+  slice(loanbook_demo, 4:15)
+  expect_false(
+    identical(
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
+      match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = FALSE)
+    )
+  )
+})
+
+test_that("w/ duplicates in ald throws now error; instead remove duplicates", {
+  dupl <- rbind(fake_ald(), fake_ald())
+  expect_error(out <- match_name(fake_lbk(), dupl), NA)
+  expect_equal(nrow(out), 1L)
 })

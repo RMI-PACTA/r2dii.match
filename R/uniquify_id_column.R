@@ -42,14 +42,14 @@ uniquify_id_column <- function(data, id_column) {
     return(data)
   }
 
-  name_column <- id_column %>% replace_prefix(to = "name")
+  name_column <- replace_prefix(id_column, to = "name")
   crucial <- c("sector_classification_direct_loantaker", name_column, id_column)
   check_crucial_names(data, crucial)
 
   prefix <- sub("^N", "", toupper(snakecase_initial(name_column)))
-  out <- data
-  out[id_column] <- paste0(prefix, group_indices_of(out, id_column))
-  out
+  indices <- group_indices_of(data, id_column)
+  data[id_column] <- paste0(prefix, indices)
+  data
 }
 
 replace_prefix <- function(x, to) {
@@ -68,9 +68,9 @@ snakecase_initial <- function(x) {
 group_indices_of <- function(data, column) {
   col_name <- replace_prefix(column, to = "name")
 
-  data %>%
-    dplyr::group_by(
-      !!rlang::sym(col_name), .data$sector_classification_direct_loantaker
-    ) %>%
-    dplyr::group_indices()
+  grouped <- dplyr::group_by(
+    data, !!rlang::sym(col_name), .data$sector_classification_direct_loantaker
+  )
+
+  dplyr::group_indices(grouped)
 }

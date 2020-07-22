@@ -44,6 +44,7 @@ BugReports:
 Depends: 
     R (>= 3.4)
 Imports: 
+    data.table,
     dplyr (>= 0.8.5),
     glue,
     magrittr,
@@ -54,7 +55,8 @@ Imports:
     stringi,
     tibble,
     tidyr,
-    tidyselect
+    tidyselect,
+    utils
 Suggests: 
     covr,
     rmarkdown,

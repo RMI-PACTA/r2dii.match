@@ -115,20 +115,17 @@ may_remove_ownership <- function(remove_ownership, ownership, .init) {
 
 replace_with_abbreviation <- function(replacement, .init) {
   replacement <- replacement %||% from_name_to_alias()
-  replacement <- rlang::set_names(replacement, tolower(names(replacement)))
+  replacement <- set_names(replacement, tolower)
 
   check_crucial_names(replacement, c("from", "to"))
 
   abbrev <- purrr::map2(tolower(replacement$from), tolower(replacement$to), c)
-
   reduce(abbrev, replace_abbrev, fixed = TRUE, .init = .init)
 }
 
 # replace long words with abbreviations
 replace_abbrev <- function(text, abr, fixed = FALSE) {
-  from <- abr[1]
-  to <- abr[2]
-  gsub(from, to, text, fixed = fixed)
+  gsub(abr[1], abr[2], text, fixed = fixed)
 }
 
 # Source: @jdhoffa https://github.com/2DegreesInvesting/r2dii.dataraw/pull/8
