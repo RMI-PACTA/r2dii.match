@@ -119,7 +119,7 @@ match_name <- function(loanbook,
 
   prep_ald <- rlang::set_names(prep_ald, paste0, "_ald")
   setDT(prep_ald)
-  matched <- prep_ald[matched, on = "alias_ald"]
+  matched <- prep_ald[matched, on = "alias_ald", allow.cartesian=TRUE]
 
   if (by_sector) {
     matched <- matched[sector == sector_ald, ]
