@@ -498,7 +498,7 @@ test_that("0-row output has expected column type", {
 
 test_that("with loanbook_demo and ald_demo outputs known output", {
   out <- arrange(match_name(loanbook_demo, ald_demo), across())
-  expect_known_value(out, "ref-match-name", update = T)
+  expect_known_value(out, "ref-match-name", update = FALSE)
   # More informative when it fails
   expect_equal(out, readRDS(test_path("ref-match-name")))
 })
@@ -508,9 +508,6 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
   # Lookup code to sectors via r2dii.data::sector_classifications$code
   code_for_sector_power <- 27
   sector_not_power <- "coal"
-
-# rowid, ------------------------------------------------------------------
-
 
   out <- match_name(
     fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
