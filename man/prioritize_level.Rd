@@ -28,3 +28,8 @@ matched <- tibble::tibble(
 )
 prioritize_level(matched)
 }
+\seealso{
+Other helpers: 
+\code{\link{crucial_lbk}()}
+}
+\concept{helpers}
