@@ -151,7 +151,7 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
   utils::write.csv(out, tmp, row.names = FALSE)
   utils::read.csv(tmp, stringsAsFactors = FALSE, colClasses = types) %>%
     as_tibble() %>%
-    select(.data$rowid, everything())
+    select(.data$rowid, dplyr::everything())
 }
 
 # readr -------------------------------------------------------------------
