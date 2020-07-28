@@ -102,6 +102,7 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
 
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
+    rowid = 1L,
     sector_classification_system = "NACE",
     id_ultimate_parent = "UP15",
     name_ultimate_parent = "Alpine Knits India Pvt. Limited",
@@ -125,6 +126,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 })
 
 expect_names_match_name <- c(
+  "rowid",
+
   "id_loan",
 
   "id_direct_loantaker",
@@ -180,8 +183,8 @@ test_that("w/ loanbook that matches nothing, yields expected", {
   )
   expect_equal(nrow(out), 0L)
   # ... but preserves minimum expected names
-  expect_named(
-    out,
+  expect_equal(
+    names(out),
     expect_names_match_name
   )
   expect_false(any(c("alias", "alias_ald") %in% names(out)))
@@ -497,10 +500,12 @@ test_that("0-row output has expected column type", {
 })
 
 test_that("with loanbook_demo and ald_demo outputs known output", {
-  out <- arrange(match_name(loanbook_demo, ald_demo), across())
+  out <- match_name(loanbook_demo, ald_demo)
   expect_known_value(out, "ref-match-name", update = FALSE)
+
   # More informative when it fails
-  expect_equal(out, readRDS(test_path("ref-match-name")))
+  ref <- readRDS(test_path("ref-match-name"))
+  expect_equal(out, ref)
 })
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields

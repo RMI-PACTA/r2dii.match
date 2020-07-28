@@ -124,7 +124,6 @@ match_name <- function(loanbook,
   # Restore columns from loanbook
   setDT(loanbook_rowid)
   matched <- loanbook_rowid[matched, on = "rowid"]
-  matched <- matched[, rowid := NULL]
   matched <- as_tibble(matched)
 
   matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
@@ -147,7 +146,8 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)
   utils::read.csv(tmp, stringsAsFactors = FALSE, colClasses = types) %>%
-    as_tibble()
+    as_tibble() %>%
+    select(.data$rowid, dplyr::everything())
 }
 
 # readr -------------------------------------------------------------------
@@ -208,6 +208,7 @@ intersect_names_as_in <- function(data, reference) {
 
 names_added_by_match_name <- function() {
   c(
+    "rowid",
     "id_2dii",
     "level",
     "sector",
