@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>r2dii.match: Tools to Match Financial Portfolios with Climate Data — r2dii.match-package • r2dii.match</title>
+<title>Crucial <code>loanbook</code> columns for <code>match_name()</code> — crucial_lbk • r2dii.match</title>
 
 
 <!-- jquery -->
@@ -39,17 +39,9 @@
 
 
 
-<meta property="og:title" content="r2dii.match: Tools to Match Financial Portfolios with Climate Data — r2dii.match-package" />
-<meta property="og:description" content="These tools implement in R a fundamental part of
-    the software 'PACTA' (Paris Agreement Capital Transition Assessment),
-    which is a free tool that calculates the alignment between financial
-    portfolios and climate scenarios (&amp;lt;https://2degrees-investing.org/&amp;gt;).
-    Financial institutions use 'PACTA' to study how their capital
-    allocation impacts the climate. This package matches data from
-    financial portfolios to asset level data from market-intelligence
-    databases (e.g. power plant capacities, emission factors, etc.). This
-    is the first step to assess if a financial portfolio aligns with
-    climate goals." />
+<meta property="og:title" content="Crucial <code>loanbook</code> columns for <code>match_name()</code> — crucial_lbk" />
+<meta property="og:description" content="This is a helper to select the minimum loanbook columns you need to run
+match_name(). Using more columns may use too much time and memory." />
 
 
 
@@ -149,36 +141,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>r2dii.match: Tools to Match Financial Portfolios with Climate Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/r2dii.match-package.R'><code>R/r2dii.match-package.R</code></a></small>
-    <div class="hidden name"><code>r2dii.match-package.Rd</code></div>
+    <h1>Crucial <code>loanbook</code> columns for <code>match_name()</code></h1>
+    <small class="dont-index">Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/R/crucial_columns.R'><code>R/crucial_columns.R</code></a></small>
+    <div class="hidden name"><code>crucial_lbk.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These tools implement in R a fundamental part of
-    the software 'PACTA' (Paris Agreement Capital Transition Assessment),
-    which is a free tool that calculates the alignment between financial
-    portfolios and climate scenarios (&lt;https://2degrees-investing.org/&gt;).
-    Financial institutions use 'PACTA' to study how their capital
-    allocation impacts the climate. This package matches data from
-    financial portfolios to asset level data from market-intelligence
-    databases (e.g. power plant capacities, emission factors, etc.). This
-    is the first step to assess if a financial portfolio aligns with
-    climate goals.</p>
+    <p>This is a helper to select the minimum <code>loanbook</code> columns you need to run
+<code><a href='match_name.html'>match_name()</a></code>. Using more columns may use too much time and memory.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>crucial_lbk</span>()</pre>
 
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A character vector.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://2degreesinvesting.github.io/r2dii.match'>https://2degreesinvesting.github.io/r2dii.match</a></p></li>
-<li><p><a href='https://github.com/2DegreesInvesting/r2dii.match'>https://github.com/2DegreesInvesting/r2dii.match</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/2DegreesInvesting/r2dii.match/issues'>https://github.com/2DegreesInvesting/r2dii.match/issues</a></p></li>
-</ul>
+    <div class='dont-index'><p>Other helpers: 
+<code><a href='prioritize_level.html'>prioritize_level</a>()</code></p></div>
 
-</div>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>crucial_lbk</span>()</div><div class='output co'>#&gt; [1] "id_ultimate_parent"                    
+#&gt; [2] "name_ultimate_parent"                  
+#&gt; [3] "id_direct_loantaker"                   
+#&gt; [4] "name_direct_loantaker"                 
+#&gt; [5] "sector_classification_system"          
+#&gt; [6] "sector_classification_direct_loantaker"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
