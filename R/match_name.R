@@ -54,19 +54,15 @@
 #' @export
 #'
 #' @examples
-#' library(dplyr, warn.conflicts = FALSE)
 #' library(r2dii.data)
 #'
-#' mini_loanbook <- sample_n(loanbook_demo, 10)
-#' ald <- distinct(ald_demo, name_company, sector)
+#' # Small data for examples
+#' loanbook <- head(loanbook_demo, 50)
+#' ald <- head(ald_demo, 50)
 #'
-#' match_name(mini_loanbook, ald)
+#' match_name(loanbook, ald)
 #'
-#' match_name(
-#'   mini_loanbook, ald,
-#'   min_score = 0.9,
-#'   by_sector = TRUE
-#' )
+#' match_name(loanbook, ald, min_score = 0.9)
 match_name <- function(loanbook,
                        ald,
                        by_sector = TRUE,
