@@ -83,13 +83,14 @@ match_name <- function(loanbook,
     overwrite = overwrite
   )
 }
+
 match_name_impl <- function(loanbook,
-                       ald,
-                       by_sector = TRUE,
-                       min_score = 0.8,
-                       method = "jw",
-                       p = 0.1,
-                       overwrite = NULL) {
+                            ald,
+                            by_sector = TRUE,
+                            min_score = 0.8,
+                            method = "jw",
+                            p = 0.1,
+                            overwrite = NULL) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)

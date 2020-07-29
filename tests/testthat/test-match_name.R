@@ -548,9 +548,10 @@ test_that("does not need explicit allow.cartesian = TRUE", {
     sector_classification_direct_loantaker = 291
   )
 
-  path <-"https://gist.githubusercontent.com/maurolepore/ff329651473cf1bdbe85ff6b7cf6a44d/raw/7ec42915c47292e3a72c106d2f63c957ab9a187f/ald_allow.cartesian.csv"
+  path <- "https://gist.githubusercontent.com/maurolepore/ff329651473cf1bdbe85ff6b7cf6a44d/raw/7ec42915c47292e3a72c106d2f63c957ab9a187f/ald_allow.cartesian.csv"
   ald <- utils::read.delim(
-    path, sep = "\t", stringsAsFactors = FALSE, na.strings = c("", "NA")
+    path,
+    sep = "\t", stringsAsFactors = FALSE, na.strings = c("", "NA")
   )
 
   expect_no_error(match_name(lbk, ald))
