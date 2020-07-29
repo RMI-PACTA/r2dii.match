@@ -523,7 +523,6 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
 })
 
 test_that("takes `by_sector`", {
-  slice(loanbook_demo, 4:15)
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:15), ald_demo, by_sector = TRUE),
