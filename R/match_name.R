@@ -70,6 +70,27 @@ match_name <- function(loanbook,
                        method = "jw",
                        p = 0.1,
                        overwrite = NULL) {
+  restore <- options(datatable.allow.cartesian = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  match_name_impl(
+    loanbook = loanbook,
+    ald = ald,
+    by_sector = by_sector,
+    min_score = min_score,
+    method = method,
+    p = p,
+    overwrite = overwrite
+  )
+}
+
+match_name_impl <- function(loanbook,
+                            ald,
+                            by_sector = TRUE,
+                            min_score = 0.8,
+                            method = "jw",
+                            p = 0.1,
+                            overwrite = NULL) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
@@ -115,7 +136,7 @@ match_name <- function(loanbook,
 
   prep_ald <- rlang::set_names(prep_ald, paste0, "_ald")
   setDT(prep_ald)
-  matched <- prep_ald[matched, on = "alias_ald", allow.cartesian = TRUE]
+  matched <- prep_ald[matched, on = "alias_ald"]
 
   if (by_sector) {
     matched <- matched[sector == sector_ald, ]

@@ -536,3 +536,22 @@ test_that("w/ duplicates in ald throws now error; instead remove duplicates", {
   expect_error(out <- match_name(fake_lbk(), dupl), NA)
   expect_equal(nrow(out), 1L)
 })
+
+test_that("does not need explicit allow.cartesian = TRUE", {
+  lbk <- tibble::tibble(
+    id_ultimate_parent = c("UP317", "UP102", "UP118", "UP307"),
+    name_ultimate_parent = c("Zil", "Gac Changfeng", "Hawtai", "Youngman Lotus"),
+    id_direct_loantaker = c("C277", "C279", "C288", "C300"),
+    name_direct_loantaker = c("Youngman Lotus", "Youxia", "Yto Group", "Yudo Auto"),
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = 291
+  )
+
+  path <- "https://gist.githubusercontent.com/maurolepore/ff329651473cf1bdbe85ff6b7cf6a44d/raw/7ec42915c47292e3a72c106d2f63c957ab9a187f/ald_allow.cartesian.csv"
+  ald <- utils::read.delim(
+    path,
+    sep = "\t", stringsAsFactors = FALSE, na.strings = c("", "NA")
+  )
+
+  expect_no_error(match_name(lbk, ald))
+})
