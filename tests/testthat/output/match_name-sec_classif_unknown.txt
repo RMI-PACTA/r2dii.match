@@ -8,7 +8,7 @@ A, 1, 11, 111, 112, 113, 114, 115, 116, 119, 12, 121, 122, 123, 124, 125, 126...
 
 > match_name(all_bad_system, fake_ald())
 Error: Some `sector_classification_system` must be known, i.e. one of:
-ISIC, NACE and NAICS
+ISIC, NACE, NAICS and SIC
 
 
 Warning
