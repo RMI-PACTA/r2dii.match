@@ -40,12 +40,18 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+<li>
+  <a href="index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
 <li>
   <a href="articles/r2dii-match.html">Get started</a>
 </li>
@@ -54,44 +60,24 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    News
+    Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Release notes</li>
-    <li>
+<li>
       <a href="articles/r2dii-match-0-0-1.html">r2dii.match 0.0.1</a>
     </li>
-    <li class="divider">
-    <li>
-      <a href="news/index.html">Change log</a>
-    </li>
   </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Packages
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match">
-    <span class="fa fa-github"></span>
+  <a href="https://github.com/2DegreesInvesting/r2dii.match/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -120,7 +106,7 @@
 <p>Before you install r2dii.match you may want to:</p>
 <ul>
 <li>
-<a href="https://rstudio.cloud/project/1424833">Try an rstudio.cloud project with this package already installed</a>.</li>
+<a href="https://rstudio.cloud/project/954051">Try an rstudio.cloud project that has r2dii.match already installed</a>.</li>
 <li>
 <a href="https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation">Learn how to minimize installation errors</a>.</li>
 </ul>
@@ -128,13 +114,14 @@
 <div class="sourceCode" id="cb1"><pre class="r"># install.packages("r2dii.match")</pre></div>
 <p>Or install the development version of r2dii.match from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"2DegreesInvesting/r2dii.match"</span>)</pre></div>
-<p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/">How to raise an issue?</a></p>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"2DegreesInvesting/r2dii.match"</span>)</pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
+<div class="sourceCode" id="cb3"><pre class="r"><span class="co"># r2dii.data is changing rapidly; ensure you have the latest version</span>
+<span class="co"># remotes::update_packages("r2dii.data", upgrade = "ask")</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)</pre></div>
 <p>Matching is achieved in two main steps:</p>
 <div id="1-run-fuzzy-matching" class="section level3">
@@ -197,8 +184,13 @@
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
 <span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></pre></div>
 <p>The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.</p>
-<p><a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
+<p>For a more detailed walkthrough of the functionality <a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
 </div>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
+<p>A big thanks to all 5 contributors who helped with ideas, code, or reviews: <a href="https://github.com/cjyetman">cjyetman</a>, <a href="https://github.com/Clare2D">Clare2D</a>, <a href="https://github.com/georgeharris2deg">georgeharris2deg</a>, <a href="https://github.com/koopmand">koopmand</a>, <a href="https://github.com/vintented">vintented</a>.</p>
 </div>
 </div>
   </div>

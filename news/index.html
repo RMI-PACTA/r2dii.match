@@ -71,13 +71,19 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../articles/r2dii-match.html">Get started</a>
 </li>
 <li>
@@ -85,44 +91,24 @@
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    News
+    Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Release notes</li>
     <li>
       <a href="../articles/r2dii-match-0-0-1.html">r2dii.match 0.0.1</a>
-    </li>
-    <li class="divider"></li>
-    <li>
-      <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Packages
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match">
-    <span class="fa fa-github"></span>
+  <a href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/2DegreesInvesting/r2dii.match/">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -147,53 +133,14 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#r2diimatch-development-version" class="anchor"></a>r2dii.match (development version)<small> Unreleased </small>
 </h1>
-<p>User-facing</p>
-<ul>
-<li><p>New <code><a href="../reference/crucial_lbk.html">crucial_lbk()</a></code> helps select the minimum loanbook columns for <code><a href="../reference/match_name.html">match_name()</a></code> to run (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/236'>#236</a>).</p></li>
-<li><p><code><a href="../reference/match_name.html">match_name()</a></code> now returns the <code>rowid</code> column giving the row number of the input <code>loanbook</code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/236'>#236</a>). This allows users to save time and memory by feeding <code><a href="../reference/match_name.html">match_name()</a></code> with only crucial columns. Then can later add the original loanbook columns to the matched output with</p></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>, <span class="kw">warn.conflicts</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)
-
-<span class="no">lbk_full</span> <span class="kw">&lt;-</span> <span class="no">loanbook_demo</span>
-<span class="co"># Save time and memory: use just crucial columns</span>
-<span class="no">lbk_mini</span> <span class="kw">&lt;-</span> <span class="no">lbk_full</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="fu"><a href="../reference/crucial_lbk.html">crucial_lbk</a></span>())
-<span class="no">ald</span> <span class="kw">&lt;-</span> <span class="no">ald_demo</span>
-
-<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">lbk_mini</span>, <span class="no">ald</span>)
-
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">out</span>)
-<span class="co">#&gt; [1] 497  15</span>
-
-<span class="co"># Recover all columns</span>
-<span class="no">all_cols</span> <span class="kw">&lt;-</span>  <span class="no">out</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span>(<span class="kw pkg">tibble</span><span class="kw ns">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rowid_to_column</a></span>(<span class="no">lbk_full</span>), <span class="kw">by</span> <span class="kw">=</span> <span class="st">"rowid"</span>)
-
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">all_cols</span>)
-<span class="co">#&gt; [1] 497  34</span></pre></div>
-<ul>
-<li>
-<code><a href="../reference/match_name.html">match_name()</a></code> now runs faster and uses less memory (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/214'>#214</a>).</li>
-</ul>
-<p>Internal</p>
-<ul>
-<li>Lint.</li>
-</ul>
-</div>
-    <div id="r2diimatch-003" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.3">
-<a href="#r2diimatch-003" class="anchor"></a>r2dii.match 0.0.3<small> 2020-06-30 </small>
-</h1>
-<ul>
-<li>Enforce dplyr &gt;= 0.8.5 (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/216'>#216</a>).</li>
-<li>No longer import vctrs; it is unused.</li>
-</ul>
 </div>
     <div id="r2diimatch-002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.2">
 <a href="#r2diimatch-002" class="anchor"></a>r2dii.match 0.0.2<small> 2020-06-04 </small>
 </h1>
-<p>This version includes only <a href="https://github.com/2DegreesInvesting/r2dii.match/releases/tag/v0.0.2">internal changes</a>.</p>
+<ul>
+<li>This version includes only internal changes.</li>
+</ul>
 </div>
     <div id="r2diimatch-001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1">
