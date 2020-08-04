@@ -102,7 +102,6 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
 
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   expected <- tibble(
-    rowid = 1L,
     sector_classification_system = "NACE",
     id_ultimate_parent = "UP15",
     name_ultimate_parent = "Alpine Knits India Pvt. Limited",
@@ -126,8 +125,6 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 })
 
 expect_names_match_name <- c(
-  "rowid",
-
   "id_loan",
 
   "id_direct_loantaker",
