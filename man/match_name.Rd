@@ -27,7 +27,7 @@ A \code{score} of 1 is a perfect match.}
 \item{method}{Method for distance calculation. One of \code{c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")}. See
 \link[stringdist:stringdist-metrics]{stringdist::stringdist-metrics}.}
 
-\item{p}{Prefix factor for Jaro-Winkler distance. The valid range for 
+\item{p}{Penalty factor for Jaro-Winkler distance. The valid range for 
 \code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
 Jaro-distance is returned. Applies only to \code{method='jw'}.}
 
