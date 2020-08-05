@@ -26,7 +26,7 @@
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   ald.
 #'
-#' @family user-oriented
+#' @family main functions
 #'
 #' @return A data frame with the same groups (if any) and columns as `loanbook`,
 #'   and the additional columns:

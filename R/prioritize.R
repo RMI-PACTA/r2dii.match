@@ -17,7 +17,7 @@
 #'   * A quosure-style lambda function, e.g. `~ rev(.x)`.
 #'
 #' @seealso [match_name()], [prioritize_level()].
-#' @family user-oriented
+#' @family main functions
 #'
 #' @details
 #' **How to validate `data`**

@@ -95,7 +95,7 @@ prioritize(matched, priority = bad_idea)
 \seealso{
 \code{\link[=match_name]{match_name()}}, \code{\link[=prioritize_level]{prioritize_level()}}.
 
-Other user-oriented: 
+Other main functions: 
 \code{\link{match_name}()}
 }
-\concept{user-oriented}
+\concept{main functions}
