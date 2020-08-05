@@ -206,21 +206,20 @@
 </ul>
 <p>The similarity is then scored between the internally-transformed names of the loanbook against the ald. (For more information on the scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html">stringdist::stringsim()</a></code>).</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">your_loanbook</span>, <span class="no">your_ald</span>)
-<span class="co">#&gt; # A tibble: 502 x 28</span>
-<span class="co">#&gt;    rowid id_loan id_direct_loant… name_direct_loa… id_intermediate…</span>
-<span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1     1 L1      C294             Yuamen Xinneng … &lt;NA&gt;            </span>
-<span class="co">#&gt;  2     3 L3      C292             Yuama Ethanol L… IP5             </span>
-<span class="co">#&gt;  3     3 L3      C292             Yuama Ethanol L… IP5             </span>
-<span class="co">#&gt;  4     5 L5      C305             Yukon Energy Co… &lt;NA&gt;            </span>
-<span class="co">#&gt;  5     5 L5      C305             Yukon Energy Co… &lt;NA&gt;            </span>
-<span class="co">#&gt;  6     6 L6      C304             Yukon Developme… &lt;NA&gt;            </span>
-<span class="co">#&gt;  7     6 L6      C304             Yukon Developme… &lt;NA&gt;            </span>
-<span class="co">#&gt;  8     8 L8      C303             Yueyang City Co… &lt;NA&gt;            </span>
-<span class="co">#&gt;  9     9 L9      C301             Yuedxiu Corp One IP10            </span>
-<span class="co">#&gt; 10    10 L10     C302             Yuexi County AA… &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 492 more rows, and 23 more variables:</span>
-<span class="co">#&gt; #   name_intermediate_parent_1 &lt;chr&gt;, id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # A tibble: 502 x 27</span>
+<span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  4 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
+<span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; # … with 492 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
