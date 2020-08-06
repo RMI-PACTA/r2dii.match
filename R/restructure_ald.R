@@ -12,9 +12,9 @@
 #'   all IDs, and with elements already manually overwritten.
 #'
 #' @examples
-#' restructure_ald_for_matching(r2dii.data::ald_demo)
+#' restructure_ald(r2dii.data::ald_demo)
 #' @noRd
-restructure_ald_for_matching <- function(data) {
+restructure_ald <- function(data) {
   check_crucial_names(data, c("name_company", "sector"))
 
   out <- select(data, name = .data$name_company, .data$sector)
