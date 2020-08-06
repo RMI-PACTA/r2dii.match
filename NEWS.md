@@ -2,7 +2,7 @@
 
 User-facing
 
-* `match_name()` now errores with a more informative message if `loanbook` has reserved columns -- `alias`, `rowid`, or `sector` (#233).
+* `match_name()` now errors with a more informative message if `loanbook` has reserved columns -- `alias`, `rowid`, or `sector` (#233).
 
 * New `crucial_lbk()` helps select the minimum loanbook columns for `match_name()` to run (#236).
 
