@@ -93,6 +93,8 @@ match_name_impl <- function(loanbook,
                             overwrite = NULL) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
+
+  abort_reserved_column(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
@@ -155,6 +157,21 @@ match_name_impl <- function(loanbook,
   attr(matched, ".internal.selfref") <- NULL
 
   matched
+}
+
+abort_reserved_column <- function(data) {
+  reserved_chr <- c("alias", "rowid", "sector")
+  is_reserved <- names(data) %in% reserved_chr
+
+  if (any(is_reserved)) {
+    bad <- paste0(sort(names(data)[is_reserved]), collapse = ", ")
+    abort(
+      class = "reserved_column",
+      glue("`loanbook` can't have reserved columns:\n{bad}")
+    )
+  }
+
+  invisible(data)
 }
 
 empty_loanbook_tibble <- function(loanbook, old_groups) {

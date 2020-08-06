@@ -540,3 +540,40 @@ test_that("w/ duplicates in ald throws now error; instead remove duplicates", {
   expect_error(out <- match_name(fake_lbk(), dupl), NA)
   expect_equal(nrow(out), 1L)
 })
+
+test_that("throws an error if the `loanbook` has reserved columns", {
+  alias <- mutate(fake_lbk(), alias = "bla")
+  expect_error(
+    class = "reserved_column",
+    match_name(alias, fake_ald()),
+    regexp = "alias"
+  )
+
+  sector <- mutate(fake_lbk(), sector = "auto")
+  expect_error(
+    class = "reserved_column",
+    match_name(sector, fake_ald()),
+    regexp = "sector"
+  )
+
+  rowid <- mutate(fake_lbk(), rowid = 1L)
+  expect_error(
+    class = "reserved_column",
+    match_name(rowid, fake_ald()),
+    regexp = "rowid"
+  )
+
+  rowid_sector <- mutate(fake_lbk(), rowid = 1L, sector = "auto")
+  expect_error(
+    class = "reserved_column",
+    match_name(rowid_sector, fake_ald()),
+    regexp = "rowid.*sector"
+  )
+
+  sector_rowid <- mutate(fake_lbk(), sector = "auto", rowid = 1L)
+  expect_error(
+    class = "reserved_column",
+    match_name(sector_rowid, fake_ald()),
+    regexp = "rowid.*sector"
+  )
+})
