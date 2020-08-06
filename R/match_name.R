@@ -255,6 +255,7 @@ names_added_by_match_name <- function() {
     "alias_lbk",
     "alias_ald",
     "score",
-    "source"
+    "source",
+    "borderline"
   )
 }
