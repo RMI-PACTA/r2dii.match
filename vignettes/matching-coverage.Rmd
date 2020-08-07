@@ -1,0 +1,192 @@
+---
+title: "Calculating Matching Coverage"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+r2dii.match allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. This post explores why, and shows how to calculate how much of the loanbook has been matched.
+
+## Why matching might be partial
+
+```{r include=FALSE}
+sector_in_scope <- glue::glue_collapse(
+  unique(r2dii.data::ald_demo$sector), sep = ", ", last = ", and "
+)
+```
+
+One reason why the matching might be partial is because some companies maybe inactive in the sectors 2DII focuses on: `r sector_in_scope`. 
+Even if the company does operate within 2DII's scope, the asset-level 
+dataset may lack information about it.
+
+## How to measure coverage
+
+Let's explore two ways to calculate coverage:
+
+1. Calculate the portion of your loanbook covered by dollar value (i.e. using one of the `loan_size_*` columns).
+2. Count the number of companies matched.
+
+### Setup
+
+Let's start by setting up the R environment and datasets we need.
+
+First we will need to load up the useful packages:
+
+```{r}
+library(dplyr, warn.conflicts = FALSE)
+library(ggplot2)
+library(r2dii.data)
+library(r2dii.match)
+```
+
+We will use example datasets from `r2dii.data`. To demonstrate our point, we create a `loanbook` dataset with two mismatching loans:
+
+```{r}
+loanbook <- loanbook_demo %>% 
+  mutate(
+    name_ultimate_parent = 
+      ifelse(id_loan == "L1", "unmatched company name", name_ultimate_parent),
+    sector_classification_direct_loantaker = 
+      ifelse(id_loan == "L2", 99, sector_classification_direct_loantaker)
+  )
+```
+
+We will then run the matching algorithm on this loanbook:
+
+```{r}
+# FIXME: Do you mean `loanbook` instead of `loanbook_demo`?
+matched <- loanbook_demo %>% 
+    match_name(ald_demo) %>% 
+    prioritize()
+```
+
+Note that this `matched` dataset will contain _only_ loans that were matched successfully. To determine coverage, we need to go back to the original `loanbook` dataset. We must determine the 2DII sectors of each loan, as dictated by the `sector_classification_direct_loantaker` column:
+
+```{r}
+# FIXME: Discuss/work then remove this comment
+# TODO: maybe export this function?
+loanbook_with_sectors <- r2dii.match:::add_sector_and_borderline(loanbook)
+```
+
+We can join these two datasets together, to generate our `coverage` dataset:
+
+``` {r}
+coverage <- left_join(loanbook_with_sectors, matched) %>% 
+  mutate(
+    loan_size_outstanding = as.numeric(loan_size_outstanding),
+    loan_size_credit_limit = as.numeric(loan_size_credit_limit),
+    matched = case_when(
+      score == 1   ~ "Matched", 
+      is.na(score) ~ "Not Matched",
+      TRUE         ~ "Not Mached"
+    )
+  )
+    # FIXME: What should we do with this?
+    # sector = case_when(
+    #   borderline == TRUE & matched == "Not Matched" ~ "not in scope",
+    #   TRUE ~ sector
+    #   )
+```
+
+### 1. Calculate the portion of your loanbook covered by dollar value
+
+From the `coverage` dataset, we can calculate the total loanbook coverage by dollar value. Let's create two helper functions, one to calculate dollar-value and another one to plot coverage in general.
+
+```{r}
+dollar_value <- function(data, ...) {
+  data %>% 
+    group_by(matched, ...) %>% 
+    summarize(loan_size_outstanding = sum(loan_size_outstanding))
+}
+
+plot_coverage <- function(data, x, y) {
+  ggplot(data) + 
+    geom_col(aes({{x}}, {{y}}, fill = matched)) +
+    # Use more horizontal space -- avoids overlap on x axis text
+    theme(legend.position = "top")
+}
+```
+
+Let's first explore all loans.
+
+```{r}
+coverage %>% 
+  dollar_value() %>% 
+  plot_coverage(matched, loan_size_outstanding)
+```
+
+To calculate the total, in-scope, loanbook coverage: 
+
+```{r}
+coverage %>% 
+  filter(sector != "not in scope") %>% 
+  dollar_value() %>% 
+  plot_coverage(matched, loan_size_outstanding)
+```
+
+### Break down by sector
+
+You may break-down the plot by sector: 
+
+```{r}
+coverage %>% 
+  dollar_value(sector) %>% 
+  plot_coverage(sector, loan_size_outstanding)
+```
+
+Or even further, by matching level:
+
+```{r}
+coverage %>% 
+  mutate(matched = case_when(
+    matched == "Matched" & level == "direct_loantaker"      ~ "Matched DL",
+    matched == "Matched" & level == "intermediate_parent_1" ~ "Matched IP1",
+    matched == "Matched" & level == "ultimate_parent"       ~ "Matched UP",
+    matched == "Not Matched"                                ~ "Not Matched",
+    TRUE                                                    ~ "Catch unknown"
+  )) %>% 
+  dollar_value(sector) %>% 
+  plot_coverage(sector, loan_size_outstanding)
+```
+
+### 2. Count the number of companies
+
+You might also be interested in knowing how many companies in your loanbook were 
+matched. It probably makes most sense to do this at the `direct_loantaker` 
+level:
+
+``` {r}
+companies_matched <- coverage %>% 
+  group_by(sector, matched) %>% 
+  summarize(no_companies = n_distinct(name_direct_loantaker))
+
+companies_matched %>% 
+  plot_coverage(sector, no_companies)
+```
+
+## A Note on Sector Classifications and the `borderline` Flag
+
+There are a zoo of sector classification code systems out there. Some are 
+granular, some are not. Since we currently cover a particular portion of the 
+supply chain (in particular production), it is important we try to only match 
+the ALD with companies that are actually active in this portion of the supply 
+chain. 
+
+An issue arises when, for example, a company is classified in the "power 
+transmission" sector. In a perfect world, these companies would produce no 
+electricity, and we would not try to match them. In practice, however, we find 
+there is often overlap. For this reason, we introduced the `borderline` flag. 
+
+If a sector classification code maps perfectly to a 2DII sector (e.g. "Power 
+Production" -> "power"), then we set the `borderline` flag to `FALSE`. If the 
+match is not perfect (e.g. "Power Transmission" -> "power"), then we set the 
+`borderline` flag to `TRUE`. 
+
+In practice, if a company has a `borderline` of `TRUE` and IS matched, then 
+consider the company in scope. If it has a `borderline` of `TRUE` and ISN'T
