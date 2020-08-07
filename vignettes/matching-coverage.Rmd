@@ -9,12 +9,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-For a variety of reasons, it is extremely unlikely that you will be able to match 
-every loan in your loanbook to a company in the Asset-Level data. To begin with, 
-not every company is active in the sectors that 2DII focuses on. We refer to 
-companies operating outside of 2DII's sectoral scope as `not in scope`. 
+The purpose of this package is to allow you to easily match loans from your 
+loanbook to the companies in an arbitrary asset-level dataset. For a variety of 
+reasons, it is extremely unlikely that you will be able to match every loan in 
+your loanbook. To begin with, not every company is active in the sectors that 
+the analysis focuses on (i.e. `r unique(r2dii.data::ald_demo$sector)`) . We 
+refer to companies operating outside of 2DII's sectoral scope as `not in scope`. 
 
-Even if the company does in  operate in an `in scope` sector, the asset-level 
+Even if the company does operate in an `in scope` sector, the asset-level 
 dataset may not have information about it. 
 
 To account for this, it is often useful to calculate a variety of loanbook 
@@ -63,7 +65,7 @@ match_result <- loanbook_demo %>%
     prioritize()
 ```
 
-Note that this `match_result` file will contain ONLY loans that were able to be 
+Note that this `match_result` file will contain ONLY loans that were successfully 
 matched. To determine coverage, we need to go back to the original `loanbook` 
 file. We must determine the 2DII sectors of each loan, as dictated by the 
 `sector_classification_direct_loantaker` column:
