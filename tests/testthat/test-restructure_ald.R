@@ -20,15 +20,6 @@ test_that("errors gracefully with bad input", {
   )
 })
 
-test_that("outputs a tibble with expected names", {
-  out <- restructure_loanbook(loanbook_rowid)
-  expect_is(out, "tbl_df")
-  expect_named(
-    out,
-    c("rowid", "level", "id_2dii", "name", "sector", "source", "alias")
-  )
-})
-
 test_that("correctly overwrites name", {
   overwrite <- overwrite_demo
 

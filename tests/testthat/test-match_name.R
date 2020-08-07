@@ -115,7 +115,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     name = "Alpine Knits India Pvt. Limited",
     name_ald = "alpine knits india pvt. limited",
     score = 1,
-    source = "loanbook"
+    source = "loanbook",
+    borderline = TRUE
   )
 
   expect_equal(
@@ -124,47 +125,9 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   )
 })
 
-expect_names_match_name <- c(
-  "id_loan",
-
-  "id_direct_loantaker",
-  "name_direct_loantaker",
-
-  "id_intermediate_parent_1",
-  "name_intermediate_parent_1",
-
-  "id_ultimate_parent",
-  "name_ultimate_parent",
-
-  "loan_size_outstanding",
-  "loan_size_outstanding_currency",
-  "loan_size_credit_limit",
-  "loan_size_credit_limit_currency",
-
-  "sector_classification_system",
-  "sector_classification_input_type",
-  "sector_classification_direct_loantaker",
-
-  "fi_type",
-  "flag_project_finance_loan",
-  "name_project",
-
-  "lei_direct_loantaker",
-  "isin_direct_loantaker",
-
-  "id_2dii",
-  "level",
-  "sector",
-  "sector_ald",
-  "name",
-  "name_ald",
-  "score",
-  "source"
-)
-
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
   out <- match_name(slice(loanbook_demo, 1L), fake_ald())
-  expect_named(out, expect_names_match_name)
+  expect_equal(names(out), expect_names_match_name)
 })
 
 test_that("takes unprepared loanbook and ald datasets", {
