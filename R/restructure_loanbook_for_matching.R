@@ -56,11 +56,13 @@ restructure_loanbook <- function(data, overwrite = NULL) {
   important_columns <- c("rowid", id_level, name_level)
 
   out <- may_add_sector_and_borderline(data)
-  out <- select(out, .data$rowid, important_columns, .data$sector)
+  out <- select(
+    out, .data$rowid, important_columns, .data$sector, .data$borderline
+  )
   out <- identify_loans_by_level(out)
   out <- identify_loans_by_name(out)
   out <- mutate(out, source = "loanbook")
-  out <- select(out, .data$rowid, output_cols_for_prep_loanbook())
+  out <- select(out, .data$rowid, prep_lbk_cols())
   out <- distinct(out)
   out <- may_overwrite_name_and_sector(out, overwrite = overwrite)
   out <- add_alias(out)
@@ -154,18 +156,20 @@ check_prep_loanbook_overwrite <- function(overwrite) {
   }
 
   stopifnot(is.data.frame(overwrite))
-  check_crucial_names(overwrite, output_cols_for_prep_loanbook())
+  crucial <- grep("borderline", prep_lbk_cols(), value = TRUE, invert = TRUE)
+  check_crucial_names(overwrite, crucial)
 
   invisible(overwrite)
 }
 
-output_cols_for_prep_loanbook <- function() {
+prep_lbk_cols <- function() {
   c(
     "level",
     "id_2dii",
     "name",
     "sector",
-    "source"
+    "source",
+    "borderline"
   )
 }
 
