@@ -12,8 +12,6 @@ status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-projec
 [![Codecov test
 coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master)
 [![R build
-status](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
-[![R build
 status](https://github.com/2degreesinvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2degreesinvesting/r2dii.match/actions)
 <!-- badges: end -->
 
@@ -71,20 +69,20 @@ and run fuzzy matching against all company names in the `ald`:
 ``` r
 match_result <- match_name(loanbook_demo, ald_demo)
 match_result 
-#> # A tibble: 502 x 27
+#> # A tibble: 502 x 28
 #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
-#>  1 L170    C203             Tesla Inc        <NA>             <NA>            
-#>  2 L180    C217             Weichai Power C… <NA>             <NA>            
-#>  3 L181    C218             Wheego           <NA>             <NA>            
-#>  4 L195    C313             Zhengzhou Yuton… <NA>             <NA>            
-#>  5 L174    C211             Tvr              <NA>             <NA>            
-#>  6 L198    C317             Ziyang Nanjun    <NA>             <NA>            
-#>  7 L193    C310             Zamyad           <NA>             <NA>            
-#>  8 L165    C195             Sunwin Bus       <NA>             <NA>            
-#>  9 L154    C171             Shandong Tangju… <NA>             <NA>            
-#> 10 L164    C193             Subaru Corp      <NA>             <NA>            
-#> # … with 492 more rows, and 22 more variables: id_ultimate_parent <chr>,
+#>  1 L1      C294             Yuamen Xinneng … <NA>             <NA>            
+#>  2 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
+#>  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
+#>  4 L5      C305             Yukon Energy Co… <NA>             <NA>            
+#>  5 L5      C305             Yukon Energy Co… <NA>             <NA>            
+#>  6 L6      C304             Yukon Developme… <NA>             <NA>            
+#>  7 L6      C304             Yukon Developme… <NA>             <NA>            
+#>  8 L8      C303             Yueyang City Co… <NA>             <NA>            
+#>  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
+#> 10 L10     C302             Yuexi County AA… <NA>             <NA>            
+#> # … with 492 more rows, and 23 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -93,7 +91,7 @@ match_result
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
 #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
 #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#> #   score <dbl>, source <chr>
+#> #   score <dbl>, source <chr>, borderline <lgl>
 ```
 
 ### 2\. Prioritize validated matches
@@ -108,20 +106,20 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 267 x 27
+#> # A tibble: 267 x 28
 #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
-#>  1 L151    C168             Shaanxi Auto     <NA>             <NA>            
-#>  2 L152    C169             Shandong Auto    <NA>             <NA>            
-#>  3 L153    C170             Shandong Kama    <NA>             <NA>            
-#>  4 L154    C171             Shandong Tangju… <NA>             <NA>            
-#>  5 L155    C173             Shanghai Automo… <NA>             <NA>            
-#>  6 L156    C176             Shanxi Dayun     <NA>             <NA>            
-#>  7 L157    C178             Shenyang Polars… <NA>             <NA>            
-#>  8 L158    C180             Shuanghuan Auto  <NA>             <NA>            
-#>  9 L159    C182             Sichuan Auto     <NA>             <NA>            
-#> 10 L160    C184             Singulato        <NA>             <NA>            
-#> # … with 257 more rows, and 22 more variables: id_ultimate_parent <chr>,
+#>  1 L6      C304             Yukon Developme… <NA>             <NA>            
+#>  2 L13     C297             Yuba City Cogen… <NA>             <NA>            
+#>  3 L20     C287             Ytl Powerseraya… <NA>             <NA>            
+#>  4 L21     C286             Ytl Power Inter… <NA>             <NA>            
+#>  5 L22     C285             Ytl Corp Bhd     <NA>             <NA>            
+#>  6 L23     C283             Ypic Internatio… <NA>             <NA>            
+#>  7 L24     C282             Ypfb Corporacion <NA>             <NA>            
+#>  8 L25     C281             Ypf Sa           <NA>             <NA>            
+#>  9 L26     C280             Ypf Energia Ele… <NA>             <NA>            
+#> 10 L27     C278             Younicos Ag      <NA>             <NA>            
+#> # … with 257 more rows, and 23 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -130,7 +128,7 @@ prioritize(match_result)
 #> #   flag_project_finance_loan <chr>, name_project <lgl>,
 #> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
 #> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#> #   score <dbl>, source <chr>
+#> #   score <dbl>, source <chr>, borderline <lgl>
 ```
 
 The result is a dataset with identical columns to the input loanbook,
