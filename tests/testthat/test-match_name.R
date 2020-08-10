@@ -548,7 +548,7 @@ test_that("outputs correct `borderline` (#269)", {
     id_direct_loantaker = c(1,2),
     name_direct_loantaker = c("coal in scope", "power borderline"),
     sector_classification_direct_loantaker = c(21000, 36100)
-    )
+  )
 
   ald <- fake_ald(
     name_company = c("coal in scope", "power borderline"),
@@ -556,8 +556,6 @@ test_that("outputs correct `borderline` (#269)", {
   )
 
   out <- match_name(lbk, ald)
-
   expect_equal(out$borderline, c(FALSE, TRUE))
-
 })
 
