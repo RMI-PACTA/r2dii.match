@@ -543,9 +543,9 @@ test_that("throws an error if the `loanbook` has reserved columns", {
 
 test_that("outputs correct `borderline` (#269)", {
   lbk <- fake_lbk(
-    id_loan = c(1,2),
+    id_loan = c(1, 2),
     sector_classification_system = "SIC",
-    id_direct_loantaker = c(1,2),
+    id_direct_loantaker = c(1, 2),
     name_direct_loantaker = c("coal in scope", "power borderline"),
     sector_classification_direct_loantaker = c(21000, 36100)
   )
@@ -558,4 +558,3 @@ test_that("outputs correct `borderline` (#269)", {
   out <- match_name(lbk, ald)
   expect_equal(out$borderline, c(FALSE, TRUE))
 })
-
