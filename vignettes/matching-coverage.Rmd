@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-r2dii.match allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. This post explores why, and shows how to calculate how much of the loanbook has been matched.
+`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. This article explores why, and shows how to calculate how much of the loanbook has been matched.
 
 ## Why matching might be partial
 
@@ -21,7 +21,7 @@ sector_in_scope <- glue::glue_collapse(
 )
 ```
 
-One reason why the matching might be partial is because some companies maybe inactive in the sectors 2DII focuses on: `r sector_in_scope`. 
+One reason why the matching might be partial is because some companies may not be active in the sectors 2DII focuses on: `r sector_in_scope`. 
 Even if the company does operate within 2DII's scope, the asset-level 
 dataset may lack information about it.
 
@@ -29,7 +29,7 @@ dataset may lack information about it.
 
 Let's explore two ways to calculate coverage:
 
-1. Calculate the portion of your loanbook covered by dollar value (i.e. using one of the `loan_size_*` columns).
+1. Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns).
 2. Count the number of companies matched.
 
 ### Setup
@@ -45,7 +45,7 @@ library(r2dii.data)
 library(r2dii.match)
 ```
 
-We will use example datasets from `r2dii.data`. To demonstrate our point, we create a `loanbook` dataset with two mismatching loans:
+We will use example datasets from `r2dii.data`. To demonstrate our point, we create a `loanbook` dataset with two mis-matching loans:
 
 ```{r}
 loanbook <- loanbook_demo %>% 
@@ -60,8 +60,7 @@ loanbook <- loanbook_demo %>%
 We will then run the matching algorithm on this loanbook:
 
 ```{r}
-# FIXME: Do you mean `loanbook` instead of `loanbook_demo`?
-matched <- loanbook_demo %>% 
+matched <- loanbook %>% 
     match_name(ald_demo) %>% 
     prioritize()
 ```
@@ -69,8 +68,6 @@ matched <- loanbook_demo %>%
 Note that this `matched` dataset will contain _only_ loans that were matched successfully. To determine coverage, we need to go back to the original `loanbook` dataset. We must determine the 2DII sectors of each loan, as dictated by the `sector_classification_direct_loantaker` column:
 
 ```{r}
-# FIXME: Discuss/work then remove this comment
-# TODO: maybe export this function?
 loanbook_with_sectors <- r2dii.match:::add_sector_and_borderline(loanbook)
 ```
 
@@ -85,13 +82,13 @@ coverage <- left_join(loanbook_with_sectors, matched) %>%
       score == 1   ~ "Matched", 
       is.na(score) ~ "Not Matched",
       TRUE         ~ "Not Mached"
-    )
+      ),
+    sector = case_when(
+      borderline == TRUE & matched == "Not Matched" ~ "not in scope",
+      TRUE ~ sector
+      )
   )
-    # FIXME: What should we do with this?
-    # sector = case_when(
-    #   borderline == TRUE & matched == "Not Matched" ~ "not in scope",
-    #   TRUE ~ sector
-    #   )
+
 ```
 
 ### 1. Calculate the portion of your loanbook covered by dollar value
@@ -174,7 +171,7 @@ companies_matched %>%
 
 There are a zoo of sector classification code systems out there. Some are 
 granular, some are not. Since we currently cover a particular portion of the 
-supply chain (in particular production), it is important we try to only match 
+supply chain (i.e. production), it is important we try to only match 
 the ALD with companies that are actually active in this portion of the supply 
 chain. 
 
@@ -189,4 +186,5 @@ match is not perfect (e.g. "Power Transmission" -> "power"), then we set the
 `borderline` flag to `TRUE`. 
 
 In practice, if a company has a `borderline` of `TRUE` and IS matched, then 
-consider the company in scope. If it has a `borderline` of `TRUE` and ISN'T
+consider the company in scope. If it has a `borderline` of `TRUE` and ISN'T 
+matched, then consider it out of scope.
