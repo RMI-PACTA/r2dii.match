@@ -2,11 +2,18 @@
 
 User-facing
 
+* `match_name()` now converts `ald$sector` to lower case before matching
+  (@georgeharris2deg #257). It now returns identical output with, for example, 
+  either "POWER" or "power". Notice that the input "POWER" in `ald$sector`
+  becomes "power" in the column `sector_ald` of the output.
+
 * `match_name()` now outputs a new column `borderline` (#258).
 
-* `match_name()` now errors with a more informative message if `loanbook` has reserved columns -- `alias`, `rowid`, or `sector` (#233).
+* `match_name()` now errors with a more informative message if `loanbook` has
+  reserved columns -- `alias`, `rowid`, or `sector` (#233).
 
-* New `crucial_lbk()` helps select the minimum loanbook columns for `match_name()` to run (#236).
+* New `crucial_lbk()` helps select the minimum loanbook columns for
+  `match_name()` to run (#236).
 
 * `match_name()` now runs faster and uses less memory (@georgeharris2deg #214).
 
