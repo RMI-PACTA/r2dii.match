@@ -6,7 +6,7 @@
 #' * `borderline`: Indicates if the classification is borderline or not.
 #'
 #' A company acts in a climate-relevant sector if it meets two conditions:
-#' 1. It is classified in one of the sectors that translate 1 to 1 from a a
+#' 1. It is classified in one of the sectors that translate 1 to 1 from a
 #' standard sector classification to a climate-relevant sector covered by the
 #' PACTA analysis (e.g. utilities to power).
 #' 2. It is classified in a sector that can but does not necessarily map to a
@@ -23,6 +23,7 @@
 #'
 #' @examples
 #' library(dplyr)
+#' library(r2dii.data)
 #'
 #' out <- add_sector_and_borderline(r2dii.data::loanbook_demo)
 #' new_columns <- setdiff(names(out), names(loanbook_demo))

@@ -540,3 +540,34 @@ test_that("throws an error if the `loanbook` has reserved columns", {
     regexp = "rowid.*sector"
   )
 })
+
+test_that("outputs correct `borderline` (#269)", {
+  # This sector-code matches the 2DII sector "coal" fully.
+  border_false <- 21000
+  coal_2dii <- "coal"
+  # This sector-code matches the 2DII sector "power" as "borderline".
+  border_true <- 36100
+  power_2dii <- "power"
+  # Confirm with:
+  # filter(sector_classifications, code %in% c(border_false, border_true))
+
+  a_code_system <- "SIC"
+  some_ids <- c(1, 2)
+  some_companies <- c("a", "b")
+
+  lbk <- fake_lbk(
+    id_loan = some_ids,
+    sector_classification_system = a_code_system,
+    id_direct_loantaker = some_ids,
+    name_direct_loantaker = some_companies,
+    sector_classification_direct_loantaker = c(border_false, border_true)
+  )
+
+  ald <- fake_ald(
+    name_company = some_companies,
+    sector = c(coal_2dii, power_2dii)
+  )
+
+  out <- match_name(lbk, ald)
+  expect_equal(out$borderline, c(FALSE, TRUE))
+})
