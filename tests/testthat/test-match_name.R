@@ -540,3 +540,24 @@ test_that("throws an error if the `loanbook` has reserved columns", {
     regexp = "rowid.*sector"
   )
 })
+
+test_that("outputs correct `borderline` (#269)", {
+  lbk <- fake_lbk(
+    id_loan = c(1,2),
+    sector_classification_system = "SIC",
+    id_direct_loantaker = c(1,2),
+    name_direct_loantaker = c("coal in scope", "power borderline"),
+    sector_classification_direct_loantaker = c(21000, 36100)
+    )
+
+  ald <- fake_ald(
+    name_company = c("coal in scope", "power borderline"),
+    sector = c("coal", "power")
+  )
+
+  out <- match_name(lbk, ald)
+
+  expect_equal(out$borderline, c(FALSE, TRUE))
+
+})
+
