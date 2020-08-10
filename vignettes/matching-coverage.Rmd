@@ -11,41 +11,27 @@ knitr::opts_chunk$set(
 )
 ```
 
-`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. This article explores why, and shows how to calculate how much of the loanbook has been matched.
-
-## Why matching might be partial
-
 ```{r include=FALSE}
 sector_in_scope <- glue::glue_collapse(
   unique(r2dii.data::ald_demo$sector), sep = ", ", last = ", and "
 )
 ```
 
-One reason why the matching might be partial is because some companies may not be active in the sectors 2DII focuses on: `r sector_in_scope`. 
-Even if the company does operate within 2DII's scope, the asset-level 
-dataset may lack information about it.
-
-## How to measure coverage
-
-Let's explore two ways to calculate coverage:
-
-1. Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns).
-2. Count the number of companies matched.
+`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. A company may not be active in the sectors 2DII focuses on: `r sector_in_scope`; and even if the company does operate within 2DII's scope, the asset-level dataset may lack information about it. How can you measure how much of the loanbook matched some asset? This article shows two ways to calculate such matching coverage: (1) Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns); and (2) Count the number of companies matched.
 
 ### Setup
-
-Let's start by setting up the R environment and datasets we need.
 
 First we will need to load up the useful packages:
 
 ```{r}
 library(dplyr, warn.conflicts = FALSE)
+library(purrr)
 library(ggplot2)
 library(r2dii.data)
 library(r2dii.match)
 ```
 
-We will use example datasets from `r2dii.data`. To demonstrate our point, we create a `loanbook` dataset with two mis-matching loans:
+We will use example datasets from `r2dii.data`. To demonstrate our point, we create a `loanbook` dataset with two mismatching loans:
 
 ```{r}
 loanbook <- loanbook_demo %>% 
@@ -65,10 +51,22 @@ matched <- loanbook %>%
     prioritize()
 ```
 
-Note that this `matched` dataset will contain _only_ loans that were matched successfully. To determine coverage, we need to go back to the original `loanbook` dataset. We must determine the 2DII sectors of each loan, as dictated by the `sector_classification_direct_loantaker` column:
+Note that this `matched` dataset will contain _only_ loans that were matched successfully. To determine coverage, we need to go back to the original `loanbook` dataset. We must determine the 2DII sectors of each loan, as dictated by the `sector_classification_direct_loantaker` column. 
+
+For this, we join the loanbook with the [`sector_classifications`](https://2degreesinvesting.github.io/r2dii.data/reference/sector_classifications.html) dataset, which lists all sector classification code standards used by 'PACTA'. Unfortunately we need to work around two caveats (you may ignore them because they are conceptually uninteresting):
+
+* In the two datasets, the columns we want to merge by have different names. We use the argument `by` to `left_join()` to merge the columns `sector_classification_system` and `sector_classification_direct_loantaker` (from `loanbook`) with the columns `code_system` and `code` (from `sector_classifications`), respectively. 
+
+* In the two datasets, the sector classification codes are represented with different data-types. We modify the column `sector_classification_direct_loantaker` before `left_join()` so it has the same type as the corresponding column `code` (otherwise `left_join()` throws an error), and again after `left_join()` to restore its original type. 
 
 ```{r}
-loanbook_with_sectors <- r2dii.match:::add_sector_and_borderline(loanbook)
+merge_by <- c("code_system", "code") %>% 
+  set_names(paste0("sector_classification_", c("system", "direct_loantaker")))
+
+loanbook_with_sectors <- loanbook %>% 
+  modify_at(names(merge_by)[[2]], as.character) %>% 
+  left_join(sector_classifications, by = merge_by) %>% 
+  modify_at(names(merge_by)[[2]], as.double)
 ```
 
 We can join these two datasets together, to generate our `coverage` dataset:
@@ -82,13 +80,12 @@ coverage <- left_join(loanbook_with_sectors, matched) %>%
       score == 1   ~ "Matched", 
       is.na(score) ~ "Not Matched",
       TRUE         ~ "Not Mached"
-      ),
+    ),
     sector = case_when(
       borderline == TRUE & matched == "Not Matched" ~ "not in scope",
       TRUE ~ sector
-      )
+    )
   )
-
 ```
 
 ### 1. Calculate the portion of your loanbook covered by dollar value
