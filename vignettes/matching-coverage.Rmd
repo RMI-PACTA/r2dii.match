@@ -17,7 +17,9 @@ sector_in_scope <- glue::glue_collapse(
 )
 ```
 
-`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. A company may not be active in the sectors 2DII focuses on: `r sector_in_scope`; and even if the company does operate within 2DII's scope, the asset-level dataset may lack information about it. How can you measure how much of the loanbook matched some asset? This article shows two ways to calculate such matching coverage: (1) Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns); and (2) Count the number of companies matched.
+`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. There are a couple reasons for this. A loan-taking company may not be active in the sectors 2DII focuses on: `r sector_in_scope`; and even if the company does operate within 2DII's scope, the asset-level dataset may lack information about it. 
+
+How can you measure how much of the loanbook matched some asset? This article shows two ways to calculate such matching coverage: (1) Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns); and (2) Count the number of companies matched.
 
 ### Setup
 
@@ -175,12 +177,23 @@ chain.
 An issue arises when, for example, a company is classified in the "power 
 transmission" sector. In a perfect world, these companies would produce no 
 electricity, and we would not try to match them. In practice, however, we find 
-there is often overlap. For this reason, we introduced the `borderline` flag. 
+there is often overlap. For this reason, we introduced the `borderline` flag.
 
-If a sector classification code maps perfectly to a 2DII sector (e.g. "Power 
-Production" -> "power"), then we set the `borderline` flag to `FALSE`. If the 
-match is not perfect (e.g. "Power Transmission" -> "power"), then we set the 
-`borderline` flag to `TRUE`. 
+In the example below, we see two classification codes coming from the SIC 
+classification standard:
+
+``` {r}
+r2dii.data::sic_classification %>% 
+  filter(code %in% c(41111, 36200))
+```
+
+Notice that the code 41111 corresponds to power generation. This is an identical 
+match to 2DII's `power` sector, and thus the `borderline` flag is set to 
+`FALSE`. In contrast, code 36200 corresponds to the manufacture of electricity 
+distribution and control apparatus. In a perfect world, we would set this code 
+to `not in scope`, however there is still a chance that these companies produce 
+electricity. For this reason, we have mapped it to `power` with 
+`borderline = TRUE`.
 
 In practice, if a company has a `borderline` of `TRUE` and IS matched, then 
 consider the company in scope. If it has a `borderline` of `TRUE` and ISN'T 
