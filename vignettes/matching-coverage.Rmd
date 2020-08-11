@@ -17,9 +17,11 @@ sector_in_scope <- glue::glue_collapse(
 )
 ```
 
-`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset, but it is unlikely that you will be able to match every loan. There are a couple reasons for this. A loan-taking company may not be active in the sectors 2DII focuses on: `r sector_in_scope`; and even if the company does operate within 2DII's scope, the asset-level dataset may lack information about it. 
+`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset. However, matching every loan is unlikely -- some loan-taking companies may be missing from the asset-level dataset, or they may not operate in the sectors 2DII focuses on (`r sector_in_scope`). Thus, you may want to measure how much of the loanbook matched some asset. This article shows two ways to calculate such matching coverage: 
 
-How can you measure how much of the loanbook matched some asset? This article shows two ways to calculate such matching coverage: (1) Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns); and (2) Count the number of companies matched.
+(1) Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns).
+
+(2) Count the number of companies matched.
 
 ### Setup
 
