@@ -197,6 +197,6 @@ to `not in scope`, however there is still a chance that these companies produce
 electricity. For this reason, we have mapped it to `power` with 
 `borderline = TRUE`.
 
-In practice, if a company has a `borderline` of `TRUE` and IS matched, then 
-consider the company in scope. If it has a `borderline` of `TRUE` and ISN'T 
+In practice, if a company has a `borderline` of `TRUE` and _is_ matched, then 
+consider the company in scope. If it has a `borderline` of `TRUE` and _isn't_
 matched, then consider it out of scope.
