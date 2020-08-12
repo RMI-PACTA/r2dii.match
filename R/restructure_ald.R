@@ -17,7 +17,9 @@
 restructure_ald <- function(data) {
   check_crucial_names(data, c("name_company", "sector"))
 
-  out <- select(data, name = .data$name_company, .data$sector)
+  out <- dplyr::transmute(
+    data, name = .data$name_company, sector = tolower(.data$sector)
+  )
   out <- distinct(out)
   add_alias(out)
 }

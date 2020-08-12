@@ -571,3 +571,26 @@ test_that("outputs correct `borderline` (#269)", {
   out <- match_name(lbk, ald)
   expect_equal(out$borderline, c(FALSE, TRUE))
 })
+
+test_that("matches any case of ald$sector, but converts sector to lowercase", {
+  low <- match_name(fake_lbk(), fake_ald(sector = "power"))
+  expect_equal(low$sector, "power")
+
+  upp <- match_name(fake_lbk(), fake_ald(sector = "POWER"))
+  # The original uppercase is converted to lowercase
+  expect_equal(upp$sector, "power")
+
+  # The output is identical
+  expect_identical(low, upp)
+})
+
+test_that("matches any case of ald$name_company, but preserves original case", {
+  low <- match_name(fake_lbk(), fake_ald(name_company = "alpine knits"))
+  expect_equal(nrow(low), 1L)
+  expect_equal(low$name_ald, "alpine knits")
+
+  upp <- match_name(fake_lbk(), fake_ald(name_company = "ALPINE KNITS"))
+  expect_equal(nrow(upp), 1L)
+  # The original uppercase is preserved
+  expect_equal(upp$name_ald, "ALPINE KNITS")
+})
