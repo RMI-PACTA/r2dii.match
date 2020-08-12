@@ -87,7 +87,35 @@ desired match. By default, the highest priority is the most granular match
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown-header">Articles</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/matching-coverage.html">Calculating Matching Coverage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Release notes</li>
+    <li>
+      <a href="../articles/r2dii-match-0-0-1.html">r2dii.match 0.0.1</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Change log</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
@@ -170,7 +198,7 @@ priority level is highest.</p>
     <p><strong>How to validate <code>data</code></strong></p>
 <p>Write the output of <code><a href='match_name.html'>match_name()</a></code> into a .csv file with:<div class="r"></p><pre><span class='co'># Writting to current working directory</span>
 <span class='no'>matched</span> <span class='kw'>%&amp;gt;%</span>
-  <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'>write_csv</span>(<span class='st'>"matched.csv"</span>)</pre><p></div></p>
+  <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span>(<span class='st'>"matched.csv"</span>)</pre><p></div></p>
 <p>Compare, edit, and save the data manually:</p><ul>
 <li><p>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel,
 Google Sheets).</p></li>
@@ -187,7 +215,7 @@ internal information on the company structure, etc.)</p></li>
 </ul>
 
 <p>Re-read the edited file (validated) with:<div class="r"></p><pre><span class='co'># Reading from current working directory</span>
-<span class='no'>valid_matches</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'>read_csv</span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
+<span class='no'>valid_matches</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
 
     
