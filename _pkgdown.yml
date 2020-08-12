@@ -36,9 +36,9 @@ navbar:
     href: reference/index.html
 
   - text: "Articles"
-  menu:
-  - text: "Calculating Matching Coverage"
-    href: articles/matching-coverage.html
+    menu:
+    - text: "Calculating Matching Coverage"
+      href: articles/matching-coverage.html
 
   - text: "News"
     menu:
