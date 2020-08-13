@@ -31,18 +31,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/r2dii-match.html">Get started</a>
 </li>
@@ -57,18 +51,50 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/matching-coverage.html">Calculating Matching Coverage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li class="dropdown-header">Release notes</li>
+    <li>
       <a href="../articles/r2dii-match-0-0-1.html">r2dii.match 0.0.1</a>
+    </li>
+    <li class="divider">
+    <li>
+      <a href="../news/index.html">Change log</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Packages
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/2DegreesInvesting/r2dii.match">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -100,27 +126,20 @@
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>We use the package r2dii.match to access the most important functions you’ll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'dplyr'</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     filter, lag</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
-<span class="co"># r2dii.data is changing rapidly; ensure you have the latest version</span>
-<span class="co"># remotes::update_packages("r2dii.data", upgrade = "ask")</span>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>, <span class="kw">warn.conflicts</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)</pre></body></html></div>
 </div>
 <div id="format-input-data-loanbook-and-asset-level-data-ald" class="section level2">
 <h2 class="hasAnchor">
-<a href="#format-input-data-loanbook-and-asset-level-data-ald" class="anchor"></a>Format input data <a href="https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_description.html">loanbook</a> and <a href="https://2degreesinvesting.github.io/r2dii.data/reference/ald_description.html">asset-level data (ald)</a>
-</h2>
+<a href="#format-input-data-loanbook-and-asset-level-data-ald" class="anchor"></a>Format input data loanbook and asset-level data (ald)</h2>
 <p>We need two datasets: a “loanbook” and an “asset-level dataset” (ald). These should be formatted like: <a href="https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html"><code>loanbook_demo</code></a> and <a href="https://2degreesinvesting.github.io/r2dii.data/reference/ald_demo.html"><code>ald_demo</code></a> (from the <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data package</a>).</p>
-<p>(A note on sector classification: Matches are preferred when the sector from the <code>loanbook</code> matches the sector from the <code>ald</code>. The <code>loanbook</code> sector is determined internally using the <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> columns. Currently, <code>sector_classification_system</code> must be either <code>ISIC</code> or <code>NACE</code>. If you would like to use a different classification system, please raise an issue in <a href="https://github.com/2DegreesInvesting/r2dii.data">r2dii.data</a> and we can incorporate it.)</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">loanbook_demo</span>
+<p>A note on sector classification: Matches are preferred when the sector from the <code>loanbook</code> matches the sector from the <code>ald</code>. The <code>loanbook</code> sector is determined internally using the <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> columns. Currently, we only allow a couple specific values for <code>sector_classification_system</code>:</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">sector_classifications</span>$<span class="no">code_system</span> <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>()
+<span class="co">#&gt; [1] "ISIC"  "NACE"  "NAICS" "SIC"</span></pre></body></html></div>
+<p>If you would like to use a different classification system, please raise an issue in <a href="https://github.com/2DegreesInvesting/r2dii.data">r2dii.data</a> and we can incorporate it.</p>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">loanbook_demo</span>
 <span class="co">#&gt; # A tibble: 320 x 19</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
@@ -165,22 +184,22 @@
 <ul>
 <li>Write <em>loanbook_demo.csv</em> and <em>ald_demo.csv</em> with:</li>
 </ul>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="co"># Writting to current working directory </span>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># Writting to current working directory </span>
 <span class="no">loanbook_demo</span> <span class="kw">%&gt;%</span>
-  <span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">"loanbook_demo.csv"</span>)
+  <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">"loanbook_demo.csv"</span>)
 
 <span class="no">ald_demo</span> <span class="kw">%&gt;%</span>
-  <span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">"ald_demo.csv"</span>)</pre></body></html></div>
+  <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">write_csv</span>(<span class="kw">path</span> <span class="kw">=</span> <span class="st">"ald_demo.csv"</span>)</pre></body></html></div>
 <ul>
 <li>For each dataset, replace our demo data with your data.</li>
 <li>Save each dataset as, for example, <em>your_loanbook.csv</em> and <em>your_ald.csv</em>.</li>
 <li>Read your datasets back into R with:</li>
 </ul>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="co"># Reading from current working directory </span>
-<span class="no">your_loanbook</span> <span class="kw">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"your_loanbook.csv"</span>)
-<span class="no">your_ald</span> <span class="kw">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"your_ald.csv"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># Reading from current working directory </span>
+<span class="no">your_loanbook</span> <span class="kw">&lt;-</span> <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">read_csv</span>(<span class="st">"your_loanbook.csv"</span>)
+<span class="no">your_ald</span> <span class="kw">&lt;-</span> <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">read_csv</span>(<span class="st">"your_ald.csv"</span>)</pre></body></html></div>
 <p>Here we continue to use the <code>*_demo</code> datasets, pretending they contain the data of your own.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># WARNING: Skip this to avoid overwriting your data with our demo data</span>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># WARNING: Skip this to avoid overwriting your data with our demo data</span>
 <span class="no">your_loanbook</span> <span class="kw">&lt;-</span> <span class="no">loanbook_demo</span>
 <span class="no">your_ald</span> <span class="kw">&lt;-</span> <span class="no">ald_demo</span></pre></body></html></div>
 </div>
@@ -197,22 +216,21 @@
 <li>Spell out numbers to increase their importance.</li>
 </ul>
 <p>The similarity is then scored between the internally-transformed names of the loanbook against the ald. (For more information on the scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html">stringdist::stringsim()</a></code>).</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">your_loanbook</span>, <span class="no">your_ald</span>)
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">your_loanbook</span>, <span class="no">your_ald</span>)
 <span class="co">#&gt; # A tibble: 502 x 28</span>
-<span class="co">#&gt;    rowid id_loan id_direct_loant… name_direct_loa… id_intermediate…</span>
-<span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1     1 L1      C294             Yuamen Xinneng … &lt;NA&gt;            </span>
-<span class="co">#&gt;  2     3 L3      C292             Yuama Ethanol L… IP5             </span>
-<span class="co">#&gt;  3     3 L3      C292             Yuama Ethanol L… IP5             </span>
-<span class="co">#&gt;  4     5 L5      C305             Yukon Energy Co… &lt;NA&gt;            </span>
-<span class="co">#&gt;  5     5 L5      C305             Yukon Energy Co… &lt;NA&gt;            </span>
-<span class="co">#&gt;  6     6 L6      C304             Yukon Developme… &lt;NA&gt;            </span>
-<span class="co">#&gt;  7     6 L6      C304             Yukon Developme… &lt;NA&gt;            </span>
-<span class="co">#&gt;  8     8 L8      C303             Yueyang City Co… &lt;NA&gt;            </span>
-<span class="co">#&gt;  9     9 L9      C301             Yuedxiu Corp One IP10            </span>
-<span class="co">#&gt; 10    10 L10     C302             Yuexi County AA… &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 492 more rows, and 23 more variables:</span>
-<span class="co">#&gt; #   name_intermediate_parent_1 &lt;chr&gt;, id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  4 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
+<span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; # … with 492 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -221,9 +239,9 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></body></html></div>
 <p><code><a href="../reference/match_name.html">match_name()</a></code> defaults to scoring matches between name strings that belong to the same sector. Using <code>by_sector = FALSE</code> removes this limitation – increasing computation time, and the number of potentially incorrect matches to manually validate.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">your_loanbook</span>, <span class="no">your_ald</span>, <span class="kw">by_sector</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">your_loanbook</span>, <span class="no">your_ald</span>, <span class="kw">by_sector</span> <span class="kw">=</span> <span class="fl">FALSE</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>()
 <span class="co">#&gt; [1] 673</span>
 
@@ -232,7 +250,7 @@
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>()
 <span class="co">#&gt; [1] 502</span></pre></body></html></div>
 <p><code>min_score</code> allows you to minimum threshold <code>score</code>.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">your_loanbook</span>, <span class="no">your_ald</span>, <span class="kw">min_score</span> <span class="kw">=</span> <span class="fl">0.9</span>)
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span>(<span class="no">your_loanbook</span>, <span class="no">your_ald</span>, <span class="kw">min_score</span> <span class="kw">=</span> <span class="fl">0.9</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span>(<span class="no">matched</span>$<span class="no">score</span>)
 <span class="co">#&gt; [1] 0.9058824 1.0000000</span></pre></body></html></div>
 <div id="maybe-overwrite-matches" class="section level3">
@@ -251,8 +269,9 @@
 <li>
 <code>source</code> this can be used later to determine where all manual matches came from.</li>
 </ul>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span>(
-  <span class="no">your_loanbook</span>, <span class="no">your_ald</span>, <span class="kw">min_score</span> <span class="kw">=</span> <span class="fl">0.9</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="no">overwrite_demo</span>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span>(
+  <span class="no">your_loanbook</span>, <span class="no">your_ald</span>,
+  <span class="kw">min_score</span> <span class="kw">=</span> <span class="fl">0.9</span>, <span class="kw">overwrite</span> <span class="kw">=</span> <span class="no">overwrite_demo</span>
 )
 <span class="co">#&gt; Warning: You should only overwrite a sector at the level of the 'direct</span>
 <span class="co">#&gt; loantaker' (DL). If you overwrite a sector at the level of the 'ultimate</span>
@@ -265,12 +284,12 @@
 <h2 class="hasAnchor">
 <a href="#validate-matches" class="anchor"></a>Validate matches</h2>
 <p>Write the output of <code><a href="../reference/match_name.html">match_name()</a></code> into a .csv file with:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="co"># Writting to current working directory</span>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Writting to current working directory</span>
 <span class="no">matched</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span>(<span class="st">"matched.csv"</span>)</pre></body></html></div>
+  <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">write_csv</span>(<span class="st">"matched.csv"</span>)</pre></body></html></div>
 <p>Compare, edit, and save the data manually:</p>
 <ul>
-<li>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel, Google Sheets).</li>
+<li>Open <em>matched.csv</em> with any spreadsheet editor (Excel, Google Sheets, etc.).</li>
 <li>Compare the columns <code>name</code> and <code>name_ald</code> manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)</li>
 <li>Edit the data:
 <ul>
@@ -281,21 +300,21 @@
 <li>Save the edited file as, say, <em>valid_matches.csv</em>.</li>
 </ul>
 <p>Re-read the edited file (validated) with:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="co"># Reading from current working directory</span>
-<span class="no">valid_matches</span> <span class="kw">&lt;-</span> <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="st">"valid_matches.csv"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># Reading from current working directory</span>
+<span class="no">valid_matches</span> <span class="kw">&lt;-</span> <span class="kw pkg">readr</span><span class="kw ns">::</span><span class="fu">read_csv</span>(<span class="st">"valid_matches.csv"</span>)</pre></body></html></div>
 </div>
 <div id="prioritize-validated-matches-by-level" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prioritize-validated-matches-by-level" class="anchor"></a>Prioritize validated matches by level</h2>
-<p>The validated dataset may have multiple matches per loan. Consider the case where a loan is given to “Acme Power USA”, a subsidiary of “Acme Power Co.”. There may be both “Acme Power USA” and “Acme Power Co.” in the <code>ald</code>, and so there could be two valid matches for this loan. To get the best match only, use <code><a href="../reference/prioritize.html">prioritize()</a></code> – it picks rows where <code>score</code> is 2 and <code>level</code> per loan is of highest <code>priority()</code>:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="co"># Pretend we validated the matched dataset</span>
+<p>The validated dataset may have multiple matches per loan. Consider the case where a loan is given to “Acme Power USA”, a subsidiary of “Acme Power Co.”. There may be both “Acme Power USA” and “Acme Power Co.” in the <code>ald</code>, and so there could be two valid matches for this loan. To get the best match only, use <code><a href="../reference/prioritize.html">prioritize()</a></code> – it picks rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority()</code>:</p>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="co"># Pretend we validated the matched dataset</span>
 <span class="no">valid_matches</span> <span class="kw">&lt;-</span> <span class="no">matched</span>
 
 <span class="no">some_interesting_columns</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span>(<span class="no">id_2dii</span>, <span class="no">level</span>, <span class="no">score</span>)
 
 <span class="no">valid_matches</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(!!! <span class="no">some_interesting_columns</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(!!!<span class="no">some_interesting_columns</span>)
 <span class="co">#&gt; # A tibble: 267 x 3</span>
 <span class="co">#&gt;    id_2dii level            score</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;</span>
@@ -311,12 +330,12 @@
 <span class="co">#&gt; 10 DL280   direct_loantaker     1</span>
 <span class="co">#&gt; # … with 257 more rows</span></pre></body></html></div>
 <p>By default, highest priority refers to the most granular match (<code>direct_loantaker</code>). The default priority is set internally via <code>prioritize_levels()</code>.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/prioritize_level.html">prioritize_level</a></span>(<span class="no">matched</span>)
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="../reference/prioritize_level.html">prioritize_level</a></span>(<span class="no">matched</span>)
 <span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></pre></body></html></div>
 <p>You may use a different priority. One way to do that is to pass a function to <code>priority</code>. For example, use <code>rev</code> to reverse the default priority.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">matched</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span>(<span class="kw">priority</span> <span class="kw">=</span> <span class="no">rev</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(!!! <span class="no">some_interesting_columns</span>)
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(!!!<span class="no">some_interesting_columns</span>)
 <span class="co">#&gt; # A tibble: 267 x 3</span>
 <span class="co">#&gt;    id_2dii level           score</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;</span>

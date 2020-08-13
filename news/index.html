@@ -71,19 +71,13 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/r2dii-match.html">Get started</a>
 </li>
 <li>
@@ -97,18 +91,50 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/matching-coverage.html">Calculating Matching Coverage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Release notes</li>
+    <li>
       <a href="../articles/r2dii-match-0-0-1.html">r2dii.match 0.0.1</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Change log</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Packages
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/2DegreesInvesting/r2dii.match">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -129,18 +155,37 @@
       <small>Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="r2diimatch-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#r2diimatch-development-version" class="anchor"></a>r2dii.match (development version)<small> Unreleased </small>
+    <div id="r2diimatch-004" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.4">
+<a href="#r2diimatch-004" class="anchor"></a>r2dii.match 0.0.4<small> Unreleased </small>
 </h1>
+<ul>
+<li>New article “Calculating matching coverage” (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/264'>#264</a>).</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now outputs a new column <code>borderline</code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/258'>#258</a>).</li>
+<li>New <code><a href="../reference/crucial_lbk.html">crucial_lbk()</a></code> helps select the minimum loanbook columns for <code><a href="../reference/match_name.html">match_name()</a></code> to run (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/236'>#236</a>).</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now runs faster and uses less memory (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/214'>#214</a>).</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now converts <code>ald$sector</code> to lower case before matching (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/257'>#257</a>). It now returns identical output with, for example, either “POWER” or “power”. Notice that the input “POWER” in <code>ald$sector</code> becomes “power” in the column <code>sector_ald</code> of the output.</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now errors with a more informative message if <code>loanbook</code> has reserved columns – <code>alias</code>, <code>rowid</code>, or <code>sector</code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/233'>#233</a>).</li>
+</ul>
+</div>
+    <div id="r2diimatch-003" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.3">
+<a href="#r2diimatch-003" class="anchor"></a>r2dii.match 0.0.3<small> 2020-06-30 </small>
+</h1>
+<ul>
+<li>Enforce dplyr &gt;= 0.8.5 (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/216'>#216</a>).</li>
+<li>No longer import vctrs; it is unused.</li>
+</ul>
 </div>
     <div id="r2diimatch-002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.2">
 <a href="#r2diimatch-002" class="anchor"></a>r2dii.match 0.0.2<small> 2020-06-04 </small>
 </h1>
-<ul>
-<li>This version includes only internal changes.</li>
-</ul>
+<p>This version includes only <a href="https://github.com/2DegreesInvesting/r2dii.match/releases/tag/v0.0.2">internal changes</a>.</p>
 </div>
     <div id="r2diimatch-001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1">

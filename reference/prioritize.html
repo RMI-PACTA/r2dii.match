@@ -75,19 +75,13 @@ desired match. By default, the highest priority is the most granular match
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../articles/r2dii-match.html">Get started</a>
 </li>
 <li>
@@ -101,18 +95,50 @@ desired match. By default, the highest priority is the most granular match
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/matching-coverage.html">Calculating Matching Coverage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Release notes</li>
+    <li>
       <a href="../articles/r2dii-match-0-0-1.html">r2dii.match 0.0.1</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Change log</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Packages
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/2DegreesInvesting/r2dii.match">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -172,24 +198,19 @@ priority level is highest.</p>
     <p><strong>How to validate <code>data</code></strong></p>
 <p>Write the output of <code><a href='match_name.html'>match_name()</a></code> into a .csv file with:<div class="r"></p><pre><span class='co'># Writting to current working directory</span>
 <span class='no'>matched</span> <span class='kw'>%&amp;gt;%</span>
-  <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span>(<span class='st'>"matched.csv"</span>)</pre><p></div></p>
+  <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'>write_csv</span>(<span class='st'>"matched.csv"</span>)</pre><p></div></p>
 <p>Compare, edit, and save the data manually:</p><ul>
-<li><p>Open <em>matched.csv</em> with any spreadsheet editor (e.g. MS Excel,
-Google Sheets).</p></li>
-<li><p>Compare the columns <code>name</code> and <code>name_ald</code> manually to determine if
-the match is valid. Other information can be used in conjunction
-with just the names to ensure the two entities match (sector,
-internal information on the company structure, etc.)</p></li>
+<li><p>Open <em>matched.csv</em> with any spreadsheet editor (Excel, Google Sheets, etc.).</p></li>
+<li><p>Compare the columns <code>name</code> and <code>name_ald</code> manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)</p></li>
 <li><p>Edit the data:</p><ul>
 <li><p>If you are happy with the match, set the <code>score</code> value to <code>1</code>.</p></li>
-<li><p>Otherwise set or leave the <code>score</code> value to anything other than
-<code>1</code>.</p></li>
+<li><p>Otherwise set or leave the <code>score</code> value to anything other than <code>1</code>.</p></li>
 </ul></li>
 <li><p>Save the edited file as, say, <em>valid_matches.csv</em>.</p></li>
 </ul>
 
 <p>Re-read the edited file (validated) with:<div class="r"></p><pre><span class='co'># Reading from current working directory</span>
-<span class='no'>valid_matches</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
+<span class='no'>valid_matches</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'>read_csv</span>(<span class='st'>"valid_matches.csv"</span>)</pre><p></div></p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
 
     
@@ -198,12 +219,16 @@ internal information on the company structure, etc.)</p></li>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='match_name.html'>match_name()</a></code>, <code><a href='prioritize_level.html'>prioritize_level()</a></code>.</p>
-<p>Other user-oriented: 
+<p>Other main functions: 
 <code><a href='match_name.html'>match_name</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
 <span class='co'># styler: off</span>
 <span class='no'>matched</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>tribble</a></span>(
   ~<span class='no'>sector</span>, ~<span class='no'>sector_ald</span>,  ~<span class='no'>score</span>, ~<span class='no'>id_loan</span>,                ~<span class='no'>level</span>,

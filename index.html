@@ -40,18 +40,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/r2dii-match.html">Get started</a>
 </li>
@@ -66,18 +60,50 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/matching-coverage.html">Calculating Matching Coverage</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li class="dropdown-header">Release notes</li>
+    <li>
       <a href="articles/r2dii-match-0-0-1.html">r2dii.match 0.0.1</a>
+    </li>
+    <li class="divider">
+    <li>
+      <a href="news/index.html">Change log</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Packages
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/2DegreesInvesting/r2dii.match">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -106,7 +132,7 @@
 <p>Before you install r2dii.match you may want to:</p>
 <ul>
 <li>
-<a href="https://rstudio.cloud/project/954051">Try an rstudio.cloud project that has r2dii.match already installed</a>.</li>
+<a href="https://rstudio.cloud/project/1424833">Try an rstudio.cloud project with this package already installed</a>.</li>
 <li>
 <a href="https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation">Learn how to minimize installation errors</a>.</li>
 </ul>
@@ -114,14 +140,13 @@
 <div class="sourceCode" id="cb1"><pre class="r"># install.packages("r2dii.match")</pre></div>
 <p>Or install the development version of r2dii.match from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"2DegreesInvesting/r2dii.match"</span>)</pre></div>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"2DegreesInvesting/r2dii.match"</span>)</pre></div>
+<p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/">How to raise an issue?</a></p>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="co"># r2dii.data is changing rapidly; ensure you have the latest version</span>
-<span class="co"># remotes::update_packages("r2dii.data", upgrade = "ask")</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.data</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">r2dii.match</span>)</pre></div>
 <p>Matching is achieved in two main steps:</p>
 <div id="1-run-fuzzy-matching" class="section level3">
@@ -130,20 +155,20 @@
 <p><code><a href="reference/match_name.html">match_name()</a></code> will extract all unique counterparty names from the columns: <code>direct_loantaker</code>, <code>ultimate_parent</code> or <code>intermediate_parent*</code> and run fuzzy matching against all company names in the <code>ald</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="no">match_result</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span>(<span class="no">loanbook_demo</span>, <span class="no">ald_demo</span>)
 <span class="no">match_result</span>
-<span class="co">#&gt; # A tibble: 502 x 27</span>
+<span class="co">#&gt; # A tibble: 502 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L170    C203             Tesla Inc        &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L180    C217             Weichai Power C… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  3 L181    C218             Wheego           &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 L195    C313             Zhengzhou Yuton… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L174    C211             Tvr              &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 L198    C317             Ziyang Nanjun    &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L193    C310             Zamyad           &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 L165    C195             Sunwin Bus       &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; 10 L164    C193             Subaru Corp      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 492 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  4 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
+<span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; # … with 492 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -152,7 +177,7 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></pre></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></div>
 </div>
 <div id="2-prioritize-validated-matches" class="section level3">
 <h3 class="hasAnchor">
@@ -160,20 +185,20 @@
 <p>The user should then manually validate the output of <br><span class="math display"><em>m</em><em>a</em><em>t</em><em>c</em><em>h</em>_<em>n</em><em>a</em><em>m</em><em>e</em>()</span><br>, ensuring that the value of the column <code>score</code> is equal to <code>1</code> for perfect matches only.</p>
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
 <div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="reference/prioritize.html">prioritize</a></span>(<span class="no">match_result</span>)
-<span class="co">#&gt; # A tibble: 267 x 27</span>
+<span class="co">#&gt; # A tibble: 267 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L152    C169             Shandong Auto    &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  3 L153    C170             Shandong Kama    &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 L156    C176             Shanxi Dayun     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L157    C178             Shenyang Polars… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 L158    C180             Shuanghuan Auto  &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L159    C182             Sichuan Auto     &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; 10 L160    C184             Singulato        &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 257 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L13     C297             Yuba City Cogen… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  3 L20     C287             Ytl Powerseraya… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  4 L21     C286             Ytl Power Inter… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L22     C285             Ytl Corp Bhd     &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L23     C283             Ypic Internatio… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L24     C282             Ypfb Corporacion &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt; # … with 257 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -182,15 +207,10 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></pre></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></div>
 <p>The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.</p>
-<p>For a more detailed walkthrough of the functionality <a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
+<p><a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
 </div>
-</div>
-<div id="acknowledgements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p>A big thanks to all 5 contributors who helped with ideas, code, or reviews: <a href="https://github.com/cjyetman">cjyetman</a>, <a href="https://github.com/Clare2D">Clare2D</a>, <a href="https://github.com/georgeharris2deg">georgeharris2deg</a>, <a href="https://github.com/koopmand">koopmand</a>, <a href="https://github.com/vintented">vintented</a>.</p>
 </div>
 </div>
   </div>
@@ -239,7 +259,6 @@
 <li><a href="https://CRAN.R-project.org/package=r2dii.match"><img src="https://www.r-pkg.org/badges/version/r2dii.match" alt="CRAN status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=r2dii.match"><img src="https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match"></a></li>
 <li><a href="https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master"><img src="https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/2DegreesInvesting/r2dii.match/actions"><img src="https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://github.com/2degreesinvesting/r2dii.match/actions"><img src="https://github.com/2degreesinvesting/r2dii.match/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
