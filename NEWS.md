@@ -1,38 +1,16 @@
 # r2dii.match (development version)
 
-<<<<<<< HEAD
 * New article "Calculating matching coverage" (#264).
 * `match_name()` now outputs a new column `borderline` (#258).
 * New `crucial_lbk()` helps select the minimum loanbook columns for
   `match_name()` to run (#236).
 * `match_name()` now runs faster and uses less memory (@georgeharris2deg #214).
-=======
-User-facing
-
->>>>>>> parent of 1ef65da... Prepare v0.0.4
 * `match_name()` now converts `ald$sector` to lower case before matching
   (@georgeharris2deg #257). It now returns identical output with, for example, 
   either "POWER" or "power". Notice that the input "POWER" in `ald$sector`
   becomes "power" in the column `sector_ald` of the output.
-<<<<<<< HEAD
 * `match_name()` now errors with a more informative message if `loanbook` has
   reserved columns -- `alias`, `rowid`, or `sector` (#233).
-=======
-
-* `match_name()` now outputs a new column `borderline` (#258).
-
-* `match_name()` now errors with a more informative message if `loanbook` has
-  reserved columns -- `alias`, `rowid`, or `sector` (#233).
-
-* New `crucial_lbk()` helps select the minimum loanbook columns for
-  `match_name()` to run (#236).
-
-* `match_name()` now runs faster and uses less memory (@georgeharris2deg #214).
->>>>>>> parent of 1ef65da... Prepare v0.0.4
-
-Internal
-
-* Lint.
 
 # r2dii.match 0.0.3
 
