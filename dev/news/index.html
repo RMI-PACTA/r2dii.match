@@ -155,41 +155,41 @@
       <small>Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="r2dii-match-development-version" class="section level1">
+    <div id="r2diimatch-development-version" class="section level1">
 <h1 class="page-header" data-toc-text="development version">
-<a href="#r2dii-match-development-version" class="anchor"></a>r2dii.match (development version)<small> Unreleased </small>
+<a href="#r2diimatch-development-version" class="anchor"></a>r2dii.match (development version)<small> Unreleased </small>
 </h1>
-<p>User-facing</p>
 <ul>
-<li><p><code><a href="../reference/match_name.html">match_name()</a></code> now converts <code>ald$sector</code> to lower case before matching (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/257'>#257</a>). It now returns identical output with, for example, either “POWER” or “power”. Notice that the input “POWER” in <code>ald$sector</code> becomes “power” in the column <code>sector_ald</code> of the output.</p></li>
-<li><p><code><a href="../reference/match_name.html">match_name()</a></code> now outputs a new column <code>borderline</code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/258'>#258</a>).</p></li>
-<li><p><code><a href="../reference/match_name.html">match_name()</a></code> now errors with a more informative message if <code>loanbook</code> has reserved columns – <code>alias</code>, <code>rowid</code>, or <code>sector</code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/233'>#233</a>).</p></li>
-<li><p>New <code><a href="../reference/crucial_lbk.html">crucial_lbk()</a></code> helps select the minimum loanbook columns for <code><a href="../reference/match_name.html">match_name()</a></code> to run (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/236'>#236</a>).</p></li>
-<li><p><code><a href="../reference/match_name.html">match_name()</a></code> now runs faster and uses less memory (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/214'>#214</a>).</p></li>
-</ul>
-<p>Internal</p>
-<ul>
-<li>Lint.</li>
+<li>New article “Calculating matching coverage” (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/264'>#264</a>).</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now outputs a new column <code>borderline</code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/258'>#258</a>).</li>
+<li>New <code><a href="../reference/crucial_lbk.html">crucial_lbk()</a></code> helps select the minimum loanbook columns for <code><a href="../reference/match_name.html">match_name()</a></code> to run (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/236'>#236</a>).</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now runs faster and uses less memory (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/214'>#214</a>).</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now converts <code>ald$sector</code> to lower case before matching (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/257'>#257</a>). It now returns identical output with, for example, either “POWER” or “power”. Notice that the input “POWER” in <code>ald$sector</code> becomes “power” in the column <code>sector_ald</code> of the output.</li>
+<li>
+<code><a href="../reference/match_name.html">match_name()</a></code> now errors with a more informative message if <code>loanbook</code> has reserved columns – <code>alias</code>, <code>rowid</code>, or <code>sector</code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/233'>#233</a>).</li>
 </ul>
 </div>
-    <div id="r2dii-match-0-0-3" class="section level1">
+    <div id="r2diimatch-003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.3">
-<a href="#r2dii-match-0-0-3" class="anchor"></a>r2dii.match 0.0.3<small> 2020-06-30 </small>
+<a href="#r2diimatch-003" class="anchor"></a>r2dii.match 0.0.3<small> 2020-06-30 </small>
 </h1>
 <ul>
 <li>Enforce dplyr &gt;= 0.8.5 (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/216'>#216</a>).</li>
 <li>No longer import vctrs; it is unused.</li>
 </ul>
 </div>
-    <div id="r2dii-match-0-0-2" class="section level1">
+    <div id="r2diimatch-002" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.2">
-<a href="#r2dii-match-0-0-2" class="anchor"></a>r2dii.match 0.0.2<small> 2020-06-04 </small>
+<a href="#r2diimatch-002" class="anchor"></a>r2dii.match 0.0.2<small> 2020-06-04 </small>
 </h1>
 <p>This version includes only <a href="https://github.com/2DegreesInvesting/r2dii.match/releases/tag/v0.0.2">internal changes</a>.</p>
 </div>
-    <div id="r2dii-match-0-0-1" class="section level1">
+    <div id="r2diimatch-001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1">
-<a href="#r2dii-match-0-0-1" class="anchor"></a>r2dii.match 0.0.1<small> 2020-03-28 </small>
+<a href="#r2diimatch-001" class="anchor"></a>r2dii.match 0.0.1<small> 2020-03-28 </small>
 </h1>
 <ul>
 <li>First release on CRAN.</li>
