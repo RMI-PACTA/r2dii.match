@@ -39,8 +39,17 @@ matched \%>\%
 
 Compare, edit, and save the data manually:
 \itemize{
+<<<<<<< HEAD
 \item Open \emph{matched.csv} with any spreadsheet editor, such as Excel or Google Sheets.
 \item Compare the columns \code{name} and \code{name_ald} manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)
+=======
+\item Open \emph{matched.csv} with any spreadsheet editor (e.g. MS Excel,
+Google Sheets).
+\item Compare the columns \code{name} and \code{name_ald} manually to determine if
+the match is valid. Other information can be used in conjunction
+with just the names to ensure the two entities match (sector,
+internal information on the company structure, etc.)
+>>>>>>> parent of 1ef65da... Prepare v0.0.4
 \item Edit the data:
 \itemize{
 \item If you are happy with the match, set the \code{score} value to \code{1}.

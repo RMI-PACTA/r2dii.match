@@ -1,4 +1,3 @@
-crucial_lbk             Crucial 'loanbook' columns for 'match_name()'
 match_name              Match a loanbook and asset-level datasets (ald)
                         by the name_* columns
 prioritize              Pick rows where 'score' is 1 and 'level' per

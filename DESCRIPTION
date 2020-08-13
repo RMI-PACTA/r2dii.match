@@ -37,7 +37,7 @@ Description: These tools implement in R a fundamental part of
     is the first step to assess if a financial portfolio aligns with
     climate goals.
 License: GPL-3
-URL: https://2degreesinvesting.github.io/r2dii.match/,
+URL: https://2degreesinvesting.github.io/r2dii.match,
     https://github.com/2DegreesInvesting/r2dii.match
 BugReports: 
     https://github.com/2DegreesInvesting/r2dii.match/issues

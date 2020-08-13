@@ -1,5 +1,5 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+R version 4.0.0 (2020-04-24) -- "Arbor Day"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -25,4 +25,4 @@ NULL
 > 
 > proc.time()
    user  system elapsed 
-  0.551   0.533   0.274 
+  0.215   0.020   0.222 
