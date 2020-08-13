@@ -38,16 +38,8 @@ matched \%>\%
 }\if{html}{\out{</div>}}
 
 Compare, edit, and save the data manually:
-\itemize{
-\item Open \emph{matched.csv} with any spreadsheet editor (Excel, Google Seets, etc.).
-\item Compare the columns \code{name} and \code{name_ald} manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)
-\item Edit the data:
-\itemize{
-\item If you are happy with the match, set the \code{score} value to \code{1}.
-\item Otherwise set or leave the \code{score} value to anything other than \code{1}.
-}
-\item Save the edited file as, say, \emph{valid_matches.csv}.
-}
+
+<<<<<<< HEAD * Open \emph{matched.csv} with any spreadsheet editor (Excel, Google Seets, etc.). ======= * Open \emph{matched.csv} with any spreadsheet editor, such as Excel or Google Sheets. >>>>>>> upstream/master * Compare the columns \code{name} and \code{name_ald} manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.) * Edit the data: * If you are happy with the match, set the \code{score} value to \code{1}. * Otherwise set or leave the \code{score} value to anything other than \code{1}. * Save the edited file as, say, \emph{valid_matches.csv}.
 
 Re-read the edited file (validated) with:\if{html}{\out{<div class="r">}}\preformatted{# Reading from current working directory
 valid_matches <- readr::read_csv("valid_matches.csv")
