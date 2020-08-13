@@ -481,16 +481,6 @@ test_that("works with UP266", {
   )
 })
 
-test_that("with loanbook_demo and ald_demo outputs known output", {
-  skip("FIXME: This fails `rhub::check(platform = 'ubuntu-gcc-release')")
-
-  out <- match_name(loanbook_demo, ald_demo)
-  expect_known_value(out, "ref-match-name", update = FALSE)
-
-  # More informative when it fails
-  expect_no_differences(out, test_path("ref-match-name"))
-})
-
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
   # Lookup code to sectors via r2dii.data::sector_classifications$code
