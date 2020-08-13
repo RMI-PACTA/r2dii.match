@@ -20,7 +20,7 @@ These tools implement in R a fundamental part of
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://2degreesinvesting.github.io/r2dii.match}
+  \item \url{https://2degreesinvesting.github.io/r2dii.match/}
   \item \url{https://github.com/2DegreesInvesting/r2dii.match}
   \item Report bugs at \url{https://github.com/2DegreesInvesting/r2dii.match/issues}
 }

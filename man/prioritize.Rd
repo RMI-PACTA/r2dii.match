@@ -39,8 +39,8 @@ matched \%>\%
 
 Compare, edit, and save the data manually:
 \itemize{
-\item Open \emph{matched.csv} with any spreadsheet editor (e.g. MS Excel,
-Google Sheets).
+\item Open \emph{matched.csv} with any spreadsheet editor, such as Excel or
+Google Sheets.
 \item Compare the columns \code{name} and \code{name_ald} manually to determine if
 the match is valid. Other information can be used in conjunction
 with just the names to ensure the two entities match (sector,
