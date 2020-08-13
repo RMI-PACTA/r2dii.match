@@ -1,0 +1,9 @@
+> select(out, id_2dii, matches(prefix))
+# A tibble: 2 x 7
+  id_2dii id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~
+  <chr>   <chr>            <chr>            <chr>            <chr>           
+1 DL1     C38              Glencore Plc     <NA>             <NA>            
+2 UP1     C38              Glencore Plc     <NA>             <NA>            
+# ... with 2 more variables: id_ultimate_parent <chr>,
+#   name_ultimate_parent <chr>
+
