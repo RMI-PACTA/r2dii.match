@@ -8,7 +8,7 @@ matched %>%
 
 Compare, edit, and save the data manually:
 
-* Open _matched.csv_ with any spreadsheet editor (e.g. MS Excel, Google Sheets).
+* Open _matched.csv_ with any spreadsheet editor, such as Excel or Google Sheets.
 * Compare the columns `name` and `name_ald` manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)
 * Edit the data:
     * If you are happy with the match, set the `score` value to `1`.
