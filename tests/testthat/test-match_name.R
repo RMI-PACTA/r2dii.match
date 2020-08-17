@@ -361,15 +361,9 @@ test_that("warns/errors if some/all system classification is unknown", {
     match_name(all_bad_code, fake_ald()),
   )
 
-  if (packageVersion("r2dii.data") > "0.1.1") {
-    path <- test_path("output", "match_name-sec_classif_unknown.txt")
-  } else {
-    path <- test_path("output", "match_name-sec_classif_unknown-cran.txt")
-  }
-
   # styler: off
   verify_output(
-    path, {
+    test_path("output", "match_name-sec_classif_unknown.txt"), {
       "# Error"
       match_name(all_bad_code, fake_ald())
 
