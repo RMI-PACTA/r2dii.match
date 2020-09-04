@@ -127,7 +127,7 @@ Notice the warning.
 
 ## Validate matches
 
-```{r validate-matches-url, results='asis', echo=FALSE}
+```{r validate-matches-url, include=FALSE, results='asis', exercise = FALSE}
 url <- paste0(
   "https://raw.githubusercontent.com/",
   "2DegreesInvesting/r2dii.match/master/",
