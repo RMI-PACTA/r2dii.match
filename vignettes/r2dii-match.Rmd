@@ -127,9 +127,17 @@ Notice the warning.
 
 ## Validate matches
 
-```{r child="_validate-matches.md"}
+```{r validate-matches-url, results='asis', echo=FALSE}
+url <- paste0(
+  "https://raw.githubusercontent.com/",
+  "2DegreesInvesting/r2dii.match/master/",
+  "vignettes/_validate-matches.md"
+)
 
+writeLines(readLines(url))
 ```
+
+
 
 ## Prioritize validated matches by level
 
