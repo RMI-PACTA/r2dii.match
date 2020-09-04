@@ -127,9 +127,9 @@ Notice the warning.
 
 ## Validate matches
 
-```{r validate-matches, eval=FALSE, include=FALSE}
+```{r}
 # Run and copy-pate to update this section
-writeLines(readLines("./_validate-matches.md"))
+# writeLines(readLines("./_validate-matches.md"))
 ```
 
 Write the output of `match_name()` into a .csv file with:
