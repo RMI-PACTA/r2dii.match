@@ -127,7 +127,7 @@ Notice the warning.
 
 ## Validate matches
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 # Run and copy-pate to update this section
 # writeLines(readLines("./_validate-matches.md"))
 ```
