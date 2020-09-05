@@ -28,7 +28,6 @@ We also recommend packages in the [tidyverse](https://www.tidyverse.org/); they 
 library(tidyverse)
 ```
 
-
 ## Format input data loanbook and asset-level data (ald)
 
 We need two datasets: a "loanbook" and an "asset-level dataset" (ald). These should be formatted like:  [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html) and [`ald_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/ald_demo.html) (from the [r2dii.data package](https://2degreesinvesting.github.io/r2dii.data)).
