@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* The News tab of the website now shows all releases to date.
+
 # r2dii.match 0.0.4
 
 * New article "Calculating matching coverage" (#264).
