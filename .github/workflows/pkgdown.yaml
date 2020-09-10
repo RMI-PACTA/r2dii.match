@@ -35,6 +35,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           install.packages("pkgdown")
           install.packages("ggplot2")
+          install.packages("vroom")
         shell: Rscript {0}
 
       - name: Install package
