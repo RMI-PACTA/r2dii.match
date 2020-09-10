@@ -1,5 +1,6 @@
 # r2dii.match (development version)
 
+* New article on using `match_name()` with large loanbooks.
 * The News tab of the website now shows all releases to date.
 
 # r2dii.match 0.0.4
