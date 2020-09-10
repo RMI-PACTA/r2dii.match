@@ -1,5 +1,6 @@
 # r2dii.match (development version)
 
+* The website now exposes the development version of the package.
 * The News tab of the website now shows all releases to date.
 
 # r2dii.match 0.0.4
