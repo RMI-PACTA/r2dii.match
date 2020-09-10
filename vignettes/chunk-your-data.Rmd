@@ -4,13 +4,6 @@ description: |
   How to resolve memory issues
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
 Users of the [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/) package reported that their R session crashed when they fed `match_name()` with big data. A [recent post](https://2degreesinvesting.github.io/posts/2020-07-18-improving-r2dii-match/) acknowledged the issue and promised examples on how to handle big data. This article shows one approach: feed [`match_name()`](https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html) with a sequence of small chunks of the `loanbook` dataset.
 
 ## Setup
@@ -19,8 +12,7 @@ Users of the [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/) pac
 knitr::opts_chunk$set(
   echo = TRUE,
   comment = "#>",
-  collapse = TRUE,
-  cache = TRUE
+  collapse = TRUE
 )
 ```
 
