@@ -1,7 +1,7 @@
 destination: docs
 
 development:
-  mode: auto
+  mode: devel
 
 template:
   params:
@@ -39,11 +39,19 @@ navbar:
     menu:
     - text: "Calculating Matching Coverage"
       href: articles/matching-coverage.html
+    - text: "Using `match_name()` with large loanbooks"
+      href: articles/chunk-your-data.html
 
   - text: "News"
     menu:
-    - text: "Release notes"
-    - text: "r2dii.match 0.0.1"
+    - text: "Releases"
+    - text: "Version 0.0.4"
+      href: https://2degreesinvesting.github.io/posts/2020-08-14-r2dii-data-0-1-2-and-r2dii-match-0-0-4-are-now-on-cran/
+    - text: "Version 0.0.3"
+      href: https://2degreesinvesting.github.io/r2dii.match/news/index.html#r2dii-match-0-0-3-2020-06-30
+    - text: "Version 0.0.2"
+      href: https://2degreesinvesting.github.io/posts/2020-06-05-r2dii-match-0-0-2/
+    - text: "Version 0.0.1"
       href: articles/r2dii-match-0-0-1.html
     - text: "----------------------"
     - text: "Change log"
