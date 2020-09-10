@@ -1,0 +1,113 @@
+---
+title: "Using `match_name()` with large loanbooks"
+description: |
+  How to resolve memory issues
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Users of the [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/) package reported that their R session crashed when they fed `match_name()` with big data. A [recent post](https://2degreesinvesting.github.io/posts/2020-07-18-improving-r2dii-match/) acknowledged the issue and promised examples on how to handle big data. This article shows one approach: feed [`match_name()`](https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html) with a sequence of small chunks of the `loanbook` dataset.
+
+## Setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = "#>",
+  collapse = TRUE,
+  cache = TRUE
+)
+```
+
+This example uses r2dii.match plus a few optional but convenient packages, including [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/) for example datasets.
+
+```{r}
+# Packages
+library(dplyr, warn.conflicts = FALSE)
+library(fs)
+library(vroom)
+library(r2dii.data)
+library(r2dii.match)
+
+# Example datasets from the r2dii.data package
+loanbook <- loanbook_demo
+ald <- ald_demo
+```
+
+If the entire `loanbook` is too large, feed `match_name()` with smaller chunks, so that any call to `match_name(this_chunk, ald)` fits in memory. More chunks take longer to run but use less memory; you'll need to experiment to find the number of chunks that best works for you. 
+
+Say you try three chunks. You can take the `loanbook` dataset and then use `mutate()` to add the new column `chunk`, which assigns each row to one of the `chunks`:
+
+```{r}
+chunks <- 3
+chunked <- loanbook %>% mutate(chunk = as.integer(cut(row_number(), chunks)))
+```
+
+The total number of rows in the entire `loanbook` equals the sum of the rows across chunks.
+
+```{r}
+count(loanbook)
+
+count(chunked, chunk)
+```
+
+For each chunk you need to repeat this process:
+
+1. Match this chunk against the entire `ald` dataset.
+2. If this chunk matched nothing, move to the next chunk.
+3. Else, save the result to a .csv file.
+
+```{r}
+# This "output" directory is temporary; you may use any folder in your computer
+out <- path(tempdir(), "output")
+if (!dir_exists(out)) dir_create(out)
+
+for (i in unique(chunked$chunk)) {
+  # 1. Match this chunk against the entire `ald` dataset.
+  this_chunk <- filter(chunked, chunk == i)
+  this_result <- match_name(this_chunk, ald)
+  
+  # 2. If this chunk matched nothing, move to the next chunk
+  matched_nothing <- nrow(this_result) == 0L
+  if (matched_nothing) next()
+  
+  # 3. Else, save the result to a .csv file.
+  vroom_write(this_result, path(out, paste0(i, ".csv")))
+}
+```
+
+The result is one .csv file per chunk.
+
+```{r}
+dir_ls(out)
+```
+
+You can read and combine all files in one step with `vroom()`.
+
+```{r}
+matched <- vroom(dir_ls(out))
+matched
+```
+
+The `matched` result should be similar to that of `match_name(loanbook, ald)`. Your next steps are documented on the website of [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/index.html).
+
+## Anecdote
+
+I tested `match_name()` with datasets which size (on disk as a .csv file) was 20MB for the `loanbook` dataset and 100MB for the `ald` dataset. Feeding `match_name()` with the entire `loanbook` crashed my R session. But feeding it with a sequence of 30 chunks run in about 25' -- successfully; the combined result had over 10 million rows:
+
+```
+sector                       data
+---------------------------------
+1 automotive     [2,644,628 × 15]
+2 aviation         [377,200 × 15]
+3 cement           [942,526 × 15]
+4 oil and gas    [1,551,805 × 15]
+5 power          [7,353,772 × 15]
+6 shipping       [4,194,067 × 15]
+7 steel                 [15 × 15]
+```
