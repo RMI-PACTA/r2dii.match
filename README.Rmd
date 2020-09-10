@@ -88,7 +88,7 @@ The result is a dataset with identical columns to the input loanbook, and added 
 
 [Get started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
 
-```{r}
+```{r echo=FALSE}
 download.file("http://bit.ly/banks-thanks", thanks <- tempfile())
 ```
 

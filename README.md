@@ -138,10 +138,6 @@ and added columns bridging all matched loans to their ald counterpart.
 [Get
 started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
 
-``` r
-download.file("http://bit.ly/banks-thanks", thanks <- tempfile())
-```
-
 ## Acknowledgements
 
 This project has received funding from the [European Union LIFE
