@@ -70,29 +70,29 @@ and run fuzzy matching against all company names in the `ald`:
 ``` r
 match_result <- match_name(loanbook_demo, ald_demo)
 match_result 
-#> [90m# A tibble: 502 x 28[39m
+#> # A tibble: 502 x 28
 #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#>    [3m[90m<chr>[39m[23m   [3m[90m<chr>[39m[23m            [3m[90m<chr>[39m[23m            [3m[90m<chr>[39m[23m            [3m[90m<chr>[39m[23m           
-#> [90m 1[39m L1      C294             Yuamen Xinneng … [31mNA[39m               [31mNA[39m              
-#> [90m 2[39m L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
-#> [90m 3[39m L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
-#> [90m 4[39m L5      C305             Yukon Energy Co… [31mNA[39m               [31mNA[39m              
-#> [90m 5[39m L5      C305             Yukon Energy Co… [31mNA[39m               [31mNA[39m              
-#> [90m 6[39m L6      C304             Yukon Developme… [31mNA[39m               [31mNA[39m              
-#> [90m 7[39m L6      C304             Yukon Developme… [31mNA[39m               [31mNA[39m              
-#> [90m 8[39m L8      C303             Yueyang City Co… [31mNA[39m               [31mNA[39m              
-#> [90m 9[39m L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
-#> [90m10[39m L10     C302             Yuexi County AA… [31mNA[39m               [31mNA[39m              
-#> [90m# … with 492 more rows, and 23 more variables: id_ultimate_parent [3m[90m<chr>[90m[23m,[39m
-#> [90m#   name_ultimate_parent [3m[90m<chr>[90m[23m, loan_size_outstanding [3m[90m<dbl>[90m[23m,[39m
-#> [90m#   loan_size_outstanding_currency [3m[90m<chr>[90m[23m, loan_size_credit_limit [3m[90m<dbl>[90m[23m,[39m
-#> [90m#   loan_size_credit_limit_currency [3m[90m<chr>[90m[23m, sector_classification_system [3m[90m<chr>[90m[23m,[39m
-#> [90m#   sector_classification_input_type [3m[90m<chr>[90m[23m,[39m
-#> [90m#   sector_classification_direct_loantaker [3m[90m<dbl>[90m[23m, fi_type [3m[90m<chr>[90m[23m,[39m
-#> [90m#   flag_project_finance_loan [3m[90m<chr>[90m[23m, name_project [3m[90m<lgl>[90m[23m,[39m
-#> [90m#   lei_direct_loantaker [3m[90m<lgl>[90m[23m, isin_direct_loantaker [3m[90m<lgl>[90m[23m, id_2dii [3m[90m<chr>[90m[23m,[39m
-#> [90m#   level [3m[90m<chr>[90m[23m, sector [3m[90m<chr>[90m[23m, sector_ald [3m[90m<chr>[90m[23m, name [3m[90m<chr>[90m[23m, name_ald [3m[90m<chr>[90m[23m,[39m
-#> [90m#   score [3m[90m<dbl>[90m[23m, source [3m[90m<chr>[90m[23m, borderline [3m[90m<lgl>[90m[23m[39m
+#>    <chr>   <chr>            <chr>            <chr>            <chr>           
+#>  1 L1      C294             Yuamen Xinneng … <NA>             <NA>            
+#>  2 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
+#>  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
+#>  4 L5      C305             Yukon Energy Co… <NA>             <NA>            
+#>  5 L5      C305             Yukon Energy Co… <NA>             <NA>            
+#>  6 L6      C304             Yukon Developme… <NA>             <NA>            
+#>  7 L6      C304             Yukon Developme… <NA>             <NA>            
+#>  8 L8      C303             Yueyang City Co… <NA>             <NA>            
+#>  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
+#> 10 L10     C302             Yuexi County AA… <NA>             <NA>            
+#> # … with 492 more rows, and 23 more variables: id_ultimate_parent <chr>,
+#> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+#> #   sector_classification_input_type <chr>,
+#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
+#> #   flag_project_finance_loan <chr>, name_project <lgl>,
+#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
+#> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
+#> #   score <dbl>, source <chr>, borderline <lgl>
 ```
 
 ### 2\. Prioritize validated matches
@@ -107,29 +107,29 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> [90m# A tibble: 267 x 28[39m
+#> # A tibble: 267 x 28
 #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#>    [3m[90m<chr>[39m[23m   [3m[90m<chr>[39m[23m            [3m[90m<chr>[39m[23m            [3m[90m<chr>[39m[23m            [3m[90m<chr>[39m[23m           
-#> [90m 1[39m L6      C304             Yukon Developme… [31mNA[39m               [31mNA[39m              
-#> [90m 2[39m L13     C297             Yuba City Cogen… [31mNA[39m               [31mNA[39m              
-#> [90m 3[39m L20     C287             Ytl Powerseraya… [31mNA[39m               [31mNA[39m              
-#> [90m 4[39m L21     C286             Ytl Power Inter… [31mNA[39m               [31mNA[39m              
-#> [90m 5[39m L22     C285             Ytl Corp Bhd     [31mNA[39m               [31mNA[39m              
-#> [90m 6[39m L23     C283             Ypic Internatio… [31mNA[39m               [31mNA[39m              
-#> [90m 7[39m L24     C282             Ypfb Corporacion [31mNA[39m               [31mNA[39m              
-#> [90m 8[39m L25     C281             Ypf Sa           [31mNA[39m               [31mNA[39m              
-#> [90m 9[39m L26     C280             Ypf Energia Ele… [31mNA[39m               [31mNA[39m              
-#> [90m10[39m L27     C278             Younicos Ag      [31mNA[39m               [31mNA[39m              
-#> [90m# … with 257 more rows, and 23 more variables: id_ultimate_parent [3m[90m<chr>[90m[23m,[39m
-#> [90m#   name_ultimate_parent [3m[90m<chr>[90m[23m, loan_size_outstanding [3m[90m<dbl>[90m[23m,[39m
-#> [90m#   loan_size_outstanding_currency [3m[90m<chr>[90m[23m, loan_size_credit_limit [3m[90m<dbl>[90m[23m,[39m
-#> [90m#   loan_size_credit_limit_currency [3m[90m<chr>[90m[23m, sector_classification_system [3m[90m<chr>[90m[23m,[39m
-#> [90m#   sector_classification_input_type [3m[90m<chr>[90m[23m,[39m
-#> [90m#   sector_classification_direct_loantaker [3m[90m<dbl>[90m[23m, fi_type [3m[90m<chr>[90m[23m,[39m
-#> [90m#   flag_project_finance_loan [3m[90m<chr>[90m[23m, name_project [3m[90m<lgl>[90m[23m,[39m
-#> [90m#   lei_direct_loantaker [3m[90m<lgl>[90m[23m, isin_direct_loantaker [3m[90m<lgl>[90m[23m, id_2dii [3m[90m<chr>[90m[23m,[39m
-#> [90m#   level [3m[90m<chr>[90m[23m, sector [3m[90m<chr>[90m[23m, sector_ald [3m[90m<chr>[90m[23m, name [3m[90m<chr>[90m[23m, name_ald [3m[90m<chr>[90m[23m,[39m
-#> [90m#   score [3m[90m<dbl>[90m[23m, source [3m[90m<chr>[90m[23m, borderline [3m[90m<lgl>[90m[23m[39m
+#>    <chr>   <chr>            <chr>            <chr>            <chr>           
+#>  1 L6      C304             Yukon Developme… <NA>             <NA>            
+#>  2 L13     C297             Yuba City Cogen… <NA>             <NA>            
+#>  3 L20     C287             Ytl Powerseraya… <NA>             <NA>            
+#>  4 L21     C286             Ytl Power Inter… <NA>             <NA>            
+#>  5 L22     C285             Ytl Corp Bhd     <NA>             <NA>            
+#>  6 L23     C283             Ypic Internatio… <NA>             <NA>            
+#>  7 L24     C282             Ypfb Corporacion <NA>             <NA>            
+#>  8 L25     C281             Ypf Sa           <NA>             <NA>            
+#>  9 L26     C280             Ypf Energia Ele… <NA>             <NA>            
+#> 10 L27     C278             Younicos Ag      <NA>             <NA>            
+#> # … with 257 more rows, and 23 more variables: id_ultimate_parent <chr>,
+#> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+#> #   sector_classification_input_type <chr>,
+#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
+#> #   flag_project_finance_loan <chr>, name_project <lgl>,
+#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
+#> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
+#> #   score <dbl>, source <chr>, borderline <lgl>
 ```
 
 The result is a dataset with identical columns to the input loanbook,
@@ -142,11 +142,10 @@ started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.ht
 
 This project has received funding from the [European Union LIFE
 program](https://ec.europa.eu/easme/en/life) and the [International
-Climate Initiative
-(IKI)](https://www.international-climate-initiative.com/en/details/project/measuring-paris-agreement-alignment-and-financial-risk-in-financial-markets-18_I_351-2982).
-The Federal Ministry for the Environment, Nature Conservation and
-Nuclear Safety (BMU) supports this initiative on the basis of a decision
-adopted by the German Bundestag. The views expressed are the sole
-responsibility of the authors and do not necessarily reflect the views
-of the funders. The funders are not responsible for any use that may be
-made of the information it contains.
+Climate Initiative (IKI)](https://bit.ly/2FtTr79). The Federal Ministry
+for the Environment, Nature Conservation and Nuclear Safety (BMU)
+supports this initiative on the basis of a decision adopted by the
+German Bundestag. The views expressed are the sole responsibility of the
+authors and do not necessarily reflect the views of the funders. The
+funders are not responsible for any use that may be made of the
+information it contains.
