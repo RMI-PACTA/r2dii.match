@@ -39,6 +39,8 @@ navbar:
     menu:
     - text: "Calculating Matching Coverage"
       href: articles/matching-coverage.html
+    - text: "Using `match_name()` with large loanbooks"
+      href: articles/chunk-your-data.html
 
   - text: "News"
     menu:
