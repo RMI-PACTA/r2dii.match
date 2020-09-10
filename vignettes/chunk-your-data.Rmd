@@ -86,7 +86,7 @@ matched <- vroom(dir_ls(out))
 matched
 ```
 
-The `matched` result should be similar to that of `match_name(loanbook, ald)`. Your next steps are documented on the website of [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/index.html).
+The `matched` result should be similar to that of `match_name(loanbook, ald)`. Your next steps are documented on the [Home](https://2degreesinvesting.github.io/r2dii.match/index.html) page and [Get started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html) sections of the package website.
 
 ## Anecdote
 
