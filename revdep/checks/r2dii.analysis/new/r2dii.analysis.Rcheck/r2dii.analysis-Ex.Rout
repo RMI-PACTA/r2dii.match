@@ -1,5 +1,5 @@
 
-R version 4.0.0 (2020-04-24) -- "Arbor Day"
+R version 4.0.2 (2020-06-22) -- "Taking Off Again"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -53,20 +53,20 @@ Type 'q()' to quit R.
 +     scenario = scenario_demo_2020,
 +     region_isos = region_isos_demo
 +   )
-# A tibble: 9,945 x 44
+# A tibble: 9,735 x 44
    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
    <chr>   <chr>            <chr>            <chr>            <chr>           
- 1 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 2 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 3 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 4 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 5 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 6 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 7 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 8 L151    C168             Shaanxi Auto     <NA>             <NA>            
- 9 L151    C168             Shaanxi Auto     <NA>             <NA>            
-10 L151    C168             Shaanxi Auto     <NA>             <NA>            
-# … with 9,935 more rows, and 39 more variables: id_ultimate_parent <chr>,
+ 1 L6      C304             Yukon Developme… <NA>             <NA>            
+ 2 L6      C304             Yukon Developme… <NA>             <NA>            
+ 3 L6      C304             Yukon Developme… <NA>             <NA>            
+ 4 L6      C304             Yukon Developme… <NA>             <NA>            
+ 5 L6      C304             Yukon Developme… <NA>             <NA>            
+ 6 L6      C304             Yukon Developme… <NA>             <NA>            
+ 7 L6      C304             Yukon Developme… <NA>             <NA>            
+ 8 L6      C304             Yukon Developme… <NA>             <NA>            
+ 9 L6      C304             Yukon Developme… <NA>             <NA>            
+10 L6      C304             Yukon Developme… <NA>             <NA>            
+# … with 9,725 more rows, and 39 more variables: id_ultimate_parent <chr>,
 #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -75,12 +75,12 @@ Type 'q()' to quit R.
 #   flag_project_finance_loan <chr>, name_project <lgl>,
 #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
 #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#   score <dbl>, source <chr>, technology <chr>, production_unit <chr>,
-#   year <int>, production <dbl>, emission_factor <dbl>,
-#   country_of_domicile <chr>, plant_location <chr>, number_of_assets <int>,
-#   is_ultimate_owner <lgl>, is_ultimate_listed_owner <lgl>,
-#   ald_timestamp <chr>, ald_emission_factor_unit <chr>, scenario <chr>,
-#   region <chr>, tmsr <dbl>, smsp <dbl>, scenario_source <chr>
+#   score <dbl>, source <chr>, borderline <lgl>, technology <chr>,
+#   production_unit <chr>, year <int>, production <dbl>, emission_factor <dbl>,
+#   country_of_domicile <chr>, plant_location <chr>, is_ultimate_owner <lgl>,
+#   is_ultimate_listed_owner <lgl>, ald_timestamp <chr>,
+#   ald_emission_factor_unit <chr>, scenario <chr>, region <chr>, tmsr <dbl>,
+#   smsp <dbl>, scenario_source <chr>
 > 
 > 
 > 
@@ -94,54 +94,90 @@ detaching ‘package:r2dii.match’, ‘package:r2dii.data’
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: summarize_weighted_production
-> ### Title: Summarize production based on the weight of each loan per sector
-> ###   per year
+> ### Title: Summaries based on the weight of each loan per sector per year
 > ### Aliases: summarize_weighted_production
+> ###   summarize_weighted_percent_change
 > 
 > ### ** Examples
 > 
-> library(r2dii.analysis)
+> installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
++   requireNamespace("r2dii.match", quietly = TRUE)
+> if (!installed) stop("Please install r2dii.match and r2dii.data")
+> 
 > library(r2dii.data)
 > library(r2dii.match)
 > 
-> master <- r2dii.data::loanbook_demo %>%
-+   r2dii.match::match_name(r2dii.data::ald_demo) %>%
-+   r2dii.match::prioritize() %>%
-+   join_ald_scenario(r2dii.data::ald_demo,
-+     r2dii.data::scenario_demo_2020,
+> master <- loanbook_demo %>%
++   match_name(ald_demo) %>%
++   prioritize() %>%
++   join_ald_scenario(
++     ald = ald_demo,
++     scenario = scenario_demo_2020,
 +     region_isos = region_isos_demo
 +   )
 > 
 > summarize_weighted_production(master)
-# A tibble: 138 x 4
-   sector     technology  year weighted_production
-   <chr>      <chr>      <int>               <dbl>
- 1 automotive electric    2020             446804.
- 2 automotive electric    2021             452626.
- 3 automotive electric    2022             458449.
- 4 automotive electric    2023             464271.
- 5 automotive electric    2024             470094.
- 6 automotive electric    2025             475916.
- 7 automotive electric    2026             481739.
- 8 automotive hybrid      2020             425303.
- 9 automotive hybrid      2021             416061.
-10 automotive hybrid      2022             406818.
+# A tibble: 138 x 5
+   sector_ald technology  year weighted_production weighted_technology_share
+   <chr>      <chr>      <int>               <dbl>                     <dbl>
+ 1 automotive electric    2020             437827.                    0.548 
+ 2 automotive electric    2021             444635.                    0.548 
+ 3 automotive electric    2022             451443.                    0.548 
+ 4 automotive electric    2023             458252.                    0.547 
+ 5 automotive electric    2024             465060.                    0.547 
+ 6 automotive electric    2025             471868.                    0.547 
+ 7 automotive electric    2026             478676.                    0.547 
+ 8 automotive hybrid      2020             425303.                    0.0973
+ 9 automotive hybrid      2021             416061.                    0.0971
+10 automotive hybrid      2022             406818.                    0.0970
 # … with 128 more rows
 > 
 > summarize_weighted_production(master, use_credit_limit = TRUE)
+# A tibble: 138 x 5
+   sector_ald technology  year weighted_production weighted_technology_share
+   <chr>      <chr>      <int>               <dbl>                     <dbl>
+ 1 automotive electric    2020             409532.                    0.540 
+ 2 automotive electric    2021             414472.                    0.540 
+ 3 automotive electric    2022             419411.                    0.539 
+ 4 automotive electric    2023             424350.                    0.539 
+ 5 automotive electric    2024             429290.                    0.538 
+ 6 automotive electric    2025             434229.                    0.538 
+ 7 automotive electric    2026             439168.                    0.537 
+ 8 automotive hybrid      2020             388781.                    0.0997
+ 9 automotive hybrid      2021             387804.                    0.100 
+10 automotive hybrid      2022             386827.                    0.101 
+# … with 128 more rows
+> 
+> summarize_weighted_percent_change(master)
 # A tibble: 138 x 4
-   sector     technology  year weighted_production
-   <chr>      <chr>      <int>               <dbl>
- 1 automotive electric    2020             422486.
- 2 automotive electric    2021             426003.
- 3 automotive electric    2022             429520.
- 4 automotive electric    2023             433037.
- 5 automotive electric    2024             436554.
- 6 automotive electric    2025             440071.
- 7 automotive electric    2026             443588.
- 8 automotive hybrid      2020             388781.
- 9 automotive hybrid      2021             387804.
-10 automotive hybrid      2022             386827.
+   sector_ald technology  year weighted_percent_change
+   <chr>      <chr>      <int>                   <dbl>
+ 1 automotive electric    2020                0       
+ 2 automotive electric    2021                0.000102
+ 3 automotive electric    2022                0.000205
+ 4 automotive electric    2023                0.000307
+ 5 automotive electric    2024                0.000409
+ 6 automotive electric    2025                0.000512
+ 7 automotive electric    2026                0.000614
+ 8 automotive hybrid      2020                0.00576 
+ 9 automotive hybrid      2021                0.00547 
+10 automotive hybrid      2022                0.00518 
+# … with 128 more rows
+> 
+> summarize_weighted_percent_change(master, use_credit_limit = TRUE)
+# A tibble: 138 x 4
+   sector_ald technology  year weighted_percent_change
+   <chr>      <chr>      <int>                   <dbl>
+ 1 automotive electric    2020               0        
+ 2 automotive electric    2021               0.0000743
+ 3 automotive electric    2022               0.000149 
+ 4 automotive electric    2023               0.000223 
+ 5 automotive electric    2024               0.000297 
+ 6 automotive electric    2025               0.000371 
+ 7 automotive electric    2026               0.000446 
+ 8 automotive hybrid      2020               0.00540  
+ 9 automotive hybrid      2021               0.00537  
+10 automotive hybrid      2022               0.00534  
 # … with 128 more rows
 > 
 > 
@@ -161,57 +197,88 @@ detaching ‘package:r2dii.match’, ‘package:r2dii.data’
 > 
 > ### ** Examples
 > 
-> library(r2dii.analysis)
+> installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
++   requireNamespace("r2dii.match", quietly = TRUE)
+> if (!installed) stop("Please install r2dii.match and r2dii.data")
+> 
 > library(r2dii.data)
 > library(r2dii.match)
 > 
-> match_result <- r2dii.data::loanbook_demo %>%
-+   r2dii.match::match_name(r2dii.data::ald_demo) %>%
-+   r2dii.match::prioritize()
+> matched <- loanbook_demo %>%
++   match_name(ald_demo) %>%
++   prioritize()
 > 
-> # calculate targets at portfolio level
-> target_market_share(match_result,
-+   ald = r2dii.data::ald_demo,
-+   scenario = r2dii.data::scenario_demo_2020,
-+   region_isos = r2dii.data::region_isos_demo
-+ )
-# A tibble: 1,170 x 7
-   sector technology  year region scenario_source weighted_produc…
-   <chr>  <chr>      <int> <chr>  <chr>           <chr>           
- 1 autom… electric    2020 global demo_2020       projected       
- 2 autom… electric    2020 global demo_2020       normalized_corp…
- 3 autom… electric    2020 global demo_2020       target_cps      
- 4 autom… electric    2020 global demo_2020       target_sds      
- 5 autom… electric    2020 global demo_2020       target_sps      
- 6 autom… hybrid      2020 global demo_2020       projected       
- 7 autom… hybrid      2020 global demo_2020       normalized_corp…
- 8 autom… hybrid      2020 global demo_2020       target_cps      
- 9 autom… hybrid      2020 global demo_2020       target_sds      
-10 autom… hybrid      2020 global demo_2020       target_sps      
-# … with 1,160 more rows, and 1 more variable: weighted_production_value <dbl>
+> # Calculate targets at portfolio level
+> matched %>%
++   target_market_share(
++     ald = ald_demo,
++     scenario = scenario_demo_2020,
++     region_isos = region_isos_demo
++   )
+# A tibble: 1,170 x 8
+   sector technology  year region scenario_source metric production
+   <chr>  <chr>      <int> <chr>  <chr>           <chr>       <dbl>
+ 1 autom… electric    2020 global demo_2020       proje…    145942.
+ 2 autom… electric    2020 global demo_2020       corpo…   8134869.
+ 3 autom… electric    2020 global demo_2020       targe…    145942.
+ 4 autom… electric    2020 global demo_2020       targe…    145942.
+ 5 autom… electric    2020 global demo_2020       targe…    145942.
+ 6 autom… electric    2021 global demo_2020       proje…    148212.
+ 7 autom… electric    2021 global demo_2020       corpo…   8183411.
+ 8 autom… electric    2021 global demo_2020       targe…    148361.
+ 9 autom… electric    2021 global demo_2020       targe…    160625.
+10 autom… electric    2021 global demo_2020       targe…    149016.
+# … with 1,160 more rows, and 1 more variable: technology_share <dbl>
 > 
-> # calculate targets at company level
-> target_market_share(match_result,
-+   ald = r2dii.data::ald_demo,
-+   scenario = r2dii.data::scenario_demo_2020,
-+   region_isos = r2dii.data::region_isos_demo,
-+   by_company = TRUE
-+ )
-# A tibble: 15,945 x 8
-   sector technology  year region scenario_source name_ald weighted_produc…
-   <chr>  <chr>      <int> <chr>  <chr>           <chr>    <chr>           
- 1 autom… electric    2020 global demo_2020       shangha… projected       
- 2 autom… electric    2020 global demo_2020       shangha… normalized_corp…
- 3 autom… electric    2020 global demo_2020       shangha… target_cps      
- 4 autom… electric    2020 global demo_2020       shangha… target_sds      
- 5 autom… electric    2020 global demo_2020       shangha… target_sps      
- 6 autom… electric    2020 global demo_2020       sichuan… projected       
- 7 autom… electric    2020 global demo_2020       sichuan… normalized_corp…
- 8 autom… electric    2020 global demo_2020       sichuan… target_cps      
- 9 autom… electric    2020 global demo_2020       sichuan… target_sds      
-10 autom… electric    2020 global demo_2020       sichuan… target_sps      
-# … with 15,935 more rows, and 1 more variable: weighted_production_value <dbl>
+> # Calculate targets at company level
+> matched %>%
++   target_market_share(
++     ald = ald_demo,
++     scenario = scenario_demo_2020,
++     region_isos = region_isos_demo,
++     by_company = TRUE
++   )
+Warning: You've supplied `by_company = TRUE` and `weight_production = TRUE`.
+This will result in company-level results, weighted by the portfolio
+loan size, which is rarely useful. Did you mean to set one of these
+arguments to `FALSE`?
+# A tibble: 15,945 x 9
+   sector technology  year region scenario_source name_ald metric production
+   <chr>  <chr>      <int> <chr>  <chr>           <chr>    <chr>       <dbl>
+ 1 autom… electric    2020 global demo_2020       shangha… proje…      5140.
+ 2 autom… electric    2020 global demo_2020       shangha… corpo…   8134869.
+ 3 autom… electric    2020 global demo_2020       shangha… targe…      5140.
+ 4 autom… electric    2020 global demo_2020       shangha… targe…      5140.
+ 5 autom… electric    2020 global demo_2020       shangha… targe…      5140.
+ 6 autom… electric    2020 global demo_2020       sichuan… proje…      2992.
+ 7 autom… electric    2020 global demo_2020       sichuan… corpo…   8134869.
+ 8 autom… electric    2020 global demo_2020       sichuan… targe…      2992.
+ 9 autom… electric    2020 global demo_2020       sichuan… targe…      2992.
+10 autom… electric    2020 global demo_2020       sichuan… targe…      2992.
+# … with 15,935 more rows, and 1 more variable: technology_share <dbl>
 > 
+> matched %>%
++   target_market_share(
++     ald = ald_demo,
++     scenario = scenario_demo_2020,
++     region_isos = region_isos_demo,
++     # Calculate unweighted targets
++     weight_production = FALSE
++   )
+# A tibble: 1,170 x 8
+   sector technology  year region scenario_source metric production
+   <chr>  <chr>      <int> <chr>  <chr>           <chr>       <dbl>
+ 1 autom… electric    2020 global demo_2020       proje…   6630404.
+ 2 autom… electric    2020 global demo_2020       corpo…   8134869.
+ 3 autom… electric    2020 global demo_2020       targe…   6630404.
+ 4 autom… electric    2020 global demo_2020       targe…   6630404.
+ 5 autom… electric    2020 global demo_2020       targe…   6630404.
+ 6 autom… electric    2021 global demo_2020       proje…   6731628.
+ 7 autom… electric    2021 global demo_2020       corpo…   8183411.
+ 8 autom… electric    2021 global demo_2020       targe…   6743979.
+ 9 autom… electric    2021 global demo_2020       targe…   7319707.
+10 autom… electric    2021 global demo_2020       targe…   6774698.
+# … with 1,160 more rows, and 1 more variable: technology_share <dbl>
 > 
 > 
 > 
@@ -231,87 +298,134 @@ detaching ‘package:r2dii.match’, ‘package:r2dii.data’
 > 
 > ### ** Examples
 > 
-> installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-+   requireNamespace("r2dii.match", quietly = TRUE)
+> installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
++   requireNamespace("r2dii.data", quietly = TRUE)
 > if (!installed) stop("Please install r2dii.match and r2dii.data")
 > 
-> library(r2dii.data)
 > library(r2dii.match)
+> library(r2dii.data)
 > 
-> valid_matches <- match_name(loanbook_demo, ald_demo) %>%
-+   # WARNING: Remember to validate matches (see `?prioritize`)
-+   prioritize()
+> # Example datasets from r2dii.data
+> loanbook <- loanbook_demo
+> ald <- ald_demo
+> co2_scenario <- co2_intensity_scenario_demo
 > 
-> out <- valid_matches %>%
-+   target_sda(
-+     ald = ald_demo,
-+     co2_intensity_scenario = co2_intensity_scenario_demo
-+   )
+> # WARNING: Remember to validate matches (see `?prioritize`)
+> matched <- prioritize(match_name(loanbook, ald))
+> 
+> # You may need to clean your data
+> anyNA(ald$emission_factor)
+[1] TRUE
+> try(target_sda(matched, ald, co2_intensity_scenario = co2_scenario))
+Warning: Removing ald rows where `emission_factor` is NA
+# A tibble: 208 x 4
+   sector      year emission_factor_metric emission_factor_value
+   <chr>      <dbl> <chr>                                  <dbl>
+ 1 automotive  2002 projected                              0.228
+ 2 automotive  2003 projected                              0.226
+ 3 automotive  2004 projected                              0.224
+ 4 automotive  2005 projected                              0.222
+ 5 automotive  2006 projected                              0.220
+ 6 automotive  2007 projected                              0.218
+ 7 automotive  2008 projected                              0.216
+ 8 automotive  2009 projected                              0.214
+ 9 automotive  2010 projected                              0.212
+10 automotive  2011 projected                              0.210
+# … with 198 more rows
+> 
+> ald2 <- subset(ald, !is.na(emission_factor))
+> anyNA(ald2$emission_factor)
+[1] FALSE
+> 
+> out <- target_sda(matched, ald2, co2_intensity_scenario = co2_scenario)
 > 
 > # The output includes the portfolio's actual projected emissions factors, the
 > # scenario pathway emissions factors, and the portfolio's target emissions
 > # factors.
 > out
-# A tibble: 28 x 4
+# A tibble: 208 x 4
+   sector      year emission_factor_metric emission_factor_value
+   <chr>      <dbl> <chr>                                  <dbl>
+ 1 automotive  2002 projected                              0.228
+ 2 automotive  2003 projected                              0.226
+ 3 automotive  2004 projected                              0.224
+ 4 automotive  2005 projected                              0.222
+ 5 automotive  2006 projected                              0.220
+ 6 automotive  2007 projected                              0.218
+ 7 automotive  2008 projected                              0.216
+ 8 automotive  2009 projected                              0.214
+ 9 automotive  2010 projected                              0.212
+10 automotive  2011 projected                              0.210
+# … with 198 more rows
+> 
+> # Split-view by metric
+> split(out, out$emission_factor_metric)
+$adjusted_scenario_demo
+# A tibble: 22 x 4
    sector  year emission_factor_metric emission_factor_value
    <chr>  <dbl> <chr>                                  <dbl>
- 1 cement  2020 projected                              0.664
- 2 cement  2020 target                                 0.669
- 3 cement  2020 scenario_benchmark                     0.7  
- 4 cement  2021 projected                              0.665
- 5 cement  2021 target                                 0.612
- 6 cement  2021 scenario_benchmark                     0.64 
- 7 cement  2022 projected                              0.666
- 8 cement  2022 target                                 0.555
- 9 cement  2022 scenario_benchmark                     0.580
-10 cement  2023 projected                              0.667
-# … with 18 more rows
-> 
-> # Split view by metric
-> split(out, out$emission_factor_metric)
+ 1 cement  2020 adjusted_scenario_demo                 0.661
+ 2 steel   2020 adjusted_scenario_demo                 0.262
+ 3 cement  2021 adjusted_scenario_demo                 0.605
+ 4 steel   2021 adjusted_scenario_demo                 0.249
+ 5 cement  2022 adjusted_scenario_demo                 0.548
+ 6 steel   2022 adjusted_scenario_demo                 0.236
+ 7 cement  2023 adjusted_scenario_demo                 0.491
+ 8 steel   2023 adjusted_scenario_demo                 0.222
+ 9 cement  2024 adjusted_scenario_demo                 0.435
+10 steel   2024 adjusted_scenario_demo                 0.209
+# … with 12 more rows
+
+$corporate_economy
+# A tibble: 103 x 4
+   sector      year emission_factor_metric emission_factor_value
+   <chr>      <dbl> <chr>                                  <dbl>
+ 1 automotive  2002 corporate_economy                      0.236
+ 2 automotive  2003 corporate_economy                      0.237
+ 3 automotive  2004 corporate_economy                      0.238
+ 4 automotive  2005 corporate_economy                      0.240
+ 5 automotive  2006 corporate_economy                      0.241
+ 6 automotive  2007 corporate_economy                      0.242
+ 7 automotive  2008 corporate_economy                      0.244
+ 8 automotive  2009 corporate_economy                      0.245
+ 9 automotive  2010 corporate_economy                      0.247
+10 automotive  2011 corporate_economy                      0.249
+# … with 93 more rows
+
 $projected
+# A tibble: 77 x 4
+   sector      year emission_factor_metric emission_factor_value
+   <chr>      <dbl> <chr>                                  <dbl>
+ 1 automotive  2002 projected                              0.228
+ 2 automotive  2003 projected                              0.226
+ 3 automotive  2004 projected                              0.224
+ 4 automotive  2005 projected                              0.222
+ 5 automotive  2006 projected                              0.220
+ 6 automotive  2007 projected                              0.218
+ 7 automotive  2008 projected                              0.216
+ 8 automotive  2009 projected                              0.214
+ 9 automotive  2010 projected                              0.212
+10 automotive  2011 projected                              0.210
+# … with 67 more rows
+
+$target_demo
 # A tibble: 6 x 4
   sector  year emission_factor_metric emission_factor_value
   <chr>  <dbl> <chr>                                  <dbl>
-1 cement  2020 projected                              0.664
-2 cement  2021 projected                              0.665
-3 cement  2022 projected                              0.666
-4 cement  2023 projected                              0.667
-5 cement  2024 projected                              0.668
-6 cement  2025 projected                              0.669
+1 cement  2020 target_demo                            0.664
+2 cement  2021 target_demo                            0.636
+3 cement  2022 target_demo                            0.607
+4 cement  2023 target_demo                            0.578
+5 cement  2024 target_demo                            0.550
+6 cement  2025 target_demo                            0.521
 
-$scenario_benchmark
-# A tibble: 11 x 4
-   sector  year emission_factor_metric emission_factor_value
-   <chr>  <dbl> <chr>                                  <dbl>
- 1 cement  2020 scenario_benchmark                     0.7  
- 2 cement  2021 scenario_benchmark                     0.64 
- 3 cement  2022 scenario_benchmark                     0.580
- 4 cement  2023 scenario_benchmark                     0.52 
- 5 cement  2024 scenario_benchmark                     0.46 
- 6 cement  2025 scenario_benchmark                     0.4  
- 7 cement  2030 scenario_benchmark                     0.39 
- 8 cement  2035 scenario_benchmark                     0.38 
- 9 cement  2040 scenario_benchmark                     0.25 
-10 cement  2045 scenario_benchmark                     0.2  
-11 cement  2050 scenario_benchmark                     0.1  
-
-$target
-# A tibble: 11 x 4
-   sector  year emission_factor_metric emission_factor_value
-   <chr>  <dbl> <chr>                                  <dbl>
- 1 cement  2020 target                                 0.669
- 2 cement  2021 target                                 0.612
- 3 cement  2022 target                                 0.555
- 4 cement  2023 target                                 0.498
- 5 cement  2024 target                                 0.441
- 6 cement  2025 target                                 0.384
- 7 cement  2030 target                                 0.375
- 8 cement  2035 target                                 0.365
- 9 cement  2040 target                                 0.242
-10 cement  2045 target                                 0.195
-11 cement  2050 target                                 0.1  
-
+> 
+> # Calculate company-level targets
+> out <- target_sda(
++   matched, ald2,
++   co2_intensity_scenario = co2_scenario,
++   by_company = TRUE
++ )
 > 
 > 
 > 
@@ -319,11 +433,11 @@ $target
 > ###
 > cleanEx()
 
-detaching ‘package:r2dii.match’, ‘package:r2dii.data’
+detaching ‘package:r2dii.data’, ‘package:r2dii.match’
 
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  13.699 0.168 12.846 0.016 0.004 
+Time elapsed:  9.3 0.116 8.466 0.025 0 
 > grDevices::dev.off()
 null device 
           1 

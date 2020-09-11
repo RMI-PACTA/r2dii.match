@@ -44,27 +44,35 @@ nameEx("summarize_weighted_production")
 flush(stderr()); flush(stdout())
 
 ### Name: summarize_weighted_production
-### Title: Summarize production based on the weight of each loan per sector
-###   per year
+### Title: Summaries based on the weight of each loan per sector per year
 ### Aliases: summarize_weighted_production
+###   summarize_weighted_percent_change
 
 ### ** Examples
 
-library(r2dii.analysis)
+installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
+  requireNamespace("r2dii.match", quietly = TRUE)
+if (!installed) stop("Please install r2dii.match and r2dii.data")
+
 library(r2dii.data)
 library(r2dii.match)
 
-master <- r2dii.data::loanbook_demo %>%
-  r2dii.match::match_name(r2dii.data::ald_demo) %>%
-  r2dii.match::prioritize() %>%
-  join_ald_scenario(r2dii.data::ald_demo,
-    r2dii.data::scenario_demo_2020,
+master <- loanbook_demo %>%
+  match_name(ald_demo) %>%
+  prioritize() %>%
+  join_ald_scenario(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
     region_isos = region_isos_demo
   )
 
 summarize_weighted_production(master)
 
 summarize_weighted_production(master, use_credit_limit = TRUE)
+
+summarize_weighted_percent_change(master)
+
+summarize_weighted_percent_change(master, use_credit_limit = TRUE)
 
 
 
@@ -80,29 +88,42 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-library(r2dii.analysis)
+installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
+  requireNamespace("r2dii.match", quietly = TRUE)
+if (!installed) stop("Please install r2dii.match and r2dii.data")
+
 library(r2dii.data)
 library(r2dii.match)
 
-match_result <- r2dii.data::loanbook_demo %>%
-  r2dii.match::match_name(r2dii.data::ald_demo) %>%
-  r2dii.match::prioritize()
+matched <- loanbook_demo %>%
+  match_name(ald_demo) %>%
+  prioritize()
 
-# calculate targets at portfolio level
-target_market_share(match_result,
-  ald = r2dii.data::ald_demo,
-  scenario = r2dii.data::scenario_demo_2020,
-  region_isos = r2dii.data::region_isos_demo
-)
+# Calculate targets at portfolio level
+matched %>%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo
+  )
 
-# calculate targets at company level
-target_market_share(match_result,
-  ald = r2dii.data::ald_demo,
-  scenario = r2dii.data::scenario_demo_2020,
-  region_isos = r2dii.data::region_isos_demo,
-  by_company = TRUE
-)
+# Calculate targets at company level
+matched %>%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo,
+    by_company = TRUE
+  )
 
+matched %>%
+  target_market_share(
+    ald = ald_demo,
+    scenario = scenario_demo_2020,
+    region_isos = region_isos_demo,
+    # Calculate unweighted targets
+    weight_production = FALSE
+  )
 
 
 
@@ -119,30 +140,44 @@ flush(stderr()); flush(stdout())
 
 ### ** Examples
 
-installed <- requireNamespace("r2dii.data", quietly = TRUE) &&
-  requireNamespace("r2dii.match", quietly = TRUE)
+installed <- requireNamespace("r2dii.match", quietly = TRUE) &&
+  requireNamespace("r2dii.data", quietly = TRUE)
 if (!installed) stop("Please install r2dii.match and r2dii.data")
 
-library(r2dii.data)
 library(r2dii.match)
+library(r2dii.data)
 
-valid_matches <- match_name(loanbook_demo, ald_demo) %>%
-  # WARNING: Remember to validate matches (see `?prioritize`)
-  prioritize()
+# Example datasets from r2dii.data
+loanbook <- loanbook_demo
+ald <- ald_demo
+co2_scenario <- co2_intensity_scenario_demo
 
-out <- valid_matches %>%
-  target_sda(
-    ald = ald_demo,
-    co2_intensity_scenario = co2_intensity_scenario_demo
-  )
+# WARNING: Remember to validate matches (see `?prioritize`)
+matched <- prioritize(match_name(loanbook, ald))
+
+# You may need to clean your data
+anyNA(ald$emission_factor)
+try(target_sda(matched, ald, co2_intensity_scenario = co2_scenario))
+
+ald2 <- subset(ald, !is.na(emission_factor))
+anyNA(ald2$emission_factor)
+
+out <- target_sda(matched, ald2, co2_intensity_scenario = co2_scenario)
 
 # The output includes the portfolio's actual projected emissions factors, the
 # scenario pathway emissions factors, and the portfolio's target emissions
 # factors.
 out
 
-# Split view by metric
+# Split-view by metric
 split(out, out$emission_factor_metric)
+
+# Calculate company-level targets
+out <- target_sda(
+  matched, ald2,
+  co2_intensity_scenario = co2_scenario,
+  by_company = TRUE
+)
 
 
 
