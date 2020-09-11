@@ -1,3 +1,5 @@
+library(r2dii.data)
+
 test_that("with bad `data` errors with informative message", {
   expect_error(target_market_share(
     "bad",
@@ -126,6 +128,7 @@ test_that("with NAs in crucial columns errors with informative message", {
   }
 
   expect_error_crucial_NAs_portfolio("name_ald")
+  expect_error_crucial_NAs_portfolio("sector_ald")
 
   expect_error_crucial_NAs_ald("production")
   expect_error_crucial_NAs_ald("sector")
@@ -152,8 +155,9 @@ test_that("outputs expected names", {
       "year",
       "region",
       "scenario_source",
-      "weighted_production_metric",
-      "weighted_production_value"
+      "metric",
+      "production",
+      "technology_share"
     )
   )
 })
@@ -179,10 +183,10 @@ test_that("with known input outputs as expected", {
 
   out <- target_market_share(portfolio, ald, scenario, region_isos_demo)
   out_target <- out %>%
-    filter(weighted_production_metric == "target_sds") %>%
+    filter(metric == "target_sds") %>%
     arrange(.data$technology, .data$year)
 
-  expect_equal(out_target$weighted_production_value, c(200, 353, 250, 150))
+  expect_equal(out_target$production, c(200, 353, 250, 150))
 })
 
 test_that("with known input outputs as expected, at company level", {
@@ -209,14 +213,15 @@ test_that("with known input outputs as expected, at company level", {
     ald,
     scenario,
     region_isos_demo,
-    by_company = TRUE
+    by_company = TRUE,
+    weight_production = FALSE
   )
   out_target <- out %>%
-    filter(weighted_production_metric == "target_sds") %>%
+    filter(metric == "target_sds") %>%
     arrange(.data$technology, .data$year, .data$name_ald)
 
   expect_equal(
-    out_target$weighted_production_value,
+    out_target$production,
     c(20, 180, 47.2, 305.8, 60, 190, 36, 114)
   )
 })
@@ -243,16 +248,17 @@ test_that("with known input outputs as expected, ald benchmark", {
     ald,
     scenario,
     region_isos_demo,
-    by_company = TRUE
+    by_company = TRUE,
+    weight_production = FALSE
   )
 
   out_benchmark <- out %>%
-    filter(weighted_production_metric == "normalized_corporate_economy") %>%
+    filter(metric == "corporate_economy") %>%
     arrange(.data$technology, .data$year)
 
   expect_equal(
-    out_benchmark$weighted_production_value,
-    c(10, 30)
+    out_benchmark$production,
+    c(30, 90)
   )
 })
 
@@ -287,7 +293,7 @@ test_that("outputs identical values at start year (#47, #87)", {
   ) %>%
     filter(year == min(year)) %>%
     group_by(sector, technology, region) %>%
-    summarize(distinct_intial_values = dplyr::n_distinct(weighted_production_value)) %>%
+    summarize(distinct_intial_values = n_distinct(production)) %>%
     mutate(initial_values_are_equal = (.data$distinct_intial_values == 1))
 
   expect_true(all(out$initial_values_are_equal))
@@ -297,7 +303,7 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
   out <- target_market_share(
     fake_matched(name_ald = c("company a", "company b")),
     fake_ald(
-      name = c("company a", "company b", "company a", "company b"),
+      name_company = c("company a", "company b", "company a", "company b"),
       is_ultimate_owner = c(T, F, T, F),
       production = c(50, 100, 100, 50),
       year = c(2020, 2020, 2021, 2021)
@@ -307,7 +313,136 @@ test_that("corporate economy benchmark only aggregates ultimate owners (#103)", 
   )
 
   corporate_economy_value <- out %>%
-    filter(weighted_production_metric == "normalized_corporate_economy")
+    filter(metric == "corporate_economy")
 
-  expect_equal(corporate_economy_value$weighted_production_value, c(150, 300))
+  expect_equal(corporate_economy_value$production, c(50, 100))
+})
+
+test_that(
+  "`sector` column is not used from data (should only use `sector_ald`) (#178)",
+  {
+    expect_error_free(
+      target_market_share(
+        fake_matched() %>% select(-sector),
+        fake_ald(),
+        fake_scenario(),
+        region_isos_demo
+      )
+    )
+  }
+)
+
+test_that("outputs known value with `weight_production` (#131)", {
+  matched <- fake_matched(
+    id_loan = c(1, 2),
+    loan_size_outstanding = c(1, 9),
+    name_ald = c("a", "b")
+  )
+
+  ald <- fake_ald(
+    name_company = c("a", "b"),
+    production = c(1, 2)
+  )
+
+  out_weighted <- target_market_share(
+    matched,
+    ald = ald,
+    scenario = fake_scenario(),
+    region_isos = region_isos_demo,
+    weight_production = TRUE
+  ) %>%
+    split(.$metric)
+
+  expect_equal(out_weighted$projected$production, 1.9)
+
+  out_unweighted <- target_market_share(
+    matched,
+    ald = ald,
+    scenario = fake_scenario(),
+    region_isos = region_isos_demo,
+    weight_production = FALSE
+  ) %>%
+    split(.$metric)
+
+  expect_equal(out_unweighted$projected$production, 3)
+})
+
+test_that("warns if `by_company` & `weight_production` are both TRUE (#165)", {
+  expect_warning(
+    target_market_share(
+      fake_matched(),
+      ald = fake_ald(),
+      scenario = fake_scenario(),
+      region_isos = region_isos_demo,
+      by_company = TRUE,
+      weight_production = TRUE
+    ),
+    "`by_company = TRUE` and `weight_production = TRUE`"
+  )
+})
+
+test_that("outputs same names regardless of the value of `weight_production` (#186)", {
+  out_weighted <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_demo,
+    weight_production = TRUE
+  )
+
+  out_unweighted <- target_market_share(
+    fake_matched(),
+    fake_ald(),
+    fake_scenario(),
+    region_isos_demo,
+    weight_production = FALSE
+  )
+
+  diff_names <- setdiff(names(out_unweighted), names(out_weighted))
+
+  expect_equal(diff_names, character(0))
+})
+
+test_that("with known input outputs `technology_share` as expected (#184)", {
+  matched <- fake_matched(
+    id_loan = c("L1", "L2"),
+    loan_size_outstanding = c(1, 3),
+    name_ald = c("a", "b")
+  )
+
+  ald <- fake_ald(
+    name_company = rep(c("a", "b"), each = 2),
+    technology = rep(c("ice", "electric"), 2),
+    production = c(1, 1, 1, 3)
+  )
+
+  scenario <- fake_scenario(
+    technology = c("ice", "electric"),
+    smsp = 1
+  )
+
+  out <- target_market_share(
+    matched,
+    ald,
+    scenario,
+    region_isos_demo
+  ) %>%
+    split(.$metric)
+
+  expect_equal(
+    out$projected$technology_share,
+    c(0.6875, 0.3125)
+  )
+
+  expect_equal(
+    out$corporate_economy$technology_share,
+    c(0.666, 0.333),
+    tolerance = 1e-3
+  )
+
+  expect_equal(
+    out$target_sds$technology_share,
+    c(0.923, 0.076),
+    tolerance = 1e-3
+  )
 })

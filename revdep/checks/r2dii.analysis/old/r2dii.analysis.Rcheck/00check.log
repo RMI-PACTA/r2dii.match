@@ -1,10 +1,10 @@
-* using log directory ‘/opt/mauro/git/r2dii.match/revdep/checks/r2dii.analysis/old/r2dii.analysis.Rcheck’
-* using R version 4.0.0 (2020-04-24)
+* using log directory ‘/home/mauro/git/r2dii.match/revdep/checks/r2dii.analysis/old/r2dii.analysis.Rcheck’
+* using R version 4.0.2 (2020-06-22)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘r2dii.analysis/DESCRIPTION’ ... OK
-* this is package ‘r2dii.analysis’ version ‘0.0.1’
+* this is package ‘r2dii.analysis’ version ‘0.1.0’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -43,7 +43,6 @@
 * checking Rd \usage sections ... OK
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
-* checking R/sysdata.rda ... OK
 * checking examples ... OK
 * checking for unstated dependencies in ‘tests’ ... OK
 * checking tests ... OK
