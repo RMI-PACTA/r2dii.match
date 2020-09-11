@@ -1,6 +1,7 @@
 # r2dii.match (development version)
 
 * Change license to MIT.
+* The website's home page now thanks founders.
 * The website now exposes the development version of the package.
 * New article on using `match_name()` with large loanbooks.
 * The News tab of the website now shows all releases to date.
