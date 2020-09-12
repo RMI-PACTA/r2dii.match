@@ -1,4 +1,4 @@
-# r2dii.match (development version)
+# r2dii.match 0.0.5
 
 * Change license to MIT.
 * Increment lifecycle badge to "Maturing".
