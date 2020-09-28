@@ -192,14 +192,21 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
 expand_alias <- function(loanbook, ald) {
   vars <- c("sector", "alias")
-  l <- dplyr::nest_by(select(loanbook, vars), .data$sector, .key = "alias_lbk")
-  a <- dplyr::nest_by(select(ald, vars), .data$sector, .key = "alias_ald")
+  l <- nest_by(select(loanbook, vars), .data$sector, .key = "alias_lbk")
+  a <- nest_by(select(ald, vars), .data$sector, .key = "alias_ald")
   la <- dplyr::inner_join(l, a, by = "sector")
 
   purrr::map2_df(
     la$alias_lbk, la$alias_ald,
     ~ tidyr::expand_grid(alias_lbk = .x$alias, alias_ald = .y$alias)
   )
+}
+
+# Similar to nest_by() from dplyr >= 1.0.0, but works with dplyr >= 0.8.5
+nest_by <- function(.data, ..., .key = "data") {
+  grouped <- dplyr::group_by(.data, ...)
+  nested <- tidyr::nest(grouped)
+  dplyr::rename(nested, !!.key := .data$data)
 }
 
 unsuffix_and_regroup <- function(data, old_groups) {
