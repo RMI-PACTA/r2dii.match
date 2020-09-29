@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* Fix `match_name()`:remove dependency on `nest_by()` from dplyr 1.0.0 (#303).
+
 # r2dii.match 0.0.5
 
 * Change license to MIT.
