@@ -57,6 +57,11 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
+  has_some_row <- nrow(data) > 0L
+  if (!has_some_row) {
+    return(data)
+  }
+
   data %>%
     check_crucial_names(
       c("id_loan", "level", "score", "sector", "sector_ald")
