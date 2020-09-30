@@ -57,10 +57,7 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  has_some_row <- nrow(data) > 0L
-  if (!has_some_row) {
-    return(data)
-  }
+  if (has_cero_rows(data)) return(data)
 
   data %>%
     check_crucial_names(
@@ -79,6 +76,10 @@ prioritize <- function(data, priority = NULL) {
     ungroup()
 
   group_by(out, !!!old_groups)
+}
+
+has_cero_rows <- function(data) {
+  !nrow(data) > 0L
 }
 
 check_duplicated_score1 <- function(data) {
