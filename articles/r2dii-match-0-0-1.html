@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -138,9 +138,9 @@
 <p>Install r2dii.match with:</p>
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("r2dii.match")</a></code></pre>
 <p>And use it with:</p>
-<pre><code><a href="https://github.com/2DegreesInvesting/r2dii.match//reference">library(r2dii.match)</a></code></pre>
-<p><a href="https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html"><code><a href="../reference/match_name.html">match_name()</a></code></a> matches a loanbook and asset-level dataset (ald). Let’s try it with <a href="https://2degreesinvesting.github.io/r2dii.data/reference/index.html">demo datasets from the package r2dii.data</a>.</p>
-<pre><code><a href="https://github.com/2DegreesInvesting/r2dii.data//reference"># install.packages("r2dii.data")
+<pre><code><a href="https://2degreesinvesting.github.io/r2dii.match/">library(r2dii.match)</a></code></pre>
+<p><a href="https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html"><code>match_name()</code></a> matches a loanbook and asset-level dataset (ald). Let’s try it with <a href="https://2degreesinvesting.github.io/r2dii.data/reference/index.html">demo datasets from the package r2dii.data</a>.</p>
+<pre><code><a href="https://2degreesinvesting.github.io/r2dii.data/"># install.packages("r2dii.data")
 library(r2dii.data)
 
 loanbook_demo
@@ -209,7 +209,7 @@ matched
 #&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
 #&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</a></code></pre>
 <p>Next you should validate the matched data (<a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">learn how</a>).</p>
-<p>Finally, <a href="https://2degreesinvesting.github.io/r2dii.match/reference/prioritize.html"><code><a href="../reference/prioritize.html">prioritize()</a></code></a> takes matched data and picks rows of highest priority.</p>
+<p>Finally, <a href="https://2degreesinvesting.github.io/r2dii.match/reference/prioritize.html"><code>prioritize()</code></a> takes matched data and picks rows of highest priority.</p>
 <pre><code><a href="../reference/prioritize.html">prioritize(matched)
 #&gt; # A tibble: 267 x 27
 #&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
@@ -257,7 +257,7 @@ matched
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
