@@ -57,6 +57,8 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
+  if (has_cero_rows(data)) return(data)
+
   data %>%
     check_crucial_names(
       c("id_loan", "level", "score", "sector", "sector_ald")
@@ -74,6 +76,10 @@ prioritize <- function(data, priority = NULL) {
     ungroup()
 
   group_by(out, !!!old_groups)
+}
+
+has_cero_rows <- function(data) {
+  !nrow(data) > 0L
 }
 
 check_duplicated_score1 <- function(data) {
