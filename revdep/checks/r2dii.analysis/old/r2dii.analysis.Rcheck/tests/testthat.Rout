@@ -20,8 +20,8 @@ Type 'q()' to quit R.
 > 
 > test_check("r2dii.analysis")
 ══ testthat results  ═══════════════════════════════════════════════════════════
-[ OK: 181 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
+[ OK: 184 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
 > 
 > proc.time()
    user  system elapsed 
- 14.074   0.134  13.640 
+  9.142   0.084   8.866 

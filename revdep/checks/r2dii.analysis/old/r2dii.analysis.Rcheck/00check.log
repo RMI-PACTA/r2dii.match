@@ -4,7 +4,7 @@
 * using session charset: UTF-8
 * using options ‘--no-manual --no-build-vignettes’
 * checking for file ‘r2dii.analysis/DESCRIPTION’ ... OK
-* this is package ‘r2dii.analysis’ version ‘0.1.0’
+* this is package ‘r2dii.analysis’ version ‘0.1.1’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
