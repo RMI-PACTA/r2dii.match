@@ -1,7 +1,7 @@
 # r2dii.match (development version)
 
 * `prioritize()` with 0-row input now returns the input untouched (#284).
-* Fix `match_name()`:remove dependency on `nest_by()` from dplyr 1.0.0 (#303).
+* Fix `match_name()`: Remove dependency on `nest_by()` from dplyr 1.0.0 (#303).
 
 # r2dii.match 0.0.5
 
