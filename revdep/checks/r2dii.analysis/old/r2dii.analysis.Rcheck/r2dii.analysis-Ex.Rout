@@ -437,7 +437,7 @@ detaching ‘package:r2dii.data’, ‘package:r2dii.match’
 
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  9.777 0.113 8.882 0.017 0.008 
+Time elapsed:  6.535 0.068 5.802 0.016 0.003 
 > grDevices::dev.off()
 null device 
           1 

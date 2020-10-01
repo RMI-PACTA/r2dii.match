@@ -1,7 +1,13 @@
 # r2dii.match (development version)
 
-* The website's home page now thanks founders.
-* The website now exposes the development version of the package.
+* `prioritize()` with 0-row input now returns the input untouched (#284).
+* Fix `match_name()`:remove dependency on `nest_by()` from dplyr 1.0.0 (#303).
+
+# r2dii.match 0.0.5
+
+* Change license to MIT.
+* Increment lifecycle badge to "Maturing".
+* The website's home page now thanks funders.
 * New article on using `match_name()` with large loanbooks.
 * The News tab of the website now shows all releases to date.
 

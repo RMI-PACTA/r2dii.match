@@ -1,3 +1,11 @@
+# r2dii.match 0.0.5
+
+* Change license to MIT.
+* Increment lifecycle badge to "Maturing".
+* The website's home page now thanks funders.
+* New article on using `match_name()` with large loanbooks.
+* The News tab of the website now shows all releases to date.
+
 # r2dii.match 0.0.4
 
 * New article "Calculating matching coverage" (#264).
