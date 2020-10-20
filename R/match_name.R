@@ -19,12 +19,12 @@
 #' @param method Method for distance calculation. One of `c("osa", "lv", "dl",
 #'   "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")`. See
 #'   [stringdist::stringdist-metrics].
-#' @inheritParams stringdist::stringdist
 #' @param overwrite A data frame used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   ald.
+#' @inheritParams stringdist::stringdist()
 #'
 #' @family main functions
 #'
@@ -68,8 +68,8 @@ match_name <- function(loanbook,
                        by_sector = TRUE,
                        min_score = 0.8,
                        method = "jw",
-                       p = 0.1,
-                       overwrite = NULL) {
+                       overwrite = NULL,
+                       ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
 
@@ -79,8 +79,8 @@ match_name <- function(loanbook,
     by_sector = by_sector,
     min_score = min_score,
     method = method,
-    p = p,
-    overwrite = overwrite
+    overwrite = overwrite,
+    ...
   )
 }
 
@@ -89,8 +89,8 @@ match_name_impl <- function(loanbook,
                             by_sector = TRUE,
                             min_score = 0.8,
                             method = "jw",
-                            p = 0.1,
-                            overwrite = NULL) {
+                            overwrite = NULL,
+                            ...) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
@@ -116,8 +116,10 @@ match_name_impl <- function(loanbook,
   a <- unique(a)[
     ,
     score := stringdist::stringsim(
-      alias_lbk, alias_ald,
-      method = method, p = p
+      alias_lbk,
+      alias_ald,
+      method = method,
+      ...
     )
   ]
   setkey(a, score)
