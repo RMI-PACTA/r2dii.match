@@ -116,7 +116,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     name_ald = "alpine knits india pvt. limited",
     score = 1,
     source = "loanbook",
-    borderline = TRUE
+    borderline = FALSE
   )
 
   expect_equal(
