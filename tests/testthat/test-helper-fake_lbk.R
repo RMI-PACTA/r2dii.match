@@ -18,5 +18,5 @@ test_that("fake_lbk creates new columns", {
 })
 
 test_that("fake_lbk outputs known value", {
-  expect_known_value(fake_lbk(), "ref-helper-fake_lbk", update = FALSE)
+  expect_snapshot_value(fake_lbk(), style = "json2")
 })

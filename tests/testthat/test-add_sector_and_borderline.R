@@ -8,11 +8,7 @@ test_that("$borderline is of type logical", {
 })
 
 test_that("outputs known output", {
-  expect_known_output(
-    add_sector_and_borderline(loanbook_demo),
-    "ref-add_sector_and_borderline",
-    update = FALSE
-  )
+  expect_snapshot_value(add_sector_and_borderline(loanbook_demo), style = "json2")
 })
 
 test_that("returns a tibble data frame", {
