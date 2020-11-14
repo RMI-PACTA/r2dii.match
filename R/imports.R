@@ -9,7 +9,7 @@ NULL
 
 # Avoid warning due to ambiguous use of external vector to select df columns:
 # https://github.com/2DegreesInvesting/r2dii.match/pull/317
-all_of <- function(x) {
+all_of_ <- function(x) {
   if (utils::packageVersion("tidyselect") >= "1.0.0") {
     tidyselect::all_of
   } else {
