@@ -479,6 +479,8 @@ test_that("with loanbook_demo and ald_demo outputs known output", {
   skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
 
   out <- match_name(loanbook_demo, ald_demo)
+  expect_snapshot_value(round_dbl(out), style = "json2")
+  # FIXME
   expect_known_value(out, "ref-match-name", update = FALSE)
 
   # More informative when it fails
