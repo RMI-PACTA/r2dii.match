@@ -1,4 +1,4 @@
-#' @importFrom dplyr all_of filter select mutate left_join group_by ungroup
+#' @importFrom dplyr filter select mutate left_join group_by ungroup
 #' @importFrom dplyr if_else rename distinct slice pull
 #' @importFrom glue glue
 #' @importFrom purrr reduce
@@ -6,6 +6,14 @@
 #' @importFrom tibble tibble tribble as_tibble
 #' @importFrom data.table setDT setkey :=
 NULL
+
+all_of <- function(x) {
+  if (utils::packageVersion("tidyselect") >= "1.0.0") {
+    tidyselect::all_of
+  } else {
+    identity
+  }
+}
 
 globalVariables(
   c(
