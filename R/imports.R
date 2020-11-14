@@ -11,9 +11,9 @@ NULL
 # https://github.com/2DegreesInvesting/r2dii.match/pull/317
 all_of_ <- function(x) {
   if (utils::packageVersion("tidyselect") >= "1.0.0") {
-    tidyselect::all_of
+    tidyselect::all_of(x)
   } else {
-    identity
+    identity(x)
   }
 }
 
