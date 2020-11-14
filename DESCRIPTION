@@ -45,7 +45,7 @@ Depends:
     R (>= 3.4)
 Imports: 
     data.table,
-    dplyr (>= 0.8.5),
+    dplyr (>= 1.0.0),
     glue,
     magrittr,
     purrr,
