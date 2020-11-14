@@ -471,7 +471,7 @@ test_that("works with UP266", {
 
   verify_output(
     test_path("output", "match_name-up266.txt"),
-    select(out, id_2dii, matches(prefix))
+    select(out, .data$id_2dii, matches(prefix))
   )
 })
 
