@@ -381,7 +381,7 @@ test_that("warns/errors if some/all system classification is unknown", {
 # crucial names -----------------------------------------------------------
 
 test_that("w/ loanbook or ald with missing names errors gracefully", {
-  invalid <- function(data, x) dplyr::rename(data, bad = x)
+  invalid <- function(data, x) dplyr::rename(data, bad = all_of(x))
 
   expect_error_missing_names <- function(lbk = NULL, ald = NULL) {
     expect_error(

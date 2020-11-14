@@ -60,7 +60,7 @@ restructure_loanbook <- function(data, overwrite = NULL) {
 
   out <- may_add_sector_and_borderline(data)
   out <- select(
-    out, .data$rowid, important_columns, .data$sector, .data$borderline
+    out, .data$rowid, all_of(important_columns), .data$sector, .data$borderline
   )
   out <- identify_loans_by_level(out)
   out <- identify_loans_by_name(out)
@@ -194,7 +194,7 @@ identify_loans_by_name <- function(data) {
   data %>%
     purrr::modify_at(cols, as.character) %>%
     tidyr::pivot_longer(
-      cols = cols,
+      cols = all_of(cols),
       names_to = "level2",
       names_prefix = "name_",
       values_to = "name"

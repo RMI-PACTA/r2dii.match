@@ -1,4 +1,4 @@
-#' @importFrom dplyr filter select mutate left_join group_by ungroup
+#' @importFrom dplyr all_of filter select mutate left_join group_by ungroup
 #' @importFrom dplyr if_else rename distinct slice pull
 #' @importFrom glue glue
 #' @importFrom purrr reduce
