@@ -1,7 +1,7 @@
 library(r2dii.data)
 
 test_that("$borderline is of type logical", {
-  expect_is(
+  expect_type(
     add_sector_and_borderline(loanbook_demo)$borderline,
     "logical"
   )
@@ -16,7 +16,7 @@ test_that("outputs known output", {
 })
 
 test_that("returns a tibble data frame", {
-  expect_is(
+  expect_s3_class(
     add_sector_and_borderline(loanbook_demo),
     "tbl_df"
   )

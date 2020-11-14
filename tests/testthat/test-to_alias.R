@@ -116,7 +116,7 @@ test_that("to_alias errors with malformed `from_to`", {
 })
 
 test_that("from_name_to_alias outputs the expectes tibble", {
-  expect_is(from_name_to_alias(), "tbl_df")
+  expect_s3_class(from_name_to_alias(), "tbl_df")
   expect_named(from_name_to_alias(), c("from", "to"))
 })
 
