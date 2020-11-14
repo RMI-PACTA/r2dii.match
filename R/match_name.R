@@ -192,8 +192,8 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
 expand_alias <- function(loanbook, ald) {
   vars <- c("sector", "alias")
-  l <- nest_by(select(loanbook, all_of(vars)), .data$sector, .key = "alias_lbk")
-  a <- nest_by(select(ald, all_of(vars)), .data$sector, .key = "alias_ald")
+  l <- nest_by(select(loanbook, all_of_(vars)), .data$sector, .key = "alias_lbk")
+  a <- nest_by(select(ald, all_of_(vars)), .data$sector, .key = "alias_ald")
   la <- dplyr::inner_join(l, a, by = "sector")
 
   purrr::map2_df(
@@ -237,7 +237,7 @@ reorder_names_as_in_loanbook <- function(data, loanbook) {
 
   data %>%
     select(
-      all_of(names_in_loanbook),
+      all_of_(names_in_loanbook),
       # New names
       !!!names_added_by_match_name(),
       # In case I missed something
