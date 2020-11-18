@@ -81,7 +81,8 @@ match_name <- function(loanbook,
     min_score = min_score,
     method = method,
     p = p,
-    overwrite = overwrite
+    overwrite = overwrite,
+    ...
   )
 }
 
@@ -91,7 +92,8 @@ match_name_impl <- function(loanbook,
                             min_score = 0.8,
                             method = "jw",
                             p = 0.1,
-                            overwrite = NULL) {
+                            overwrite = NULL,
+                            ...) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
@@ -118,7 +120,7 @@ match_name_impl <- function(loanbook,
     ,
     score := stringdist::stringsim(
       alias_lbk, alias_ald,
-      method = method, p = p
+      method = method, p = p, ...
     )
   ]
   setkey(a, score)
