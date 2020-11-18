@@ -11,7 +11,8 @@ match_name(
   min_score = 0.8,
   method = "jw",
   p = 0.1,
-  overwrite = NULL
+  overwrite = NULL,
+  ...
 )
 }
 \arguments{
