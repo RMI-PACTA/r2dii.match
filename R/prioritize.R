@@ -57,7 +57,9 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  if (has_cero_rows(data)) return(data)
+  if (has_cero_rows(data)) {
+    return(data)
+  }
 
   data %>%
     check_crucial_names(
