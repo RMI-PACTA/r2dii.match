@@ -361,21 +361,6 @@ test_that("warns/errors if some/all system classification is unknown", {
     match_name(all_bad_code, fake_ald()),
   )
 
-  # styler: off
-  verify_output(
-    test_path("output", "match_name-sec_classif_unknown.txt"), {
-      "# Error"
-      match_name(all_bad_code, fake_ald())
-
-      match_name(all_bad_system, fake_ald())
-
-      "# Warning"
-      invisible(match_name(some_bad_code, fake_ald()))
-
-      invisible(match_name(some_bad_system, fake_ald()))
-    }
-  )
-  # styler: on
 })
 
 # crucial names -----------------------------------------------------------
