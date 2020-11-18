@@ -1,4 +1,4 @@
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
