@@ -25,6 +25,7 @@
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   ald.
+#' @param ... Arguments passed on to [stringdist::stringsim()].
 #'
 #' @family main functions
 #'
