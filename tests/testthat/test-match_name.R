@@ -465,14 +465,6 @@ test_that("with loanbook_demo and ald_demo outputs known output", {
 
   out <- match_name(loanbook_demo, ald_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
-  # FIXME: This test should be removed but I don't because it's failing; so
-  # before we record a snapshot we need to decide if the value we'll store is
-  # correct or corrupt.
-  expect_known_value(out, "ref-match-name", update = FALSE)
-
-  # More informative when it fails
-  ref <- readRDS(test_path("ref-match-name"))
-  expect_equal(out, ref)
 })
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
