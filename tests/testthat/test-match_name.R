@@ -1,4 +1,4 @@
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
@@ -361,27 +361,12 @@ test_that("warns/errors if some/all system classification is unknown", {
     match_name(all_bad_code, fake_ald()),
   )
 
-  # styler: off
-  verify_output(
-    test_path("output", "match_name-sec_classif_unknown.txt"), {
-      "# Error"
-      match_name(all_bad_code, fake_ald())
-
-      match_name(all_bad_system, fake_ald())
-
-      "# Warning"
-      invisible(match_name(some_bad_code, fake_ald()))
-
-      invisible(match_name(some_bad_system, fake_ald()))
-    }
-  )
-  # styler: on
 })
 
 # crucial names -----------------------------------------------------------
 
 test_that("w/ loanbook or ald with missing names errors gracefully", {
-  invalid <- function(data, x) dplyr::rename(data, bad = x)
+  invalid <- function(data, x) dplyr::rename(data, bad = all_of_(x))
 
   expect_error_missing_names <- function(lbk = NULL, ald = NULL) {
     expect_error(
@@ -471,7 +456,7 @@ test_that("works with UP266", {
 
   verify_output(
     test_path("output", "match_name-up266.txt"),
-    select(out, id_2dii, matches(prefix))
+    select(out, .data$id_2dii, matches(prefix))
   )
 })
 
