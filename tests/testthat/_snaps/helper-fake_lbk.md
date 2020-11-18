@@ -1,4 +1,4 @@
-# fake_lbk outputs known value
+# fake_lbk outputs expected value
 
     {
       "type": "list",

@@ -1,5 +1,0 @@
-> prioritize(invalid)
-Error: `data` where `score` is `1` must be unique by `id_loan` by `level`.
-Duplicated rows: 2.
-Have you ensured that only one ald-name per loanbook-name is set to `1`?
-

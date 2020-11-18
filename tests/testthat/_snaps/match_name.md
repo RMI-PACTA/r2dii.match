@@ -1,4 +1,36 @@
-# with loanbook_demo and ald_demo outputs known output
+# warns overwrite
+
+    Code
+      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    Warning <overwrite_warning>
+      You should only overwrite a sector at the level of the 'direct
+      loantaker' (DL). If you overwrite a sector at the level of the 'ultimate
+      parent' (UP) you consequently overwrite all children of that sector,
+      which most likely is a mistake.
+    Output
+      # A tibble: 1 x 15
+        sector_classifi~ id_ultimate_par~ name_ultimate_p~ id_direct_loant~
+        <chr>            <chr>            <chr>            <chr>           
+      1 NACE             UP15             Alpine Knits In~ C294            
+      # ... with 11 more variables: name_direct_loantaker <chr>,
+      #   sector_classification_direct_loantaker <dbl>, id_2dii <chr>, level <chr>,
+      #   sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>, score <dbl>,
+      #   source <chr>, borderline <lgl>
+
+# works with UP266
+
+    Code
+      select(out, .data$id_2dii, matches(prefix))
+    Output
+      # A tibble: 2 x 7
+        id_2dii id_direct_loant~ name_direct_loa~ id_intermediate~ name_intermedia~
+        <chr>   <chr>            <chr>            <chr>            <chr>           
+      1 DL1     C38              Glencore Plc     <NA>             <NA>            
+      2 UP1     C38              Glencore Plc     <NA>             <NA>            
+      # ... with 2 more variables: id_ultimate_parent <chr>,
+      #   name_ultimate_parent <chr>
+
+# with loanbook_demo and ald_demo outputs expected value
 
     {
       "type": "list",

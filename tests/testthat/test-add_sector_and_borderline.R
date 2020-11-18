@@ -7,7 +7,7 @@ test_that("$borderline is of type logical", {
   )
 })
 
-test_that("outputs known output", {
+test_that("outputs expected value", {
   expect_snapshot_value(add_sector_and_borderline(loanbook_demo), style = "json2")
 })
 

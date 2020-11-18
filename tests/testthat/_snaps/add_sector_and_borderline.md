@@ -1,4 +1,4 @@
-# outputs known output
+# outputs expected value
 
     {
       "type": "list",

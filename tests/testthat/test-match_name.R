@@ -210,11 +210,8 @@ test_that("warns overwrite", {
     match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 
-  verify_output(
-    test_path("output", "match_name-overwrite_warning.txt"),
-    as.data.frame(
-      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
-    )
+  expect_snapshot(
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 })
 
@@ -360,7 +357,6 @@ test_that("warns/errors if some/all system classification is unknown", {
     class = "all_sec_classif_unknown",
     match_name(all_bad_code, fake_ald()),
   )
-
 })
 
 # crucial names -----------------------------------------------------------
@@ -454,13 +450,10 @@ test_that("works with UP266", {
   prefix <- c(glue("id_{level()}"), glue("name_{level()}"))
   prefix <- paste0(prefix, collapse = "|")
 
-  verify_output(
-    test_path("output", "match_name-up266.txt"),
-    select(out, .data$id_2dii, matches(prefix))
-  )
+  expect_snapshot(select(out, .data$id_2dii, matches(prefix)))
 })
 
-test_that("with loanbook_demo and ald_demo outputs known output", {
+test_that("with loanbook_demo and ald_demo outputs expected value", {
   skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
 
   out <- match_name(loanbook_demo, ald_demo)
