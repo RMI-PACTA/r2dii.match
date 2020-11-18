@@ -590,3 +590,11 @@ test_that("matches any case of ald$name_company, but preserves original case", {
   # The original uppercase is preserved
   expect_equal(upp$name_ald, "ALPINE KNITS")
 })
+
+test_that("with arguments passed via ellipsis, throws no error (#310)", {
+  # `q` isn't a formal argument of `match_name()`
+  expect_false(any(grepl("^q$", names(formals(match_name)))))
+
+  # `q` should pass `...` with no error
+  expect_no_error(match_name(fake_lbk(), fake_ald(), method = "qgram", q = 1))
+})
