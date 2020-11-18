@@ -2,6 +2,8 @@
 
 # r2dii.match 0.0.6
 
+* `match_names()` gains `...` to pass additional arguments to
+  `stringdist::stringsim()` (@evgeniadimi #310).
 * `prioritize()` with 0-row input now returns the input untouched (#284).
 * Fix `match_name()`: Remove dependency on `nest_by()` from dplyr 1.0.0 (#303).
 
