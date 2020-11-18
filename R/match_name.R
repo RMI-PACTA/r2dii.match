@@ -69,7 +69,8 @@ match_name <- function(loanbook,
                        min_score = 0.8,
                        method = "jw",
                        p = 0.1,
-                       overwrite = NULL) {
+                       overwrite = NULL,
+                       ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
 
