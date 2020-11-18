@@ -121,7 +121,8 @@
 
       
 
-      </header><script src="matching-coverage_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="matching-coverage_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="matching-coverage_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="matching-coverage_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating Matching Coverage</h1>
@@ -143,43 +144,43 @@
 <h3 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h3>
 <p>First we will need to load up the useful packages:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></code></pre></div>
 <p>We will use example datasets from <code>r2dii.data</code>. To demonstrate our point, we create a <code>loanbook</code> dataset with two mismatching loans:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     name_ultimate_parent <span class="op">=</span> 
       <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">id_loan</span> <span class="op">==</span> <span class="st">"L1"</span>, <span class="st">"unmatched company name"</span>, <span class="va">name_ultimate_parent</span><span class="op">)</span>,
     sector_classification_direct_loantaker <span class="op">=</span> 
       <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">id_loan</span> <span class="op">==</span> <span class="st">"L2"</span>, <span class="fl">99</span>, <span class="va">sector_classification_direct_loantaker</span><span class="op">)</span>
-  <span class="op">)</span></pre></div>
+  <span class="op">)</span></code></pre></div>
 <p>We will then run the matching algorithm on this loanbook:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">matched</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op">%&gt;%</span> 
     <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">ald_demo</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+    <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Note that this <code>matched</code> dataset will contain <em>only</em> loans that were matched successfully. To determine coverage, we need to go back to the original <code>loanbook</code> dataset. We must determine the 2DII sectors of each loan, as dictated by the <code>sector_classification_direct_loantaker</code> column.</p>
 <p>For this, we join the loanbook with the <a href="https://2degreesinvesting.github.io/r2dii.data/reference/sector_classifications.html"><code>sector_classifications</code></a> dataset, which lists all sector classification code standards used by ‘PACTA’. Unfortunately we need to work around two caveats (you may ignore them because they are conceptually uninteresting):</p>
 <ul>
 <li><p>In the two datasets, the columns we want to merge by have different names. We use the argument <code>by</code> to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> to merge the columns <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> (from <code>loanbook</code>) with the columns <code>code_system</code> and <code>code</code> (from <code>sector_classifications</code>), respectively.</p></li>
 <li><p>In the two datasets, the sector classification codes are represented with different data-types. We modify the column <code>sector_classification_direct_loantaker</code> before <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> so it has the same type as the corresponding column <code>code</code> (otherwise <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> throws an error), and again after <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> to restore its original type.</p></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">merge_by</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"code_system"</span>, <span class="st">"code"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">merge_by</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"code_system"</span>, <span class="st">"code"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://purrr.tidyverse.org/reference/set_names.html">set_names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"sector_classification_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"system"</span>, <span class="st">"direct_loantaker"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">loanbook_with_sectors</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">sector_classifications</span>, by <span class="op">=</span> <span class="va">merge_by</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.double</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.double</span><span class="op">)</span></code></pre></div>
 <p>We can join these two datasets together, to generate our <code>coverage</code> dataset:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">coverage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">loanbook_with_sectors</span>, <span class="va">matched</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coverage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">loanbook_with_sectors</span>, <span class="va">matched</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     loan_size_outstanding <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">loan_size_outstanding</span><span class="op">)</span>,
     loan_size_credit_limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">loan_size_credit_limit</span><span class="op">)</span>,
@@ -193,14 +194,14 @@
       <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">sector</span>
     <span class="op">)</span>
   <span class="op">)</span>
-<span class="co">#&gt; Joining, by = c("id_loan", "id_direct_loantaker", "name_direct_loantaker", "id_intermediate_parent_1", "name_intermediate_parent_1", "id_ultimate_parent", "name_ultimate_parent", "loan_size_outstanding", "loan_size_outstanding_currency", "loan_size_credit_limit", "loan_size_credit_limit_currency", "sector_classification_system", "sector_classification_input_type", "sector_classification_direct_loantaker", "fi_type", "flag_project_finance_loan", "name_project", "lei_direct_loantaker", "isin_direct_loantaker", "sector", "borderline")</span></pre></div>
+<span class="co">#&gt; Joining, by = c("id_loan", "id_direct_loantaker", "name_direct_loantaker", "id_intermediate_parent_1", "name_intermediate_parent_1", "id_ultimate_parent", "name_ultimate_parent", "loan_size_outstanding", "loan_size_outstanding_currency", "loan_size_credit_limit", "loan_size_credit_limit_currency", "sector_classification_system", "sector_classification_input_type", "sector_classification_direct_loantaker", "fi_type", "flag_project_finance_loan", "name_project", "lei_direct_loantaker", "isin_direct_loantaker", "sector", "borderline")</span></code></pre></div>
 </div>
 <div id="calculate-the-portion-of-your-loanbook-covered-by-dollar-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#calculate-the-portion-of-your-loanbook-covered-by-dollar-value" class="anchor"></a>1. Calculate the portion of your loanbook covered by dollar value</h3>
 <p>From the <code>coverage</code> dataset, we can calculate the total loanbook coverage by dollar value. Let’s create two helper functions, one to calculate dollar-value and another one to plot coverage in general.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">dollar_value</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dollar_value</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">data</span> <span class="op">%&gt;%</span> 
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">matched</span>, <span class="va">...</span><span class="op">)</span> <span class="op">%&gt;%</span> 
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>loan_size_outstanding <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">loan_size_outstanding</span><span class="op">)</span><span class="op">)</span>
@@ -211,36 +212,36 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="op">{</span><span class="op">{</span><span class="va">x</span><span class="op">}</span><span class="op">}</span>, <span class="op">{</span><span class="op">{</span><span class="va">y</span><span class="op">}</span><span class="op">}</span>, fill <span class="op">=</span> <span class="va">matched</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="co"># Use more horizontal space -- avoids overlap on x axis text</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span>
-<span class="op">}</span></pre></div>
+<span class="op">}</span></code></pre></div>
 <p>Let’s first explore all loans.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">coverage</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">matched</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></pre></div>
+<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>To calculate the total, in-scope, loanbook coverage:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">coverage</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sector</span> <span class="op">!=</span> <span class="st">"not in scope"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">matched</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></pre></div>
+<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div id="break-down-by-sector" class="section level3">
 <h3 class="hasAnchor">
 <a href="#break-down-by-sector" class="anchor"></a>Break down by sector</h3>
 <p>You may break-down the plot by sector:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">coverage</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="va">sector</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'matched' (override with `.groups` argument)</span></pre></div>
+<span class="co">#&gt; `summarise()` regrouping output by 'matched' (override with `.groups` argument)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>Or even further, by matching level:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="va">coverage</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>matched <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
     <span class="va">matched</span> <span class="op">==</span> <span class="st">"Matched"</span> <span class="op">&amp;</span> <span class="va">level</span> <span class="op">==</span> <span class="st">"direct_loantaker"</span>      <span class="op">~</span> <span class="st">"Matched DL"</span>,
     <span class="va">matched</span> <span class="op">==</span> <span class="st">"Matched"</span> <span class="op">&amp;</span> <span class="va">level</span> <span class="op">==</span> <span class="st">"intermediate_parent_1"</span> <span class="op">~</span> <span class="st">"Matched IP1"</span>,
@@ -250,21 +251,21 @@
   <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="va">sector</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'matched' (override with `.groups` argument)</span></pre></div>
+<span class="co">#&gt; `summarise()` regrouping output by 'matched' (override with `.groups` argument)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div id="count-the-number-of-companies" class="section level3">
 <h3 class="hasAnchor">
 <a href="#count-the-number-of-companies" class="anchor"></a>2. Count the number of companies</h3>
 <p>You might also be interested in knowing how many companies in your loanbook were matched. It probably makes most sense to do this at the <code>direct_loantaker</code> level:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">companies_matched</span> <span class="op">&lt;-</span> <span class="va">coverage</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">companies_matched</span> <span class="op">&lt;-</span> <span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">matched</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>no_companies <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">name_direct_loantaker</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` regrouping output by 'sector' (override with `.groups` argument)</span>
 
 <span class="va">companies_matched</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">no_companies</span><span class="op">)</span></pre></div>
+  <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">no_companies</span><span class="op">)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div id="a-note-on-sector-classifications-and-the-borderline-flag" class="section level2">
@@ -273,14 +274,14 @@
 <p>There are a zoo of sector classification code systems out there. Some are granular, some are not. Since we currently cover a particular portion of the supply chain (i.e. production), it is important we try to only match the ALD with companies that are actually active in this portion of the supply chain.</p>
 <p>An issue arises when, for example, a company is classified in the “power transmission” sector. In a perfect world, these companies would produce no electricity, and we would not try to match them. In practice, however, we find there is often overlap. For this reason, we introduced the <code>borderline</code> flag.</p>
 <p>In the example below, we see two classification codes coming from the SIC classification standard:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/sic_classification.html">sic_classification</a></span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/sic_classification.html">sic_classification</a></span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">41111</span>, <span class="fl">36200</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 2 x 4</span>
 <span class="co">#&gt;   code  description                                            sector borderline</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;                                                  &lt;chr&gt;  &lt;lgl&gt;     </span>
 <span class="co">#&gt; 1 36200 manufacture of electricity distribution and control a… power  TRUE      </span>
-<span class="co">#&gt; 2 41111 generation                                             power  FALSE</span></pre></div>
+<span class="co">#&gt; 2 41111 generation                                             power  FALSE</span></code></pre></div>
 <p>Notice that the code 41111 corresponds to power generation. This is an identical match to 2DII’s <code>power</code> sector, and thus the <code>borderline</code> flag is set to <code>FALSE</code>. In contrast, code 36200 corresponds to the manufacture of electricity distribution and control apparatus. In a perfect world, we would set this code to <code>not in scope</code>, however there is still a chance that these companies produce electricity. For this reason, we have mapped it to <code>power</code> with <code>borderline = TRUE</code>.</p>
 <p>In practice, if a company has a <code>borderline</code> of <code>TRUE</code> and <em>is</em> matched, then consider the company in scope. If it has a <code>borderline</code> of <code>TRUE</code> and <em>isn’t</em> matched, then consider it out of scope.</p>
 </div>

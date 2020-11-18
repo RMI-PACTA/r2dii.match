@@ -150,27 +150,27 @@
 <a href="https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation">Learn how to minimize installation errors</a>.</li>
 </ul>
 <p>When you are ready, install the released version of r2dii.match from CRAN with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("r2dii.match")</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("r2dii.match")</span></code></pre></div>
 <p>Or install the development version of r2dii.match from GitHub with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.match"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.match"</span><span class="op">)</span></code></pre></div>
 <p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/">How to raise an issue?</a></p>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></code></pre></div>
 <p>Matching is achieved in two main steps:</p>
 <div id="1-run-fuzzy-matching" class="section level3">
 <h3 class="hasAnchor">
 <a href="#1-run-fuzzy-matching" class="anchor"></a>1. Run fuzzy matching</h3>
 <p><code><a href="reference/match_name.html">match_name()</a></code> will extract all unique counterparty names from the columns: <code>direct_loantaker</code>, <code>ultimate_parent</code> or <code>intermediate_parent*</code> and run fuzzy matching against all company names in the <code>ald</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">match_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">match_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span>
 <span class="va">match_result</span> 
 <span class="co">#&gt; # A tibble: 502 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
@@ -194,15 +194,15 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
 </div>
 <div id="2-prioritize-validated-matches" class="section level3">
 <h3 class="hasAnchor">
 <a href="#2-prioritize-validated-matches" class="anchor"></a>2. Prioritize validated matches</h3>
 <p>The user should then manually validate the output of <br><span class="math display"><em>m</em><em>a</em><em>t</em><em>c</em><em>h</em>_<em>n</em><em>a</em><em>m</em><em>e</em>()</span><br>, ensuring that the value of the column <code>score</code> is equal to <code>1</code> for perfect matches only.</p>
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">match_result</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">match_result</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 267 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
@@ -225,7 +225,7 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
 <span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></div>
+<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
 <p>The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.</p>
 <p><a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
 </div>
