@@ -119,6 +119,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     borderline = TRUE
   )
 
+  if (packageVersion("r2dii.data") > "0.1.4") expected$borderline <- FALSE
+
   expect_equal(
     match_name(fake_lbk(), fake_ald()),
     expected
