@@ -209,14 +209,8 @@ test_that("takes `overwrite`", {
 
 test_that("warns overwrite", {
   expect_warning(
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
-  )
-
-  verify_output(
-    test_path("output", "match_name-overwrite_warning.txt"),
-    as.data.frame(
-      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
-    )
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo),
+    "should only.*overwrite"
   )
 })
 
