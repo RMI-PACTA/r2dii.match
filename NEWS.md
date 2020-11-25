@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* Avoid failures due to changes in r2dii.data that are expected.
+
 # r2dii.match 0.0.6
 
 * `match_names()` gains `...` to pass additional arguments to

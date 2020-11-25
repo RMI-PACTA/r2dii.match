@@ -119,6 +119,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     borderline = TRUE
   )
 
+  if (packageVersion("r2dii.data") > "0.1.4") expected$borderline <- FALSE
+
   expect_equal(
     match_name(fake_lbk(), fake_ald()),
     expected
@@ -207,14 +209,8 @@ test_that("takes `overwrite`", {
 
 test_that("warns overwrite", {
   expect_warning(
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
-  )
-
-  verify_output(
-    test_path("output", "match_name-overwrite_warning.txt"),
-    as.data.frame(
-      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
-    )
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo),
+    "should only.*overwrite"
   )
 })
 
@@ -461,6 +457,7 @@ test_that("works with UP266", {
 
 test_that("with loanbook_demo and ald_demo outputs known output", {
   skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
+  skip_if(packageVersion("r2dii.data") > "0.1.4", "We expect different output")
 
   out <- match_name(loanbook_demo, ald_demo)
   expect_known_value(out, "ref-match-name", update = FALSE)
