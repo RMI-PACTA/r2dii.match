@@ -160,7 +160,7 @@ match_name_impl <- function(loanbook,
 }
 
 abort_reserved_column <- function(data) {
-  reserved_chr <- c("alias", "rowid", "sector")
+  reserved_chr <- c("alias", "rowid")
   is_reserved <- names(data) %in% reserved_chr
 
   if (any(is_reserved)) {
