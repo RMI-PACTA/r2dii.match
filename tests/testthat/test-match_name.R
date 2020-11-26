@@ -587,3 +587,11 @@ test_that("matches any case of ald$name_company, but preserves original case", {
   # The original uppercase is preserved
   expect_equal(upp$name_ald, "ALPINE KNITS")
 })
+
+test_that("allows for input data to have `sector` and `borderline`", {
+  loanbook <- fake_lbk() %>%
+    mutate(sector = "power", borderline = TRUE)
+
+  expect_success(match_name(loanbook, ald_demo))
+
+})
