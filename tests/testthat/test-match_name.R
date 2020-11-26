@@ -505,32 +505,11 @@ test_that("throws an error if the `loanbook` has reserved columns", {
     regexp = "alias"
   )
 
-  sector <- mutate(fake_lbk(), sector = "auto")
-  expect_error(
-    class = "reserved_column",
-    match_name(sector, fake_ald()),
-    regexp = "sector"
-  )
-
   rowid <- mutate(fake_lbk(), rowid = 1L)
   expect_error(
     class = "reserved_column",
     match_name(rowid, fake_ald()),
     regexp = "rowid"
-  )
-
-  rowid_sector <- mutate(fake_lbk(), rowid = 1L, sector = "auto")
-  expect_error(
-    class = "reserved_column",
-    match_name(rowid_sector, fake_ald()),
-    regexp = "rowid.*sector"
-  )
-
-  sector_rowid <- mutate(fake_lbk(), sector = "auto", rowid = 1L)
-  expect_error(
-    class = "reserved_column",
-    match_name(sector_rowid, fake_ald()),
-    regexp = "rowid.*sector"
   )
 })
 
@@ -592,6 +571,13 @@ test_that("allows for input data to have `sector` and `borderline`", {
   loanbook <- fake_lbk() %>%
     mutate(sector = "power", borderline = TRUE)
 
-  expect_success(match_name(loanbook, ald_demo))
+  out_usual <- match_name(fake_lbk(), fake_ald())
+
+  out <- match_name(loanbook, fake_ald())
+
+  expect_equal(out$sector, "power")
+  expect_equal(out$borderline, TRUE)
+  expect_equal(setdiff(names(out), names(out_usual)), character(0))
+
 
 })
