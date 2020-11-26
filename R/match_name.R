@@ -146,7 +146,9 @@ match_name_impl <- function(loanbook,
 
   # Restore columns from loanbook
   setDT(loanbook_rowid)
-  matched <- loanbook_rowid[matched, on = "rowid"]
+  maybe_columns <- c("rowid", "sector", "borderline")
+  join_on <- intersect(maybe_columns, names(loanbook_rowid))
+  matched <- loanbook_rowid[matched, on = join_on]
   matched <- matched[, rowid := NULL]
   matched <- as_tibble(matched)
 
