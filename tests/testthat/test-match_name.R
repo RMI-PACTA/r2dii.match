@@ -594,5 +594,8 @@ test_that("with relevant options allows loanbook with reserved columns", {
 
   # Must add both `sector` and `borderline` -- match_name errors with just one
   lbk <- mutate(fake_lbk(), sector = "a", borderline = FALSE)
-  expect_no_error(suppressWarnings(match_name(lbk, fake_ald())))
+  expect_no_error(
+    # Don't warn if found no match
+    suppressWarnings(match_name(lbk, fake_ald()))
+  )
 })
