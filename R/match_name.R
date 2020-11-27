@@ -160,7 +160,7 @@ match_name_impl <- function(loanbook,
 }
 
 allow_reserved_columns <- function() {
-  isTRUE(getOption("allow_reserved_columns"))
+  isTRUE(getOption("r2dii.match.allow_reserved_columns"))
 }
 
 abort_reserved_column <- function(data) {

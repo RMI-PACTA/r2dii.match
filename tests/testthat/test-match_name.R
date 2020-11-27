@@ -589,7 +589,7 @@ test_that("matches any case of ald$name_company, but preserves original case", {
 })
 
 test_that("with relevant options allows loanbook with reserved columns", {
-  restore <- options(allow_reserved_columns = TRUE)
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
   on.exit(options(restore), add = TRUE)
 
   # Must add both `sector` and `borderline` -- match_name errors with just one
