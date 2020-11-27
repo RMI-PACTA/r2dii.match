@@ -587,3 +587,12 @@ test_that("matches any case of ald$name_company, but preserves original case", {
   # The original uppercase is preserved
   expect_equal(upp$name_ald, "ALPINE KNITS")
 })
+
+test_that("with relevant options allows loanbook with reserved columns", {
+  restore <- options(allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE, after = FALSE)
+
+  # Must add both `sector` and `borderline` -- match_name errors with just one
+  lbk <- mutate(fake_lbk(), sector = "a", borderline = FALSE)
+  expect_no_error(suppressWarnings(match_name(lbk, fake_ald())))
+})
