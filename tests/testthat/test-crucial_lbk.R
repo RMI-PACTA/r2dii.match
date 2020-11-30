@@ -1,5 +1,5 @@
 test_that("outputs hasn't changed", {
-  expected <-   c(
+  expected <- c(
     "id_ultimate_parent",
     "name_ultimate_parent",
     "id_direct_loantaker",
