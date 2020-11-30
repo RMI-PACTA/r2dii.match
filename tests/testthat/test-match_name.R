@@ -119,6 +119,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     borderline = TRUE
   )
 
+  if (packageVersion("r2dii.data") > "0.1.4") expected$borderline <- FALSE
+
   expect_equal(
     match_name(fake_lbk(), fake_ald()),
     expected
@@ -455,6 +457,7 @@ test_that("works with UP266", {
 
 test_that("with loanbook_demo and ald_demo outputs expected value", {
   skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
+  skip_if(packageVersion("r2dii.data") > "0.1.4", "We expect different output")
 
   out <- match_name(loanbook_demo, ald_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
@@ -578,4 +581,16 @@ test_that("matches any case of ald$name_company, but preserves original case", {
   expect_equal(nrow(upp), 1L)
   # The original uppercase is preserved
   expect_equal(upp$name_ald, "ALPINE KNITS")
+})
+
+test_that("with relevant options allows loanbook with reserved columns", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  # Must add both `sector` and `borderline` -- match_name errors with just one
+  lbk <- mutate(fake_lbk(), sector = "a", borderline = FALSE)
+  expect_no_error(
+    # Don't warn if found no match
+    suppressWarnings(match_name(lbk, fake_ald()))
+  )
 })
