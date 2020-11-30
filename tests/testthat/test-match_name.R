@@ -624,3 +624,15 @@ test_that("with arguments passed via ellipsis, outputs the expected score", {
   out2 <- match_name(lbk, ald, method = "qgram", q = this_q)
   expect_equal(unique(out2$score), expected2)
 })
+
+test_that("with relevant options allows loanbook with reserved columns", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  # Must add both `sector` and `borderline` -- match_name errors with just one
+  lbk <- mutate(fake_lbk(), sector = "a", borderline = FALSE)
+  expect_no_error(
+    # Don't warn if found no match
+    suppressWarnings(match_name(lbk, fake_ald()))
+  )
+})

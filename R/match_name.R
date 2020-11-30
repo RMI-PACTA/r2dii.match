@@ -98,7 +98,7 @@ match_name_impl <- function(loanbook,
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
-  abort_reserved_column(loanbook)
+  if (!allow_reserved_columns()) abort_reserved_column(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
@@ -161,6 +161,10 @@ match_name_impl <- function(loanbook,
   attr(matched, ".internal.selfref") <- NULL
 
   matched
+}
+
+allow_reserved_columns <- function() {
+  isTRUE(getOption("r2dii.match.allow_reserved_columns"))
 }
 
 abort_reserved_column <- function(data) {
