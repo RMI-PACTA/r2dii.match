@@ -11,7 +11,8 @@ match_name(
   min_score = 0.8,
   method = "jw",
   p = 0.1,
-  overwrite = NULL
+  overwrite = NULL,
+  ...
 )
 }
 \arguments{
@@ -36,6 +37,8 @@ columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to
 ald.}
+
+\item{...}{Arguments passed on to \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.}
 }
 \value{
 A data frame with the same groups (if any) and columns as \code{loanbook},

@@ -137,7 +137,7 @@ test_that("takes unprepared loanbook and ald datasets", {
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
-  # Matches cero row ...
+  # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
   expect_warning(
     out <- match_name(lbk2, ald_demo),
@@ -583,14 +583,64 @@ test_that("matches any case of ald$name_company, but preserves original case", {
   expect_equal(upp$name_ald, "ALPINE KNITS")
 })
 
+test_that("with arguments passed via ellipsis, throws no error (#310)", {
+  # `q` isn't a formal argument of `match_name()`
+  expect_false(any(grepl("^q$", names(formals(match_name)))))
+
+  # `q` should pass `...` with no error
+  expect_no_error(match_name(fake_lbk(), fake_ald(), method = "qgram", q = 1))
+})
+
+test_that("with arguments passed via ellipsis, outputs the expected score", {
+  lbk <-
+    fake_lbk(name_direct_loantaker = "Yuamen Changyuan Hydropower Co., Ltd.")
+  ald <-
+    fake_ald(name_company = "yiyang baoyuan power generation co., ltd.")
+
+  this_q <- 0.5
+  expected1 <- stringdist::stringsim(
+    to_alias(lbk$name_direct_loantaker),
+    to_alias(ald$name_company),
+    method = "qgram", q = this_q
+  )
+
+  out1 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  expect_equal(unique(out1$score), expected1)
+
+  this_q <- 1
+  expected2 <- stringdist::stringsim(
+    to_alias(lbk$name_direct_loantaker),
+    to_alias(ald$name_company),
+    method = "qgram", q = this_q
+  )
+
+  # Ensure this test does not just duplicate the previous one
+  expect_false(identical(expected1, expected2))
+
+  out2 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  expect_equal(unique(out2$score), expected2)
+})
+
 test_that("with relevant options allows loanbook with reserved columns", {
   restore <- options(r2dii.match.allow_reserved_columns = TRUE)
   on.exit(options(restore), add = TRUE)
 
-  # Must add both `sector` and `borderline` -- match_name errors with just one
   lbk <- mutate(fake_lbk(), sector = "a", borderline = FALSE)
   expect_no_error(
     # Don't warn if found no match
     suppressWarnings(match_name(lbk, fake_ald()))
   )
+})
+
+test_that("with loanbook with(out) reserved columns, outputs same names", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  reserved <- mutate(fake_lbk(), sector = "power", borderline = FALSE)
+  actual <- sort(names(match_name(reserved, fake_ald())))
+
+  standard <- fake_lbk()
+  expected <- sort(names(match_name(standard, fake_ald())))
+
+  expect_equal(actual, expected)
 })
