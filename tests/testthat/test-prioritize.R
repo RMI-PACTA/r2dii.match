@@ -106,6 +106,18 @@ test_that("ignores existing groups", {
   )
 })
 
+test_that("when ignoring existing groups, does not throw a message", {
+  matched <- group_by(fake_matched(other = 1), other)
+
+  capture_msg <- function(expr) {
+    tryCatch(expr, message = function(m) conditionMessage(m))
+  }
+
+  unwanted_msg <- "missing grouping"
+  has_unwanted_msg <-any(grepl(unwanted_msg, capture_msg(prioritize(matched))))
+  expect_false(has_unwanted_msg)
+})
+
 test_that("previous preserves groups", {
   matched <- fake_matched(other_id = 1:4) %>%
     group_by(other_id, score)

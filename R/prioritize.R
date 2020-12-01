@@ -85,20 +85,21 @@ has_zero_rows <- function(data) {
 }
 
 check_duplicated_score1 <- function(data) {
-  is_duplicated <- data %>%
-    filter(.data$score == 1) %>%
-    select(.data$id_loan, .data$level) %>%
-    duplicated()
+  is_dupl <- data %>% filter(.data$score == 1)
+  # The only important side effect of this function if to abort duplicated rows
+  is_dupl <- suppressMessages(select(is_dupl, .data$id_loan, .data$level))
+  is_dupl <- is_dupl %>% duplicated()
 
-  if (!any(is_duplicated)) {
+  if (!any(is_dupl)) {
     return(invisible(data))
   }
 
+  duplicated_rows <- commas(rownames(data)[is_dupl])
   abort(
     class = "duplicated_score1_by_id_loan_by_level",
     message = glue(
       "`data` where `score` is `1` must be unique by `id_loan` by `level`.
-     Duplicated rows: {commas(rownames(data)[is_duplicated])}.
+     Duplicated rows: {duplicated_rows}.
      Have you ensured that only one ald-name per loanbook-name is set to `1`?"
     )
   )
