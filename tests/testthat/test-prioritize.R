@@ -114,7 +114,7 @@ test_that("when ignoring existing groups, does not throw a message", {
   }
 
   unwanted_msg <- "missing grouping"
-  has_unwanted_msg <-any(grepl(unwanted_msg, capture_msg(prioritize(matched))))
+  has_unwanted_msg <- any(grepl(unwanted_msg, capture_msg(prioritize(matched))))
   expect_false(has_unwanted_msg)
 })
 
