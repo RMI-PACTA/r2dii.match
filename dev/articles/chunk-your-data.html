@@ -197,9 +197,9 @@
 <p>The result is one .csv file per chunk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKZHdvU/output/1.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKZHdvU/output/2.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKZHdvU/output/3.csv</span></code></pre></div>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpGRPUrK/output/1.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpGRPUrK/output/2.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpGRPUrK/output/3.csv</span></code></pre></div>
 <p>You can read and combine all files in one step with <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
