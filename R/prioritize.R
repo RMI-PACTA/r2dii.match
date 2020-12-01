@@ -57,7 +57,7 @@
 #'
 #' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
-  if (has_cero_rows(data)) {
+  if (has_zero_rows(data)) {
     return(data)
   }
 
@@ -80,7 +80,7 @@ prioritize <- function(data, priority = NULL) {
   group_by(out, !!!old_groups)
 }
 
-has_cero_rows <- function(data) {
+has_zero_rows <- function(data) {
   !nrow(data) > 0L
 }
 

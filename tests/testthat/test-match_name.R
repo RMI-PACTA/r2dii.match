@@ -137,7 +137,7 @@ test_that("takes unprepared loanbook and ald datasets", {
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
-  # Matches cero row ...
+  # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
   expect_warning(
     out <- match_name(lbk2, ald_demo),
