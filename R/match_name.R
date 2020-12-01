@@ -25,6 +25,7 @@
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   ald.
+#' @param ... Arguments passed on to [stringdist::stringsim()].
 #'
 #' @family main functions
 #'
@@ -69,7 +70,8 @@ match_name <- function(loanbook,
                        min_score = 0.8,
                        method = "jw",
                        p = 0.1,
-                       overwrite = NULL) {
+                       overwrite = NULL,
+                       ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
 
@@ -80,7 +82,8 @@ match_name <- function(loanbook,
     min_score = min_score,
     method = method,
     p = p,
-    overwrite = overwrite
+    overwrite = overwrite,
+    ...
   )
 }
 
@@ -90,7 +93,8 @@ match_name_impl <- function(loanbook,
                             min_score = 0.8,
                             method = "jw",
                             p = 0.1,
-                            overwrite = NULL) {
+                            overwrite = NULL,
+                            ...) {
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
@@ -117,7 +121,7 @@ match_name_impl <- function(loanbook,
     ,
     score := stringdist::stringsim(
       alias_lbk, alias_ald,
-      method = method, p = p
+      method = method, p = p, ...
     )
   ]
   setkey(a, score)

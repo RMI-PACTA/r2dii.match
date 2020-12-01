@@ -137,7 +137,7 @@ test_that("takes unprepared loanbook and ald datasets", {
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
-  # Matches cero row ...
+  # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
   expect_warning(
     out <- match_name(lbk2, ald_demo),
@@ -356,7 +356,6 @@ test_that("warns/errors if some/all system classification is unknown", {
     class = "all_sec_classif_unknown",
     match_name(all_bad_code, fake_ald()),
   )
-
 })
 
 # crucial names -----------------------------------------------------------
@@ -586,6 +585,44 @@ test_that("matches any case of ald$name_company, but preserves original case", {
   expect_equal(nrow(upp), 1L)
   # The original uppercase is preserved
   expect_equal(upp$name_ald, "ALPINE KNITS")
+})
+
+test_that("with arguments passed via ellipsis, throws no error (#310)", {
+  # `q` isn't a formal argument of `match_name()`
+  expect_false(any(grepl("^q$", names(formals(match_name)))))
+
+  # `q` should pass `...` with no error
+  expect_no_error(match_name(fake_lbk(), fake_ald(), method = "qgram", q = 1))
+})
+
+test_that("with arguments passed via ellipsis, outputs the expected score", {
+  lbk <-
+    fake_lbk(name_direct_loantaker = "Yuamen Changyuan Hydropower Co., Ltd.")
+  ald <-
+    fake_ald(name_company = "yiyang baoyuan power generation co., ltd.")
+
+  this_q <- 0.5
+  expected1 <- stringdist::stringsim(
+    to_alias(lbk$name_direct_loantaker),
+    to_alias(ald$name_company),
+    method = "qgram", q = this_q
+  )
+
+  out1 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  expect_equal(unique(out1$score), expected1)
+
+  this_q <- 1
+  expected2 <- stringdist::stringsim(
+    to_alias(lbk$name_direct_loantaker),
+    to_alias(ald$name_company),
+    method = "qgram", q = this_q
+  )
+
+  # Ensure this test does not just duplicate the previous one
+  expect_false(identical(expected1, expected2))
+
+  out2 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  expect_equal(unique(out2$score), expected2)
 })
 
 test_that("with relevant options allows loanbook with reserved columns", {
