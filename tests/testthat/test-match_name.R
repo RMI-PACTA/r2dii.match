@@ -636,3 +636,17 @@ test_that("with relevant options allows loanbook with reserved columns", {
     suppressWarnings(match_name(lbk, fake_ald()))
   )
 })
+
+test_that("with loanbook with reserved columns, doesnt output duplicate cols", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  # Must add both `sector` and `borderline` -- match_name errors with just one
+  lbk <- mutate(fake_lbk(), sector = "power", borderline = FALSE)
+  out_names <- names(match_name(lbk, fake_ald()))
+
+  standard_out_names <- names(match_name(fake_lbk(), fake_ald()))
+
+  expect_equal(setdiff(out_names, standard_out_names), character(0))
+
+})
