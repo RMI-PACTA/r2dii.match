@@ -458,7 +458,8 @@ test_that("works with UP266", {
 
 test_that("with loanbook_demo and ald_demo outputs expected value", {
   skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
-  skip_if(packageVersion("r2dii.data") > "0.1.4", "We expect different output")
+  # TODO: Remove once r2dii.data 0.1.5 is on CRAN
+  skip_if(packageVersion("r2dii.data") <= "0.1.4", "We expect different output")
 
   out <- match_name(loanbook_demo, ald_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
