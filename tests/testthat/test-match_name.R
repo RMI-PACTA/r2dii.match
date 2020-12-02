@@ -636,15 +636,30 @@ test_that("with relevant options allows loanbook with reserved columns", {
   )
 })
 
-test_that("with loanbook with(out) reserved columns, outputs same names", {
+test_that("w/ loanbook w/ reserved cols, outputs sector not i.sector (#330)", {
   restore <- options(r2dii.match.allow_reserved_columns = TRUE)
   on.exit(options(restore), add = TRUE)
 
   reserved <- mutate(fake_lbk(), sector = "power", borderline = FALSE)
-  actual <- sort(names(match_name(reserved, fake_ald())))
+  out <- match_name(reserved, fake_ald())
 
-  standard <- fake_lbk()
-  expected <- sort(names(match_name(standard, fake_ald())))
+  expect_true(utils::hasName(out, "sector"))
+  expect_false(utils::hasName(out, "i.sector"))
+})
 
-  expect_equal(actual, expected)
+test_that("w/ loanbook lacking sector or borderline, errors gracefully (#330)", {
+  restore <- options(r2dii.match.allow_reserved_columns = TRUE)
+  on.exit(options(restore), add = TRUE)
+
+  lacks_borderline <- mutate(fake_lbk(), sector = "power")
+  expect_error(
+    match_name(lacks_borderline, fake_ald()),
+    "Must have both `sector` and `borderline`"
+  )
+
+  lacks_sector <- mutate(fake_lbk(), borderline = TRUE)
+  expect_error(
+    match_name(lacks_sector, fake_ald()),
+    "Must have both `sector` and `borderline`"
+  )
 })
