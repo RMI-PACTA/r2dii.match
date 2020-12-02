@@ -1,22 +1,19 @@
 library(r2dii.data)
 
 test_that("$borderline is of type logical", {
-  expect_is(
+  expect_type(
     add_sector_and_borderline(loanbook_demo)$borderline,
     "logical"
   )
 })
 
-test_that("outputs known output", {
-  expect_known_output(
-    add_sector_and_borderline(loanbook_demo),
-    "ref-add_sector_and_borderline",
-    update = FALSE
-  )
+test_that("outputs expected value", {
+  skip_if(packageVersion("r2dii.data") <= "0.1.4", "We expect different output")
+  expect_snapshot_value(add_sector_and_borderline(loanbook_demo), style = "json2")
 })
 
 test_that("returns a tibble data frame", {
-  expect_is(
+  expect_s3_class(
     add_sector_and_borderline(loanbook_demo),
     "tbl_df"
   )

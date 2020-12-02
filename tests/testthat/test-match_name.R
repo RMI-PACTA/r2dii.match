@@ -209,8 +209,11 @@ test_that("takes `overwrite`", {
 
 test_that("warns overwrite", {
   expect_warning(
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo),
-    "should only.*overwrite"
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+  )
+
+  expect_snapshot(
+    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
   )
 })
 
@@ -345,9 +348,12 @@ test_that("warns/errors if some/all system classification is unknown", {
   bad <- -999
   some_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(35, bad))
 
-  expect_warning(
-    class = "some_sec_classif_unknown",
-    match_name(some_bad_code, fake_ald()),
+  suppressWarnings(
+    # In this expectation, we only care about this specific warning
+    expect_warning(
+      class = "some_sec_classif_unknown",
+      match_name(some_bad_code, fake_ald())
+    )
   )
 
   all_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(bad, bad))
@@ -449,22 +455,16 @@ test_that("works with UP266", {
   prefix <- c(glue("id_{level()}"), glue("name_{level()}"))
   prefix <- paste0(prefix, collapse = "|")
 
-  verify_output(
-    test_path("output", "match_name-up266.txt"),
-    select(out, .data$id_2dii, matches(prefix))
-  )
+  expect_snapshot(select(out, .data$id_2dii, matches(prefix)))
 })
 
-test_that("with loanbook_demo and ald_demo outputs known output", {
+test_that("with loanbook_demo and ald_demo outputs expected value", {
   skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
-  skip_if(packageVersion("r2dii.data") > "0.1.4", "We expect different output")
+  # TODO: Remove once r2dii.data 0.1.5 is on CRAN
+  skip_if(packageVersion("r2dii.data") <= "0.1.4", "We expect different output")
 
   out <- match_name(loanbook_demo, ald_demo)
-  expect_known_value(out, "ref-match-name", update = FALSE)
-
-  # More informative when it fails
-  ref <- readRDS(test_path("ref-match-name"))
-  expect_equal(out, ref)
+  expect_snapshot_value(round_dbl(out), style = "json2")
 })
 
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields

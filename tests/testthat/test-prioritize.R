@@ -106,6 +106,18 @@ test_that("ignores existing groups", {
   )
 })
 
+test_that("when ignoring existing groups, does not throw a message", {
+  matched <- group_by(fake_matched(other = 1), other)
+
+  capture_msg <- function(expr) {
+    tryCatch(expr, message = function(m) conditionMessage(m))
+  }
+
+  unwanted_msg <- "missing grouping"
+  has_unwanted_msg <- any(grepl(unwanted_msg, capture_msg(prioritize(matched))))
+  expect_false(has_unwanted_msg)
+})
+
 test_that("previous preserves groups", {
   matched <- fake_matched(other_id = 1:4) %>%
     group_by(other_id, score)
@@ -199,10 +211,7 @@ test_that("error if score=1 & values by id_loan+level are duplicated (#114)", {
     prioritize(invalid)
   )
 
-  verify_output(
-    test_path("output", "prioritize-duplicated_score1_by_id_loan_by_level.txt"),
-    prioritize(invalid)
-  )
+  expect_snapshot(prioritize(invalid))
 })
 
 test_that("passes if score=1 & values by id_loan are duplicated for distinct
