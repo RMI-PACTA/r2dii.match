@@ -85,10 +85,10 @@ has_zero_rows <- function(data) {
 }
 
 check_duplicated_score1 <- function(data) {
-  duplicated <- filter(data, .data$score == 1)
+  score_1 <- filter(data, .data$score == 1)
   # The only important side effect of this function if to abort duplicated rows
-  duplicated <- suppressMessages(select(duplicated, .data$id_loan, .data$level))
-  duplicated <- duplicated(duplicated)
+  loan_level <- suppressMessages(select(score_1, .data$id_loan, .data$level))
+  duplicated <- duplicated(loan_level)
 
   if (!any(duplicated)) {
     return(invisible(data))
