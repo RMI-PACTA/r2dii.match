@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
       </span>
     </div>
 
@@ -120,7 +120,8 @@
 
       
 
-      </header><script src="chunk-your-data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="chunk-your-data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="chunk-your-data_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="chunk-your-data_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using <code>match_name()</code> with large loanbooks</h1>
@@ -138,8 +139,8 @@
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>This example uses r2dii.match plus a few optional but convenient packages, including <a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a> for example datasets.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># Packages</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Packages</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://fs.r-lib.org">fs</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vroom.r-lib.org">vroom</a></span><span class="op">)</span>
@@ -148,15 +149,15 @@
 
 <span class="co"># Example datasets from the r2dii.data package</span>
 <span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span>
-<span class="va">ald</span> <span class="op">&lt;-</span> <span class="va">ald_demo</span></pre></div>
+<span class="va">ald</span> <span class="op">&lt;-</span> <span class="va">ald_demo</span></code></pre></div>
 <p>If the entire <code>loanbook</code> is too large, feed <code><a href="../reference/match_name.html">match_name()</a></code> with smaller chunks, so that any call to <code><a href="../reference/match_name.html">match_name(this_chunk, ald)</a></code> fits in memory. More chunks take longer to run but use less memory; you’ll need to experiment to find the number of chunks that best works for you.</p>
 <p>Say you try three chunks. You can take the <code>loanbook</code> dataset and then use <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> to add the new column <code>chunk</code>, which assigns each row to one of the <code>chunks</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">chunks</span> <span class="op">&lt;-</span> <span class="fl">3</span>
-<span class="va">chunked</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>chunk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">chunks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chunks</span> <span class="op">&lt;-</span> <span class="fl">3</span>
+<span class="va">chunked</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>chunk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">chunks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The total number of rows in the entire <code>loanbook</code> equals the sum of the rows across chunks.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">loanbook</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">loanbook</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 1</span>
 <span class="co">#&gt;       n</span>
 <span class="co">#&gt;   &lt;int&gt;</span>
@@ -168,15 +169,15 @@
 <span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span>
 <span class="co">#&gt; 1     1   107</span>
 <span class="co">#&gt; 2     2   106</span>
-<span class="co">#&gt; 3     3   107</span></pre></div>
+<span class="co">#&gt; 3     3   107</span></code></pre></div>
 <p>For each chunk you need to repeat this process:</p>
 <ol style="list-style-type: decimal">
 <li>Match this chunk against the entire <code>ald</code> dataset.</li>
 <li>If this chunk matched nothing, move to the next chunk.</li>
 <li>Else, save the result to a .csv file.</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># This "output" directory is temporary; you may use any folder in your computer</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># This "output" directory is temporary; you may use any folder in your computer</span>
 <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"output"</span><span class="op">)</span>
 <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="http://fs.r-lib.org/reference/file_access.html">dir_exists</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="http://fs.r-lib.org/reference/create.html">dir_create</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
 
@@ -191,16 +192,16 @@
   
   <span class="co"># 3. Else, save the result to a .csv file.</span>
   <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html">vroom_write</a></span><span class="op">(</span><span class="va">this_result</span>, <span class="fu"><a href="http://fs.r-lib.org/reference/path.html">path</a></span><span class="op">(</span><span class="va">out</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">i</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span></pre></div>
+<span class="op">}</span></code></pre></div>
 <p>The result is one .csv file per chunk.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpeyD3MG/output/1.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpeyD3MG/output/2.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpeyD3MG/output/3.csv</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpnC8WYd/output/1.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpnC8WYd/output/2.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpnC8WYd/output/3.csv</span></code></pre></div>
 <p>You can read and combine all files in one step with <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom()</a></code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 502</span>
 <span class="co">#&gt; Columns: 29</span>
 <span class="co">#&gt; Delimiter: "\t"</span>
@@ -233,7 +234,7 @@
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, chunk &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   id_2dii &lt;chr&gt;, level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;,</span>
-<span class="co">#&gt; #   name_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></pre></div>
+<span class="co">#&gt; #   name_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
 <p>The <code>matched</code> result should be similar to that of <code><a href="../reference/match_name.html">match_name(loanbook, ald)</a></code>. Your next steps are documented on the <a href="https://2degreesinvesting.github.io/r2dii.match/index.html">Home</a> page and <a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a> sections of the package website.</p>
 </div>
 <div id="anecdote" class="section level2">
