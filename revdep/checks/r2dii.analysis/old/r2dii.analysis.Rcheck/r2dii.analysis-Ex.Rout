@@ -1,5 +1,5 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -437,7 +437,7 @@ detaching ‘package:r2dii.data’, ‘package:r2dii.match’
 
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  6.535 0.068 5.802 0.016 0.003 
+Time elapsed:  8.002 0.132 7.283 0.018 0.004 
 > grDevices::dev.off()
 null device 
           1 

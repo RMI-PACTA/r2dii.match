@@ -1,7 +1,14 @@
 # r2dii.match (development version)
 
+* Avoid failures due to changes in r2dii.data that are expected.
+* Use snapshots via testthat 3e.
+
+# r2dii.match 0.0.6
+
+* `match_names()` gains `...` to pass additional arguments to
+  `stringdist::stringsim()` (@evgeniadimi #310).
 * `prioritize()` with 0-row input now returns the input untouched (#284).
-* Fix `match_name()`:remove dependency on `nest_by()` from dplyr 1.0.0 (#303).
+* Fix `match_name()`: Remove dependency on `nest_by()` from dplyr 1.0.0 (#303).
 
 # r2dii.match 0.0.5
 
