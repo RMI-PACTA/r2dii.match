@@ -1,4 +1,4 @@
-# r2dii.match (development version)
+# r2dii.match 0.0.7
 
 * `match_name()` gains `...` to pass additional arguments to
   `stringdist::stringsim()` (@evgeniadimi #310).
