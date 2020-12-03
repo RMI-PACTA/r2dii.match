@@ -1,5 +1,5 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -19,9 +19,7 @@ Type 'q()' to quit R.
 > library(r2dii.analysis)
 > 
 > test_check("r2dii.analysis")
-══ testthat results  ═══════════════════════════════════════════════════════════
-[ OK: 184 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 0 ]
 > 
 > proc.time()
    user  system elapsed 
-  9.142   0.084   8.866 
+ 11.790   0.114  11.422 

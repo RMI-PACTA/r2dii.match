@@ -1,5 +1,5 @@
 * using log directory ‘/home/mauro/git/r2dii.match/revdep/checks/r2dii.analysis/old/r2dii.analysis.Rcheck’
-* using R version 4.0.2 (2020-06-22)
+* using R version 4.0.3 (2020-10-10)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * using session charset: UTF-8
 * using options ‘--no-manual --no-build-vignettes’
@@ -34,7 +34,9 @@
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
-* checking R code for possible problems ... OK
+* checking R code for possible problems ... NOTE
+Error: package ‘codetools’ was installed before R 4.0.0: please re-install it
+Execution halted
 * checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd cross-references ... OK
@@ -49,4 +51,4 @@
   Running ‘spelling.R’
   Running ‘testthat.R’
 * DONE
-Status: OK
+Status: 1 NOTE
