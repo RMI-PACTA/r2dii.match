@@ -172,7 +172,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">match_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span>
 <span class="va">match_result</span> 
-<span class="co">#&gt; # A tibble: 502 x 28</span>
+<span class="co">#&gt; # A tibble: 408 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -185,7 +185,7 @@
 <span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
 <span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 492 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 398 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -203,7 +203,7 @@
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">match_result</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 267 x 28</span>
+<span class="co">#&gt; # A tibble: 217 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -216,7 +216,7 @@
 <span class="co">#&gt;  8 L25     C281             Ypf Sa           &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L26     C280             Ypf Energia Ele… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; 10 L27     C278             Younicos Ag      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 257 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 207 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
