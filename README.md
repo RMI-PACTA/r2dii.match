@@ -45,7 +45,7 @@ Matching is achieved in two main steps:
 ``` r
 match_result <- match_name(loanbook_demo, ald_demo)
 match_result 
-#> # A tibble: 502 x 28
+#> # A tibble: 408 x 28
 #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
 #>  1 L1      C294             Yuamen Xinneng … <NA>             <NA>            
@@ -58,7 +58,7 @@ match_result
 #>  8 L8      C303             Yueyang City Co… <NA>             <NA>            
 #>  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
 #> 10 L10     C302             Yuexi County AA… <NA>             <NA>            
-#> # … with 492 more rows, and 23 more variables: id_ultimate_parent <chr>,
+#> # … with 398 more rows, and 23 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -78,7 +78,7 @@ Once validated, the `prioritize()` function, will choose only the valid matches,
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 267 x 28
+#> # A tibble: 217 x 28
 #>    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>            <chr>            <chr>            <chr>           
 #>  1 L6      C304             Yukon Developme… <NA>             <NA>            
@@ -91,7 +91,7 @@ prioritize(match_result)
 #>  8 L25     C281             Ypf Sa           <NA>             <NA>            
 #>  9 L26     C280             Ypf Energia Ele… <NA>             <NA>            
 #> 10 L27     C278             Younicos Ag      <NA>             <NA>            
-#> # … with 257 more rows, and 23 more variables: id_ultimate_parent <chr>,
+#> # … with 207 more rows, and 23 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
