@@ -1,16 +1,16 @@
 # Platform
 
-|field    |value                        |
-|:--------|:----------------------------|
-|version  |R version 4.0.3 (2020-10-10) |
-|os       |Ubuntu 18.04.5 LTS           |
-|system   |x86_64, linux-gnu            |
-|ui       |RStudio                      |
-|language |en_US:en                     |
-|collate  |en_US.UTF-8                  |
-|ctype    |en_US.UTF-8                  |
-|tz       |America/Monterrey            |
-|date     |2020-12-02                   |
+|field    |value                          |
+|:--------|:------------------------------|
+|version  |R version 4.0.3 (2020-10-10)   |
+|os       |Ubuntu 18.04.5 LTS             |
+|system   |x86_64, linux-gnu              |
+|ui       |X11                            |
+|language |en_US:en                       |
+|collate  |en_US.UTF-8                    |
+|ctype    |en_US.UTF-8                    |
+|tz       |America/Argentina/Buenos_Aires |
+|date     |2020-12-22                     |
 
 # Dependencies
 
