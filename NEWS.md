@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* Maintenance release.
+
 # r2dii.match 0.0.7
 
 * `match_name()` gains `...` to pass additional arguments to
