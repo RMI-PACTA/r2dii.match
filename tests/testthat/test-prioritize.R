@@ -210,8 +210,6 @@ test_that("error if score=1 & values by id_loan+level are duplicated (#114)", {
     class = "duplicated_score1_by_id_loan_by_level",
     prioritize(invalid)
   )
-
-  expect_snapshot(prioritize(invalid))
 })
 
 test_that("passes if score=1 & values by id_loan are duplicated for distinct
