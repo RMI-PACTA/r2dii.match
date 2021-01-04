@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.8</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
 </li>
 <li>
   <a href="https://github.com/2DegreesInvesting/r2dii.match">
-    <span class="fa fa-github"></span>
+    <span class="fas fa-github"></span>
      
   </a>
 </li>
@@ -120,8 +120,7 @@
 
       
 
-      </header><script src="matching-coverage_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="matching-coverage_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="matching-coverage_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="matching-coverage_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating Matching Coverage</h1>
@@ -146,7 +145,7 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></code></pre></div>
 <p>We will use example datasets from <code>r2dii.data</code>. To demonstrate our point, we create a <code>loanbook</code> dataset with two mismatching loans:</p>
