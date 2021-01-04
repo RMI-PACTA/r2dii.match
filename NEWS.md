@@ -1,4 +1,4 @@
-# r2dii.match (development version)
+# r2dii.match 0.0.8
 
 * Maintenance release.
 
