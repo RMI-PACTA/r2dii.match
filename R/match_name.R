@@ -100,16 +100,7 @@ match_name_impl <- function(loanbook,
 
   if (!allow_reserved_columns()) abort_reserved_column(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
-
-  col <- "id_loan"
-  if (has_name(loanbook, col)) {
-    duplicated_id <- anyDuplicated(loanbook[[col]])
-    duplicated <- duplicated_id > 0
-    if (duplicated) {
-      msg <- glue("`loanbook` must have unique values of `{col}`.")
-      abort(msg, class = "duplicated_id_loan")
-    }
-  }
+  abort_if_duplicated_id_loan(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
   prep_ald <- restructure_ald(ald)
@@ -192,6 +183,22 @@ abort_reserved_column <- function(data) {
   }
 
   invisible(data)
+}
+
+abort_if_duplicated_id_loan <- function(loanbook) {
+  col <- "id_loan"
+
+  if (has_name(loanbook, col)) {
+    duplicated_id <- anyDuplicated(loanbook[[col]])
+    duplicated <- duplicated_id > 0
+
+    if (duplicated) {
+      msg <- glue("`loanbook` must have unique values of `{col}`.")
+      abort(msg, class = "duplicated_id_loan")
+    }
+  }
+
+  invisible(loanbook)
 }
 
 empty_loanbook_tibble <- function(loanbook, old_groups) {
