@@ -198,5 +198,5 @@
 # errors if any id_loan is duplicated (#349)
 
       All values of `id_loan` in a `loanbook` must be unique.
-      First duplicated value: `1`
+      Duplicated value: `1`
 

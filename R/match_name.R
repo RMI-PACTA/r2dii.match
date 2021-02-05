@@ -193,11 +193,13 @@ abort_if_duplicated_id_loan <- function(loanbook) {
     dupl <- anyDuplicated(x)
 
     if (dupl > 0L) {
+      first <- x[[dupl]]
+
       abort(
         class = "duplicated_id_loan",
         glue("
           All values of `{column}` in a `loanbook` must be unique.
-          First duplicated value: `{x[[dupl]]}`
+          Duplicated value: `{first}`
         ")
       )
     }
