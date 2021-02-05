@@ -669,8 +669,6 @@ test_that("errors if any id_loan is duplicated (#349)", {
   lbk <- fake_lbk(id_loan = duplicated)
   ald <- fake_ald()
 
-  expect_error(
-    class = "duplicated_id_loan",
-    expect_snapshot(match_name(lbk, ald))
-  )
+  expect_snapshot_error(match_name(lbk, ald))
+  expect_error(class = "duplicated_id_loan", match_name(lbk, ald))
 })
