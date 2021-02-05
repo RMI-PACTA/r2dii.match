@@ -189,11 +189,15 @@ abort_if_duplicated_id_loan <- function(loanbook) {
   col <- "id_loan"
 
   if (has_name(loanbook, col)) {
-    duplicated_id <- anyDuplicated(loanbook[[col]])
-    duplicated <- duplicated_id > 0
+    dupl <- loanbook[[col]]
+    dupl_id <- anyDuplicated(dupl)
 
-    if (duplicated) {
-      msg <- glue("`loanbook` must have unique values of `{col}`.")
+    if (dupl_id > 0L) {
+      dupl_val <- dupl[[dupl_id]]
+      msg <- glue("
+        In `loanbook`, the column `{col}` must have no duplicated values.
+        Do you need to remove duplicates values (e.g. `{dupl_val}`)?
+      ")
       abort(msg, class = "duplicated_id_loan")
     }
   }
