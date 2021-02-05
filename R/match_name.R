@@ -186,19 +186,20 @@ abort_reserved_column <- function(data) {
 }
 
 abort_if_duplicated_id_loan <- function(loanbook) {
-  col <- "id_loan"
+  column <- "id_loan"
 
-  if (has_name(loanbook, col)) {
-    dupl <- loanbook[[col]]
-    dupl_id <- anyDuplicated(dupl)
+  if (has_name(loanbook, column)) {
+    x <- loanbook[[column]]
+    dupl <- anyDuplicated(x)
 
-    if (dupl_id > 0L) {
-      dupl_val <- dupl[[dupl_id]]
-      msg <- glue("
-        All values of `{col}` in a `loanbook` must be unique.
-        First duplicated value: `{dupl_val}`
-      ")
-      abort(msg, class = "duplicated_id_loan")
+    if (dupl > 0L) {
+      abort(
+        class = "duplicated_id_loan",
+        glue("
+          All values of `{column}` in a `loanbook` must be unique.
+          First duplicated value: `{x[[dupl]]}`
+        ")
+      )
     }
   }
 
