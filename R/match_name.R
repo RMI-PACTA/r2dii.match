@@ -98,9 +98,9 @@ match_name_impl <- function(loanbook,
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
+  abort_if_duplicated_id_loan(loanbook)
   if (!allow_reserved_columns()) abort_reserved_column(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
-  abort_if_duplicated_id_loan(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
   prep_ald <- restructure_ald(ald)
