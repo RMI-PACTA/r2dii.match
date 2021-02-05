@@ -199,7 +199,7 @@ abort_if_duplicated_id_loan <- function(loanbook) {
         class = "duplicated_id_loan",
         glue("
           All values of `{column}` in a `loanbook` must be unique.
-          Duplicated value: `{first}`
+          Do you need to remove duplicated values (e.g. `{first}`)?
         ")
       )
     }
