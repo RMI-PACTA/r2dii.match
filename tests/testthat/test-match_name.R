@@ -663,3 +663,11 @@ test_that("w/ loanbook lacking sector or borderline, errors gracefully (#330)", 
     "Must have both `sector` and `borderline`"
   )
 })
+
+test_that("errors if any id_loan is duplicated (#349)", {
+  duplicated <- rep.int(1, times = 2)
+  lbk <- fake_lbk(id_loan = duplicated)
+  ald <- fake_ald()
+
+  expect_error(class = "duplicated_id_loan", match_name(lbk, ald))
+})
