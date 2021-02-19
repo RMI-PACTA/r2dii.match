@@ -216,16 +216,14 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">matched</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></code></pre></div>
+  <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">matched</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <p>To calculate the total, in-scope, loanbook coverage:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sector</span> <span class="op">!=</span> <span class="st">"not in scope"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">matched</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` ungrouping output (override with `.groups` argument)</span></code></pre></div>
+  <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">matched</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div id="break-down-by-sector" class="section level3">
@@ -236,7 +234,7 @@
 <code class="sourceCode R"><span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="va">sector</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'matched' (override with `.groups` argument)</span></code></pre></div>
+<span class="co">#&gt; `summarise()` has grouped output by 'matched'. You can override using the `.groups` argument.</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>Or even further, by matching level:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -250,7 +248,7 @@
   <span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">dollar_value</span><span class="op">(</span><span class="va">sector</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">loan_size_outstanding</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'matched' (override with `.groups` argument)</span></code></pre></div>
+<span class="co">#&gt; `summarise()` has grouped output by 'matched'. You can override using the `.groups` argument.</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div id="count-the-number-of-companies" class="section level3">
@@ -261,7 +259,7 @@
 <code class="sourceCode R"><span class="va">companies_matched</span> <span class="op">&lt;-</span> <span class="va">coverage</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">matched</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>no_companies <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">name_direct_loantaker</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; `summarise()` regrouping output by 'sector' (override with `.groups` argument)</span>
+<span class="co">#&gt; `summarise()` has grouped output by 'sector'. You can override using the `.groups` argument.</span>
 
 <span class="va">companies_matched</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">no_companies</span><span class="op">)</span></code></pre></div>

@@ -161,14 +161,14 @@
 <span class="co">#&gt; # A tibble: 1 x 1</span>
 <span class="co">#&gt;       n</span>
 <span class="co">#&gt;   &lt;int&gt;</span>
-<span class="co">#&gt; 1   320</span>
+<span class="co">#&gt; 1   321</span>
 
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 2</span>
 <span class="co">#&gt;   chunk     n</span>
-<span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span>
+<span class="co">#&gt; * &lt;int&gt; &lt;int&gt;</span>
 <span class="co">#&gt; 1     1   107</span>
-<span class="co">#&gt; 2     2   106</span>
+<span class="co">#&gt; 2     2   107</span>
 <span class="co">#&gt; 3     3   107</span></code></pre></div>
 <p>For each chunk you need to repeat this process:</p>
 <ol style="list-style-type: decimal">
@@ -196,13 +196,13 @@
 <p>The result is one .csv file per chunk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpxIM0XD/output/1.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpxIM0XD/output/2.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpxIM0XD/output/3.csv</span></code></pre></div>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKYJIRi/output/1.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKYJIRi/output/2.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKYJIRi/output/3.csv</span></code></pre></div>
 <p>You can read and combine all files in one step with <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 408</span>
+<span class="co">#&gt; Rows: 410</span>
 <span class="co">#&gt; Columns: 29</span>
 <span class="co">#&gt; Delimiter: "\t"</span>
 <span class="co">#&gt; chr [20]: id_loan, id_direct_loantaker, name_direct_loantaker, id_intermediate_parent_1, n...</span>
@@ -212,7 +212,7 @@
 <span class="co">#&gt; Use `spec()` to retrieve the guessed column specification</span>
 <span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
 <span class="va">matched</span>
-<span class="co">#&gt; # A tibble: 408 x 29</span>
+<span class="co">#&gt; # A tibble: 410 x 29</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -225,7 +225,7 @@
 <span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
 <span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 398 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 400 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>

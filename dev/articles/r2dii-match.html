@@ -152,11 +152,11 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sector_classifications</span><span class="op">$</span><span class="va">code_system</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "CNB"   "GICS"  "ISIC"  "NACE"  "NAICS" "SIC"</span></code></pre></div>
+<span class="co">#&gt; [1] "CNB"   "GICS"  "ISIC"  "NACE"  "NAICS" "PSIC"  "SIC"</span></code></pre></div>
 <p>If you would like to use a different classification system, please raise an issue in <a href="https://github.com/2DegreesInvesting/r2dii.data">r2dii.data</a> and we can incorporate it.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">loanbook_demo</span>
-<span class="co">#&gt; # A tibble: 320 x 19</span>
+<span class="co">#&gt; # A tibble: 321 x 19</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -169,7 +169,7 @@
 <span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
 <span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 311 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -179,7 +179,7 @@
 <span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</span>
 
 <span class="va">ald_demo</span>
-<span class="co">#&gt; # A tibble: 17,368 x 13</span>
+<span class="co">#&gt; # A tibble: 17,468 x 13</span>
 <span class="co">#&gt;    name_company sector technology production_unit  year production</span>
 <span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 aba hydropo… power  hydrocap   MW               2013    133340.</span>
@@ -192,7 +192,7 @@
 <span class="co">#&gt;  8 aba hydropo… power  hydrocap   MW               2020    121032.</span>
 <span class="co">#&gt;  9 aba hydropo… power  hydrocap   MW               2021    119274.</span>
 <span class="co">#&gt; 10 aba hydropo… power  hydrocap   MW               2022    117515.</span>
-<span class="co">#&gt; # … with 17,358 more rows, and 7 more variables: emission_factor &lt;dbl&gt;,</span>
+<span class="co">#&gt; # … with 17,458 more rows, and 7 more variables: emission_factor &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, is_ultimate_owner &lt;lgl&gt;,</span>
 <span class="co">#&gt; #   is_ultimate_listed_owner &lt;lgl&gt;, ald_timestamp &lt;chr&gt;,</span>
 <span class="co">#&gt; #   ald_emission_factor_unit &lt;chr&gt;</span></code></pre></div>
@@ -237,7 +237,7 @@
 <p>The similarity is then scored between the internally-transformed names of the loanbook against the ald. (For more information on the scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html">stringdist::stringsim()</a></code>).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_ald</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 408 x 28</span>
+<span class="co">#&gt; # A tibble: 410 x 28</span>
 <span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -250,7 +250,7 @@
 <span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
 <span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 398 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
+<span class="co">#&gt; # … with 400 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
@@ -264,12 +264,12 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_ald</span>, by_sector <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] 673</span>
+<span class="co">#&gt; [1] 675</span>
 
 <span class="co"># Compare</span>
 <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_ald</span>, by_sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] 408</span></code></pre></div>
+<span class="co">#&gt; [1] 410</span></code></pre></div>
 <p><code>min_score</code> allows you to minimum threshold <code>score</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_ald</span>, min_score <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span>
@@ -341,7 +341,7 @@
 <span class="va">valid_matches</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">some_interesting_columns</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 217 x 3</span>
+<span class="co">#&gt; # A tibble: 218 x 3</span>
 <span class="co">#&gt;    id_2dii level            score</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 DL294   direct_loantaker     1</span>
@@ -354,7 +354,7 @@
 <span class="co">#&gt;  8 DL282   direct_loantaker     1</span>
 <span class="co">#&gt;  9 DL281   direct_loantaker     1</span>
 <span class="co">#&gt; 10 DL280   direct_loantaker     1</span>
-<span class="co">#&gt; # … with 207 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 208 more rows</span></code></pre></div>
 <p>By default, highest priority refers to the most granular match (<code>direct_loantaker</code>). The default priority is set internally via <code>prioritize_levels()</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/prioritize_level.html">prioritize_level</a></span><span class="op">(</span><span class="va">matched</span><span class="op">)</span>
@@ -364,7 +364,7 @@
 <code class="sourceCode R"><span class="va">matched</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span>priority <span class="op">=</span> <span class="va">rev</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="op">!</span><span class="va">some_interesting_columns</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 217 x 3</span>
+<span class="co">#&gt; # A tibble: 218 x 3</span>
 <span class="co">#&gt;    id_2dii level           score</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 UP288   ultimate_parent     1</span>
@@ -377,7 +377,7 @@
 <span class="co">#&gt;  8 UP269   ultimate_parent     1</span>
 <span class="co">#&gt;  9 UP69    ultimate_parent     1</span>
 <span class="co">#&gt; 10 UP3     ultimate_parent     1</span>
-<span class="co">#&gt; # … with 207 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 208 more rows</span></code></pre></div>
 </div>
   </div>
 
