@@ -166,7 +166,7 @@
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 2</span>
 <span class="co">#&gt;   chunk     n</span>
-<span class="co">#&gt; * &lt;int&gt; &lt;int&gt;</span>
+<span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span>
 <span class="co">#&gt; 1     1   107</span>
 <span class="co">#&gt; 2     2   107</span>
 <span class="co">#&gt; 3     3   107</span></code></pre></div>
@@ -196,9 +196,9 @@
 <p>The result is one .csv file per chunk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKYJIRi/output/1.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKYJIRi/output/2.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpKYJIRi/output/3.csv</span></code></pre></div>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp4YMTRV/output/1.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp4YMTRV/output/2.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmp4YMTRV/output/3.csv</span></code></pre></div>
 <p>You can read and combine all files in one step with <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
@@ -213,18 +213,18 @@
 <span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
 <span class="va">matched</span>
 <span class="co">#&gt; # A tibble: 410 x 29</span>
-<span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
-<span class="co">#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span>
-<span class="co">#&gt;  4 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span>
-<span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
+<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
+<span class="co">#&gt;  1 L1      C294              Yuamen Xinneng T… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  2 L3      C292              Yuama Ethanol Llc IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  3 L3      C292              Yuama Ethanol Llc IP5              Yuama Inc.      </span>
+<span class="co">#&gt;  4 L5      C305              Yukon Energy Cor… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  5 L5      C305              Yukon Energy Cor… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  6 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  7 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  8 L8      C303              Yueyang City Con… &lt;NA&gt;             &lt;NA&gt;            </span>
+<span class="co">#&gt;  9 L9      C301              Yuedxiu Corp One  IP10             Yuedxiu Group   </span>
+<span class="co">#&gt; 10 L10     C302              Yuexi County AAA… &lt;NA&gt;             &lt;NA&gt;            </span>
 <span class="co">#&gt; # … with 400 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,</span>
 <span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
