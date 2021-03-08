@@ -79,7 +79,7 @@
 #'   code = "3511",
 #'   code_system = "WHATEVER"
 #' )
-#' options(r2dii.match.sector_classifications = own)
+#' old <- options(r2dii.match.sector_classifications = own)
 #'
 #' loanbook <- tibble(
 #'   sector_classification_system = "WHATEVER",
@@ -97,6 +97,9 @@
 #' )
 #'
 #' match_name(loanbook, ald)
+#'
+#' # Cleanup
+#' options(old)
 match_name <- function(loanbook,
                        ald,
                        by_sector = TRUE,

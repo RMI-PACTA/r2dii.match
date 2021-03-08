@@ -113,12 +113,12 @@ match_name(loanbook, ald, min_score = 0.9)
 
 # Use your own `sector_classifications`
 own <- tibble(
-    sector = "power",
-    borderline = FALSE,
-    code = "3511",
-    code_system = "WHATEVER"
-  )
-options(r2dii.match.sector_classifications = own)
+  sector = "power",
+  borderline = FALSE,
+  code = "3511",
+  code_system = "WHATEVER"
+)
+old <- options(r2dii.match.sector_classifications = own)
 
 loanbook <- tibble(
   sector_classification_system = "WHATEVER",
@@ -136,6 +136,9 @@ ald <- tibble(
 )
 
 match_name(loanbook, ald)
+
+# Cleanup
+options(old)
 }
 \seealso{
 Other main functions: 
