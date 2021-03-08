@@ -7,6 +7,12 @@
 #' are assigned. The similarity between aliases in each of the loanbook and ald
 #' datasets is scored using [stringdist::stringsim()].
 #'
+#' @section Package options:
+#' `r2dii.match.sector_classifications`: Allows you to use your own
+#' `sector_classififications` instead of the default. This feature is
+#' experimental and may be dropped and/or become a new argument to
+#' `match_name()`.
+#'e
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
@@ -64,6 +70,32 @@
 #' match_name(loanbook, ald)
 #'
 #' match_name(loanbook, ald, min_score = 0.9)
+#'
+#' # Use your own `sector_classifications`
+#' own <- tibble(
+#'     sector = "power",
+#'     borderline = FALSE,
+#'     code = "3511",
+#'     code_system = "WHATEVER"
+#'   )
+#' options(r2dii.match.sector_classifications = own)
+#'
+#' loanbook <- tibble(
+#'   sector_classification_system = "WHATEVER",
+#'   sector_classification_direct_loantaker = "3511",
+#'   id_ultimate_parent = "UP15",
+#'   name_ultimate_parent = "Alpine Knits India Pvt. Limited",
+#'   id_direct_loantaker = "C294",
+#'   name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd"
+#' )
+#'
+#' ald <- tibble(
+#'   name_company = "alpine knits india pvt. limited",
+#'   sector = "power",
+#'   alias_ald = "alpineknitsindiapvt ltd"
+#' )
+#'
+#' match_name(loanbook, ald)
 match_name <- function(loanbook,
                        ald,
                        by_sector = TRUE,
