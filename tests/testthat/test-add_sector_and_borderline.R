@@ -68,20 +68,3 @@ test_that("outputs no missing value of `borderline`", {
   out <- add_sector_and_borderline(loanbook_demo)
   expect_false(any(is.na(out$borderline)))
 })
-
-test_that("allows custom `sector_classifications` via options()", {
-  loanbook <- fake_lbk(sector_classification_system = "CUSTOM")
-  custom <- tibble::tribble(
-    ~sector, ~borderline,  ~code, ~code_system,
-    "power",        TRUE, "3511",       "ISIC",
-    "custom",       FALSE, "3511",     "CUSTOM"
-  )
-
-  op <- list(r2dii.match.sector_classifications = custom)
-  restore <- options(op)
-  custom <- add_sector_and_borderline(loanbook)
-  options(restore)
-
-  expect_equal(custom$sector, "custom")
-  expect_equal(custom$sector_classification_system, "CUSTOM")
-})

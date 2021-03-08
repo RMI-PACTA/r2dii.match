@@ -672,3 +672,18 @@ test_that("errors if any id_loan is duplicated (#349)", {
   expect_snapshot_error(match_name(lbk, ald))
   expect_error(class = "duplicated_id_loan", match_name(lbk, ald))
 })
+
+test_that("allows custom `sector_classifications` via options() (#354)", {
+  loanbook <- fake_lbk(sector_classification_system = "OWN")
+  ald <- fake_ald()
+  own <- tibble::tribble(
+    ~sector,       ~borderline,  ~code, ~code_system,
+    "power",             FALSE, "3511",        "OWN",
+  )
+
+  # Allow users to inject their own `sector_classifications`
+  old <- options(r2dii.match.sector_classifications = own)
+  out <- match_name(loanbook, ald)
+  expect_equal(nrow(out), 1L)
+  options(old)
+})
