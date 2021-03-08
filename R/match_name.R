@@ -98,6 +98,7 @@ match_name_impl <- function(loanbook,
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
+  abort_if_duplicated_id_loan(loanbook)
   if (!allow_reserved_columns()) abort_reserved_column(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
@@ -182,6 +183,28 @@ abort_reserved_column <- function(data) {
   }
 
   invisible(data)
+}
+
+abort_if_duplicated_id_loan <- function(loanbook) {
+  column <- "id_loan"
+  if (!has_name(loanbook, column)) {
+    return(invisible(loanbook))
+  }
+
+  x <- loanbook[[column]]
+  dupl <- anyDuplicated(x)
+  if (dupl == 0L) {
+    return(invisible(loanbook))
+  }
+
+  first <- x[[dupl]]
+  msg <- glue("
+    All values of `{column}` in a `loanbook` must be unique (`{first}` is not).
+    Please ensure that every loan has a unique identifier.
+  ")
+  abort(msg, class = "duplicated_id_loan")
+
+  invisible(loanbook)
 }
 
 empty_loanbook_tibble <- function(loanbook, old_groups) {
