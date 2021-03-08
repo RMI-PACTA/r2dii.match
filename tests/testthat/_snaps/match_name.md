@@ -200,6 +200,6 @@
 
 # errors if any id_loan is duplicated (#349)
 
-      All values of `id_loan` in a `loanbook` must be unique.
-      Do you need to remove duplicated values (e.g. `1`)?
+      All values of `id_loan` in a `loanbook` must be unique (`1` is not).
+      Please ensure that every loan has a unique identifier.
 
