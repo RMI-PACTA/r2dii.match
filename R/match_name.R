@@ -12,7 +12,7 @@
 #' `sector_classififications` instead of the default. This feature is
 #' experimental and may be dropped and/or become a new argument to
 #' `match_name()`.
-#'e
+#'
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'

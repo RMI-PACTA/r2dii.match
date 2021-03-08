@@ -80,7 +80,6 @@ datasets is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim
 \code{sector_classififications} instead of the default. This feature is
 experimental and may be dropped and/or become a new argument to
 \code{match_name()}.
-e
 }
 
 \section{Assigning aliases}{
