@@ -9,13 +9,15 @@
       which most likely is a mistake.
     Output
       # A tibble: 1 x 15
-        sector_classificatio~ id_ultimate_par~ name_ultimate_parent  id_direct_loanta~
-        <chr>                 <chr>            <chr>                 <chr>            
-      1 NACE                  UP15             Alpine Knits India P~ C294             
-      # ... with 11 more variables: name_direct_loantaker <chr>,
-      #   sector_classification_direct_loantaker <dbl>, id_2dii <chr>, level <chr>,
-      #   sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>, score <dbl>,
-      #   source <chr>, borderline <lgl>
+        sector_classificati~ id_ultimate_par~ name_ultimate_parent
+        <chr>                <chr>            <chr>               
+      1 NACE                 UP15             Alpine Knits India ~
+      # ... with 12 more variables: id_direct_loantaker <chr>,
+      #   name_direct_loantaker <chr>,
+      #   sector_classification_direct_loantaker <dbl>,
+      #   id_2dii <chr>, level <chr>, sector <chr>,
+      #   sector_ald <chr>, name <chr>, name_ald <chr>,
+      #   score <dbl>, source <chr>, borderline <lgl>
 
 # works with UP266
 
@@ -23,12 +25,13 @@
       select(out, .data$id_2dii, matches(prefix))
     Output
       # A tibble: 2 x 7
-        id_2dii id_direct_loanta~ name_direct_loan~ id_intermediate~ name_intermediat~
-        <chr>   <chr>             <chr>             <chr>            <chr>            
-      1 DL1     C38               Glencore Plc      <NA>             <NA>             
-      2 UP1     C38               Glencore Plc      <NA>             <NA>             
-      # ... with 2 more variables: id_ultimate_parent <chr>,
-      #   name_ultimate_parent <chr>
+        id_2dii id_direct_loant~ name_direct_loa~ id_intermediate~
+        <chr>   <chr>            <chr>            <chr>           
+      1 DL1     C38              Glencore Plc     <NA>            
+      2 UP1     C38              Glencore Plc     <NA>            
+      # ... with 3 more variables:
+      #   name_intermediate_parent_1 <chr>,
+      #   id_ultimate_parent <chr>, name_ultimate_parent <chr>
 
 # with loanbook_demo and ald_demo outputs expected value
 
