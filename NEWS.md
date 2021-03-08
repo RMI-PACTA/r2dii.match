@@ -1,5 +1,8 @@
 # r2dii.match (development version)
 
+* `match_name()` now errors if the column `id_loan` of the input loanbook has
+any duplicated value `id_loan` (@georgeharris2deg #349).
+
 # r2dii.match 0.0.8
 
 * Maintenance release.
