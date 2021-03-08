@@ -102,6 +102,7 @@ This function ignores but preserves existing groups.
 
 \examples{
 library(r2dii.data)
+library(tibble)
 
 # Small data for examples
 loanbook <- head(loanbook_demo, 50)
