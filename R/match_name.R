@@ -74,11 +74,11 @@
 #'
 #' # Use your own `sector_classifications`
 #' own <- tibble(
-#'     sector = "power",
-#'     borderline = FALSE,
-#'     code = "3511",
-#'     code_system = "WHATEVER"
-#'   )
+#'   sector = "power",
+#'   borderline = FALSE,
+#'   code = "3511",
+#'   code_system = "WHATEVER"
+#' )
 #' options(r2dii.match.sector_classifications = own)
 #'
 #' loanbook <- tibble(
