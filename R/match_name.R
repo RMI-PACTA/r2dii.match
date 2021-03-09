@@ -73,16 +73,17 @@
 #' match_name(loanbook, ald, min_score = 0.9)
 #'
 #' # Use your own `sector_classifications`
-#' own <- tibble(
+#' your_classifications <- tibble(
 #'   sector = "power",
 #'   borderline = FALSE,
 #'   code = "3511",
-#'   code_system = "WHATEVER"
+#'   code_system = "XYZ"
 #' )
-#' old <- options(r2dii.match.sector_classifications = own)
+#'
+#' restore <- options(r2dii.match.sector_classifications = your_classifications)
 #'
 #' loanbook <- tibble(
-#'   sector_classification_system = "WHATEVER",
+#'   sector_classification_system = "XYZ",
 #'   sector_classification_direct_loantaker = "3511",
 #'   id_ultimate_parent = "UP15",
 #'   name_ultimate_parent = "Alpine Knits India Pvt. Limited",
@@ -99,7 +100,7 @@
 #' match_name(loanbook, ald)
 #'
 #' # Cleanup
-#' options(old)
+#' options(restore)
 match_name <- function(loanbook,
                        ald,
                        by_sector = TRUE,
