@@ -1,5 +1,5 @@
 library(r2dii.data)
-
+# TODO: Instead of `loanbook_demo`, can use fake_lbk() everywhere?
 test_that("$borderline is of type logical", {
   expect_type(
     add_sector_and_borderline(loanbook_demo)$borderline,
