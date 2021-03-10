@@ -447,8 +447,6 @@ test_that("0-row output has expected column type", {
 })
 
 test_that("works with UP266", {
-  skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
-
   up266 <- filter(loanbook_demo, id_ultimate_parent == "UP266")
   out <- match_name(up266, ald_demo)
 
@@ -459,8 +457,6 @@ test_that("works with UP266", {
 })
 
 test_that("with loanbook_demo and ald_demo outputs expected value", {
-  skip_if(on_platform_that_fails_misteriously(), "We don't bother testing")
-
   out <- match_name(loanbook_demo, ald_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
 })
