@@ -1,4 +1,4 @@
-# r2dii.match (development version)
+# r2dii.match 0.0.9
 
 * With `options(r2dii.match.sector_classifications = own)` users can inject
   their `own` `sector_classififications` instead of the default
