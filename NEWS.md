@@ -1,7 +1,14 @@
 # r2dii.match (development version)
 
+* With `options(r2dii.match.sector_classifications = own)` users can inject
+  their `own` `sector_classififications` instead of the default
+  `r2dii.data::sector_classifications`. With this feature, user may or may not
+  choose to request their `sector_classifications` to be added to r2dii.data. 
+  This feature is experimental and may be dropped and/or become a new argument
+  to `match_name()` (#356 @georgeharris2deg @daisy-pacheco)`.
+
 * `match_name()` now errors if the column `id_loan` of the input loanbook has
-any duplicated value `id_loan` (@georgeharris2deg #349).
+  any duplicated value `id_loan` (@georgeharris2deg #349).
 
 # r2dii.match 0.0.8
 

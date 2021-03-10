@@ -1,6 +1,7 @@
 ALD
 Acknowledgements
 BMU
+CMD
 Codecov
 DII
 DII's
@@ -31,7 +32,6 @@ quosure
 readr
 rstudio
 stringdist
-testthat
 tibble
 vctrs
 vintented
