@@ -12,8 +12,7 @@ status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-projec
 [![](https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![Codecov test
 coverage](https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg)](https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master)
-[![R build
-status](https://github.com/2degreesinvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2degreesinvesting/r2dii.match/actions)
+[![R-CMD-check](https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of the software PACTA
@@ -30,9 +29,9 @@ portfolio aligns with climate goals.
 
 Before you install r2dii.match you may want to:
 
--   [Try an rstudio.cloud project with this package already
+  - [Try an rstudio.cloud project with this package already
     installed](https://rstudio.cloud/project/1424833).
--   [Learn how to minimize installation
+  - [Learn how to minimize installation
     errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
 
 When you are ready, install the released version of r2dii.match from
@@ -61,7 +60,7 @@ library(r2dii.match)
 
 Matching is achieved in two main steps:
 
-### 1. Run fuzzy matching
+### 1\. Run fuzzy matching
 
 `match_name()` will extract all unique counterparty names from the
 columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*`
@@ -95,7 +94,7 @@ match_result
 #> #   score <dbl>, source <chr>, borderline <lgl>
 ```
 
-### 2. Prioritize validated matches
+### 2\. Prioritize validated matches
 
 The user should then manually validate the output of \[match\_name()\],
 ensuring that the value of the column `score` is equal to `1` for
