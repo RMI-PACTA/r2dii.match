@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9</span>
       </span>
     </div>
 
@@ -167,9 +167,18 @@
       <small>Source: <a href='https://github.com/2DegreesInvesting/r2dii.match/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="r2diimatch-009" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.9">
+<a href="#r2diimatch-009" class="anchor"></a>r2dii.match 0.0.9<small> 2021-03-10 </small>
+</h1>
+<ul>
+<li><p>With <code><a href="https://rdrr.io/r/base/options.html">options(r2dii.match.sector_classifications = own)</a></code> users can inject their <code>own</code> <code>sector_classififications</code> instead of the default <code><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/sector_classifications.html">r2dii.data::sector_classifications</a></code>. With this feature, user may or may not choose to request their <code>sector_classifications</code> to be added to r2dii.data. This feature is experimental and may be dropped and/or become a new argument to <code><a href="../reference/match_name.html">match_name()</a></code> (<a href='https://github.com/2DegreesInvesting/r2dii.match/issues/356'>#356</a> <a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/daisy-pacheco'>@daisy-pacheco</a>)`.</p></li>
+<li><p><code><a href="../reference/match_name.html">match_name()</a></code> now errors if the column <code>id_loan</code> of the input loanbook has any duplicated value <code>id_loan</code> (<a href='https://github.com/georgeharris2deg'>@georgeharris2deg</a> <a href='https://github.com/2DegreesInvesting/r2dii.match/issues/349'>#349</a>).</p></li>
+</ul>
+</div>
     <div id="r2diimatch-008" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.8">
-<a href="#r2diimatch-008" class="anchor"></a>r2dii.match 0.0.8<small> Unreleased </small>
+<a href="#r2diimatch-008" class="anchor"></a>r2dii.match 0.0.8<small> 2021-01-04 </small>
 </h1>
 <ul>
 <li>Maintenance release.</li>

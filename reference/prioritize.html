@@ -75,7 +75,7 @@ desired match. By default, the highest priority is the most granular match
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9</span>
       </span>
     </div>
 
@@ -210,7 +210,7 @@ priority level is highest.</p>
     <p><strong>How to validate <code>data</code></strong></p>
 <p>Write the output of <code><a href='match_name.html'>match_name()</a></code> into a .csv file with:<div class="r"></p><pre><span class='co'># Writting to current working directory</span>
 <span class='va'>matched</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'>write_csv</span><span class='op'>(</span><span class='st'>"matched.csv"</span><span class='op'>)</span>
+  <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='st'>"matched.csv"</span><span class='op'>)</span>
 </pre><p></div></p>
 <p>Compare, edit, and save the data manually:</p><ul>
 <li><p>Open <em>matched.csv</em> with any spreadsheet editor (Excel, Google
@@ -228,7 +228,7 @@ internal information on the company structure, etc.)</p></li>
 </ul>
 
 <p>Re-read the edited file (validated) with:<div class="r"></p><pre><span class='co'># Reading from current working directory</span>
-<span class='va'>valid_matches</span> <span class='op'>&lt;-</span> <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'>read_csv</span><span class='op'>(</span><span class='st'>"valid_matches.csv"</span><span class='op'>)</span>
+<span class='va'>valid_matches</span> <span class='op'>&lt;-</span> <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"valid_matches.csv"</span><span class='op'>)</span>
 </pre><p></div></p>
     <h2 class="hasAnchor" id="handling-grouped-data"><a class="anchor" href="#handling-grouped-data"></a>Handling grouped data</h2>
 
@@ -263,34 +263,34 @@ internal information on the company structure, etc.)</p></li>
 </div><div class='output co'>#&gt; [1] "direct_loantaker"    "intermediate_parent" "ultimate_parent"    </div><div class='input'>
 <span class='co'># Using default priority</span>
 <span class='fu'>prioritize</span><span class='op'>(</span><span class='va'>matched</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 5</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level              
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
-#&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 aa      direct_loantaker   
-#&gt; </span><span style='color: #555555;'>2</span><span> coal   coal           1 bb      intermediate_parent</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> coal   coal           1 aa      direct_loantaker   
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> coal   coal           1 bb      intermediate_parent</div><div class='input'>
 <span class='co'># Using the reverse of the default priority</span>
 <span class='fu'>prioritize</span><span class='op'>(</span><span class='va'>matched</span>, priority <span class='op'>=</span> <span class='va'>rev</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level          
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 aa      ultimate_parent
-#&gt; </span><span style='color: #555555;'>2</span><span> coal   coal           1 bb      ultimate_parent</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> coal   coal           1 aa      ultimate_parent
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> coal   coal           1 bb      ultimate_parent</div><div class='input'>
 <span class='co'># Same</span>
 <span class='fu'>prioritize</span><span class='op'>(</span><span class='va'>matched</span>, priority <span class='op'>=</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/rev.html'>rev</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level          
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 aa      ultimate_parent
-#&gt; </span><span style='color: #555555;'>2</span><span> coal   coal           1 bb      ultimate_parent</div><div class='input'>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> coal   coal           1 aa      ultimate_parent
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> coal   coal           1 bb      ultimate_parent</div><div class='input'>
 <span class='co'># Using a custom priority</span>
 <span class='va'>bad_idea</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"intermediate_parent"</span>, <span class='st'>"ultimate_parent"</span>, <span class='st'>"direct_loantaker"</span><span class='op'>)</span>
 
 <span class='fu'>prioritize</span><span class='op'>(</span><span class='va'>matched</span>, priority <span class='op'>=</span> <span class='va'>bad_idea</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 5</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 5</span><span>
 #&gt;   sector sector_ald score id_loan level              
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              
-#&gt; </span><span style='color: #555555;'>1</span><span> coal   coal           1 bb      intermediate_parent
-#&gt; </span><span style='color: #555555;'>2</span><span> coal   coal           1 aa      ultimate_parent    </div></span></pre>
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>              
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> coal   coal           1 bb      intermediate_parent
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> coal   coal           1 aa      ultimate_parent    </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
