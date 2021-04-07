@@ -121,7 +121,7 @@
 
       
 
-      </header><script src="r2dii-match_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="r2dii-match_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to r2dii.match</h1>
@@ -203,10 +203,10 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Writting to current working directory </span>
 <span class="va">loanbook_demo</span> <span class="op">%&gt;%</span> 
-  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"loanbook_demo.csv"</span><span class="op">)</span>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu">write_csv</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"loanbook_demo.csv"</span><span class="op">)</span>
 
 <span class="va">ald_demo</span> <span class="op">%&gt;%</span> 
-  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"ald_demo.csv"</span><span class="op">)</span></code></pre></div>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu">write_csv</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"ald_demo.csv"</span><span class="op">)</span></code></pre></div>
 <ul>
 <li>For each dataset, replace our demo data with your data.</li>
 <li>Save each dataset as, for example, <em>your_loanbook.csv</em> and <em>your_ald.csv</em>.</li>
@@ -214,8 +214,8 @@
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Reading from current working directory </span>
-<span class="va">your_loanbook</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"your_loanbook.csv"</span><span class="op">)</span>
-<span class="va">your_ald</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"your_ald.csv"</span><span class="op">)</span></code></pre></div>
+<span class="va">your_loanbook</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="st">"your_loanbook.csv"</span><span class="op">)</span>
+<span class="va">your_ald</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="st">"your_ald.csv"</span><span class="op">)</span></code></pre></div>
 <p>Here we continue to use the <code>*_demo</code> datasets, pretending they contain the data of your own.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># WARNING: Skip this to avoid overwriting your data with our demo data</span>
@@ -310,7 +310,7 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Writting to current working directory</span>
 <span class="va">matched</span> <span class="op">%&gt;%</span>
-  <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="st">"matched.csv"</span><span class="op">)</span></code></pre></div>
+  <span class="fu">readr</span><span class="fu">::</span><span class="fu">write_csv</span><span class="op">(</span><span class="st">"matched.csv"</span><span class="op">)</span></code></pre></div>
 <p>Compare, edit, and save the data manually:</p>
 <ul>
 <li>Open <em>matched.csv</em> with any spreadsheet editor (Excel, Google Sheets, etc.).</li>
@@ -326,7 +326,7 @@
 <p>Re-read the edited file (validated) with:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Reading from current working directory</span>
-<span class="va">valid_matches</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"valid_matches.csv"</span><span class="op">)</span></code></pre></div>
+<span class="va">valid_matches</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="st">"valid_matches.csv"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="prioritize-validated-matches-by-level" class="section level2">
 <h2 class="hasAnchor">
