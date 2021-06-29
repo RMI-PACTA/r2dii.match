@@ -457,6 +457,7 @@ test_that("works with UP266", {
 })
 
 test_that("with loanbook_demo and ald_demo outputs expected value", {
+  skip_on_ci()
   out <- match_name(loanbook_demo, ald_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
 })
