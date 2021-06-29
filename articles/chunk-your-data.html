@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.10</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@
 </li>
 <li>
   <a href="https://github.com/2DegreesInvesting/r2dii.match">
-    <span class="fas fa-github"></span>
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -120,7 +120,7 @@
 
       
 
-      </header><script src="chunk-your-data_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="chunk-your-data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using <code>match_name()</code> with large loanbooks</h1>
@@ -195,20 +195,21 @@
 <p>The result is one .csv file per chunk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; /tmp/RtmpzFOSJe/output/1.csv /tmp/RtmpzFOSJe/output/2.csv </span>
-<span class="co">#&gt; /tmp/RtmpzFOSJe/output/3.csv</span></code></pre></div>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpBTyfc8/output/1.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpBTyfc8/output/2.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpBTyfc8/output/3.csv</span></code></pre></div>
 <p>You can read and combine all files in one step with <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 410</span>
-<span class="co">#&gt; Columns: 29</span>
+<span class="co">#&gt; Rows: 410 Columns: 29</span>
+<span class="co">#&gt; ── Column specification ────────────────────────────────────────────────────────</span>
 <span class="co">#&gt; Delimiter: "\t"</span>
-<span class="co">#&gt; chr [20]: id_loan, id_direct_loantaker, name_direct_loantaker, id_intermediate_parent_1, n...</span>
-<span class="co">#&gt; dbl [ 5]: loan_size_outstanding, loan_size_credit_limit, sector_classification_direct_loan...</span>
-<span class="co">#&gt; lgl [ 4]: name_project, lei_direct_loantaker, isin_direct_loantaker, borderline</span>
+<span class="co">#&gt; chr (20): id_loan, id_direct_loantaker, name_direct_loantaker, id_intermedia...</span>
+<span class="co">#&gt; dbl  (5): loan_size_outstanding, loan_size_credit_limit, sector_classificati...</span>
+<span class="co">#&gt; lgl  (4): name_project, lei_direct_loantaker, isin_direct_loantaker, borderline</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Use `spec()` to retrieve the guessed column specification</span>
-<span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
+<span class="co">#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.</span>
+<span class="co">#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="va">matched</span>
 <span class="co">#&gt; # A tibble: 410 x 29</span>
 <span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
