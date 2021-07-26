@@ -25,12 +25,9 @@ same \code{sector}?}
 \item{min_score}{A number between 0-1, to set the minimum \code{score} threshold.
 A \code{score} of 1 is a perfect match.}
 
-\item{method}{Method for distance calculation. One of \code{c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")}. See
-\link[stringdist:stringdist-metrics]{stringdist::stringdist-metrics}.}
+\item{method}{Method for distance calculation. One of \code{c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")}.}
 
-\item{p}{Prefix factor for Jaro-Winkler distance. The valid range for 
-\code{p} is \code{0 <= p <= 0.25}. If \code{p=0} (default), the
-Jaro-distance is returned. Applies only to \code{method='jw'}.}
+\item{p}{Passed on to \code{stringdist::stringdist()}.}
 
 \item{overwrite}{A data frame used to overwrite the \code{sector} and/or \code{name}
 columns of a particular direct loantaker or ultimate parent. To overwrite
@@ -38,7 +35,7 @@ only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to
 ald.}
 
-\item{...}{Arguments passed on to \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.}
+\item{...}{Arguments passed on to \code{stringdist::stringsim()}.}
 }
 \value{
 A data frame with the same groups (if any) and columns as \code{loanbook},
@@ -72,7 +69,7 @@ can be \code{name_direct_loantaker}, \verb{name_intermediate_parent*} and
 \code{name_ultimate_parent}) with names in an asset-level dataset (column
 \code{name_company}). The raw names are first internally transformed, and aliases
 are assigned. The similarity between aliases in each of the loanbook and ald
-datasets is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
+datasets is scored using \code{stringdist::stringsim()}.
 }
 \section{Package options}{
 

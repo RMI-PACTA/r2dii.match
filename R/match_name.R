@@ -5,7 +5,7 @@
 #' `name_ultimate_parent`) with names in an asset-level dataset (column
 #' `name_company`). The raw names are first internally transformed, and aliases
 #' are assigned. The similarity between aliases in each of the loanbook and ald
-#' datasets is scored using [stringdist::stringsim()].
+#' datasets is scored using `stringdist::stringsim()`.
 #'
 #' @section Package options:
 #' `r2dii.match.sector_classifications`: Allows you to use your own
@@ -23,15 +23,14 @@
 #' @param min_score A number between 0-1, to set the minimum `score` threshold.
 #'   A `score` of 1 is a perfect match.
 #' @param method Method for distance calculation. One of `c("osa", "lv", "dl",
-#'   "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")`. See
-#'   [stringdist::stringdist-metrics].
-#' @inheritParams stringdist::stringdist
+#'   "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")`.
+#' @param p Passed on to `stringdist::stringdist()`.
 #' @param overwrite A data frame used to overwrite the `sector` and/or `name`
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   ald.
-#' @param ... Arguments passed on to [stringdist::stringsim()].
+#' @param ... Arguments passed on to `stringdist::stringsim()`.
 #'
 #' @family main functions
 #'
