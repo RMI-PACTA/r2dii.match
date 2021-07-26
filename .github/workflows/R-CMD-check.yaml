@@ -72,7 +72,8 @@ jobs:
 
       - name: Install stringdist from GitHub
         run: |
-          pak::pkg_install("markvanderloo/stringdist", subdir = "pkg")
+          install.packages("remotes")
+          remotes::install_github("markvanderloo/stringdist", subdir = "pkg")
         shell: Rscript {0}
 
       - name: Install dependencies
