@@ -70,6 +70,11 @@ jobs:
           pak::pkg_system_requirements("rcmdcheck", execute = TRUE)
         shell: Rscript {0}
 
+      - name: Install stringdist from GitHub
+        run: |
+          pak::pkg_install("markvanderloo/stringdist")
+        shell: Rscript {0}
+
       - name: Install dependencies
         run: |
           pak::local_install_dev_deps(upgrade = TRUE)
