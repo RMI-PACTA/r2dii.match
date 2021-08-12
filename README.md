@@ -27,15 +27,7 @@ portfolio aligns with climate goals.
 
 ## Installation
 
-Before you install r2dii.match you may want to:
-
-  - [Try an rstudio.cloud project with this package already
-    installed](https://rstudio.cloud/project/1424833).
-  - [Learn how to minimize installation
-    errors](https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation).
-
-When you are ready, install the released version of r2dii.match from
-CRAN with:
+Install the released version of r2dii.match from CRAN with:
 
 ``` r
 # install.packages("r2dii.match")
@@ -69,7 +61,7 @@ and run fuzzy matching against all company names in the `ald`:
 ``` r
 match_result <- match_name(loanbook_demo, ald_demo)
 match_result 
-#> # A tibble: 410 x 28
+#> # A tibble: 410 × 28
 #>    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…
 #>    <chr>   <chr>             <chr>             <chr>            <chr>           
 #>  1 L1      C294              Yuamen Xinneng T… <NA>             <NA>            
@@ -88,10 +80,7 @@ match_result
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
 #> #   sector_classification_input_type <chr>,
 #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
-#> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#> #   score <dbl>, source <chr>, borderline <lgl>
+#> #   flag_project_finance_loan <chr>, name_project <lgl>, …
 ```
 
 ### 2\. Prioritize validated matches
@@ -106,7 +95,7 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 217 x 28
+#> # A tibble: 217 × 28
 #>    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…
 #>    <chr>   <chr>             <chr>             <chr>            <chr>           
 #>  1 L6      C304              Yukon Developmen… <NA>             <NA>            
@@ -125,10 +114,7 @@ prioritize(match_result)
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
 #> #   sector_classification_input_type <chr>,
 #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
-#> #   level <chr>, sector <chr>, sector_ald <chr>, name <chr>, name_ald <chr>,
-#> #   score <dbl>, source <chr>, borderline <lgl>
+#> #   flag_project_finance_loan <chr>, name_project <lgl>, …
 ```
 
 The result is a dataset with identical columns to the input loanbook,
