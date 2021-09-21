@@ -42,9 +42,6 @@ navbar:
     - text: "Using `match_name()` with large loanbooks"
       href: articles/chunk-your-data.html
 
-  - text: "News"
-    href: news/index.html
-
   right:
     - text: "Packages"
       menu:
