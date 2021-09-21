@@ -43,7 +43,7 @@ test_that("w/ missing values at all levels outputs 0-row", {
     alias_ald = "any",
   )
 
-  out <- expect_warning(match_name(lbk, ald), "no match")
+  expect_warning(out <- match_name(lbk, ald), "no match")
   expect_equal(nrow(out), 0L)
 })
 
