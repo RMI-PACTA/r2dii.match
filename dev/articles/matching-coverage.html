@@ -260,7 +260,6 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">matched</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>no_companies <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">name_direct_loantaker</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` has grouped output by 'sector'. You can override using the `.groups` argument.</span>
-
 <span class="va">companies_matched</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">no_companies</span><span class="op">)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>

@@ -176,7 +176,6 @@
 <span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
 <span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span>
-
 <span class="va">ald_demo</span>
 <span class="co">#&gt; # A tibble: 17,668 × 14</span>
 <span class="co">#&gt;    company_id name_company      lei      sector technology production_unit  year</span>
@@ -260,7 +259,6 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_ald</span>, by_sector <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; [1] 676</span>
-
 <span class="co"># Compare</span>
 <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_ald</span>, by_sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span>
