@@ -14,7 +14,7 @@ on:
       - main
       - master
 
-name: R-CMD-check
+name: R-CMD-check r2dii-devel
 
 jobs:
   R-CMD-check:
@@ -78,8 +78,8 @@ jobs:
 
       - name: Install devel version of other r2dii packages
         run: |
-          remotes::install_github("2DegreesInvesting/r2dii.data")
-          remotes::install_github("2DegreesInvesting/r2dii.analysis")
+          pak::pkg_install("2DegreesInvesting/r2dii.data")
+          pak::pkg_install("2DegreesInvesting/r2dii.analysis")
         shell: Rscript {0}
 
       - name: Session info
