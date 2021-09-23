@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.11</span>
       </span>
     </div>
 
@@ -74,18 +74,8 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Releases</li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/posts/2020-08-14-r2dii-data-0-1-2-and-r2dii-match-0-0-4-are-now-on-cran/">Version 0.0.4</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.match/news/index.html#r2dii-match-0-0-3-2020-06-30">Version 0.0.3</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/posts/2020-06-05-r2dii-match-0-0-2/">Version 0.0.2</a>
-    </li>
-    <li>
-      <a href="articles/r2dii-match-0-0-1.html">Version 0.0.1</a>
+<li>
+      <a href="https://2degreesinvesting.github.io/#category:r2dii">r2dii blog posts</a>
     </li>
     <li class="divider">
     <li>
@@ -110,6 +100,9 @@
     </li>
     <li>
       <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>
     </li>
   </ul>
 </li>
@@ -141,14 +134,7 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Before you install r2dii.match you may want to:</p>
-<ul>
-<li>
-<a href="https://rstudio.cloud/project/1424833">Try an rstudio.cloud project with this package already installed</a>.</li>
-<li>
-<a href="https://gist.github.com/maurolepore/a0187be9d40aee95a43f20a85f4caed6#installation">Learn how to minimize installation errors</a>.</li>
-</ul>
-<p>When you are ready, install the released version of r2dii.match from CRAN with:</p>
+<p>Install the released version of r2dii.match from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("r2dii.match")</span></code></pre></div>
 <p>Or install the development version of r2dii.match from GitHub with:</p>
@@ -171,7 +157,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">match_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span>
 <span class="va">match_result</span> 
-<span class="co">#&gt; # A tibble: 410 x 28</span>
+<span class="co">#&gt; # A tibble: 410 × 28</span>
 <span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L1      C294              Yuamen Xinneng T… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -190,10 +176,7 @@
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
-<span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
+<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></code></pre></div>
 </div>
 <div id="2-prioritize-validated-matches" class="section level3">
 <h3 class="hasAnchor">
@@ -202,7 +185,7 @@
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">match_result</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 217 x 28</span>
+<span class="co">#&gt; # A tibble: 217 × 28</span>
 <span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -221,10 +204,7 @@
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span>
-<span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span>
-<span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
+<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></code></pre></div>
 <p>The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.</p>
 <p><a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
 </div>

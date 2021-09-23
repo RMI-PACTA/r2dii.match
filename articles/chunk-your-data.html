@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.11</span>
       </span>
     </div>
 
@@ -65,18 +65,8 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Releases</li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/posts/2020-08-14-r2dii-data-0-1-2-and-r2dii-match-0-0-4-are-now-on-cran/">Version 0.0.4</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.match/news/index.html#r2dii-match-0-0-3-2020-06-30">Version 0.0.3</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/posts/2020-06-05-r2dii-match-0-0-2/">Version 0.0.2</a>
-    </li>
-    <li>
-      <a href="../articles/r2dii-match-0-0-1.html">Version 0.0.1</a>
+<li>
+      <a href="https://2degreesinvesting.github.io/#category:r2dii">r2dii blog posts</a>
     </li>
     <li class="divider">
     <li>
@@ -101,6 +91,9 @@
     </li>
     <li>
       <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>
     </li>
   </ul>
 </li>
@@ -157,13 +150,12 @@
 <p>The total number of rows in the entire <code>loanbook</code> equals the sum of the rows across chunks.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">loanbook</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 1</span>
+<span class="co">#&gt; # A tibble: 1 × 1</span>
 <span class="co">#&gt;       n</span>
 <span class="co">#&gt;   &lt;int&gt;</span>
 <span class="co">#&gt; 1   321</span>
-
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 3 x 2</span>
+<span class="co">#&gt; # A tibble: 3 × 2</span>
 <span class="co">#&gt;   chunk     n</span>
 <span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span>
 <span class="co">#&gt; 1     1   107</span>
@@ -195,9 +187,9 @@
 <p>The result is one .csv file per chunk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpBTyfc8/output/1.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpBTyfc8/output/2.csv</span>
-<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpBTyfc8/output/3.csv</span></code></pre></div>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmph1ernh/output/1.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmph1ernh/output/2.csv</span>
+<span class="co">#&gt; /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmph1ernh/output/3.csv</span></code></pre></div>
 <p>You can read and combine all files in one step with <code><a href="https://vroom.r-lib.org/reference/vroom.html">vroom()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html">vroom</a></span><span class="op">(</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_ls.html">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
@@ -211,7 +203,7 @@
 <span class="co">#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.</span>
 <span class="co">#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
 <span class="va">matched</span>
-<span class="co">#&gt; # A tibble: 410 x 29</span>
+<span class="co">#&gt; # A tibble: 410 × 29</span>
 <span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
 <span class="co">#&gt;  1 L1      C294              Yuamen Xinneng T… &lt;NA&gt;             &lt;NA&gt;            </span>
@@ -230,10 +222,7 @@
 <span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
 <span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span>
-<span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, chunk &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   id_2dii &lt;chr&gt;, level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;,</span>
-<span class="co">#&gt; #   name_ald &lt;chr&gt;, score &lt;dbl&gt;, source &lt;chr&gt;, borderline &lt;lgl&gt;</span></code></pre></div>
+<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></code></pre></div>
 <p>The <code>matched</code> result should be similar to that of <code><a href="../reference/match_name.html">match_name(loanbook, ald)</a></code>. Your next steps are documented on the <a href="https://2degreesinvesting.github.io/r2dii.match/index.html">Home</a> page and <a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a> sections of the package website.</p>
 </div>
 <div id="anecdote" class="section level2">

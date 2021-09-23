@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.11</span>
       </span>
     </div>
 
@@ -65,18 +65,8 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-<li class="dropdown-header">Releases</li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/posts/2020-08-14-r2dii-data-0-1-2-and-r2dii-match-0-0-4-are-now-on-cran/">Version 0.0.4</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.match/news/index.html#r2dii-match-0-0-3-2020-06-30">Version 0.0.3</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/posts/2020-06-05-r2dii-match-0-0-2/">Version 0.0.2</a>
-    </li>
-    <li>
-      <a href="../articles/r2dii-match-0-0-1.html">Version 0.0.1</a>
+<li>
+      <a href="https://2degreesinvesting.github.io/#category:r2dii">r2dii blog posts</a>
     </li>
     <li class="divider">
     <li>
@@ -101,6 +91,9 @@
     </li>
     <li>
       <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
+    </li>
+    <li>
+      <a href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>
     </li>
   </ul>
 </li>
@@ -259,7 +252,6 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">matched</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>no_companies <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">name_direct_loantaker</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` has grouped output by 'sector'. You can override using the `.groups` argument.</span>
-
 <span class="va">companies_matched</span> <span class="op">%&gt;%</span> 
   <span class="fu">plot_coverage</span><span class="op">(</span><span class="va">sector</span>, <span class="va">no_companies</span><span class="op">)</span></code></pre></div>
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
@@ -273,7 +265,7 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://github.com/2DegreesInvesting/r2dii.data//reference/sic_classification.html">sic_classification</a></span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">41111</span>, <span class="fl">36200</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 4</span>
+<span class="co">#&gt; # A tibble: 2 × 4</span>
 <span class="co">#&gt;   code  description                                            sector borderline</span>
 <span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;                                                  &lt;chr&gt;  &lt;lgl&gt;     </span>
 <span class="co">#&gt; 1 36200 manufacture of electricity distribution and control a… power  TRUE      </span>
