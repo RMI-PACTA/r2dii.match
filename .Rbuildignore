@@ -17,3 +17,4 @@
 ^docs$
 ^revdep$
 ^CRAN-RELEASE$
+^pkgdown$
