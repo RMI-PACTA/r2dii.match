@@ -1,14 +1,10 @@
 destination: docs
-
 development:
   mode: auto
-
 template:
   params:
     bootswatch: flatly
-
-url: https://github.com/2DegreesInvesting/r2dii.match/
-
+url: https://2degreesinvesting.github.io/r2dii.match
 authors:
   Mauro Lepore:
     href: https://github.com/maurolepore/
@@ -16,62 +12,46 @@ authors:
     href: https://github.com/jdhoffa/
   2 Degrees Investing Initiative:
     href: https://2degrees-investing.org/
-
 home:
   links:
   - text: Learn more
     href: https://2degrees-investing.org/
-
-
-
 navbar:
-
   type: default
-
   left:
-  - text: "Get started"
+  - text: Get started
     href: articles/r2dii-match.html
-
-  - text: "Reference"
+  - text: Reference
     href: reference/index.html
-
-  - text: "Articles"
+  - text: Articles
     menu:
-    - text: "Calculating Matching Coverage"
+    - text: Calculating Matching Coverage
       href: articles/matching-coverage.html
-    - text: "Using `match_name()` with large loanbooks"
+    - text: Using `match_name()` with large loanbooks
       href: articles/chunk-your-data.html
-
-  - text: "News"
+  - text: News
     menu:
-    - text: "r2dii blog posts"
+    - text: r2dii blog posts
       href: https://2degreesinvesting.github.io/#category:r2dii
-    - text: "----------------------"
-    - text: "Change log"
+    - text: '----------------------'
+    - text: Change log
       href: news/index.html
-
   right:
-    - text: "Packages"
-      menu:
-      - text: "r2dii.data"
-        href: https://2degreesinvesting.github.io/r2dii.data
-      - text: "r2dii.match"
-        href: https://2degreesinvesting.github.io/r2dii.match
-      - text: "r2dii.analysis"
-        href: https://2degreesinvesting.github.io/r2dii.analysis
-      - text: "r2dii.plot"
-        href: https://2degreesinvesting.github.io/r2dii.plot
-
-
-    - icon: fa-github
-      href: https://github.com/2DegreesInvesting/r2dii.match
-
+  - text: Packages
+    menu:
+    - text: r2dii.data
+      href: https://2degreesinvesting.github.io/r2dii.data
+    - text: r2dii.match
+      href: https://2degreesinvesting.github.io/r2dii.match
+    - text: r2dii.analysis
+      href: https://2degreesinvesting.github.io/r2dii.analysis
+    - text: r2dii.plot
+      href: https://2degreesinvesting.github.io/r2dii.plot
+  - icon: fa-github
+    href: https://github.com/2DegreesInvesting/r2dii.match
 reference:
+- title: Main functions
+  contents: has_concept("main functions")
+- title: Helper functions
+  contents: has_concept("helpers")
 
-  - title: Main functions
-    contents:
-      - has_concept("main functions")
-
-  - title: Helper functions
-    contents:
-      - has_concept("helpers")
