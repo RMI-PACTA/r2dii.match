@@ -2,16 +2,16 @@ Package: r2dii.match
 Title: Tools to Match Corporate Lending Portfolios with Climate Data
 Version: 0.0.11.9000
 Authors@R: 
-    c(person(given = "Mauro",
-             family = "Lepore",
-             role = c("aut", "cre", "ctr"),
-             email = "maurolepore@gmail.com",
-             comment = c(ORCID = "0000-0002-1986-7988")),
-      person(given = "Jackson",
+    c(person(given = "Jackson",
              family = "Hoffart",
-             role = "aut",
+             role = c("aut", "cre"),
              email = "jackson@2degrees-investing.org",
              comment = c(ORCID = "0000-0002-8600-5042")),
+      person(given = "Mauro",
+             family = "Lepore",
+             role = c("aut", "ctr"),
+             email = "maurolepore@gmail.com",
+             comment = c(ORCID = "0000-0002-1986-7988")),
       person(given = "Klaus",
              family = "Hagedorn",
              role = "aut",
@@ -66,4 +66,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
