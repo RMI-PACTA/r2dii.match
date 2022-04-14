@@ -9,9 +9,9 @@
       which most likely is a mistake.
     Output
       # A tibble: 1 x 15
-        sector_classificati~ id_ultimate_par~ name_ultimate_parent
-        <chr>                <chr>            <chr>               
-      1 NACE                 UP15             Alpine Knits India ~
+        sector_classification_s~ id_ultimate_par~ name_ultimate_p~
+        <chr>                    <chr>            <chr>           
+      1 NACE                     UP15             Alpine Knits In~
       # ... with 12 more variables: id_direct_loantaker <chr>,
       #   name_direct_loantaker <chr>,
       #   sector_classification_direct_loantaker <dbl>,
