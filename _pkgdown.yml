@@ -7,10 +7,10 @@ template:
     bootswatch: flatly
 url: https://2degreesinvesting.github.io/r2dii.match
 authors:
-  Mauro Lepore:
-    href: https://github.com/maurolepore/
   Jackson Hoffart:
     href: https://github.com/jdhoffa/
+  Mauro Lepore:
+    href: https://github.com/maurolepore/
   2 Degrees Investing Initiative:
     href: https://2degrees-investing.org/
 home:

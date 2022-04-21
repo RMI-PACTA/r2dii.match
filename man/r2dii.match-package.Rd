@@ -19,11 +19,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Mauro Lepore \email{maurolepore@gmail.com} (\href{https://orcid.org/0000-0002-1986-7988}{ORCID}) [contractor]
+\strong{Maintainer}: Jackson Hoffart \email{jackson@2degrees-investing.org} (\href{https://orcid.org/0000-0002-8600-5042}{ORCID})
 
 Authors:
 \itemize{
-  \item Jackson Hoffart \email{jackson@2degrees-investing.org} (\href{https://orcid.org/0000-0002-8600-5042}{ORCID})
+  \item Mauro Lepore \email{maurolepore@gmail.com} (\href{https://orcid.org/0000-0002-1986-7988}{ORCID}) [contractor]
   \item Klaus Hagedorn \email{klaus@2degrees-investing.org}
   \item Florence Palandri \email{florence@2degrees-investing.org}
   \item Evgeny Petrovsky
