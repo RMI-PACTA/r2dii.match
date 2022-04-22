@@ -52,7 +52,7 @@ library(r2dii.match)
 
 Matching is achieved in two main steps:
 
-### 1. Run fuzzy matching
+### 1\. Run fuzzy matching
 
 `match_name()` will extract all unique counterparty names from the
 columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*`
@@ -83,9 +83,9 @@ match_result
 #> #   flag_project_finance_loan <chr>, name_project <lgl>, …
 ```
 
-### 2. Prioritize validated matches
+### 2\. Prioritize validated matches
 
-The user should then manually validate the output of \[match_name()\],
+The user should then manually validate the output of \[match\_name()\],
 ensuring that the value of the column `score` is equal to `1` for
 perfect matches only.
 
