@@ -1,11 +1,11 @@
-#' Match a loanbook and asset-level datasets (ald) by the `name_*` columns
+#' Match a loanbook to asset-based company data (abcd) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' can be `name_direct_loantaker`, `name_intermediate_parent*` and
-#' `name_ultimate_parent`) with names in an asset-level dataset (column
+#' `name_ultimate_parent`) with names in an asset-based company data (column
 #' `name_company`). The raw names are first internally transformed, and aliases
-#' are assigned. The similarity between aliases in each of the loanbook and ald
-#' datasets is scored using [stringdist::stringsim()].
+#' are assigned. The similarity between aliases in each of the loanbook and abcd
+#'  is scored using [stringdist::stringsim()].
 #'
 #' @section Package options:
 #' `r2dii.match.sector_classifications`: Allows you to use your own
@@ -16,8 +16,8 @@
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param loanbook,ald data frames structured like [r2dii.data::loanbook_demo]
-#'   and [r2dii.data::ald_demo].
+#' @param loanbook,abcd data frames structured like [r2dii.data::loanbook_demo]
+#'   and [r2dii.data::abcd_demo].
 #' @param by_sector Should names only be compared if companies belong to the
 #'   same `sector`?
 #' @param min_score A number between 0-1, to set the minimum `score` threshold.
@@ -30,8 +30,10 @@
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
-#'   ald.
+#'   abcd.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
+#' @param ald `r lifecycle::badge("superseded")` `ald` has been superseded by
+#'   `abcd`.
 #'
 #' @family main functions
 #'
@@ -42,9 +44,9 @@
 #'   * `level` - the level of granularity that the loan was matched at
 #'   (e.g `direct_loantaker` or `ultimate_parent`)
 #'   * `sector` - the sector of the `loanbook` company
-#'   * `sector_ald` - the sector of the `ald` company
+#'   * `sector_ald` - the sector of the `abcd` company
 #'   * `name` - the name of the `loanbook` company
-#'   * `name_ald` - the name of the `ald` company
+#'   * `name_ald` - the name of the `abcd` company
 #'   * `score` - the score of the match (manually set this to `1`
 #'   prior to calling `prioritize()` to validate the match)
 #'   * `source` - determines the source of the match. (equal to `loanbook`
@@ -66,11 +68,11 @@
 #'
 #' # Small data for examples
 #' loanbook <- head(loanbook_demo, 50)
-#' ald <- head(ald_demo, 50)
+#' abcd <- head(abcd_demo, 50)
 #'
-#' match_name(loanbook, ald)
+#' match_name(loanbook, abcd)
 #'
-#' match_name(loanbook, ald, min_score = 0.9)
+#' match_name(loanbook, abcd, min_score = 0.9)
 #'
 #' # Use your own `sector_classifications`
 #' your_classifications <- tibble(
@@ -91,13 +93,13 @@
 #'   name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd"
 #' )
 #'
-#' ald <- tibble(
+#' abcd <- tibble(
 #'   name_company = "alpine knits india pvt. limited",
 #'   sector = "power",
 #'   alias_ald = "alpineknitsindiapvt ltd"
 #' )
 #'
-#' match_name(loanbook, ald)
+#' match_name(loanbook, abcd)
 #'
 #' # Cleanup
 #' options(restore)
