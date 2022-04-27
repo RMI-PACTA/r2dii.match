@@ -102,19 +102,25 @@
 #' # Cleanup
 #' options(restore)
 match_name <- function(loanbook,
-                       ald,
+                       abcd,
                        by_sector = TRUE,
                        min_score = 0.8,
                        method = "jw",
                        p = 0.1,
                        overwrite = NULL,
+                       ald = deprecated(),
                        ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
 
+  if (lifecycle::is_present(ald)) {
+    lifecycle::deprecate_warn("1.0.0", "match_name(ald)", "match_name(abcd)")
+    abcd <- ald
+  }
+
   match_name_impl(
     loanbook = loanbook,
-    ald = ald,
+    ald = abcd,
     by_sector = by_sector,
     min_score = min_score,
     method = method,
