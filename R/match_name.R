@@ -32,7 +32,7 @@
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   abcd.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
-#' @param ald `r lifecycle::badge("superseded")` `ald` has been superseded by
+#' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
 #'   `abcd`.
 #'
 #' @family main functions
