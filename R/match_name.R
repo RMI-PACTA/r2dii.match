@@ -116,7 +116,11 @@ match_name <- function(loanbook,
   on.exit(options(restore), add = TRUE)
 
   if (lifecycle::is_present(ald)) {
-    lifecycle::deprecate_warn("1.0.0", "match_name(ald)", "match_name(abcd)")
+    lifecycle::deprecate_warn(
+      "0.1.0 (expected July 2022)",
+      "match_name(ald)",
+      "match_name(abcd)"
+      )
     abcd <- ald
   }
 
