@@ -13,11 +13,11 @@ knitr::opts_chunk$set(
 
 ```{r include=FALSE}
 sector_in_scope <- glue::glue_collapse(
-  unique(r2dii.data::ald_demo$sector), sep = ", ", last = ", and "
+  unique(r2dii.data::abcd_demo$sector), sep = ", ", last = ", and "
 )
 ```
 
-`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-level dataset. However, matching every loan is unlikely -- some loan-taking companies may be missing from the asset-level dataset, or they may not operate in the sectors 2DII focuses on (`r sector_in_scope`). Thus, you may want to measure how much of the loanbook matched some asset. This article shows two ways to calculate such matching coverage: 
+`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-based company dataset. However, matching every loan is unlikely -- some loan-taking companies may be missing from the asset-based company dataset, or they may not operate in the sectors 2DII focuses on (`r sector_in_scope`). Thus, you may want to measure how much of the loanbook matched some asset. This article shows two ways to calculate such matching coverage: 
 
 (1) Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns).
 
@@ -51,7 +51,7 @@ We will then run the matching algorithm on this loanbook:
 
 ```{r}
 matched <- loanbook %>% 
-    match_name(ald_demo) %>% 
+    match_name(abcd_demo) %>% 
     prioritize()
 ```
 
@@ -173,7 +173,7 @@ companies_matched %>%
 There are a zoo of sector classification code systems out there. Some are 
 granular, some are not. Since we currently cover a particular portion of the 
 supply chain (i.e. production), it is important we try to only match 
-the ALD with companies that are actually active in this portion of the supply 
+the ABCD with companies that are actually active in this portion of the supply 
 chain. 
 
 An issue arises when, for example, a company is classified in the "power 

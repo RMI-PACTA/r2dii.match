@@ -28,10 +28,10 @@ library(r2dii.match)
 
 # Example datasets from the r2dii.data package
 loanbook <- loanbook_demo
-ald <- ald_demo
+abcd <- abcd_demo
 ```
 
-If the entire `loanbook` is too large, feed `match_name()` with smaller chunks, so that any call to `match_name(this_chunk, ald)` fits in memory. More chunks take longer to run but use less memory; you'll need to experiment to find the number of chunks that best works for you. 
+If the entire `loanbook` is too large, feed `match_name()` with smaller chunks, so that any call to `match_name(this_chunk, abcd)` fits in memory. More chunks take longer to run but use less memory; you'll need to experiment to find the number of chunks that best works for you. 
 
 Say you try three chunks. You can take the `loanbook` dataset and then use `mutate()` to add the new column `chunk`, which assigns each row to one of the `chunks`:
 
@@ -50,7 +50,7 @@ count(chunked, chunk)
 
 For each chunk you need to repeat this process:
 
-1. Match this chunk against the entire `ald` dataset.
+1. Match this chunk against the entire `abcd` dataset.
 2. If this chunk matched nothing, move to the next chunk.
 3. Else, save the result to a .csv file.
 
@@ -60,9 +60,9 @@ out <- path(tempdir(), "output")
 if (!dir_exists(out)) dir_create(out)
 
 for (i in unique(chunked$chunk)) {
-  # 1. Match this chunk against the entire `ald` dataset.
+  # 1. Match this chunk against the entire `abcd` dataset.
   this_chunk <- filter(chunked, chunk == i)
-  this_result <- match_name(this_chunk, ald)
+  this_result <- match_name(this_chunk, abcd)
   
   # 2. If this chunk matched nothing, move to the next chunk
   matched_nothing <- nrow(this_result) == 0L
@@ -86,11 +86,11 @@ matched <- vroom(dir_ls(out))
 matched
 ```
 
-The `matched` result should be similar to that of `match_name(loanbook, ald)`. Your next steps are documented on the [Home](https://2degreesinvesting.github.io/r2dii.match/index.html) page and [Get started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html) sections of the package website.
+The `matched` result should be similar to that of `match_name(loanbook, abcd)`. Your next steps are documented on the [Home](https://2degreesinvesting.github.io/r2dii.match/index.html) page and [Get started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html) sections of the package website.
 
 ## Anecdote
 
-I tested `match_name()` with datasets which size (on disk as a .csv file) was 20MB for the `loanbook` dataset and 100MB for the `ald` dataset. Feeding `match_name()` with the entire `loanbook` crashed my R session. But feeding it with a sequence of 30 chunks run in about 25' -- successfully; the combined result had over 10 million rows:
+I tested `match_name()` with datasets which size (on disk as a .csv file) was 20MB for the `loanbook` dataset and 100MB for the `abcd` dataset. Feeding `match_name()` with the entire `loanbook` crashed my R session. But feeding it with a sequence of 30 chunks run in about 25' -- successfully; the combined result had over 10 million rows:
 
 ```
 sector                       data
