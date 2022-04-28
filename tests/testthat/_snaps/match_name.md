@@ -33,7 +33,7 @@
       #   name_intermediate_parent_1 <chr>,
       #   id_ultimate_parent <chr>, name_ultimate_parent <chr>
 
-# with loanbook_demo and ald_demo outputs expected value
+# with loanbook_demo and abcd_demo outputs expected value
 
     {
       "type": "list",

@@ -5,7 +5,7 @@ test_that("w/ full demo datasets throws no error", {
   expect_no_error(
     loanbook_demo %>%
       slice(4:5) %>%
-      match_name(ald_demo) %>%
+      match_name(abcd_demo) %>%
       prioritize(priority = "ultimate_parent")
   )
 })
