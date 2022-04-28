@@ -75,7 +75,7 @@ test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
 test_that("`by_sector = TRUE` yields only matching sectors", {
   out <- match_name(
     fake_lbk(),
-    fake_ald(),
+    fake_abcd(),
     by_sector = TRUE
   ) %>%
     filter(sector != sector_ald)
@@ -92,7 +92,7 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
   expect_warning(
     out <- match_name(
       fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
-      fake_ald(sector = sector_not_power),
+      fake_abcd(sector = sector_not_power),
       by_sector = TRUE
     ),
     "no match"
@@ -122,13 +122,13 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
   if (packageVersion("r2dii.data") > "0.1.4") expected$borderline <- FALSE
 
   expect_equal(
-    match_name(fake_lbk(), fake_ald()),
+    match_name(fake_lbk(), fake_abcd()),
     expected
   )
 })
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
-  out <- match_name(slice(loanbook_demo, 1L), fake_ald())
+  out <- match_name(slice(loanbook_demo, 1L), fake_abcd())
   expect_equal(names(out), expect_names_match_name)
 })
 
@@ -209,11 +209,11 @@ test_that("takes `overwrite`", {
 
 test_that("warns overwrite", {
   expect_warning(
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo)
   )
 
   expect_snapshot(
-    match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+    match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo)
   )
 })
 
@@ -322,7 +322,7 @@ test_that("handles any number of intermediate_parent columns (#84)", {
     sector_classification_direct_loantaker = 3511
   )
 
-  out <- match_name(lbk_mini, fake_ald())
+  out <- match_name(lbk_mini, fake_abcd())
   output_levels <- unique(out$level)
   expect_length(output_levels, 5L)
 
@@ -335,14 +335,14 @@ test_that("warns/errors if some/all system classification is unknown", {
 
   expect_warning(
     class = "some_sec_classif_unknown",
-    match_name(some_bad_system, fake_ald())
+    match_name(some_bad_system, fake_abcd())
   )
 
   all_bad_system <- fake_lbk(sector_classification_system = c("bad", "bad"))
 
   expect_error(
     class = "all_sec_classif_unknown",
-    match_name(all_bad_system, fake_ald())
+    match_name(all_bad_system, fake_abcd())
   )
 
   bad <- -999
@@ -352,7 +352,7 @@ test_that("warns/errors if some/all system classification is unknown", {
     # In this expectation, we only care about this specific warning
     expect_warning(
       class = "some_sec_classif_unknown",
-      match_name(some_bad_code, fake_ald())
+      match_name(some_bad_code, fake_abcd())
     )
   )
 
@@ -360,7 +360,7 @@ test_that("warns/errors if some/all system classification is unknown", {
 
   expect_error(
     class = "all_sec_classif_unknown",
-    match_name(all_bad_code, fake_ald()),
+    match_name(all_bad_code, fake_abcd()),
   )
 })
 
@@ -372,11 +372,11 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
   expect_error_missing_names <- function(lbk = NULL, ald = NULL) {
     expect_error(
       class = "missing_names",
-      match_name(lbk %||% fake_lbk(), ald %||% fake_ald())
+      match_name(lbk %||% fake_lbk(), ald %||% fake_abcd())
     )
   }
 
-  expect_error_missing_names(ald = invalid(fake_ald(), "sector"))
+  expect_error_missing_names(ald = invalid(fake_abcd(), "sector"))
 
   expect_error_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
   expect_error_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
@@ -394,7 +394,7 @@ test_that("w/ loanbook or ald with missing names errors gracefully", {
     match_name(
       # missing name_intermediate_parent (doesn't come with fake_lbk())
       fake_lbk(id_intermediate_parent = id_direct_loantaker),
-      fake_ald()
+      fake_abcd()
     )
   )
 })
@@ -405,7 +405,7 @@ test_that("w/ lbk with name_intermediate_* but missing id_intermediate_*", {
       class = "has_name_but_not_id",
       # missing id_intermediate_parent (doesn't come with fake_lbk())
       fake_lbk(name_intermediate_parent = name_direct_loantaker),
-      fake_ald()
+      fake_abcd()
     )
   )
 })
@@ -416,7 +416,7 @@ test_that("w/ overwrite with missing names errors gracefully", {
     match_name(
       fake_lbk(),
       overwrite = tibble(bad = 1),
-      fake_ald()
+      fake_abcd()
     )
   )
 })
@@ -431,7 +431,7 @@ test_that("with bad input errors gracefully", {
 test_that("with name_intermediate but not id_intermediate throws an error", {
   expect_error(
     class = "has_name_but_not_id",
-    match_name(fake_lbk(name_intermediate_parent = "a"), fake_ald())
+    match_name(fake_lbk(name_intermediate_parent = "a"), fake_abcd())
   )
 })
 
@@ -470,7 +470,7 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
 
   out <- match_name(
     fake_lbk(sector_classification_direct_loantaker = code_for_sector_power),
-    fake_ald(sector = sector_not_power),
+    fake_abcd(sector = sector_not_power),
     by_sector = FALSE
   )
   expect_equal(nrow(out), 1L)
@@ -486,7 +486,7 @@ test_that("takes `by_sector`", {
 })
 
 test_that("w/ duplicates in ald throws now error; instead remove duplicates", {
-  dupl <- rbind(fake_ald(), fake_ald())
+  dupl <- rbind(fake_abcd(), fake_abcd())
   expect_error(out <- match_name(fake_lbk(), dupl), NA)
   expect_equal(nrow(out), 1L)
 })
@@ -495,35 +495,35 @@ test_that("throws an error if the `loanbook` has reserved columns", {
   alias <- mutate(fake_lbk(), alias = "bla")
   expect_error(
     class = "reserved_column",
-    match_name(alias, fake_ald()),
+    match_name(alias, fake_abcd()),
     regexp = "alias"
   )
 
   sector <- mutate(fake_lbk(), sector = "auto")
   expect_error(
     class = "reserved_column",
-    match_name(sector, fake_ald()),
+    match_name(sector, fake_abcd()),
     regexp = "sector"
   )
 
   rowid <- mutate(fake_lbk(), rowid = 1L)
   expect_error(
     class = "reserved_column",
-    match_name(rowid, fake_ald()),
+    match_name(rowid, fake_abcd()),
     regexp = "rowid"
   )
 
   rowid_sector <- mutate(fake_lbk(), rowid = 1L, sector = "auto")
   expect_error(
     class = "reserved_column",
-    match_name(rowid_sector, fake_ald()),
+    match_name(rowid_sector, fake_abcd()),
     regexp = "rowid.*sector"
   )
 
   sector_rowid <- mutate(fake_lbk(), sector = "auto", rowid = 1L)
   expect_error(
     class = "reserved_column",
-    match_name(sector_rowid, fake_ald()),
+    match_name(sector_rowid, fake_abcd()),
     regexp = "rowid.*sector"
   )
 })
@@ -550,7 +550,7 @@ test_that("outputs correct `borderline` (#269)", {
     sector_classification_direct_loantaker = c(border_false, border_true)
   )
 
-  ald <- fake_ald(
+  ald <- fake_abcd(
     name_company = some_companies,
     sector = c(coal_2dii, power_2dii)
   )
@@ -560,10 +560,10 @@ test_that("outputs correct `borderline` (#269)", {
 })
 
 test_that("matches any case of ald$sector, but converts sector to lowercase", {
-  low <- match_name(fake_lbk(), fake_ald(sector = "power"))
+  low <- match_name(fake_lbk(), fake_abcd(sector = "power"))
   expect_equal(low$sector, "power")
 
-  upp <- match_name(fake_lbk(), fake_ald(sector = "POWER"))
+  upp <- match_name(fake_lbk(), fake_abcd(sector = "POWER"))
   # The original uppercase is converted to lowercase
   expect_equal(upp$sector, "power")
 
@@ -572,11 +572,11 @@ test_that("matches any case of ald$sector, but converts sector to lowercase", {
 })
 
 test_that("matches any case of ald$name_company, but preserves original case", {
-  low <- match_name(fake_lbk(), fake_ald(name_company = "alpine knits"))
+  low <- match_name(fake_lbk(), fake_abcd(name_company = "alpine knits"))
   expect_equal(nrow(low), 1L)
   expect_equal(low$name_ald, "alpine knits")
 
-  upp <- match_name(fake_lbk(), fake_ald(name_company = "ALPINE KNITS"))
+  upp <- match_name(fake_lbk(), fake_abcd(name_company = "ALPINE KNITS"))
   expect_equal(nrow(upp), 1L)
   # The original uppercase is preserved
   expect_equal(upp$name_ald, "ALPINE KNITS")
@@ -587,14 +587,14 @@ test_that("with arguments passed via ellipsis, throws no error (#310)", {
   expect_false(any(grepl("^q$", names(formals(match_name)))))
 
   # `q` should pass `...` with no error
-  expect_no_error(match_name(fake_lbk(), fake_ald(), method = "qgram", q = 1))
+  expect_no_error(match_name(fake_lbk(), fake_abcd(), method = "qgram", q = 1))
 })
 
 test_that("with arguments passed via ellipsis, outputs the expected score", {
   lbk <-
     fake_lbk(name_direct_loantaker = "Yuamen Changyuan Hydropower Co., Ltd.")
   ald <-
-    fake_ald(name_company = "yiyang baoyuan power generation co., ltd.")
+    fake_abcd(name_company = "yiyang baoyuan power generation co., ltd.")
 
   this_q <- 0.5
   expected1 <- stringdist::stringsim(
@@ -627,7 +627,7 @@ test_that("with relevant options allows loanbook with reserved columns", {
   lbk <- mutate(fake_lbk(), sector = "a", borderline = FALSE)
   expect_no_error(
     # Don't warn if found no match
-    suppressWarnings(match_name(lbk, fake_ald()))
+    suppressWarnings(match_name(lbk, fake_abcd()))
   )
 })
 
@@ -636,7 +636,7 @@ test_that("w/ loanbook w/ reserved cols, outputs sector not i.sector (#330)", {
   on.exit(options(restore), add = TRUE)
 
   reserved <- mutate(fake_lbk(), sector = "power", borderline = FALSE)
-  out <- match_name(reserved, fake_ald())
+  out <- match_name(reserved, fake_abcd())
 
   expect_true(utils::hasName(out, "sector"))
   expect_false(utils::hasName(out, "i.sector"))
@@ -648,13 +648,13 @@ test_that("w/ loanbook lacking sector or borderline, errors gracefully (#330)", 
 
   lacks_borderline <- mutate(fake_lbk(), sector = "power")
   expect_error(
-    match_name(lacks_borderline, fake_ald()),
+    match_name(lacks_borderline, fake_abcd()),
     "Must have both `sector` and `borderline`"
   )
 
   lacks_sector <- mutate(fake_lbk(), borderline = TRUE)
   expect_error(
-    match_name(lacks_sector, fake_ald()),
+    match_name(lacks_sector, fake_abcd()),
     "Must have both `sector` and `borderline`"
   )
 })
@@ -662,7 +662,7 @@ test_that("w/ loanbook lacking sector or borderline, errors gracefully (#330)", 
 test_that("errors if any id_loan is duplicated (#349)", {
   duplicated <- rep.int(1, times = 2)
   lbk <- fake_lbk(id_loan = duplicated)
-  ald <- fake_ald()
+  ald <- fake_abcd()
 
   expect_snapshot_error(match_name(lbk, ald))
   expect_error(class = "duplicated_id_loan", match_name(lbk, ald))
@@ -670,7 +670,7 @@ test_that("errors if any id_loan is duplicated (#349)", {
 
 test_that("allows custom `sector_classifications` via options() (#354)", {
   loanbook <- fake_lbk(sector_classification_system = "XYZ")
-  ald <- fake_ald()
+  ald <- fake_abcd()
   custom_classification <- tibble::tribble(
     ~sector,       ~borderline,  ~code, ~code_system,
     "power",             FALSE, "3511",        "XYZ",

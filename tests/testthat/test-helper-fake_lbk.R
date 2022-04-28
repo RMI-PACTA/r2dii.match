@@ -2,8 +2,8 @@ test_that("fake_lbk w/ lenght-2 input outpus 2 rows", {
   expect_equal(nrow(fake_lbk(c("a", "a"))), 2L)
 })
 
-test_that("fake_ald w/ lenght-2 input outpus 2 rows", {
-  expect_equal(nrow(fake_ald(c("a", "a"))), 2L)
+test_that("fake_abcd w/ lenght-2 input outpus 2 rows", {
+  expect_equal(nrow(fake_abcd(c("a", "a"))), 2L)
 })
 
 test_that("fake_matched w/ lenght-2 input outpus 2 rows", {

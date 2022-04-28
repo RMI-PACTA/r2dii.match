@@ -1,7 +1,7 @@
 # warns overwrite
 
     Code
-      match_name(fake_lbk(), fake_ald(), overwrite = overwrite_demo)
+      match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo)
     Warning <overwrite_warning>
       You should only overwrite a sector at the level of the 'direct
       loantaker' (DL). If you overwrite a sector at the level of the 'ultimate

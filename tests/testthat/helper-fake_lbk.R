@@ -28,19 +28,19 @@
 #' @examples
 #' fake_lbk()
 #'
-#' fake_ald()
+#' fake_abcd()
 #'
 #' fake_matched()
 #'
 #' fake_matched(id = c("a", "a"), sector = c("coal", "automotive"))
 #'
 #' # Helps invalidate values for tests
-#' fake_ald(name_company = "bad")
+#' fake_abcd(name_company = "bad")
 #'
 #' # tibble() goodies:
 #'
 #' # Create new columns on the fly
-#' fake_ald(new = "a")
+#' fake_abcd(new = "a")
 #'
 #' # Support for trailing commas
 #' fake_matched(id = "a", )
@@ -68,7 +68,7 @@ fake_lbk <- function(sector_classification_system = NULL,
 
 #' See `fake_lbk()`
 #' @noRd
-fake_ald <- function(name_company = NULL,
+fake_abcd <- function(name_company = NULL,
                      sector = NULL,
                      alias_ald = NULL,
                      ...) {
