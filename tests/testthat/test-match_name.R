@@ -17,12 +17,12 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
     sector_classification_direct_loantaker = 3511,
   )
 
-  ald <- tibble(
+  abcd <- tibble(
     name_company = c("nanco hosiery mills", "standard solar inc"),
     sector = c("power", "power")
   )
 
-  out <- match_name(lbk, ald)
+  out <- match_name(lbk, abcd)
   expect_equal(out$level, "intermediate_parent_999")
 })
 
@@ -36,16 +36,16 @@ test_that("w/ missing values at all levels outputs 0-row", {
     sector_classification_direct_loantaker = 291,
   )
 
-  ald <- tibble(
+  abcd <- tibble(
     name_company = "any",
     sector = "power"
   )
 
-  expect_warning(out <- match_name(lbk, ald), "no match")
+  expect_warning(out <- match_name(lbk, abcd), "no match")
   expect_equal(nrow(out), 0L)
 })
 
-test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
+test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
   sector_ald <- c("automotive", "shipping")
 
   lbk <- tibble(
@@ -58,12 +58,12 @@ test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
     name_ultimate_parent = NA_character_,
   )
 
-  ald <- tibble(
+  abcd <- tibble(
     name_company = "suzuki motor corp",
     sector = sector_ald
   )
 
-  out <- match_name(lbk, ald, by_sector = FALSE)
+  out <- match_name(lbk, abcd, by_sector = FALSE)
   expect_equal(nrow(out), 2L)
   out$sector
   expect_equal(out$sector_ald, sector_ald)
@@ -129,7 +129,7 @@ test_that("w/ 1 row of full loanbook_demo yields expected names", {
   expect_equal(names(out), expect_names_match_name)
 })
 
-test_that("takes unprepared loanbook and ald datasets", {
+test_that("takes unprepared loanbook and abcd datasets", {
   expect_no_error(match_name(slice(loanbook_demo, 1), abcd_demo))
 })
 
@@ -149,7 +149,7 @@ test_that("w/ loanbook that matches nothing, yields expected", {
   expect_false(any(c("alias", "alias_ald") %in% names(out)))
 })
 
-test_that("w/ 2 lbk rows matching 2 ald rows, yields expected names", {
+test_that("w/ 2 lbk rows matching 2 abcd rows, yields expected names", {
   # Slice 5 once was problematic (#85)
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
@@ -363,17 +363,17 @@ test_that("warns/errors if some/all system classification is unknown", {
 
 # crucial names -----------------------------------------------------------
 
-test_that("w/ loanbook or ald with missing names errors gracefully", {
+test_that("w/ loanbook or abcd with missing names errors gracefully", {
   invalid <- function(data, x) dplyr::rename(data, bad = all_of_(x))
 
-  expect_error_missing_names <- function(lbk = NULL, ald = NULL) {
+  expect_error_missing_names <- function(lbk = NULL, abcd = NULL) {
     expect_error(
       class = "missing_names",
-      match_name(lbk %||% fake_lbk(), ald %||% fake_abcd())
+      match_name(lbk %||% fake_lbk(), abcd %||% fake_abcd())
     )
   }
 
-  expect_error_missing_names(ald = invalid(fake_abcd(), "sector"))
+  expect_error_missing_names(abcd = invalid(fake_abcd(), "sector"))
 
   expect_error_missing_names(invalid(fake_lbk(), "name_ultimate_parent"))
   expect_error_missing_names(invalid(fake_lbk(), "id_ultimate_parent"))
@@ -482,7 +482,7 @@ test_that("takes `by_sector`", {
   )
 })
 
-test_that("w/ duplicates in ald throws now error; instead remove duplicates", {
+test_that("w/ duplicates in abcd throws now error; instead remove duplicates", {
   dupl <- rbind(fake_abcd(), fake_abcd())
   expect_error(out <- match_name(fake_lbk(), dupl), NA)
   expect_equal(nrow(out), 1L)
@@ -547,16 +547,16 @@ test_that("outputs correct `borderline` (#269)", {
     sector_classification_direct_loantaker = c(border_false, border_true)
   )
 
-  ald <- fake_abcd(
+  abcd <- fake_abcd(
     name_company = some_companies,
     sector = c(coal_2dii, power_2dii)
   )
 
-  out <- match_name(lbk, ald)
+  out <- match_name(lbk, abcd)
   expect_equal(out$borderline, c(FALSE, TRUE))
 })
 
-test_that("matches any case of ald$sector, but converts sector to lowercase", {
+test_that("matches any case of abcd$sector, but converts sector to lowercase", {
   low <- match_name(fake_lbk(), fake_abcd(sector = "power"))
   expect_equal(low$sector, "power")
 
@@ -568,7 +568,7 @@ test_that("matches any case of ald$sector, but converts sector to lowercase", {
   expect_identical(low, upp)
 })
 
-test_that("matches any case of ald$name_company, but preserves original case", {
+test_that("matches any case of abcd$name_company, but preserves original case", {
   low <- match_name(fake_lbk(), fake_abcd(name_company = "alpine knits"))
   expect_equal(nrow(low), 1L)
   expect_equal(low$name_ald, "alpine knits")
@@ -590,30 +590,30 @@ test_that("with arguments passed via ellipsis, throws no error (#310)", {
 test_that("with arguments passed via ellipsis, outputs the expected score", {
   lbk <-
     fake_lbk(name_direct_loantaker = "Yuamen Changyuan Hydropower Co., Ltd.")
-  ald <-
+  abcd <-
     fake_abcd(name_company = "yiyang baoyuan power generation co., ltd.")
 
   this_q <- 0.5
   expected1 <- stringdist::stringsim(
     to_alias(lbk$name_direct_loantaker),
-    to_alias(ald$name_company),
+    to_alias(abcd$name_company),
     method = "qgram", q = this_q
   )
 
-  out1 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  out1 <- match_name(lbk, abcd, method = "qgram", q = this_q)
   expect_equal(unique(out1$score), expected1)
 
   this_q <- 1
   expected2 <- stringdist::stringsim(
     to_alias(lbk$name_direct_loantaker),
-    to_alias(ald$name_company),
+    to_alias(abcd$name_company),
     method = "qgram", q = this_q
   )
 
   # Ensure this test does not just duplicate the previous one
   expect_false(identical(expected1, expected2))
 
-  out2 <- match_name(lbk, ald, method = "qgram", q = this_q)
+  out2 <- match_name(lbk, abcd, method = "qgram", q = this_q)
   expect_equal(unique(out2$score), expected2)
 })
 
@@ -659,15 +659,15 @@ test_that("w/ loanbook lacking sector or borderline, errors gracefully (#330)", 
 test_that("errors if any id_loan is duplicated (#349)", {
   duplicated <- rep.int(1, times = 2)
   lbk <- fake_lbk(id_loan = duplicated)
-  ald <- fake_abcd()
+  abcd <- fake_abcd()
 
-  expect_snapshot_error(match_name(lbk, ald))
-  expect_error(class = "duplicated_id_loan", match_name(lbk, ald))
+  expect_snapshot_error(match_name(lbk, abcd))
+  expect_error(class = "duplicated_id_loan", match_name(lbk, abcd))
 })
 
 test_that("allows custom `sector_classifications` via options() (#354)", {
   loanbook <- fake_lbk(sector_classification_system = "XYZ")
-  ald <- fake_abcd()
+  abcd <- fake_abcd()
   custom_classification <- tibble::tribble(
     ~sector,       ~borderline,  ~code, ~code_system,
     "power",             FALSE, "3511",        "XYZ",
@@ -675,7 +675,7 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
 
   # Allow users to inject their own `sector_classifications`
   old <- options(r2dii.match.sector_classifications = custom_classification)
-  out <- match_name(loanbook, ald)
+  out <- match_name(loanbook, abcd)
   expect_equal(nrow(out), 1L)
   options(old)
 })
