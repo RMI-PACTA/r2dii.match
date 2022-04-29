@@ -100,7 +100,7 @@ check_duplicated_score1 <- function(data) {
     message = glue(
       "`data` where `score` is `1` must be unique by `id_loan` by `level`.
      Duplicated rows: {duplicated_rows}.
-     Have you ensured that only one ald-name per loanbook-name is set to `1`?"
+     Have you ensured that only one abcd-name per loanbook-name is set to `1`?"
     )
   )
 }
