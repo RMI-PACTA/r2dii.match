@@ -52,14 +52,14 @@ library(r2dii.match)
 
 Matching is achieved in two main steps:
 
-### 1\. Run fuzzy matching
+### 1. Run fuzzy matching
 
 `match_name()` will extract all unique counterparty names from the
 columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*`
-and run fuzzy matching against all company names in the `ald`:
+and run fuzzy matching against all company names in the `abcd`:
 
 ``` r
-match_result <- match_name(loanbook_demo, ald_demo)
+match_result <- match_name(loanbook_demo, abcd_demo)
 match_result 
 #> # A tibble: 410 × 28
 #>    id_loan id_direct_loantak… name_direct_loa… id_intermediate… name_intermedia…
@@ -83,9 +83,9 @@ match_result
 #> #   flag_project_finance_loan <chr>, name_project <lgl>, …
 ```
 
-### 2\. Prioritize validated matches
+### 2. Prioritize validated matches
 
-The user should then manually validate the output of \[match\_name()\],
+The user should then manually validate the output of \[match_name()\],
 ensuring that the value of the column `score` is equal to `1` for
 perfect matches only.
 
@@ -118,7 +118,7 @@ prioritize(match_result)
 ```
 
 The result is a dataset with identical columns to the input loanbook,
-and added columns bridging all matched loans to their ald counterpart.
+and added columns bridging all matched loans to their abcd counterpart.
 
 [Get
 started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
