@@ -1,6 +1,6 @@
-#' Minimal explicit loanbook and ald datasets that allow overwriting values
+#' Minimal explicit loanbook and abcd datasets that allow overwriting values
 #'
-#' These funtions are developer-oriented. They all call [tibble::tibble()] so
+#' These functions are developer-oriented. They all call [tibble::tibble()] so
 #' you can expect all the goodies that come with that.
 #' * `fake_lbk()`includes non-crucal columns `id_intermediate_parent_1`, `name_intermediate_parent_1`.
 #' * `fake_matched()` fakes the ouput of `match_name()`. It is based on
