@@ -125,7 +125,7 @@ match_name <- function(loanbook,
 
   match_name_impl(
     loanbook = loanbook,
-    ald = abcd,
+    abcd = abcd,
     by_sector = by_sector,
     min_score = min_score,
     method = method,
@@ -136,7 +136,7 @@ match_name <- function(loanbook,
 }
 
 match_name_impl <- function(loanbook,
-                            ald,
+                            abcd,
                             by_sector = TRUE,
                             min_score = 0.8,
                             method = "jw",
@@ -151,12 +151,12 @@ match_name_impl <- function(loanbook,
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
-  prep_ald <- restructure_abcd(ald)
+  prep_abcd <- restructure_abcd(abcd)
 
   if (by_sector) {
-    a <- expand_alias(prep_lbk, prep_ald)
+    a <- expand_alias(prep_lbk, prep_abcd)
   } else {
-    a <- tidyr::crossing(alias_lbk = prep_lbk$alias, alias_ald = prep_ald$alias)
+    a <- tidyr::crossing(alias_lbk = prep_lbk$alias, alias_abcd = prep_abcd$alias)
   }
 
   setDT(a)
@@ -169,7 +169,7 @@ match_name_impl <- function(loanbook,
   a <- unique(a)[
     ,
     score := stringdist::stringsim(
-      alias_lbk, alias_ald,
+      alias_lbk, alias_abcd,
       method = method, p = p, ...
     )
   ]
@@ -189,12 +189,12 @@ match_name_impl <- function(loanbook,
     by = id_2dii
   ][pick == TRUE][, pick := NULL]
 
-  prep_ald <- rlang::set_names(prep_ald, paste0, "_ald")
-  setDT(prep_ald)
-  matched <- prep_ald[matched, on = "alias_ald"]
+  prep_abcd <- rlang::set_names(prep_abcd, paste0, "_abcd")
+  setDT(prep_abcd)
+  matched <- prep_abcd[matched, on = "alias_abcd"]
 
   if (by_sector) {
-    matched <- matched[sector == sector_ald, ]
+    matched <- matched[sector == sector_abcd, ]
   }
 
   # Restore columns from loanbook
@@ -207,9 +207,15 @@ match_name_impl <- function(loanbook,
 
   matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
   matched <- unsuffix_and_regroup(matched, old_groups)
-  matched <- select(matched, -.data$alias, -.data$alias_ald)
+  matched <- select(matched, -.data$alias, -.data$alias_abcd)
   # Remove attribute added by data.table
   attr(matched, ".internal.selfref") <- NULL
+
+  matched <- rename(
+    matched,
+    name_ald = .data$name_abcd,
+    sector_ald = .data$sector_abcd
+    )
 
   matched
 }
@@ -261,7 +267,8 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
   out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
     unsuffix_and_regroup(old_groups) %>%
-    select(-.data$alias, -.data$alias_ald)
+    select(-.data$alias, -.data$alias_abcd) %>%
+    rename(name_ald = .data$name_abcd, sector_ald = .data$sector_abcd)
 
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)
@@ -271,15 +278,15 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
 # readr -------------------------------------------------------------------
 
-expand_alias <- function(loanbook, ald) {
+expand_alias <- function(loanbook, abcd) {
   vars <- c("sector", "alias")
   l <- nest_by(select(loanbook, all_of_(vars)), .data$sector, .key = "alias_lbk")
-  a <- nest_by(select(ald, all_of_(vars)), .data$sector, .key = "alias_ald")
+  a <- nest_by(select(abcd, all_of_(vars)), .data$sector, .key = "alias_abcd")
   la <- dplyr::inner_join(l, a, by = "sector")
 
   purrr::map2_df(
-    la$alias_lbk, la$alias_ald,
-    ~ tidyr::expand_grid(alias_lbk = .x$alias, alias_ald = .y$alias)
+    la$alias_lbk, la$alias_abcd,
+    ~ tidyr::expand_grid(alias_lbk = .x$alias, alias_abcd = .y$alias)
   )
 }
 
@@ -337,11 +344,11 @@ names_added_by_match_name <- function() {
     "id_2dii",
     "level",
     "sector",
-    "sector_ald",
+    "sector_abcd",
     "name",
-    "name_ald",
+    "name_abcd",
     "alias_lbk",
-    "alias_ald",
+    "alias_abcd",
     "score",
     "source",
     "borderline"
