@@ -19,8 +19,7 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
 
   ald <- tibble(
     name_company = c("nanco hosiery mills", "standard solar inc"),
-    sector = c("power", "power"),
-    alias_ald = c("nancohosierymills", "standardsolar inc")
+    sector = c("power", "power")
   )
 
   out <- match_name(lbk, ald)
@@ -39,8 +38,7 @@ test_that("w/ missing values at all levels outputs 0-row", {
 
   ald <- tibble(
     name_company = "any",
-    sector = "power",
-    alias_ald = "any",
+    sector = "power"
   )
 
   expect_warning(out <- match_name(lbk, ald), "no match")
@@ -62,8 +60,7 @@ test_that("w/ 1 lbk row matching 1 ald company in 2 sectors outputs 2 rows", {
 
   ald <- tibble(
     name_company = "suzuki motor corp",
-    sector = sector_ald,
-    alias_ald = "suzukimotor corp",
+    sector = sector_ald
   )
 
   out <- match_name(lbk, ald, by_sector = FALSE)
