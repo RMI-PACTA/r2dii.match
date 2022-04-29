@@ -152,7 +152,7 @@ match_name_impl <- function(loanbook,
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
-  prep_ald <- restructure_ald(ald)
+  prep_ald <- restructure_abcd(ald)
 
   if (by_sector) {
     a <- expand_alias(prep_lbk, prep_ald)
