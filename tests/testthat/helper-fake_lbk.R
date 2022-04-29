@@ -20,7 +20,7 @@
 #' code wants to inspect the data being tested, they need to jump to the
 #' function definition or call them interactively.
 #'
-#' @seealso [r2dii.data::loanbook_demo], [r2dii.data::ald_demo]
+#' @seealso [r2dii.data::loanbook_demo], [r2dii.data::abcd_demo]
 #'
 #'
 #' @return A data frame

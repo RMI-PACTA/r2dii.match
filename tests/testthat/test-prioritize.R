@@ -226,8 +226,8 @@ test_that("passes if score=1 & values by id_loan are duplicated for distinct
 
 test_that("with 0-row input returns 0-row input", {
   lbk <- fake_lbk()
-  ald <- fake_abcd(name_company = "won't match")
-  zero_row <- suppressWarnings(match_name(lbk, ald))
+  abcd <- fake_abcd(name_company = "won't match")
+  zero_row <- suppressWarnings(match_name(lbk, abcd))
 
   has_zero_row <- identical(nrow(zero_row), 0L)
   stopifnot(has_zero_row)
