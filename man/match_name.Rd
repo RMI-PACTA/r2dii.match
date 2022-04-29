@@ -88,7 +88,7 @@ experimental and may be dropped and/or become a new argument to
 
 \section{Assigning aliases}{
 
-The transformation process used to compare names between loanbook and ald
+The transformation process used to compare names between loanbook and abcd
 datasets applies best practices commonly used in name matching algorithms:
 \itemize{
 \item Remove special characters.
