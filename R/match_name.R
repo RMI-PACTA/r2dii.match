@@ -95,8 +95,7 @@
 #'
 #' abcd <- tibble(
 #'   name_company = "alpine knits india pvt. limited",
-#'   sector = "power",
-#'   alias_ald = "alpineknitsindiapvt ltd"
+#'   sector = "power"
 #' )
 #'
 #' match_name(loanbook, abcd)

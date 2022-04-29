@@ -70,12 +70,10 @@ fake_lbk <- function(sector_classification_system = NULL,
 #' @noRd
 fake_abcd <- function(name_company = NULL,
                      sector = NULL,
-                     alias_ald = NULL,
                      ...) {
   tibble::tibble(
     name_company = name_company %||% "alpine knits india pvt. limited",
     sector = sector %||% "power",
-    alias_ald = alias_ald %||% "alpineknitsindiapvt ltd",
     ...
   )
 }
