@@ -41,7 +41,7 @@ Compare, edit, and save the data manually:
 \itemize{
 \item Open \emph{matched.csv} with any spreadsheet editor (Excel, Google
 Sheets, etc.).
-\item Compare the columns \code{name} and \code{name_ald} manually to determine if
+\item Compare the columns \code{name} and \code{name_abcd} manually to determine if
 the match is valid. Other information can be used in conjunction
 with just the names to ensure the two entities match (sector,
 internal information on the company structure, etc.)
@@ -68,7 +68,7 @@ library(dplyr)
 
 # styler: off
 matched <- tribble(
-  ~sector, ~sector_ald,  ~score, ~id_loan,                ~level,
+  ~sector, ~sector_abcd,  ~score, ~id_loan,                ~level,
    "coal",      "coal",       1,     "aa",     "ultimate_parent",
    "coal",      "coal",       1,     "aa",    "direct_loantaker",
    "coal",      "coal",       1,     "bb", "intermediate_parent",

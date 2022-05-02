@@ -53,9 +53,9 @@ companies
 \item \code{level} - the level of granularity that the loan was matched at
 (e.g \code{direct_loantaker} or \code{ultimate_parent})
 \item \code{sector} - the sector of the \code{loanbook} company
-\item \code{sector_ald} - the sector of the \code{abcd} company
+\item \code{sector_abcd} - the sector of the \code{abcd} company
 \item \code{name} - the name of the \code{loanbook} company
-\item \code{name_ald} - the name of the \code{abcd} company
+\item \code{name_abcd} - the name of the \code{abcd} company
 \item \code{score} - the score of the match (manually set this to \code{1}
 prior to calling \code{prioritize()} to validate the match)
 \item \code{source} - determines the source of the match. (equal to \code{loanbook}

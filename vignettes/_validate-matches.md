@@ -9,7 +9,7 @@ matched %>%
 Compare, edit, and save the data manually:
 
 * Open _matched.csv_ with any spreadsheet editor (Excel, Google Sheets, etc.).
-* Compare the columns `name` and `name_ald` manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)
+* Compare the columns `name` and `name_abcd` manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)
 * Edit the data:
     * If you are happy with the match, set the `score` value to `1`.
     * Otherwise set or leave the `score` value to anything other than `1`.

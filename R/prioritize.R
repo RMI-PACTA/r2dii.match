@@ -33,7 +33,7 @@
 #'
 #' # styler: off
 #' matched <- tribble(
-#'   ~sector, ~sector_ald,  ~score, ~id_loan,                ~level,
+#'   ~sector, ~sector_abcd,  ~score, ~id_loan,                ~level,
 #'    "coal",      "coal",       1,     "aa",     "ultimate_parent",
 #'    "coal",      "coal",       1,     "aa",    "direct_loantaker",
 #'    "coal",      "coal",       1,     "bb", "intermediate_parent",
