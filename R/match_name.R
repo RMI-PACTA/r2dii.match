@@ -44,9 +44,9 @@
 #'   * `level` - the level of granularity that the loan was matched at
 #'   (e.g `direct_loantaker` or `ultimate_parent`)
 #'   * `sector` - the sector of the `loanbook` company
-#'   * `sector_ald` - the sector of the `abcd` company
+#'   * `sector_abcd` - the sector of the `abcd` company
 #'   * `name` - the name of the `loanbook` company
-#'   * `name_ald` - the name of the `abcd` company
+#'   * `name_abcd` - the name of the `abcd` company
 #'   * `score` - the score of the match (manually set this to `1`
 #'   prior to calling `prioritize()` to validate the match)
 #'   * `source` - determines the source of the match. (equal to `loanbook`
@@ -211,12 +211,6 @@ match_name_impl <- function(loanbook,
   # Remove attribute added by data.table
   attr(matched, ".internal.selfref") <- NULL
 
-  matched <- rename(
-    matched,
-    name_ald = .data$name_abcd,
-    sector_ald = .data$sector_abcd
-    )
-
   matched
 }
 
@@ -267,8 +261,7 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
   out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
     unsuffix_and_regroup(old_groups) %>%
-    select(-.data$alias, -.data$alias_abcd) %>%
-    rename(name_ald = .data$name_abcd, sector_ald = .data$sector_abcd)
+    select(-.data$alias, -.data$alias_abcd)
 
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)

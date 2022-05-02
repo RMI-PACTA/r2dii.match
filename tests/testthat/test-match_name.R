@@ -46,7 +46,7 @@ test_that("w/ missing values at all levels outputs 0-row", {
 })
 
 test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
-  sector_ald <- c("automotive", "shipping")
+  sector_abcd <- c("automotive", "shipping")
 
   lbk <- tibble(
     id_direct_loantaker = "C196",
@@ -60,22 +60,22 @@ test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
 
   abcd <- tibble(
     name_company = "suzuki motor corp",
-    sector = sector_ald
+    sector = sector_abcd
   )
 
   out <- match_name(lbk, abcd, by_sector = FALSE)
   expect_equal(nrow(out), 2L)
   out$sector
-  expect_equal(out$sector_ald, sector_ald)
+  expect_equal(out$sector_abcd, sector_abcd)
 })
 
 test_that("`by_sector = TRUE` yields only matching sectors", {
   out <- match_name(
     fake_lbk(),
-    fake_abcd(),
+    fake_abcd(sector = ),
     by_sector = TRUE
   ) %>%
-    filter(sector != sector_ald)
+    filter(sector != sector_abcd)
 
   expect_equal(nrow(out), 0L)
 })
@@ -108,9 +108,9 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     id_2dii = "UP1",
     level = "ultimate_parent",
     sector = "power",
-    sector_ald = "power",
+    sector_abcd = "power",
     name = "Alpine Knits India Pvt. Limited",
-    name_ald = "alpine knits india pvt. limited",
+    name_abcd = "alpine knits india pvt. limited",
     score = 1,
     source = "loanbook",
     borderline = TRUE
@@ -223,9 +223,9 @@ test_that("recovers `sector_lbk`", {
   )
 })
 
-test_that("recovers `sector_ald`", {
+test_that("recovers `sector_abcd`", {
   expect_true(
-    rlang::has_name(match_name(loanbook_demo, abcd_demo), "sector_ald")
+    rlang::has_name(match_name(loanbook_demo, abcd_demo), "sector_abcd")
   )
 })
 
@@ -571,12 +571,12 @@ test_that("matches any case of abcd$sector, but converts sector to lowercase", {
 test_that("matches any case of abcd$name_company, but preserves original case", {
   low <- match_name(fake_lbk(), fake_abcd(name_company = "alpine knits"))
   expect_equal(nrow(low), 1L)
-  expect_equal(low$name_ald, "alpine knits")
+  expect_equal(low$name_abcd, "alpine knits")
 
   upp <- match_name(fake_lbk(), fake_abcd(name_company = "ALPINE KNITS"))
   expect_equal(nrow(upp), 1L)
   # The original uppercase is preserved
-  expect_equal(upp$name_ald, "ALPINE KNITS")
+  expect_equal(upp$name_abcd, "ALPINE KNITS")
 })
 
 test_that("with arguments passed via ellipsis, throws no error (#310)", {
