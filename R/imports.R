@@ -21,6 +21,7 @@ globalVariables(
   c(
     ".",
     ".data",
+    "alias_abcd",
     "alias_ald",
     "alias_lbk",
     "id_2dii",
@@ -28,6 +29,7 @@ globalVariables(
     "rowid",
     "score",
     "sector",
+    "sector_abcd",
     "sector_ald"
   )
 )
