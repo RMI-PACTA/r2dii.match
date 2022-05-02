@@ -26,7 +26,7 @@ test_that("errors gracefully if data lacks crucial columns", {
     class = "missing_names"
   )
   expect_error(
-    prioritize(select(fake_matched(), -sector_ald)),
+    prioritize(select(fake_matched(), -sector_abcd)),
     class = "missing_names"
   )
   expect_error(
@@ -96,7 +96,7 @@ test_that("ignores existing groups", {
          "b",         4,    "a",
   ) %>%
     # Crucial columns with toy values
-    mutate(sector = "coal", sector_ald = "coal", score = 1) %>%
+    mutate(sector = "coal", sector_abcd = "coal", score = 1) %>%
     group_by(other_id)
   # styler: on
 
@@ -186,7 +186,7 @@ test_that("output is independent from the row-order of the input (#113)", {
   # styler: off
   # Could use fake_matched() but the data is clearer this way
   matched_direct <- tibble::tribble(
-  ~id_loan,   ~id_2dii,             ~level, ~score,      ~sector,  ~sector_ald,
+  ~id_loan,   ~id_2dii,             ~level, ~score,      ~sector,  ~sector_abcd,
        "A",        "D", "direct_loantaker",      1, "automotive", "automotive",
        "A",        "U",  "ultimate_parent",      1, "automotive", "automotive",
        "B",        "U",  "ultimate_parent",      1, "automotive", "automotive",

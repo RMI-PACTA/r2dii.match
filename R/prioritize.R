@@ -61,9 +61,32 @@ prioritize <- function(data, priority = NULL) {
     return(data)
   }
 
+  if (all(c("sector_ald", "sector_abcd") %in% names(data))) {
+
+    rlang::abort(
+      "too_many_sectors",
+      message = glue(
+        "Column `sector_ald` is deprecated as of r2dii.match 0.1.0, please use
+        `sector_abcd` instead."
+      )
+    )
+
+  } else if ("sector_ald" %in% names(data)) {
+
+    rlang::warn(
+      "deprecated_name",
+      message = glue(
+        "Column `sector_ald` is deprecated as of r2dii.match 0.1.0, please use
+        `sector_abcd` instead."
+      )
+    )
+
+    data <- dplyr::rename(data, sector_abcd = .data$sector_ald)
+  }
+
   data %>%
     check_crucial_names(
-      c("id_loan", "level", "score", "sector", "sector_ald")
+      c("id_loan", "level", "score", "sector", "sector_abcd")
     ) %>%
     check_duplicated_score1()
 
@@ -73,7 +96,7 @@ prioritize <- function(data, priority = NULL) {
   perfect_matches <- filter(ungroup(data), .data$score == 1L)
 
   out <- perfect_matches %>%
-    group_by(.data$id_loan, .data$sector, .data$sector_ald) %>%
+    group_by(.data$id_loan, .data$sector, .data$sector_abcd) %>%
     prioritize_at(.at = "level", priority = priority) %>%
     ungroup()
 
