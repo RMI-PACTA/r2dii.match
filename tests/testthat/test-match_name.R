@@ -72,7 +72,7 @@ test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
 test_that("`by_sector = TRUE` yields only matching sectors", {
   out <- match_name(
     fake_lbk(),
-    fake_abcd(sector = ),
+    fake_abcd(),
     by_sector = TRUE
   ) %>%
     filter(sector != sector_abcd)
