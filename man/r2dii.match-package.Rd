@@ -19,7 +19,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Jackson Hoffart \email{jackson@2degrees-investing.org} (\href{https://orcid.org/0000-0002-8600-5042}{ORCID})
+\strong{Maintainer}: Jackson Hoffart \email{jackson.hoffart@gmail.com} (\href{https://orcid.org/0000-0002-8600-5042}{ORCID})
 
 Authors:
 \itemize{
