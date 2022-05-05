@@ -1,20 +1,20 @@
-#' Restructure an asset-level dataset (ald) in preparation for fuzzy matching
+#' Restructure an asset-level dataset (abcd) in preparation for fuzzy matching
 #'
-#' This function restructures an asset-level dataset (ald) in preparation for
+#' This function restructures an asset-level dataset (abcd) in preparation for
 #' the fuzzy matching process. Most notably, it outputs an the `alias` column
 #' from values in the `name_company` column.
 #'
 #' @param data A data frame. Should be an asset-level dataset.
 #'
-#' @seealso [r2dii.data::ald_demo] `to_alias()`.
+#' @seealso [r2dii.data::abcd_demo] `to_alias()`.
 #'
 #' @return A data frame with unique combinations of `name` + `sector`, including
 #'   all IDs, and with elements already manually overwritten.
 #'
 #' @examples
-#' restructure_ald(r2dii.data::ald_demo)
+#' restructure_abcd(r2dii.data::abcd_demo)
 #' @noRd
-restructure_ald <- function(data) {
+restructure_abcd <- function(data) {
   check_crucial_names(data, c("name_company", "sector"))
 
   out <- dplyr::transmute(

@@ -1,5 +1,5 @@
 #' @section Assigning aliases:
-#' The transformation process used to compare names between loanbook and ald
+#' The transformation process used to compare names between loanbook and abcd
 #' datasets applies best practices commonly used in name matching algorithms:
 #' * Remove special characters.
 #' * Replace language specific characters.

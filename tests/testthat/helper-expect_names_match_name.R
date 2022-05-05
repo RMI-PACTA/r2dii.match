@@ -31,9 +31,9 @@ expect_names_match_name <- c(
   "id_2dii",
   "level",
   "sector",
-  "sector_ald",
+  "sector_abcd",
   "name",
-  "name_ald",
+  "name_abcd",
   "score",
   "source",
   "borderline"

@@ -44,8 +44,8 @@ test_that("correctly overwrites sector", {
   expect_equal(out$sector.x, out$sector.y)
 })
 
-test_that("restructure_ald outputs the expected tibble", {
-  out <- restructure_ald(fake_ald())
+test_that("restructure_abcd outputs the expected tibble", {
+  out <- restructure_abcd(fake_abcd())
   expect_s3_class(out, "tbl_df")
   expect_named(out, c("name", "sector", "alias"))
 })

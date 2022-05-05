@@ -1,6 +1,6 @@
-#' Minimal explicit loanbook and ald datasets that allow overwriting values
+#' Minimal explicit loanbook and abcd datasets that allow overwriting values
 #'
-#' These funtions are developer-oriented. They all call [tibble::tibble()] so
+#' These functions are developer-oriented. They all call [tibble::tibble()] so
 #' you can expect all the goodies that come with that.
 #' * `fake_lbk()`includes non-crucal columns `id_intermediate_parent_1`, `name_intermediate_parent_1`.
 #' * `fake_matched()` fakes the ouput of `match_name()`. It is based on
@@ -20,7 +20,7 @@
 #' code wants to inspect the data being tested, they need to jump to the
 #' function definition or call them interactively.
 #'
-#' @seealso [r2dii.data::loanbook_demo], [r2dii.data::ald_demo]
+#' @seealso [r2dii.data::loanbook_demo], [r2dii.data::abcd_demo]
 #'
 #'
 #' @return A data frame
@@ -28,19 +28,19 @@
 #' @examples
 #' fake_lbk()
 #'
-#' fake_ald()
+#' fake_abcd()
 #'
 #' fake_matched()
 #'
 #' fake_matched(id = c("a", "a"), sector = c("coal", "automotive"))
 #'
 #' # Helps invalidate values for tests
-#' fake_ald(name_company = "bad")
+#' fake_abcd(name_company = "bad")
 #'
 #' # tibble() goodies:
 #'
 #' # Create new columns on the fly
-#' fake_ald(new = "a")
+#' fake_abcd(new = "a")
 #'
 #' # Support for trailing commas
 #' fake_matched(id = "a", )
@@ -68,14 +68,12 @@ fake_lbk <- function(sector_classification_system = NULL,
 
 #' See `fake_lbk()`
 #' @noRd
-fake_ald <- function(name_company = NULL,
+fake_abcd <- function(name_company = NULL,
                      sector = NULL,
-                     alias_ald = NULL,
                      ...) {
   tibble::tibble(
     name_company = name_company %||% "alpine knits india pvt. limited",
     sector = sector %||% "power",
-    alias_ald = alias_ald %||% "alpineknitsindiapvt ltd",
     ...
   )
 }
@@ -87,7 +85,7 @@ fake_matched <- function(id_loan = NULL,
                          level = NULL,
                          score = NULL,
                          sector = NULL,
-                         sector_ald = NULL,
+                         sector_abcd = NULL,
                          ...) {
   tibble::tibble(
     id_loan = id_loan %||% "L162",
@@ -95,7 +93,7 @@ fake_matched <- function(id_loan = NULL,
     level = level %||% "ultimate_parent",
     score = score %||% 1,
     sector = sector %||% "automotive",
-    sector_ald = sector_ald %||% "automotive",
+    sector_abcd = sector_abcd %||% "automotive",
     ...
   )
 }

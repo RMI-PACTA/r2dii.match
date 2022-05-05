@@ -2,22 +2,23 @@
 % Please edit documentation in R/match_name.R
 \name{match_name}
 \alias{match_name}
-\title{Match a loanbook and asset-level datasets (ald) by the \verb{name_*} columns}
+\title{Match a loanbook to asset-based company data (abcd) by the \verb{name_*} columns}
 \usage{
 match_name(
   loanbook,
-  ald,
+  abcd,
   by_sector = TRUE,
   min_score = 0.8,
   method = "jw",
   p = 0.1,
   overwrite = NULL,
+  ald = deprecated(),
   ...
 )
 }
 \arguments{
-\item{loanbook, ald}{data frames structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
-and \link[r2dii.data:ald_demo]{r2dii.data::ald_demo}.}
+\item{loanbook, abcd}{data frames structured like \link[r2dii.data:loanbook_demo]{r2dii.data::loanbook_demo}
+and \link[r2dii.data:abcd_demo]{r2dii.data::abcd_demo}.}
 
 \item{by_sector}{Should names only be compared if companies belong to the
 same \code{sector}?}
@@ -36,7 +37,10 @@ Jaro-distance is returned. Applies only to \code{method='jw'}.}
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to
-ald.}
+abcd.}
+
+\item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
+\code{abcd}.}
 
 \item{...}{Arguments passed on to \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.}
 }
@@ -49,9 +53,9 @@ companies
 \item \code{level} - the level of granularity that the loan was matched at
 (e.g \code{direct_loantaker} or \code{ultimate_parent})
 \item \code{sector} - the sector of the \code{loanbook} company
-\item \code{sector_ald} - the sector of the \code{ald} company
+\item \code{sector_abcd} - the sector of the \code{abcd} company
 \item \code{name} - the name of the \code{loanbook} company
-\item \code{name_ald} - the name of the \code{ald} company
+\item \code{name_abcd} - the name of the \code{abcd} company
 \item \code{score} - the score of the match (manually set this to \code{1}
 prior to calling \code{prioritize()} to validate the match)
 \item \code{source} - determines the source of the match. (equal to \code{loanbook}
@@ -69,10 +73,10 @@ type stability.
 \description{
 \code{match_name()} scores the match between names in a loanbook dataset (columns
 can be \code{name_direct_loantaker}, \verb{name_intermediate_parent*} and
-\code{name_ultimate_parent}) with names in an asset-level dataset (column
+\code{name_ultimate_parent}) with names in an asset-based company data (column
 \code{name_company}). The raw names are first internally transformed, and aliases
-are assigned. The similarity between aliases in each of the loanbook and ald
-datasets is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
+are assigned. The similarity between aliases in each of the loanbook and abcd
+is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
 \section{Package options}{
 
@@ -84,7 +88,7 @@ experimental and may be dropped and/or become a new argument to
 
 \section{Assigning aliases}{
 
-The transformation process used to compare names between loanbook and ald
+The transformation process used to compare names between loanbook and abcd
 datasets applies best practices commonly used in name matching algorithms:
 \itemize{
 \item Remove special characters.
@@ -105,11 +109,11 @@ library(tibble)
 
 # Small data for examples
 loanbook <- head(loanbook_demo, 50)
-ald <- head(ald_demo, 50)
+abcd <- head(abcd_demo, 50)
 
-match_name(loanbook, ald)
+match_name(loanbook, abcd)
 
-match_name(loanbook, ald, min_score = 0.9)
+match_name(loanbook, abcd, min_score = 0.9)
 
 # Use your own `sector_classifications`
 your_classifications <- tibble(
@@ -130,13 +134,12 @@ loanbook <- tibble(
   name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd"
 )
 
-ald <- tibble(
+abcd <- tibble(
   name_company = "alpine knits india pvt. limited",
-  sector = "power",
-  alias_ald = "alpineknitsindiapvt ltd"
+  sector = "power"
 )
 
-match_name(loanbook, ald)
+match_name(loanbook, abcd)
 
 # Cleanup
 options(restore)

@@ -1,11 +1,11 @@
-#' Match a loanbook and asset-level datasets (ald) by the `name_*` columns
+#' Match a loanbook to asset-based company data (abcd) by the `name_*` columns
 #'
 #' `match_name()` scores the match between names in a loanbook dataset (columns
 #' can be `name_direct_loantaker`, `name_intermediate_parent*` and
-#' `name_ultimate_parent`) with names in an asset-level dataset (column
+#' `name_ultimate_parent`) with names in an asset-based company data (column
 #' `name_company`). The raw names are first internally transformed, and aliases
-#' are assigned. The similarity between aliases in each of the loanbook and ald
-#' datasets is scored using [stringdist::stringsim()].
+#' are assigned. The similarity between aliases in each of the loanbook and abcd
+#'  is scored using [stringdist::stringsim()].
 #'
 #' @section Package options:
 #' `r2dii.match.sector_classifications`: Allows you to use your own
@@ -16,8 +16,8 @@
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
-#' @param loanbook,ald data frames structured like [r2dii.data::loanbook_demo]
-#'   and [r2dii.data::ald_demo].
+#' @param loanbook,abcd data frames structured like [r2dii.data::loanbook_demo]
+#'   and [r2dii.data::abcd_demo].
 #' @param by_sector Should names only be compared if companies belong to the
 #'   same `sector`?
 #' @param min_score A number between 0-1, to set the minimum `score` threshold.
@@ -30,8 +30,10 @@
 #'   columns of a particular direct loantaker or ultimate parent. To overwrite
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
-#'   ald.
+#'   abcd.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
+#' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
+#'   `abcd`.
 #'
 #' @family main functions
 #'
@@ -42,9 +44,9 @@
 #'   * `level` - the level of granularity that the loan was matched at
 #'   (e.g `direct_loantaker` or `ultimate_parent`)
 #'   * `sector` - the sector of the `loanbook` company
-#'   * `sector_ald` - the sector of the `ald` company
+#'   * `sector_abcd` - the sector of the `abcd` company
 #'   * `name` - the name of the `loanbook` company
-#'   * `name_ald` - the name of the `ald` company
+#'   * `name_abcd` - the name of the `abcd` company
 #'   * `score` - the score of the match (manually set this to `1`
 #'   prior to calling `prioritize()` to validate the match)
 #'   * `source` - determines the source of the match. (equal to `loanbook`
@@ -66,11 +68,11 @@
 #'
 #' # Small data for examples
 #' loanbook <- head(loanbook_demo, 50)
-#' ald <- head(ald_demo, 50)
+#' abcd <- head(abcd_demo, 50)
 #'
-#' match_name(loanbook, ald)
+#' match_name(loanbook, abcd)
 #'
-#' match_name(loanbook, ald, min_score = 0.9)
+#' match_name(loanbook, abcd, min_score = 0.9)
 #'
 #' # Use your own `sector_classifications`
 #' your_classifications <- tibble(
@@ -91,30 +93,39 @@
 #'   name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd"
 #' )
 #'
-#' ald <- tibble(
+#' abcd <- tibble(
 #'   name_company = "alpine knits india pvt. limited",
-#'   sector = "power",
-#'   alias_ald = "alpineknitsindiapvt ltd"
+#'   sector = "power"
 #' )
 #'
-#' match_name(loanbook, ald)
+#' match_name(loanbook, abcd)
 #'
 #' # Cleanup
 #' options(restore)
 match_name <- function(loanbook,
-                       ald,
+                       abcd,
                        by_sector = TRUE,
                        min_score = 0.8,
                        method = "jw",
                        p = 0.1,
                        overwrite = NULL,
+                       ald = deprecated(),
                        ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
 
+  if (lifecycle::is_present(ald)) {
+    lifecycle::deprecate_warn(
+      "0.1.0 (expected July 2022)",
+      "match_name(ald)",
+      "match_name(abcd)"
+      )
+    abcd <- ald
+  }
+
   match_name_impl(
     loanbook = loanbook,
-    ald = ald,
+    abcd = abcd,
     by_sector = by_sector,
     min_score = min_score,
     method = method,
@@ -125,7 +136,7 @@ match_name <- function(loanbook,
 }
 
 match_name_impl <- function(loanbook,
-                            ald,
+                            abcd,
                             by_sector = TRUE,
                             min_score = 0.8,
                             method = "jw",
@@ -140,12 +151,12 @@ match_name_impl <- function(loanbook,
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
-  prep_ald <- restructure_ald(ald)
+  prep_abcd <- restructure_abcd(abcd)
 
   if (by_sector) {
-    a <- expand_alias(prep_lbk, prep_ald)
+    a <- expand_alias(prep_lbk, prep_abcd)
   } else {
-    a <- tidyr::crossing(alias_lbk = prep_lbk$alias, alias_ald = prep_ald$alias)
+    a <- tidyr::crossing(alias_lbk = prep_lbk$alias, alias_abcd = prep_abcd$alias)
   }
 
   setDT(a)
@@ -158,7 +169,7 @@ match_name_impl <- function(loanbook,
   a <- unique(a)[
     ,
     score := stringdist::stringsim(
-      alias_lbk, alias_ald,
+      alias_lbk, alias_abcd,
       method = method, p = p, ...
     )
   ]
@@ -178,12 +189,12 @@ match_name_impl <- function(loanbook,
     by = id_2dii
   ][pick == TRUE][, pick := NULL]
 
-  prep_ald <- rlang::set_names(prep_ald, paste0, "_ald")
-  setDT(prep_ald)
-  matched <- prep_ald[matched, on = "alias_ald"]
+  prep_abcd <- rlang::set_names(prep_abcd, paste0, "_abcd")
+  setDT(prep_abcd)
+  matched <- prep_abcd[matched, on = "alias_abcd"]
 
   if (by_sector) {
-    matched <- matched[sector == sector_ald, ]
+    matched <- matched[sector == sector_abcd, ]
   }
 
   # Restore columns from loanbook
@@ -196,7 +207,7 @@ match_name_impl <- function(loanbook,
 
   matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
   matched <- unsuffix_and_regroup(matched, old_groups)
-  matched <- select(matched, -.data$alias, -.data$alias_ald)
+  matched <- select(matched, -.data$alias, -.data$alias_abcd)
   # Remove attribute added by data.table
   attr(matched, ".internal.selfref") <- NULL
 
@@ -250,7 +261,7 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
   out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
     unsuffix_and_regroup(old_groups) %>%
-    select(-.data$alias, -.data$alias_ald)
+    select(-.data$alias, -.data$alias_abcd)
 
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)
@@ -260,15 +271,15 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
 # readr -------------------------------------------------------------------
 
-expand_alias <- function(loanbook, ald) {
+expand_alias <- function(loanbook, abcd) {
   vars <- c("sector", "alias")
   l <- nest_by(select(loanbook, all_of_(vars)), .data$sector, .key = "alias_lbk")
-  a <- nest_by(select(ald, all_of_(vars)), .data$sector, .key = "alias_ald")
+  a <- nest_by(select(abcd, all_of_(vars)), .data$sector, .key = "alias_abcd")
   la <- dplyr::inner_join(l, a, by = "sector")
 
   purrr::map2_df(
-    la$alias_lbk, la$alias_ald,
-    ~ tidyr::expand_grid(alias_lbk = .x$alias, alias_ald = .y$alias)
+    la$alias_lbk, la$alias_abcd,
+    ~ tidyr::expand_grid(alias_lbk = .x$alias, alias_abcd = .y$alias)
   )
 }
 
@@ -326,11 +337,11 @@ names_added_by_match_name <- function() {
     "id_2dii",
     "level",
     "sector",
-    "sector_ald",
+    "sector_abcd",
     "name",
-    "name_ald",
+    "name_abcd",
     "alias_lbk",
-    "alias_ald",
+    "alias_abcd",
     "score",
     "source",
     "borderline"

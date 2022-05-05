@@ -5,7 +5,7 @@ test_that("w/ full demo datasets throws no error", {
   expect_no_error(
     loanbook_demo %>%
       slice(4:5) %>%
-      match_name(ald_demo) %>%
+      match_name(abcd_demo) %>%
       prioritize(priority = "ultimate_parent")
   )
 })
@@ -26,7 +26,7 @@ test_that("errors gracefully if data lacks crucial columns", {
     class = "missing_names"
   )
   expect_error(
-    prioritize(select(fake_matched(), -sector_ald)),
+    prioritize(select(fake_matched(), -sector_abcd)),
     class = "missing_names"
   )
   expect_error(
@@ -96,7 +96,7 @@ test_that("ignores existing groups", {
          "b",         4,    "a",
   ) %>%
     # Crucial columns with toy values
-    mutate(sector = "coal", sector_ald = "coal", score = 1) %>%
+    mutate(sector = "coal", sector_abcd = "coal", score = 1) %>%
     group_by(other_id)
   # styler: on
 
@@ -186,7 +186,7 @@ test_that("output is independent from the row-order of the input (#113)", {
   # styler: off
   # Could use fake_matched() but the data is clearer this way
   matched_direct <- tibble::tribble(
-  ~id_loan,   ~id_2dii,             ~level, ~score,      ~sector,  ~sector_ald,
+  ~id_loan,   ~id_2dii,             ~level, ~score,      ~sector,  ~sector_abcd,
        "A",        "D", "direct_loantaker",      1, "automotive", "automotive",
        "A",        "U",  "ultimate_parent",      1, "automotive", "automotive",
        "B",        "U",  "ultimate_parent",      1, "automotive", "automotive",
@@ -226,8 +226,8 @@ test_that("passes if score=1 & values by id_loan are duplicated for distinct
 
 test_that("with 0-row input returns 0-row input", {
   lbk <- fake_lbk()
-  ald <- fake_ald(name_company = "won't match")
-  zero_row <- suppressWarnings(match_name(lbk, ald))
+  abcd <- fake_abcd(name_company = "won't match")
+  zero_row <- suppressWarnings(match_name(lbk, abcd))
 
   has_zero_row <- identical(nrow(zero_row), 0L)
   stopifnot(has_zero_row)
