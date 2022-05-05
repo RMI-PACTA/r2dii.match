@@ -95,7 +95,7 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 217 × 28
+#> # A tibble: 216 × 28
 #>    id_loan id_direct_loantak… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>              <chr>            <chr>            <chr>           
 #>  1 L6      C304               Yukon Developme… <NA>             <NA>            
@@ -108,7 +108,7 @@ prioritize(match_result)
 #>  8 L25     C281               Ypf Sa           <NA>             <NA>            
 #>  9 L26     C280               Ypf Energia Ele… <NA>             <NA>            
 #> 10 L27     C278               Younicos Ag      <NA>             <NA>            
-#> # … with 207 more rows, and 23 more variables: id_ultimate_parent <chr>,
+#> # … with 206 more rows, and 23 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
