@@ -52,7 +52,7 @@ library(r2dii.match)
 
 Matching is achieved in two main steps:
 
-### 1. Run fuzzy matching
+### 1\. Run fuzzy matching
 
 `match_name()` will extract all unique counterparty names from the
 columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*`
@@ -83,9 +83,9 @@ match_result
 #> #   flag_project_finance_loan <chr>, name_project <lgl>, …
 ```
 
-### 2. Prioritize validated matches
+### 2\. Prioritize validated matches
 
-The user should then manually validate the output of \[match_name()\],
+The user should then manually validate the output of \[match\_name()\],
 ensuring that the value of the column `score` is equal to `1` for
 perfect matches only.
 
@@ -95,7 +95,7 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 217 × 28
+#> # A tibble: 216 × 28
 #>    id_loan id_direct_loantak… name_direct_loa… id_intermediate… name_intermedia…
 #>    <chr>   <chr>              <chr>            <chr>            <chr>           
 #>  1 L6      C304               Yukon Developme… <NA>             <NA>            
@@ -108,7 +108,7 @@ prioritize(match_result)
 #>  8 L25     C281               Ypf Sa           <NA>             <NA>            
 #>  9 L26     C280               Ypf Energia Ele… <NA>             <NA>            
 #> 10 L27     C278               Younicos Ag      <NA>             <NA>            
-#> # … with 207 more rows, and 23 more variables: id_ultimate_parent <chr>,
+#> # … with 206 more rows, and 23 more variables: id_ultimate_parent <chr>,
 #> #   name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
 #> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
 #> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
@@ -128,7 +128,7 @@ started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.ht
 This project has received funding from the [European Union LIFE
 program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/)
 and the [International Climate Initiative
-(IKI)](https://www.international-climate-initiative.com/en/details/project/measuring-paris-agreement-alignment-and-financial-risk-in-financial-markets-18_I_351-2982).
+(IKI)](https://www.international-climate-initiative.com/en/search-project/).
 The Federal Ministry for the Environment, Nature Conservation and
 Nuclear Safety (BMU) supports this initiative on the basis of a decision
 adopted by the German Bundestag. The views expressed are the sole

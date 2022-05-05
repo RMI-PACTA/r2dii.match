@@ -11,15 +11,15 @@ These tools implement in R a fundamental part of the software 'PACTA' (Paris Agr
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://2degreesinvesting.github.io/r2dii.match/}
+  \item \url{https://2degreesinvesting.github.io/r2dii.match//}
   \item \url{https://github.com/2DegreesInvesting/r2dii.match}
-  \item \url{https://2degreesinvesting.github.io/r2dii.match}
+  \item \url{https://2degreesinvesting.github.io/r2dii.match/}
   \item Report bugs at \url{https://github.com/2DegreesInvesting/r2dii.match/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Jackson Hoffart \email{jackson@2degrees-investing.org} (\href{https://orcid.org/0000-0002-8600-5042}{ORCID})
+\strong{Maintainer}: Jackson Hoffart \email{jackson.hoffart@gmail.com} (\href{https://orcid.org/0000-0002-8600-5042}{ORCID})
 
 Authors:
 \itemize{
