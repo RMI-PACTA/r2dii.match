@@ -37,9 +37,9 @@ Description: These tools implement in R a fundamental part of the software
     emission factors, etc.). This is the first step to assess if a
     financial portfolio aligns with climate goals.
 License: MIT + file LICENSE
-URL: https://2degreesinvesting.github.io/r2dii.match/,
+URL: https://2degreesinvesting.github.io/r2dii.match//,
     https://github.com/2DegreesInvesting/r2dii.match,
-    https://2degreesinvesting.github.io/r2dii.match
+    https://2degreesinvesting.github.io/r2dii.match/
 BugReports: https://github.com/2DegreesInvesting/r2dii.match/issues
 Depends: 
     R (>= 3.4)
