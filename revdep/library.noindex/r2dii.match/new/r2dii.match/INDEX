@@ -1,7 +1,0 @@
-crucial_lbk             Crucial 'loanbook' columns for 'match_name()'
-match_name              Match a loanbook to asset-based company data
-                        (abcd) by the name_* columns
-prioritize              Pick rows where 'score' is 1 and 'level' per
-                        loan is of highest 'priority'
-prioritize_level        Arrange unique 'level' values in default order
-                        of 'priority'
