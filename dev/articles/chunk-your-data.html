@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Using `match_name()` with large loanbooks">
 <meta property="og:description" content="How to resolve memory issues">
@@ -96,7 +96,7 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Using `match_name()` with large loanbooks</h1>
             
       
@@ -112,36 +112,36 @@
 </h2>
 <p>This example uses r2dii.match plus a few optional but convenient packages, including <a href="https://2degreesinvesting.github.io/r2dii.data/" class="external-link">r2dii.data</a> for example datasets.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vroom.r-lib.org" class="external-link">vroom</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//">r2dii.match</a></span><span class="op">)</span>
-
-<span class="co"># Example datasets from the r2dii.data package</span>
-<span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span>
-<span class="va">abcd</span> <span class="op">&lt;-</span> <span class="va">abcd_demo</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://fs.r-lib.org" class="external-link">fs</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vroom.r-lib.org" class="external-link">vroom</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//">r2dii.match</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Example datasets from the r2dii.data package</span></span>
+<span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span></span>
+<span><span class="va">abcd</span> <span class="op">&lt;-</span> <span class="va">abcd_demo</span></span></code></pre></div>
 <p>If the entire <code>loanbook</code> is too large, feed <code><a href="../reference/match_name.html">match_name()</a></code> with smaller chunks, so that any call to <code>match_name(this_chunk, abcd)</code> fits in memory. More chunks take longer to run but use less memory; you’ll need to experiment to find the number of chunks that best works for you.</p>
 <p>Say you try three chunks. You can take the <code>loanbook</code> dataset and then use <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> to add the new column <code>chunk</code>, which assigns each row to one of the <code>chunks</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">chunks</span> <span class="op">&lt;-</span> <span class="fl">3</span>
-<span class="va">chunked</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>chunk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">chunks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">chunks</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="va">chunked</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>chunk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">chunks</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The total number of rows in the entire <code>loanbook</code> equals the sum of the rows across chunks.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">loanbook</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span>
-<span class="co">#&gt;       n</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   321</span>
-
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span>
-<span class="co">#&gt;   chunk     n</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1   107</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2   107</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3   107</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">loanbook</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
+<span><span class="co">#&gt;       n</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   321</span></span>
+<span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
+<span><span class="co">#&gt;   chunk     n</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1   107</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2   107</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3   107</span></span></code></pre></div>
 <p>For each chunk you need to repeat this process:</p>
 <ol style="list-style-type: decimal">
 <li>Match this chunk against the entire <code>abcd</code> dataset.</li>
@@ -149,60 +149,60 @@
 <li>Else, save the result to a .csv file.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># This "output" directory is temporary; you may use any folder in your computer</span>
-<span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"output"</span><span class="op">)</span>
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_access.html" class="external-link">dir_exists</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-
-<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">chunked</span><span class="op">$</span><span class="va">chunk</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="co"># 1. Match this chunk against the entire `abcd` dataset.</span>
-  <span class="va">this_chunk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span> <span class="op">==</span> <span class="va">i</span><span class="op">)</span>
-  <span class="va">this_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">this_chunk</span>, <span class="va">abcd</span><span class="op">)</span>
-  
-  <span class="co"># 2. If this chunk matched nothing, move to the next chunk</span>
-  <span class="va">matched_nothing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_result</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span>
-  <span class="kw">if</span> <span class="op">(</span><span class="va">matched_nothing</span><span class="op">)</span> <span class="kw">next</span><span class="op">(</span><span class="op">)</span>
-  
-  <span class="co"># 3. Else, save the result to a .csv file.</span>
-  <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span><span class="va">this_result</span>, <span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="va">out</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">i</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># This "output" directory is temporary; you may use any folder in your computer</span></span>
+<span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"output"</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://fs.r-lib.org/reference/file_access.html" class="external-link">dir_exists</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">chunked</span><span class="op">$</span><span class="va">chunk</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># 1. Match this chunk against the entire `abcd` dataset.</span></span>
+<span>  <span class="va">this_chunk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span> <span class="op">==</span> <span class="va">i</span><span class="op">)</span></span>
+<span>  <span class="va">this_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">this_chunk</span>, <span class="va">abcd</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># 2. If this chunk matched nothing, move to the next chunk</span></span>
+<span>  <span class="va">matched_nothing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_result</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">matched_nothing</span><span class="op">)</span> <span class="kw">next</span><span class="op">(</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># 3. Else, save the result to a .csv file.</span></span>
+<span>  <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span><span class="va">this_result</span>, <span class="fu"><a href="https://fs.r-lib.org/reference/path.html" class="external-link">path</a></span><span class="op">(</span><span class="va">out</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">i</span>, <span class="st">".csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>The result is one .csv file per chunk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span>
-<span class="co">#&gt; /tmp/RtmpMEQqyW/output/1.csv /tmp/RtmpMEQqyW/output/2.csv </span>
-<span class="co">#&gt; /tmp/RtmpMEQqyW/output/3.csv</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<span><span class="co">#&gt; /tmp/RtmpLj2Bzo/output/1.csv /tmp/RtmpLj2Bzo/output/2.csv </span></span>
+<span><span class="co">#&gt; /tmp/RtmpLj2Bzo/output/3.csv</span></span></code></pre></div>
 <p>You can read and combine all files in one step with <code><a href="https://vroom.r-lib.org/reference/vroom.html" class="external-link">vroom()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html" class="external-link">vroom</a></span><span class="op">(</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">410</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">29</span></span>
-<span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span>
-<span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> "\t"</span>
-<span class="co">#&gt; <span style="color: #BB0000;">chr</span> (20): id_loan, id_direct_loantaker, name_direct_loantaker, id_intermedia...</span>
-<span class="co">#&gt; <span style="color: #00BB00;">dbl</span>  (5): loan_size_outstanding, loan_size_credit_limit, sector_classificati...</span>
-<span class="co">#&gt; <span style="color: #BBBB00;">lgl</span>  (4): name_project, lei_direct_loantaker, isin_direct_loantaker, borderline</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="va">matched</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 410 × 29</span></span>
-<span class="co">#&gt;    id_loan id_direct_loantak… name_direct_loa… id_intermediate… name_intermedia…</span>
-<span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L1      C294               Yuamen Xinneng … <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L3      C292               Yuama Ethanol L… IP5              Yuama Inc.      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L3      C292               Yuama Ethanol L… IP5              Yuama Inc.      </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L5      C305               Yukon Energy Co… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L5      C305               Yukon Energy Co… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L6      C304               Yukon Developme… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L6      C304               Yukon Developme… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L8      C303               Yueyang City Co… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L9      C301               Yuedxiu Corp One IP10             Yuedxiu Group   </span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L10     C302               Yuexi County AA… <span style="color: #BB0000;">NA</span>               <span style="color: #BB0000;">NA</span>              </span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 400 more rows, and 24 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   sector_classification_input_type &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
-<span class="co">#&gt; <span style="color: #949494;">#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html" class="external-link">vroom</a></span><span class="op">(</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">410</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">29</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> "\t"</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span> (20): id_loan, id_direct_loantaker, name_direct_loantaker, id_intermedia...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">dbl</span>  (5): loan_size_outstanding, loan_size_credit_limit, sector_classificati...</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">lgl</span>  (4): name_project, lei_direct_loantaker, isin_direct_loantaker, borderline</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="va">matched</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 410 × 29</span></span></span>
+<span><span class="co">#&gt;    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L1      C294          Yuamen… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP15    Alpine…  <span style="text-decoration: underline;">225</span>625 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L3      C292          Yuama … IP5     Yuama … UP288   Univer…  <span style="text-decoration: underline;">410</span>297 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L3      C292          Yuama … IP5     Yuama … UP288   Univer…  <span style="text-decoration: underline;">410</span>297 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L5      C305          Yukon … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP104   Garlan…  <span style="text-decoration: underline;">406</span>585 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L5      C305          Yukon … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP104   Garlan…  <span style="text-decoration: underline;">406</span>585 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L6      C304          Yukon … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP83    Earthp…  <span style="text-decoration: underline;">185</span>721 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L6      C304          Yukon … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP83    Earthp…  <span style="text-decoration: underline;">185</span>721 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L8      C303          Yueyan… <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP163   Kraftw…  <span style="text-decoration: underline;">291</span>513 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L9      C301          Yuedxi… IP10    Yuedxi… UP138   Jai Bh…  <span style="text-decoration: underline;">407</span>513 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L10     C302          Yuexi … <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      UP32    Bhagwa…  <span style="text-decoration: underline;">186</span>649 EUR    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 400 more rows, 20 more variables: loan_size_credit_limit &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_input_type &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, chunk &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   id_2dii &lt;chr&gt;, level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></span></code></pre></div>
 <p>The <code>matched</code> result should be similar to that of <code>match_name(loanbook, abcd)</code>. Your next steps are documented on the <a href="https://2degreesinvesting.github.io/r2dii.match/index.html">Home</a> page and <a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a> sections of the package website.</p>
 </div>
 <div class="section level2">
@@ -232,7 +232,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
