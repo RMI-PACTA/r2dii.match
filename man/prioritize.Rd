@@ -32,7 +32,9 @@ desired match. By default, the highest \code{priority} is the most granular matc
 \details{
 \strong{How to validate \code{data}}
 
-Write the output of \code{match_name()} into a .csv file with:\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Writting to current working directory
+Write the output of \code{match_name()} into a .csv file with:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Writting to current working directory
 matched \%>\%
   readr::write_csv("matched.csv")
 }\if{html}{\out{</div>}}
@@ -54,7 +56,9 @@ internal information on the company structure, etc.)
 \item Save the edited file as, say, \emph{valid_matches.csv}.
 }
 
-Re-read the edited file (validated) with:\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Reading from current working directory
+Re-read the edited file (validated) with:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Reading from current working directory
 valid_matches <- readr::read_csv("valid_matches.csv")
 }\if{html}{\out{</div>}}
 }
