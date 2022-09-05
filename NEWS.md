@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* Maintenance release. 
+
 # r2dii.match 0.1.0
 
 * New argument `abcd` of `match_name()` supersedes the argument `ald` (#399). 
