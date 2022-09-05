@@ -1,4 +1,4 @@
-ALD
+ABCD
 Acknowledgements
 BMU
 CMD
@@ -11,6 +11,7 @@ Lifecycle
 ORCID
 PACTA
 Winkler
+abcd
 ald
 cjyetman
 counterparties
@@ -30,7 +31,6 @@ loanbooks
 loantaker
 quosure
 readr
-rstudio
 stringdist
 tibble
 vctrs
