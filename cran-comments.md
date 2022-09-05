@@ -8,12 +8,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-New maintainer:
-  Jackson Hoffart <jackson.hoffart@gmail.com>
-Old maintainer(s):
-  Mauro Lepore <maurolepore@gmail.com>
+0 errors | 0 warnings | 0 notes
 
 ## revdepcheck results
 
