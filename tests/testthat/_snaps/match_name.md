@@ -1,25 +1,3 @@
-# warns overwrite
-
-    Code
-      match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo)
-    Warning <overwrite_warning>
-      You should only overwrite a sector at the level of the 'direct
-      loantaker' (DL). If you overwrite a sector at the level of the 'ultimate
-      parent' (UP) you consequently overwrite all children of that sector,
-      which most likely is a mistake.
-    Output
-      # A tibble: 1 x 15
-        sector_c~1 id_ul~2 name_~3 id_di~4 name_~5 secto~6 id_2dii
-        <chr>      <chr>   <chr>   <chr>   <chr>     <dbl> <chr>  
-      1 NACE       UP15    Alpine~ C294    Yuamen~    3511 UP1    
-      # ... with 8 more variables: level <chr>, sector <chr>,
-      #   sector_abcd <chr>, name <chr>, name_abcd <chr>,
-      #   score <dbl>, source <chr>, borderline <lgl>, and
-      #   abbreviated variable names
-      #   1: sector_classification_system, 2: id_ultimate_parent,
-      #   3: name_ultimate_parent, 4: id_direct_loantaker,
-      #   5: name_direct_loantaker, ...
-
 # works with UP266
 
     Code
