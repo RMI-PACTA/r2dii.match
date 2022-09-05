@@ -22,19 +22,63 @@
 
 # works with UP266
 
-    Code
-      select(out, .data$id_2dii, matches(prefix))
-    Output
-      # A tibble: 2 x 7
-        id_2dii id_direc~1 name_~2 id_in~3 name_~4 id_ul~5 name_~6
-        <chr>   <chr>      <chr>   <chr>   <chr>   <chr>   <chr>  
-      1 DL1     C38        Glenco~ <NA>    <NA>    UP266   State ~
-      2 UP1     C38        Glenco~ <NA>    <NA>    UP266   State ~
-      # ... with abbreviated variable names
-      #   1: id_direct_loantaker, 2: name_direct_loantaker,
-      #   3: id_intermediate_parent_1,
-      #   4: name_intermediate_parent_1, 5: id_ultimate_parent,
-      #   6: name_ultimate_parent
+    {
+      "type": "list",
+      "attributes": {
+        "names": {
+          "type": "character",
+          "attributes": {},
+          "value": ["id_2dii", "id_direct_loantaker", "name_direct_loantaker", "id_intermediate_parent_1", "name_intermediate_parent_1", "id_ultimate_parent", "name_ultimate_parent"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2]
+        },
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["tbl_df", "tbl", "data.frame"]
+        }
+      },
+      "value": [
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["DL1", "UP1"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["C38", "C38"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["Glencore Plc", "Glencore Plc"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": [null, null]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["UP266", "UP266"]
+        },
+        {
+          "type": "character",
+          "attributes": {},
+          "value": ["State Of Qatar", "State Of Qatar"]
+        }
+      ]
+    }
 
 # with loanbook_demo and abcd_demo outputs expected value
 
