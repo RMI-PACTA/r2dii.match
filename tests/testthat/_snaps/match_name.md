@@ -1,37 +1,18 @@
-# warns overwrite
-
-    Code
-      match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo)
-    Warning <overwrite_warning>
-      You should only overwrite a sector at the level of the 'direct
-      loantaker' (DL). If you overwrite a sector at the level of the 'ultimate
-      parent' (UP) you consequently overwrite all children of that sector,
-      which most likely is a mistake.
-    Output
-      # A tibble: 1 x 15
-        sector_classification_s~ id_ultimate_par~ name_ultimate_p~
-        <chr>                    <chr>            <chr>           
-      1 NACE                     UP15             Alpine Knits In~
-      # ... with 12 more variables: id_direct_loantaker <chr>,
-      #   name_direct_loantaker <chr>,
-      #   sector_classification_direct_loantaker <dbl>,
-      #   id_2dii <chr>, level <chr>, sector <chr>,
-      #   sector_abcd <chr>, name <chr>, name_abcd <chr>,
-      #   score <dbl>, source <chr>, borderline <lgl>
-
 # works with UP266
 
     Code
       select(out, .data$id_2dii, matches(prefix))
     Output
       # A tibble: 2 x 7
-        id_2dii id_direct_loant~ name_direct_loa~ id_intermediate~
-        <chr>   <chr>            <chr>            <chr>           
-      1 DL1     C38              Glencore Plc     <NA>            
-      2 UP1     C38              Glencore Plc     <NA>            
-      # ... with 3 more variables:
-      #   name_intermediate_parent_1 <chr>,
-      #   id_ultimate_parent <chr>, name_ultimate_parent <chr>
+        id_2dii id_direc~1 name_~2 id_in~3 name_~4 id_ul~5 name_~6
+        <chr>   <chr>      <chr>   <chr>   <chr>   <chr>   <chr>  
+      1 DL1     C38        Glenco~ <NA>    <NA>    UP266   State ~
+      2 UP1     C38        Glenco~ <NA>    <NA>    UP266   State ~
+      # ... with abbreviated variable names
+      #   1: id_direct_loantaker, 2: name_direct_loantaker,
+      #   3: id_intermediate_parent_1,
+      #   4: name_intermediate_parent_1, 5: id_ultimate_parent,
+      #   6: name_ultimate_parent
 
 # with loanbook_demo and abcd_demo outputs expected value
 
