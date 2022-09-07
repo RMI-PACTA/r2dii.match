@@ -4,14 +4,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="These tools implement in R a fundamental part of the software
+    PACTA (Paris Agreement Capital Transition Assessment), which is a
+    free tool that calculates the alignment between financial portfolios
+    and climate scenarios (&lt;https://2degrees-investing.org/&gt;). Financial
+    institutions use PACTA to study how their capital allocation
+    decisions align with climate change mitigation goals. This package
+    matches data from corporate lending portfolios to asset level data
+    from market-intelligence databases (e.g. power plant capacities,
+    emission factors, etc.). This is the first step to assess if a
+    financial portfolio aligns with climate goals.">
 <title>Tools to Match Corporate Lending Portfolios with Climate Data • r2dii.match</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Tools to Match Corporate Lending Portfolios with Climate Data">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Tools to Match Corporate Lending Portfolios with Climate Data">
 <meta property="og:description" content="These tools implement in R a fundamental part of the software
     PACTA (Paris Agreement Capital Transition Assessment), which is a
     free tool that calculates the alignment between financial portfolios
@@ -22,264 +37,232 @@
     from market-intelligence databases (e.g. power plant capacities,
     emission factors, etc.). This is the first step to assess if a
     financial portfolio aligns with climate goals.">
+<meta property="og:image" content="https://2degreesinvesting.github.io/r2dii.match/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.11</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="articles/r2dii-match.html">Get started</a>
+    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="index.html">r2dii.match</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="articles/r2dii-match.html">Get started</a>
 </li>
-<li>
-  <a href="reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/matching-coverage.html">Calculating Matching Coverage</a>
-    </li>
-    <li>
-      <a href="articles/chunk-your-data.html">Using `match_name()` with large loanbooks</a>
-    </li>
-  </ul>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/matching-coverage.html">Calculating Matching Coverage</a>
+    <a class="dropdown-item" href="articles/chunk-your-data.html">Using `match_name()` with large loanbooks</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    News
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="https://2degreesinvesting.github.io/#category:r2dii">r2dii blog posts</a>
-    </li>
-    <li class="divider">
-    <li>
-      <a href="news/index.html">Change log</a>
-    </li>
-  </ul>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-news">News</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-news">
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/#category:r2dii">r2dii blog posts</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="news/index.html">Change log</a>
+  </div>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Packages
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>
-    </li>
-  </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-packages">Packages</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-packages">
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
+    <a class="dropdown-item" href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>
+  </div>
 </li>
-<li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/2DegreesInvesting/r2dii.match">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.svg" class="logo" alt=""><h1 id="r2diimatch-">r2dii.match <a class="anchor" aria-label="anchor" href="#r2diimatch-"></a>
+</h1>
 </div>
-<!--/.navbar -->
-
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-<div id="r2diimatch-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#r2diimatch-" class="anchor"></a>r2dii.match <a href="https://github.com/2DegreesInvesting/r2dii.match"><img src="https://imgur.com/A5ASZPE.png" align="right" height="43"></a>
-</h1></div>
 <!-- badges: start -->
-
-<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://2degrees-investing.org/" class="external-link uri">https://2degrees-investing.org/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the released version of r2dii.match from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("r2dii.match")</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("r2dii.match")</span></span></code></pre></div>
 <p>Or install the development version of r2dii.match from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.match"</span><span class="op">)</span></code></pre></div>
-<p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/">How to raise an issue?</a></p>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"2DegreesInvesting/r2dii.match"</span><span class="op">)</span></span></code></pre></div>
+<p><a href="https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/" class="external-link">How to raise an issue?</a></p>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/">r2dii.data</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//">r2dii.match</a></span><span class="op">)</span></span></code></pre></div>
 <p>Matching is achieved in two main steps:</p>
-<div id="1-run-fuzzy-matching" class="section level3">
-<h3 class="hasAnchor">
-<a href="#1-run-fuzzy-matching" class="anchor"></a>1. Run fuzzy matching</h3>
-<p><code><a href="reference/match_name.html">match_name()</a></code> will extract all unique counterparty names from the columns: <code>direct_loantaker</code>, <code>ultimate_parent</code> or <code>intermediate_parent*</code> and run fuzzy matching against all company names in the <code>ald</code>:</p>
+<div class="section level3">
+<h3 id="1-run-fuzzy-matching">1. Run fuzzy matching<a class="anchor" aria-label="anchor" href="#1-run-fuzzy-matching"></a>
+</h3>
+<p><code><a href="reference/match_name.html">match_name()</a></code> will extract all unique counterparty names from the columns: <code>direct_loantaker</code>, <code>ultimate_parent</code> or <code>intermediate_parent*</code> and run fuzzy matching against all company names in the <code>abcd</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">match_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span>
-<span class="va">match_result</span> 
-<span class="co">#&gt; # A tibble: 410 × 28</span>
-<span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L1      C294              Yuamen Xinneng T… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L3      C292              Yuama Ethanol Llc IP5              Yuama Inc.      </span>
-<span class="co">#&gt;  3 L3      C292              Yuama Ethanol Llc IP5              Yuama Inc.      </span>
-<span class="co">#&gt;  4 L5      C305              Yukon Energy Cor… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L5      C305              Yukon Energy Cor… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 L8      C303              Yueyang City Con… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L9      C301              Yuedxiu Corp One  IP10             Yuedxiu Group   </span>
-<span class="co">#&gt; 10 L10     C302              Yuexi County AAA… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 400 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
-<span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
-<span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">match_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">abcd_demo</span><span class="op">)</span></span>
+<span><span class="va">match_result</span> </span>
+<span><span class="co">#&gt; # A tibble: 410 × 28</span></span>
+<span><span class="co">#&gt;    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt;  1 L1      C294          Yuamen… &lt;NA&gt;    &lt;NA&gt;    UP15    Alpine…  225625 EUR    </span></span>
+<span><span class="co">#&gt;  2 L3      C292          Yuama … IP5     Yuama … UP288   Univer…  410297 EUR    </span></span>
+<span><span class="co">#&gt;  3 L3      C292          Yuama … IP5     Yuama … UP288   Univer…  410297 EUR    </span></span>
+<span><span class="co">#&gt;  4 L5      C305          Yukon … &lt;NA&gt;    &lt;NA&gt;    UP104   Garlan…  406585 EUR    </span></span>
+<span><span class="co">#&gt;  5 L5      C305          Yukon … &lt;NA&gt;    &lt;NA&gt;    UP104   Garlan…  406585 EUR    </span></span>
+<span><span class="co">#&gt;  6 L6      C304          Yukon … &lt;NA&gt;    &lt;NA&gt;    UP83    Earthp…  185721 EUR    </span></span>
+<span><span class="co">#&gt;  7 L6      C304          Yukon … &lt;NA&gt;    &lt;NA&gt;    UP83    Earthp…  185721 EUR    </span></span>
+<span><span class="co">#&gt;  8 L8      C303          Yueyan… &lt;NA&gt;    &lt;NA&gt;    UP163   Kraftw…  291513 EUR    </span></span>
+<span><span class="co">#&gt;  9 L9      C301          Yuedxi… IP10    Yuedxi… UP138   Jai Bh…  407513 EUR    </span></span>
+<span><span class="co">#&gt; 10 L10     C302          Yuexi … &lt;NA&gt;    &lt;NA&gt;    UP32    Bhagwa…  186649 EUR    </span></span>
+<span><span class="co">#&gt; # … with 400 more rows, 19 more variables: loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></code></pre></div>
 </div>
-<div id="2-prioritize-validated-matches" class="section level3">
-<h3 class="hasAnchor">
-<a href="#2-prioritize-validated-matches" class="anchor"></a>2. Prioritize validated matches</h3>
-<p>The user should then manually validate the output of <br><span class="math display"><em>m</em><em>a</em><em>t</em><em>c</em><em>h</em>_<em>n</em><em>a</em><em>m</em><em>e</em>()</span><br>, ensuring that the value of the column <code>score</code> is equal to <code>1</code> for perfect matches only.</p>
+<div class="section level3">
+<h3 id="2-prioritize-validated-matches">2. Prioritize validated matches<a class="anchor" aria-label="anchor" href="#2-prioritize-validated-matches"></a>
+</h3>
+<p>The user should then manually validate the output of [match_name()], ensuring that the value of the column <code>score</code> is equal to <code>1</code> for perfect matches only.</p>
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">match_result</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 217 × 28</span>
-<span class="co">#&gt;    id_loan id_direct_loanta… name_direct_loan… id_intermediate… name_intermedia…</span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           </span>
-<span class="co">#&gt;  1 L6      C304              Yukon Developmen… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  2 L13     C297              Yuba City Cogene… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  3 L20     C287              Ytl Powerseraya … &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  4 L21     C286              Ytl Power Intern… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  5 L22     C285              Ytl Corp Bhd      &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  6 L23     C283              Ypic Internation… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  7 L24     C282              Ypfb Corporacion  &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  8 L25     C281              Ypf Sa            &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt;  9 L26     C280              Ypf Energia Elec… &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; 10 L27     C278              Younicos Ag       &lt;NA&gt;             &lt;NA&gt;            </span>
-<span class="co">#&gt; # … with 207 more rows, and 23 more variables: id_ultimate_parent &lt;chr&gt;,</span>
-<span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span>
-<span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span>
-<span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;, …</span></code></pre></div>
-<p>The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their ald counterpart.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">match_result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 216 × 28</span></span>
+<span><span class="co">#&gt;    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt;  1 L6      C304          Yukon … &lt;NA&gt;    &lt;NA&gt;    UP83    Earthp…  185721 EUR    </span></span>
+<span><span class="co">#&gt;  2 L13     C297          Yuba C… &lt;NA&gt;    &lt;NA&gt;    UP69    Consor…  200569 EUR    </span></span>
+<span><span class="co">#&gt;  3 L20     C287          Ytl Po… &lt;NA&gt;    &lt;NA&gt;    UP35    Bnb Re…  308217 EUR    </span></span>
+<span><span class="co">#&gt;  4 L21     C286          Ytl Po… &lt;NA&gt;    &lt;NA&gt;    UP63    Cisa S…  226553 EUR    </span></span>
+<span><span class="co">#&gt;  5 L22     C285          Ytl Co… &lt;NA&gt;    &lt;NA&gt;    UP187   Mr. La…  196857 EUR    </span></span>
+<span><span class="co">#&gt;  6 L23     C283          Ypic I… &lt;NA&gt;    &lt;NA&gt;    UP297   Wallen…  195929 EUR    </span></span>
+<span><span class="co">#&gt;  7 L24     C282          Ypfb C… &lt;NA&gt;    &lt;NA&gt;    UP209   Phoeni…  309145 EUR    </span></span>
+<span><span class="co">#&gt;  8 L25     C281          Ypf Sa  &lt;NA&gt;    &lt;NA&gt;    UP296   Viridi…  266457 EUR    </span></span>
+<span><span class="co">#&gt;  9 L26     C280          Ypf En… &lt;NA&gt;    &lt;NA&gt;    UP67    Coast …  199641 EUR    </span></span>
+<span><span class="co">#&gt; 10 L27     C278          Younic… &lt;NA&gt;    &lt;NA&gt;    UP45    Ce Ene…  197785 EUR    </span></span>
+<span><span class="co">#&gt; # … with 206 more rows, 19 more variables: loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></code></pre></div>
+<p>The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their abcd counterpart.</p>
 <p><a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
 </div>
 </div>
-<div id="funding" class="section level2">
-<h2 class="hasAnchor">
-<a href="#funding" class="anchor"></a>Funding</h2>
-<p>This project has received funding from the <a href="https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/">European Union LIFE program</a> and the <a href="https://www.international-climate-initiative.com/en/details/project/measuring-paris-agreement-alignment-and-financial-risk-in-financial-markets-18_I_351-2982">International Climate Initiative (IKI)</a>. The Federal Ministry for the Environment, Nature Conservation and Nuclear Safety (BMU) supports this initiative on the basis of a decision adopted by the German Bundestag. The views expressed are the sole responsibility of the authors and do not necessarily reflect the views of the funders. The funders are not responsible for any use that may be made of the information it contains.</p>
+<div class="section level2">
+<h2 id="funding">Funding<a class="anchor" aria-label="anchor" href="#funding"></a>
+</h2>
+<p>This project has received funding from the <a href="https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/" class="external-link">European Union LIFE program</a> and the <a href="https://www.international-climate-initiative.com/en/search-project/" class="external-link">International Climate Initiative (IKI)</a>. The Federal Ministry for the Environment, Nature Conservation and Nuclear Safety (BMU) supports this initiative on the basis of a decision adopted by the German Bundestag. The views expressed are the sole responsibility of the authors and do not necessarily reflect the views of the funders. The funders are not responsible for any use that may be made of the information it contains.</p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
-<h2>Links</h2>
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=r2dii.match">https://​cloud.r-project.org/​package=r2dii.match</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/2DegreesInvesting/r2dii.match/">https://​github.com/​2DegreesInvesting/​r2dii.match/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/2DegreesInvesting/r2dii.match/issues">https://​github.com/​2DegreesInvesting/​r2dii.match/​issues</a>
-</li>
-<li>Learn more at <br><a href="https://2degrees-investing.org/">https://​2degrees-investing.org/​</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=r2dii.match" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/2DegreesInvesting/r2dii.match/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/2DegreesInvesting/r2dii.match/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://2degrees-investing.org/" class="external-link">Learn more</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing r2dii.match</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://github.com/maurolepore/">Mauro Lepore</a> <br><small class="roles"> Author, maintainer, contractor </small> <a href="https://orcid.org/0000-0002-1986-7988" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://github.com/jdhoffa/" class="external-link">Jackson Hoffart</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-8600-5042" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
-<a href="https://github.com/jdhoffa/">Jackson Hoffart</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8600-5042" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://github.com/maurolepore/" class="external-link">Mauro Lepore</a> <br><small class="roles"> Author, contractor </small> <a href="https://orcid.org/0000-0002-1986-7988" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Klaus Hagedorn <br><small class="roles"> Author </small>  </li>
 <li>Florence Palandri <br><small class="roles"> Author </small>  </li>
 <li>Evgeny Petrovsky <br><small class="roles"> Author </small>  </li>
 <li>
-<a href="https://2degrees-investing.org/">2 Degrees Investing Initiative</a> <br><small class="roles"> Copyright holder, funder </small>  </li>
+<a href="https://2degrees-investing.org/" class="external-link">2 Degrees Investing Initiative</a> <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
-<li><a href="https://CRAN.R-project.org/package=r2dii.match"><img src="https://www.r-pkg.org/badges/version/r2dii.match" alt="CRAN status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=r2dii.match"><img src="https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match"></a></li>
-<li><a href="https://codecov.io/gh/2degreesinvesting/r2dii.match?branch=master"><img src="https://codecov.io/gh/2degreesinvesting/r2dii.match/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/2DegreesInvesting/r2dii.match/actions"><img src="https://github.com/2DegreesInvesting/r2dii.match/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-</ul>
-</div>
-</div>
+
+
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/maurolepore/">Mauro Lepore</a>, <a href="https://github.com/jdhoffa/">Jackson Hoffart</a>, Klaus Hagedorn, Florence Palandri, Evgeny Petrovsky, <a href="https://2degrees-investing.org/">2 Degrees Investing Initiative</a>.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://github.com/jdhoffa/" class="external-link">Jackson Hoffart</a>, <a href="https://github.com/maurolepore/" class="external-link">Mauro Lepore</a>, Klaus Hagedorn, Florence Palandri, Evgeny Petrovsky, <a href="https://2degrees-investing.org/" class="external-link">2 Degrees Investing Initiative</a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//index.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/404.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/crucial_lbk.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/match_name.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/pipe.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/articles/chunk-your-data.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/prioritize_level.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/articles/matching-coverage.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//reference/r2dii.match-package.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match-0-0-1.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//articles/chunk-your-data.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//articles/matching-coverage.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/authors.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//articles/r2dii-match-0-0-1.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/index.html</loc>
   </url>
   <url>
-    <loc>https://github.com/2DegreesInvesting/r2dii.match//articles/r2dii-match.html</loc>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/reference/crucial_lbk.html</loc>
+  </url>
+  <url>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html</loc>
+  </url>
+  <url>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/reference/prioritize.html</loc>
+  </url>
+  <url>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/reference/prioritize_level.html</loc>
+  </url>
+  <url>
+    <loc>https://2degreesinvesting.github.io/r2dii.match/reference/r2dii.match-package.html</loc>
   </url>
 </urlset>

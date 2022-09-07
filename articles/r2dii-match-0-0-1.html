@@ -4,260 +4,235 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="r2dii.match">
 <title>r2dii.match 0.0.1 • r2dii.match</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="r2dii.match 0.0.1">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="r2dii.match 0.0.1">
 <meta property="og:description" content="r2dii.match">
+<meta property="og:image" content="https://2degreesinvesting.github.io/r2dii.match/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">r2dii.match</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.11</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../articles/r2dii-match.html">Get started</a>
+    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-primary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">r2dii.match</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../articles/r2dii-match.html">Get started</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/matching-coverage.html">Calculating Matching Coverage</a>
-    </li>
-    <li>
-      <a href="../articles/chunk-your-data.html">Using `match_name()` with large loanbooks</a>
-    </li>
-  </ul>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/matching-coverage.html">Calculating Matching Coverage</a>
+    <a class="dropdown-item" href="../articles/chunk-your-data.html">Using `match_name()` with large loanbooks</a>
+  </div>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    News
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="https://2degreesinvesting.github.io/#category:r2dii">r2dii blog posts</a>
-    </li>
-    <li class="divider">
-    <li>
-      <a href="../news/index.html">Change log</a>
-    </li>
-  </ul>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-news">News</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-news">
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/#category:r2dii">r2dii blog posts</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="../news/index.html">Change log</a>
+  </div>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Packages
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
-    </li>
-    <li>
-      <a href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>
-    </li>
-  </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-packages">Packages</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-packages">
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/r2dii.data">r2dii.data</a>
+    <a class="dropdown-item" href="https://2degreesinvesting.github.io/r2dii.match">r2dii.match</a>
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/r2dii.analysis">r2dii.analysis</a>
+    <a class="external-link dropdown-item" href="https://2degreesinvesting.github.io/r2dii.plot">r2dii.plot</a>
+  </div>
 </li>
-<li>
-  <a href="https://github.com/2DegreesInvesting/r2dii.match">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/2DegreesInvesting/r2dii.match">
     <span class="fa fa-github"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><script src="r2dii-match-0-0-1_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>r2dii.match 0.0.1</h1>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+      <img src="../logo.svg" class="logo" alt=""><h1>r2dii.match 0.0.1</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/2DegreesInvesting/r2dii.match/blob/master/vignettes/r2dii-match-0-0-1.Rmd"><code>vignettes/r2dii-match-0-0-1.Rmd</code></a></small>
-      <div class="hidden name"><code>r2dii-match-0-0-1.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/2DegreesInvesting/r2dii.match/blob/HEAD/vignettes/r2dii-match-0-0-1.Rmd" class="external-link"><code>vignettes/r2dii-match-0-0-1.Rmd</code></a></small>
+      <div class="d-none name"><code>r2dii-match-0-0-1.Rmd</code></div>
     </div>
 
     
     
 <p>We’re happy to announce that r2dii.match is now on CRAN.</p>
-<p>r2dii.match matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals. For details see the package’s <a href="https://2degreesinvesting.github.io/r2dii.match/">website</a> and <a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>.</p>
+<p>r2dii.match matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals. For details see the package’s <a href="https://2degreesinvesting.github.io/r2dii.match/">website</a> and <a href="https://2degrees-investing.org/" class="external-link uri">https://2degrees-investing.org/</a>.</p>
 <p>Install r2dii.match with:</p>
-<pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("r2dii.match")</a></code></pre>
+<pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"r2dii.match"</span><span class="op">)</span></span></code></pre>
 <p>And use it with:</p>
-<pre><code><a href="https://2degreesinvesting.github.io/r2dii.match/">library(r2dii.match)</a></code></pre>
-<p><a href="https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html"><code>match_name()</code></a> matches a loanbook and asset-level dataset (ald). Let’s try it with <a href="https://2degreesinvesting.github.io/r2dii.data/reference/index.html">demo datasets from the package r2dii.data</a>.</p>
-<pre><code><a href="https://2degreesinvesting.github.io/r2dii.data/"># install.packages("r2dii.data")
-library(r2dii.data)
-
-loanbook_demo
-#&gt; # A tibble: 320 x 19
-#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
-#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  2 L2      C293             Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      
-#&gt;  4 L4      C299             Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  7 L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   
-#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; # … with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,
-#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
-#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
-#&gt; #   sector_classification_input_type &lt;chr&gt;,
-#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
-#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;
-ald_demo
-#&gt; # A tibble: 17,368 x 13
-#&gt;    name_company sector technology production_unit  year production emission_factor
-#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;
-#&gt;  1 aba hydropo… power  hydrocap   MW               2013    133340.              NA
-#&gt;  2 aba hydropo… power  hydrocap   MW               2014    131582.              NA
-#&gt;  3 aba hydropo… power  hydrocap   MW               2015    129824.              NA
-#&gt;  4 aba hydropo… power  hydrocap   MW               2016    128065.              NA
-#&gt;  5 aba hydropo… power  hydrocap   MW               2017    126307.              NA
-#&gt;  6 aba hydropo… power  hydrocap   MW               2018    124549.              NA
-#&gt;  7 aba hydropo… power  hydrocap   MW               2019    122790.              NA
-#&gt;  8 aba hydropo… power  hydrocap   MW               2020    121032.              NA
-#&gt;  9 aba hydropo… power  hydrocap   MW               2021    119274.              NA
-#&gt; 10 aba hydropo… power  hydrocap   MW               2022    117515.              NA
-#&gt; # … with 17,358 more rows, and 6 more variables: country_of_domicile &lt;chr&gt;,
-#&gt; #   plant_location &lt;chr&gt;, number_of_assets &lt;dbl&gt;, is_ultimate_owner &lt;lgl&gt;,
-#&gt; #   is_ultimate_listed_owner &lt;lgl&gt;, ald_timestamp &lt;chr&gt;
-
-matched &lt;- match_name(loanbook_demo, ald_demo)
-matched
-#&gt; # A tibble: 502 x 27
-#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
-#&gt;  1 L170    C203             Tesla Inc        &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  2 L180    C217             Weichai Power C… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  3 L181    C218             Wheego           &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  4 L195    C313             Zhengzhou Yuton… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  5 L174    C211             Tvr              &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  6 L198    C317             Ziyang Nanjun    &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  7 L193    C310             Zamyad           &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  8 L165    C195             Sunwin Bus       &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  9 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 10 L164    C193             Subaru Corp      &lt;NA&gt;             &lt;NA&gt;            
-#&gt; # … with 492 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,
-#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
-#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
-#&gt; #   sector_classification_input_type &lt;chr&gt;,
-#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
-#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,
-#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
-#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</a></code></pre>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.match//">r2dii.match</a></span><span class="op">)</span></span></code></pre>
+<p><a href="https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html"><code>match_name()</code></a> matches a loanbook and asset-level dataset (ald). Let’s try it with <a href="https://2degreesinvesting.github.io/r2dii.data/reference/index.html" class="external-link">demo datasets from the package r2dii.data</a>.</p>
+<pre><code><span><span class="co"># install.packages("r2dii.data")</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">loanbook_demo</span></span>
+<span><span class="co">#&gt; # A tibble: 320 x 19</span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
+<span><span class="co">#&gt;  1 L1      C294             Yuamen Xinneng … &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  2 L2      C293             Yuamen Changyua… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  3 L3      C292             Yuama Ethanol L… IP5              Yuama Inc.      </span></span>
+<span><span class="co">#&gt;  4 L4      C299             Yudaksel Holdin… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  5 L5      C305             Yukon Energy Co… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  6 L6      C304             Yukon Developme… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  7 L7      C227             Yaugoa-Zapadnay… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  8 L8      C303             Yueyang City Co… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  9 L9      C301             Yuedxiu Corp One IP10             Yuedxiu Group   </span></span>
+<span><span class="co">#&gt; 10 L10     C302             Yuexi County AA… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt; # … with 310 more rows, and 14 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;</span></span>
+<span><span class="va">ald_demo</span></span>
+<span><span class="co">#&gt; # A tibble: 17,368 x 13</span></span>
+<span><span class="co">#&gt;    name_company sector technology production_unit  year production emission_factor</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 aba hydropo… power  hydrocap   MW               2013    133340.              NA</span></span>
+<span><span class="co">#&gt;  2 aba hydropo… power  hydrocap   MW               2014    131582.              NA</span></span>
+<span><span class="co">#&gt;  3 aba hydropo… power  hydrocap   MW               2015    129824.              NA</span></span>
+<span><span class="co">#&gt;  4 aba hydropo… power  hydrocap   MW               2016    128065.              NA</span></span>
+<span><span class="co">#&gt;  5 aba hydropo… power  hydrocap   MW               2017    126307.              NA</span></span>
+<span><span class="co">#&gt;  6 aba hydropo… power  hydrocap   MW               2018    124549.              NA</span></span>
+<span><span class="co">#&gt;  7 aba hydropo… power  hydrocap   MW               2019    122790.              NA</span></span>
+<span><span class="co">#&gt;  8 aba hydropo… power  hydrocap   MW               2020    121032.              NA</span></span>
+<span><span class="co">#&gt;  9 aba hydropo… power  hydrocap   MW               2021    119274.              NA</span></span>
+<span><span class="co">#&gt; 10 aba hydropo… power  hydrocap   MW               2022    117515.              NA</span></span>
+<span><span class="co">#&gt; # … with 17,358 more rows, and 6 more variables: country_of_domicile &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   plant_location &lt;chr&gt;, number_of_assets &lt;dbl&gt;, is_ultimate_owner &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   is_ultimate_listed_owner &lt;lgl&gt;, ald_timestamp &lt;chr&gt;</span></span>
+<span></span>
+<span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">ald_demo</span><span class="op">)</span></span>
+<span><span class="va">matched</span></span>
+<span><span class="co">#&gt; # A tibble: 502 x 27</span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
+<span><span class="co">#&gt;  1 L170    C203             Tesla Inc        &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  2 L180    C217             Weichai Power C… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  3 L181    C218             Wheego           &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  4 L195    C313             Zhengzhou Yuton… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  5 L174    C211             Tvr              &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  6 L198    C317             Ziyang Nanjun    &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  7 L193    C310             Zamyad           &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  8 L165    C195             Sunwin Bus       &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  9 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt; 10 L164    C193             Subaru Corp      &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt; # … with 492 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></span></code></pre>
 <p>Next you should validate the matched data (<a href="https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html">learn how</a>).</p>
 <p>Finally, <a href="https://2degreesinvesting.github.io/r2dii.match/reference/prioritize.html"><code>prioritize()</code></a> takes matched data and picks rows of highest priority.</p>
-<pre><code><a href="../reference/prioritize.html">prioritize(matched)
-#&gt; # A tibble: 267 x 27
-#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…
-#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
-#&gt;  1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  2 L152    C169             Shandong Auto    &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  3 L153    C170             Shandong Kama    &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  4 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  5 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  6 L156    C176             Shanxi Dayun     &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  7 L157    C178             Shenyang Polars… &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  8 L158    C180             Shuanghuan Auto  &lt;NA&gt;             &lt;NA&gt;            
-#&gt;  9 L159    C182             Sichuan Auto     &lt;NA&gt;             &lt;NA&gt;            
-#&gt; 10 L160    C184             Singulato        &lt;NA&gt;             &lt;NA&gt;            
-#&gt; # … with 257 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,
-#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,
-#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,
-#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,
-#&gt; #   sector_classification_input_type &lt;chr&gt;,
-#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,
-#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,
-#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,
-#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,
-#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</a></code></pre>
-<p>We look forward to <a href="https://github.com/2DegreesInvesting/r2dii.match/issues">your feedback</a>.</p>
-<div id="acknowledgements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p>A big thanks to all 5 contributors who helped with ideas, code, or reviews: <a href="https://github.com/cjyetman">cjyetman</a>, <a href="https://github.com/Clare2D">Clare2D</a>, <a href="https://github.com/georgeharris2deg">georgeharris2deg</a>, <a href="https://github.com/koopmand">koopmand</a>, <a href="https://github.com/vintented">vintented</a>.</p>
+<pre><code><span><span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">matched</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 267 x 27</span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           </span></span>
+<span><span class="co">#&gt;  1 L151    C168             Shaanxi Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  2 L152    C169             Shandong Auto    &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  3 L153    C170             Shandong Kama    &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  4 L154    C171             Shandong Tangju… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  5 L155    C173             Shanghai Automo… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  6 L156    C176             Shanxi Dayun     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  7 L157    C178             Shenyang Polars… &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  8 L158    C180             Shuanghuan Auto  &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt;  9 L159    C182             Sichuan Auto     &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt; 10 L160    C184             Singulato        &lt;NA&gt;             &lt;NA&gt;            </span></span>
+<span><span class="co">#&gt; # … with 257 more rows, and 22 more variables: id_ultimate_parent &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_input_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span>
+<span><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></span></code></pre>
+<p>We look forward to <a href="https://github.com/2DegreesInvesting/r2dii.match/issues" class="external-link">your feedback</a>.</p>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p>A big thanks to all 5 contributors who helped with ideas, code, or reviews: <a href="https://github.com/cjyetman" class="external-link">cjyetman</a>, <a href="https://github.com/Clare2D" class="external-link">Clare2D</a>, <a href="https://github.com/georgeharris2deg" class="external-link">georgeharris2deg</a>, <a href="https://github.com/koopmand" class="external-link">koopmand</a>, <a href="https://github.com/vintented" class="external-link">vintented</a>.</p>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/maurolepore/">Mauro Lepore</a>, <a href="https://github.com/jdhoffa/">Jackson Hoffart</a>, Klaus Hagedorn, Florence Palandri, Evgeny Petrovsky, <a href="https://2degrees-investing.org/">2 Degrees Investing Initiative</a>.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://github.com/jdhoffa/" class="external-link">Jackson Hoffart</a>, <a href="https://github.com/maurolepore/" class="external-link">Mauro Lepore</a>, Klaus Hagedorn, Florence Palandri, Evgeny Petrovsky, <a href="https://2degrees-investing.org/" class="external-link">2 Degrees Investing Initiative</a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>
