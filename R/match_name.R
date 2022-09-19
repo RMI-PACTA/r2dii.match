@@ -181,7 +181,7 @@ match_name_impl <- function(loanbook,
     return(empty_loanbook_tibble(loanbook, old_groups))
   }
 
-  l <- rename(prep_lbk, alias_lbk = .data$alias)
+  l <- rename(prep_lbk, alias_lbk = "alias")
   setDT(l)
   matched <- a[l, on = "alias_lbk", nomatch = 0]
   matched <- matched[,
@@ -287,12 +287,12 @@ expand_alias <- function(loanbook, abcd) {
 nest_by <- function(.data, ..., .key = "data") {
   grouped <- dplyr::group_by(.data, ...)
   nested <- tidyr::nest(grouped)
-  dplyr::rename(nested, !!.key := .data$data)
+  dplyr::rename(nested, !!.key := "data")
 }
 
 unsuffix_and_regroup <- function(data, old_groups) {
   data %>%
-    rename(alias = .data$alias_lbk) %>%
+    rename(alias = "alias_lbk") %>%
     group_by(!!!old_groups)
 }
 

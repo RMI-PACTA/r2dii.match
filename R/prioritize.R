@@ -81,7 +81,7 @@ prioritize <- function(data, priority = NULL) {
       )
     )
 
-    data <- dplyr::rename(data, sector_abcd = .data$sector_ald)
+    data <- dplyr::rename(data, sector_abcd = "sector_ald")
   }
 
   data %>%
