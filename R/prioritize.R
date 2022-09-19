@@ -81,7 +81,7 @@ prioritize <- function(data, priority = NULL) {
       )
     )
 
-    data <- dplyr::rename(data, sector_abcd = .data$sector_ald)
+    data <- dplyr::rename(data, sector_abcd = "sector_ald")
   }
 
   data %>%
@@ -110,7 +110,7 @@ has_zero_rows <- function(data) {
 check_duplicated_score1 <- function(data) {
   score_1 <- filter(data, .data$score == 1)
   # The only important side effect of this function if to abort duplicated rows
-  loan_level <- suppressMessages(select(score_1, .data$id_loan, .data$level))
+  loan_level <- suppressMessages(select(score_1, all_of(c("id_loan", "level"))))
   is_duplicated <- duplicated(loan_level)
 
   if (!any(is_duplicated)) {

@@ -117,8 +117,8 @@ rename_as_loanbook <- function(classification) {
   classification %>%
     check_crucial_names(c("code_system", "code")) %>%
     dplyr::rename(
-      sector_classification_system = .data$code_system,
-      sector_classification_direct_loantaker = .data$code
+      sector_classification_system = "code_system",
+      sector_classification_direct_loantaker = "code"
     )
 }
 

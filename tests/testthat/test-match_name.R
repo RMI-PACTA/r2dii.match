@@ -448,7 +448,7 @@ test_that("works with UP266", {
   prefix <- paste0(prefix, collapse = "|")
 
   expect_snapshot_value(
-    select(out, .data$id_2dii, matches(prefix)),
+    select(out, all_of("id_2dii"), matches(prefix)),
     style = "json2"
     )
 })

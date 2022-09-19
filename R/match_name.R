@@ -181,7 +181,7 @@ match_name_impl <- function(loanbook,
     return(empty_loanbook_tibble(loanbook, old_groups))
   }
 
-  l <- rename(prep_lbk, alias_lbk = .data$alias)
+  l <- rename(prep_lbk, alias_lbk = "alias")
   setDT(l)
   matched <- a[l, on = "alias_lbk", nomatch = 0]
   matched <- matched[,
@@ -207,7 +207,7 @@ match_name_impl <- function(loanbook,
 
   matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
   matched <- unsuffix_and_regroup(matched, old_groups)
-  matched <- select(matched, -.data$alias, -.data$alias_abcd)
+  matched <- select(matched, -all_of(c("alias", "alias_abcd")))
   # Remove attribute added by data.table
   attr(matched, ".internal.selfref") <- NULL
 
@@ -261,7 +261,7 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
   out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
     unsuffix_and_regroup(old_groups) %>%
-    select(-.data$alias, -.data$alias_abcd)
+    select(-all_of(c("alias", "alias_abcd")))
 
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)
@@ -287,12 +287,12 @@ expand_alias <- function(loanbook, abcd) {
 nest_by <- function(.data, ..., .key = "data") {
   grouped <- dplyr::group_by(.data, ...)
   nested <- tidyr::nest(grouped)
-  dplyr::rename(nested, !!.key := .data$data)
+  dplyr::rename(nested, !!.key := "data")
 }
 
 unsuffix_and_regroup <- function(data, old_groups) {
   data %>%
-    rename(alias = .data$alias_lbk) %>%
+    rename(alias = "alias_lbk") %>%
     group_by(!!!old_groups)
 }
 
