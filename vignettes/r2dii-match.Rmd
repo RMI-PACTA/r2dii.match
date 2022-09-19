@@ -139,11 +139,11 @@ The validated dataset may have multiple matches per loan. Consider the case wher
 # Pretend we validated the matched dataset
 valid_matches <- matched
 
-some_interesting_columns <- vars(id_2dii, level, score)
+some_interesting_columns <- c("id_2dii", "level", "score")
 
 valid_matches %>%
   prioritize() %>%
-  select(!!!some_interesting_columns)
+  select(all_of(some_interesting_columns))
 ```
 
 By default, highest priority refers to the most granular match (`direct_loantaker`). The default priority is set internally via `prioritize_levels()`.
@@ -157,5 +157,5 @@ You may use a different priority. One way to do that is to pass a function to `p
 ```{r}
 matched %>%
   prioritize(priority = rev) %>%
-  select(!!!some_interesting_columns)
+  select(all_of(some_interesting_columns))
 ```
