@@ -207,7 +207,7 @@ match_name_impl <- function(loanbook,
 
   matched <- reorder_names_as_in_loanbook(matched, loanbook_rowid)
   matched <- unsuffix_and_regroup(matched, old_groups)
-  matched <- select(matched, -.data$alias, -.data$alias_abcd)
+  matched <- select(matched, -all_of(c("alias", "alias_abcd")))
   # Remove attribute added by data.table
   attr(matched, ".internal.selfref") <- NULL
 
@@ -261,7 +261,7 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
   out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
     unsuffix_and_regroup(old_groups) %>%
-    select(-.data$alias, -.data$alias_abcd)
+    select(-c("alias", "alias_abcd"))
 
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)

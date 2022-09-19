@@ -60,12 +60,12 @@ restructure_loanbook <- function(data, overwrite = NULL) {
 
   out <- may_add_sector_and_borderline(data)
   out <- select(
-    out, .data$rowid, all_of_(important_columns), .data$sector, .data$borderline
+    out, all_of(c("rowid", important_columns, "sector", "borderline"))
   )
   out <- identify_loans_by_level(out)
   out <- identify_loans_by_name(out)
   out <- mutate(out, source = "loanbook")
-  out <- select(out, .data$rowid, prep_lbk_cols())
+  out <- select(out, all_of(c("rowid", prep_lbk_cols())))
   out <- distinct(out)
   out <- may_overwrite_name_and_sector(out, overwrite = overwrite)
   out <- add_alias(out)
