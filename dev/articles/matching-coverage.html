@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">r2dii.match</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -254,7 +254,7 @@
 <p>An issue arises when, for example, a company is classified in the “power transmission” sector. In a perfect world, these companies would produce no electricity, and we would not try to match them. In practice, however, we find there is often overlap. For this reason, we introduced the <code>borderline</code> flag.</p>
 <p>In the example below, we see two classification codes coming from the SIC classification standard:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data/reference/sic_classification.html" class="external-link">sic_classification</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/sic_classification.html" class="external-link">sic_classification</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">41111</span>, <span class="fl">36200</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
 <span><span class="co">#&gt;   code  description                                               sector borde…¹</span></span>
