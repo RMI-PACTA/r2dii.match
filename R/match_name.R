@@ -261,7 +261,7 @@ empty_loanbook_tibble <- function(loanbook, old_groups) {
 
   out <- named_tibble(names = minimum_names_of_match_name(loanbook)) %>%
     unsuffix_and_regroup(old_groups) %>%
-    select(-c("alias", "alias_abcd"))
+    select(-all_of(c("alias", "alias_abcd")))
 
   tmp <- tempfile()
   utils::write.csv(out, tmp, row.names = FALSE)
