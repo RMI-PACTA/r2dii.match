@@ -128,7 +128,7 @@ replace_abbrev <- function(text, abr, fixed = FALSE) {
   gsub(abr[1], abr[2], text, fixed = fixed)
 }
 
-# Source: @jdhoffa https://github.com/2DegreesInvesting/r2dii.dataraw/pull/8
+# Source: @jdhoffa https://github.com/RMI-PACTA/r2dii.dataraw/pull/8
 #' @noRd
 from_name_to_alias <- function() {
   # styler: off
