@@ -57,7 +57,7 @@ matched <- loanbook %>%
 
 Note that this `matched` dataset will contain _only_ loans that were matched successfully. To determine coverage, we need to go back to the original `loanbook` dataset. We must determine the 2DII sectors of each loan, as dictated by the `sector_classification_direct_loantaker` column. 
 
-For this, we join the loanbook with the [`sector_classifications`](https://2degreesinvesting.github.io/r2dii.data/reference/sector_classifications.html) dataset, which lists all sector classification code standards used by 'PACTA'. Unfortunately we need to work around two caveats (you may ignore them because they are conceptually uninteresting):
+For this, we join the loanbook with the [`sector_classifications`](https://rmi-pacta.github.io/r2dii.data/reference/sector_classifications.html) dataset, which lists all sector classification code standards used by 'PACTA'. Unfortunately we need to work around two caveats (you may ignore them because they are conceptually uninteresting):
 
 * In the two datasets, the columns we want to merge by have different names. We use the argument `by` to `left_join()` to merge the columns `sector_classification_system` and `sector_classification_direct_loantaker` (from `loanbook`) with the columns `code_system` and `code` (from `sector_classifications`), respectively. 
 
