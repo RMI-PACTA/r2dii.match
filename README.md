@@ -11,8 +11,8 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lif
 status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![Codecov test
-coverage](https://codecov.io/gh/2DegreesInvesting/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2DegreesInvesting/r2dii.match?branch=main)
-[![R-CMD-check](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml)
+coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.match?branch=main)
+[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of the software PACTA
@@ -37,11 +37,11 @@ Or install the development version of r2dii.match from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("2DegreesInvesting/r2dii.match")
+devtools::install_github("RMI-PACTA/r2dii.match")
 ```
 
 [How to raise an
-issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
+issue?](https://rmi-pacta.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 ## Example
 
@@ -121,7 +121,7 @@ The result is a dataset with identical columns to the input loanbook,
 and added columns bridging all matched loans to their abcd counterpart.
 
 [Get
-started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
+started](https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html).
 
 ## Funding
 
