@@ -4,7 +4,7 @@ description: |
   How to resolve memory issues
 ---
 
-Users of the [r2dii.match](https://2degreesinvesting.github.io/r2dii.match/) package reported that their R session crashed when they fed `match_name()` with big data. A [recent post](https://2degreesinvesting.github.io/posts/2020-07-18-improving-r2dii-match/) acknowledged the issue and promised examples on how to handle big data. This article shows one approach: feed [`match_name()`](https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html) with a sequence of small chunks of the `loanbook` dataset.
+Users of the [r2dii.match](https://rmi-pacta.github.io/r2dii.match/) package reported that their R session crashed when they fed `match_name()` with big data. A [recent post](https://2degreesinvesting.github.io/posts/2020-07-18-improving-r2dii-match/) acknowledged the issue and promised examples on how to handle big data. This article shows one approach: feed [`match_name()`](https://rmi-pacta.github.io/r2dii.match/reference/match_name.html) with a sequence of small chunks of the `loanbook` dataset.
 
 ## Setup
 
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This example uses r2dii.match plus a few optional but convenient packages, including [r2dii.data](https://2degreesinvesting.github.io/r2dii.data/) for example datasets.
+This example uses r2dii.match plus a few optional but convenient packages, including [r2dii.data](https://rmi-pacta.github.io/r2dii.data/) for example datasets.
 
 ```{r}
 # Packages
@@ -86,7 +86,7 @@ matched <- vroom(dir_ls(out))
 matched
 ```
 
-The `matched` result should be similar to that of `match_name(loanbook, abcd)`. Your next steps are documented on the [Home](https://2degreesinvesting.github.io/r2dii.match/index.html) page and [Get started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html) sections of the package website.
+The `matched` result should be similar to that of `match_name(loanbook, abcd)`. Your next steps are documented on the [Home](https://rmi-pacta.github.io/r2dii.match/index.html) page and [Get started](https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html) sections of the package website.
 
 ## Anecdote
 

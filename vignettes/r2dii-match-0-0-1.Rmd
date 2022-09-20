@@ -15,8 +15,8 @@ r2dii.match matches data from financial portfolios to asset level data
 from market-intelligence databases (e.g. power plant capacities,
 emission factors, etc.). This is the first step to assess if a financial
 portfolio aligns with climate goals. For details see the package’s
-[website](https://2degreesinvesting.github.io/r2dii.match/) and
-<a href="https://2degrees-investing.org/" class="uri">https://2degrees-investing.org/</a>.
+[website](https://rmi-pacta.github.io/r2dii.match/) and
+<a href="https://transitionmonitor.com/" class="uri">https://transitionmonitor.com/</a>.
 
 Install r2dii.match with:
 
@@ -26,10 +26,10 @@ And use it with:
 
     library(r2dii.match)
 
-[`match_name()`](https://2degreesinvesting.github.io/r2dii.match/reference/match_name.html)
+[`match_name()`](https://rmi-pacta.github.io/r2dii.match/reference/match_name.html)
 matches a loanbook and asset-level dataset (ald). Let’s try it with
 [demo datasets from the package
-r2dii.data](https://2degreesinvesting.github.io/r2dii.data/reference/index.html).
+r2dii.data](https://rmi-pacta.github.io/r2dii.data/reference/index.html).
 
     # install.packages("r2dii.data")
     library(r2dii.data)
@@ -101,10 +101,10 @@ r2dii.data](https://2degreesinvesting.github.io/r2dii.data/reference/index.html)
     #> #   score <dbl>, source <chr>
 
 Next you should validate the matched data ([learn
-how](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html)).
+how](https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html)).
 
 Finally,
-[`prioritize()`](https://2degreesinvesting.github.io/r2dii.match/reference/prioritize.html)
+[`prioritize()`](https://rmi-pacta.github.io/r2dii.match/reference/prioritize.html)
 takes matched data and picks rows of highest priority.
 
     prioritize(matched)
@@ -133,7 +133,7 @@ takes matched data and picks rows of highest priority.
     #> #   score <dbl>, source <chr>
 
 We look forward to [your
-feedback](https://github.com/2DegreesInvesting/r2dii.match/issues).
+feedback](https://github.com/RMI-PACTA/r2dii.match/issues).
 
 Acknowledgements
 ----------------

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# r2dii.match <img src="man/figures/logo.svg" align="right" width="120" />
+# r2dii.match <img src="man/figures/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 
@@ -11,18 +11,18 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lif
 status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![Codecov test
-coverage](https://codecov.io/gh/2DegreesInvesting/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2DegreesInvesting/r2dii.match?branch=main)
-[![R-CMD-check](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml)
+coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.match?branch=main)
+[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
-scenarios (<https://2degrees-investing.org/>). Financial institutions
-use PACTA to study how their capital allocation impacts the climate.
-This package matches data from financial portfolios to asset level data
-from market-intelligence databases (e.g. power plant capacities,
-emission factors, etc.). This is the first step to assess if a financial
+scenarios (<https://transitionmonitor.com/>). Financial institutions use
+PACTA to study how their capital allocation impacts the climate. This
+package matches data from financial portfolios to asset level data from
+market-intelligence databases (e.g. power plant capacities, emission
+factors, etc.). This is the first step to assess if a financial
 portfolio aligns with climate goals.
 
 ## Installation
@@ -37,11 +37,8 @@ Or install the development version of r2dii.match from GitHub with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("2DegreesInvesting/r2dii.match")
+devtools::install_github("RMI-PACTA/r2dii.match")
 ```
-
-[How to raise an
-issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 ## Example
 
@@ -52,7 +49,7 @@ library(r2dii.match)
 
 Matching is achieved in two main steps:
 
-### 1. Run fuzzy matching
+### 1\. Run fuzzy matching
 
 `match_name()` will extract all unique counterparty names from the
 columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*`
@@ -83,9 +80,9 @@ match_result
 #> #   level <chr>, sector <chr>, sector_abcd <chr>, name <chr>, …
 ```
 
-### 2. Prioritize validated matches
+### 2\. Prioritize validated matches
 
-The user should then manually validate the output of \[match_name()\],
+The user should then manually validate the output of \[match\_name()\],
 ensuring that the value of the column `score` is equal to `1` for
 perfect matches only.
 
@@ -121,7 +118,7 @@ The result is a dataset with identical columns to the input loanbook,
 and added columns bridging all matched loans to their abcd counterpart.
 
 [Get
-started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
+started](https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html).
 
 ## Funding
 

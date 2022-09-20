@@ -13,20 +13,20 @@ knitr::opts_chunk$set(
 )
 ```
 
-# r2dii.match <img src="man/figures/logo.svg" align="right" width="120" />
+# r2dii.match <img src="man/figures/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
-[![Codecov test coverage](https://codecov.io/gh/2DegreesInvesting/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/2DegreesInvesting/r2dii.match?branch=main)
-[![R-CMD-check](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/2DegreesInvesting/r2dii.match/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.match?branch=main)
+[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of
 the software PACTA (Paris Agreement Capital Transition Assessment),
 which is a free tool that calculates the alignment between financial
-portfolios and climate scenarios (<https://2degrees-investing.org/>).
+portfolios and climate scenarios (<https://transitionmonitor.com/>).
 Financial institutions use PACTA to study how their capital
 allocation impacts the climate. This package matches data from
 financial portfolios to asset level data from market-intelligence
@@ -46,10 +46,8 @@ Or install the development version of r2dii.match from GitHub with:
 
 ```r
 # install.packages("devtools")
-devtools::install_github("2DegreesInvesting/r2dii.match")
+devtools::install_github("RMI-PACTA/r2dii.match")
 ```
-
-[How to raise an issue?](https://2degreesinvesting.github.io/posts/2020-06-26-instructions-to-raise-an-issue/)
 
 ## Example
 
@@ -81,7 +79,7 @@ prioritize(match_result)
 
 The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their abcd counterpart.
 
-[Get started](https://2degreesinvesting.github.io/r2dii.match/articles/r2dii-match.html).
+[Get started](https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html).
 
 ```{r echo=FALSE}
 download.file("http://bit.ly/banks-thanks", thanks <- tempfile())

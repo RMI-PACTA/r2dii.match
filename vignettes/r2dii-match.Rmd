@@ -23,7 +23,7 @@ library(r2dii.match)
 
 ## Format input data loanbook and asset-based company data (abcd)
 
-We need two datasets: a "loanbook" and an "asset-based company dataset" (abcd). These should be formatted like:  [`loanbook_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/loanbook_demo.html) and [`abcd_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/abcd_demo.html) (from the [r2dii.data package](https://2degreesinvesting.github.io/r2dii.data)).
+We need two datasets: a "loanbook" and an "asset-based company dataset" (abcd). These should be formatted like:  [`loanbook_demo`](https://rmi-pacta.github.io/r2dii.data/reference/loanbook_demo.html) and [`abcd_demo`](https://rmi-pacta.github.io/r2dii.data/reference/abcd_demo.html) (from the [r2dii.data package](https://rmi-pacta.github.io/r2dii.data)).
 
 A note on sector classification: Matches are preferred when the sector from the `loanbook` matches the sector from the `abcd`. The `loanbook` sector is determined internally using the `sector_classification_system` and `sector_classification_direct_loantaker` columns. Currently, we only allow a couple specific values for `sector_classification_system`:
 ```{r}
@@ -31,7 +31,7 @@ sector_classifications$code_system %>%
   unique()
 ```
 
-If you would like to use a different classification system, please raise an issue in [r2dii.data](https://github.com/2DegreesInvesting/r2dii.data) and we can incorporate it.
+If you would like to use a different classification system, please raise an issue in [r2dii.data](https://github.com/RMI-PACTA/r2dii.data) and we can incorporate it.
 
 ```{r}
 loanbook_demo
@@ -108,7 +108,7 @@ range(matched$score)
 
 ### Maybe overwrite matches
 
-If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `abcd` and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to [`overwrite_demo`](https://2degreesinvesting.github.io/r2dii.data/reference/overwrite_demo.html), where: 
+If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by `match_name()`. To do this, manually inspect the `abcd` and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to [`overwrite_demo`](https://rmi-pacta.github.io/r2dii.data/reference/overwrite_demo.html), where: 
 
 * `level` indicates the level that the manual match should be added to (e.g. `direct_loantaker`)
 * `id_2dii` is the id of the loanbook company you would like to match (from the output of `match_name()`)

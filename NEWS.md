@@ -1,5 +1,8 @@
 # r2dii.match (development version)
 
+* `r2dii.match` has transferred to a new organization 
+https://github.com/RMI-PACTA/. 
+
 # r2dii.match 0.1.1
 
 * Maintenance release. 
@@ -71,7 +74,7 @@
 
 # r2dii.match 0.0.2
 
-This version includes only [internal changes](https://github.com/2DegreesInvesting/r2dii.match/releases/tag/v0.0.2). 
+This version includes only [internal changes](https://github.com/RMI-PACTA/r2dii.match/releases/tag/v0.0.2). 
 
 # r2dii.match 0.0.1
 

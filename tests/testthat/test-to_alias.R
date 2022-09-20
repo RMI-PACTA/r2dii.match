@@ -1,4 +1,3 @@
-# Based on https://github.com/2DegreesInvesting/pacta/
 # test-name-simplification.R
 test_that("to_alias with `NA` returns `NA_character`", {
   expect_equal(to_alias(NA), NA_character_)
