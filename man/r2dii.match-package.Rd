@@ -6,15 +6,16 @@
 \alias{r2dii.match-package}
 \title{r2dii.match: Tools to Match Corporate Lending Portfolios with Climate Data}
 \description{
-These tools implement in R a fundamental part of the software 'PACTA' (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (\url{https://2degrees-investing.org/}). Financial institutions use 'PACTA' to study how their capital allocation decisions align with climate change mitigation goals. This package matches data from corporate lending portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+These tools implement in R a fundamental part of the software 'PACTA' (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (\url{https://transitionmonitor.com/}). Financial institutions use 'PACTA' to study how their capital allocation decisions align with climate change mitigation goals. This package matches data from corporate lending portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://2degreesinvesting.github.io/r2dii.match//}
-  \item \url{https://github.com/2DegreesInvesting/r2dii.match}
-  \item \url{https://2degreesinvesting.github.io/r2dii.match/}
-  \item Report bugs at \url{https://github.com/2DegreesInvesting/r2dii.match/issues}
+  \item \url{https://rmi-pacta.github.io/r2dii.match/}
+  \item \url{https://github.com/RMI-PACTA/r2dii.match}
+  \item Report bugs at \url{https://github.com/RMI-PACTA/r2dii.match/issues}
 }
 
 }
@@ -31,7 +32,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item 2 Degrees Investing Initiative \email{contact@2degrees-investing.org} [copyright holder, funder]
+  \item Rocky Mountain Institute \email{PACTA4banks@rmi.org} [copyright holder, funder]
 }
 
 }
