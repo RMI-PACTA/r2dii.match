@@ -29,7 +29,7 @@ test_that("uniquify_id_column overwrites id_direct_loantaker", {
 })
 
 test_that("uniquify_id_column prints its output (fix not returned result)", {
-  # https://github.com/2DegreesInvesting/r2dii.match/pull/
+  # https://github.com/RMI-PACTA/r2dii.match/pull/
   # 6#pullrequestreview-301599396
   out <- capture.output(
     uniquify_id_column(
