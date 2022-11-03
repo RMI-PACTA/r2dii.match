@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 These tools implement in R a fundamental part of
 the software PACTA (Paris Agreement Capital Transition Assessment),
 which is a free tool that calculates the alignment between financial
-portfolios and climate scenarios (<https://transitionmonitor.com/>).
+portfolios and climate scenarios (<https://www.transitionmonitor.com/>).
 Financial institutions use PACTA to study how their capital
 allocation impacts the climate. This package matches data from
 financial portfolios to asset level data from market-intelligence
@@ -88,9 +88,7 @@ download.file("http://bit.ly/banks-thanks", thanks <- tempfile())
 ## Funding
 
 This project has received funding from the [European Union LIFE
-program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/) and the [International Climate
-Initiative
-(IKI)](https://www.international-climate-initiative.com/en/search-project/).
+program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/) and the International Climate Initiative (IKI).
 The Federal Ministry for the Environment, Nature Conservation and Nuclear Safety
 (BMU) supports this initiative on the basis of a decision adopted by the German
 Bundestag. The views expressed are the sole responsibility of the authors and do

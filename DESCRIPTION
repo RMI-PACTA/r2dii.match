@@ -29,7 +29,7 @@ Authors@R:
 Description: These tools implement in R a fundamental part of the software
     'PACTA' (Paris Agreement Capital Transition Assessment), which is a
     free tool that calculates the alignment between financial portfolios
-    and climate scenarios (<https://transitionmonitor.com/>). Financial
+    and climate scenarios (<https://www.transitionmonitor.com/>). Financial
     institutions use 'PACTA' to study how their capital allocation
     decisions align with climate change mitigation goals. This package
     matches data from corporate lending portfolios to asset level data
