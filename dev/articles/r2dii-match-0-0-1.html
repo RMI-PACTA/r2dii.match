@@ -107,14 +107,20 @@
     
     
 <p>We’re happy to announce that r2dii.match is now on CRAN.</p>
-<p>r2dii.match matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals. For details see the package’s <a href="https://rmi-pacta.github.io/r2dii.match/">website</a> and <a href="https://transitionmonitor.com/" class="external-link uri">https://transitionmonitor.com/</a>.</p>
+<p>r2dii.match matches data from financial portfolios to asset level
+data from market-intelligence databases (e.g. power plant capacities,
+emission factors, etc.). This is the first step to assess if a financial
+portfolio aligns with climate goals. For details see the package’s <a href="https://rmi-pacta.github.io/r2dii.match/">website</a> and
+<a href="https://www.transitionmonitor.com/" class="external-link uri">https://transitionmonitor.com/</a>.</p>
 <p>Install r2dii.match with:</p>
 <pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"r2dii.match"</span><span class="op">)</span></span></code></pre>
 <p>And use it with:</p>
 <pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></span></code></pre>
-<p><a href="https://rmi-pacta.github.io/r2dii.match/reference/match_name.html"><code>match_name()</code></a> matches a loanbook and asset-level dataset (ald). Let’s try it with <a href="https://rmi-pacta.github.io/r2dii.data/reference/index.html" class="external-link">demo datasets from the package r2dii.data</a>.</p>
+<p><a href="https://rmi-pacta.github.io/r2dii.match/reference/match_name.html"><code>match_name()</code></a>
+matches a loanbook and asset-level dataset (ald). Let’s try it with <a href="https://rmi-pacta.github.io/r2dii.data/reference/index.html" class="external-link">demo
+datasets from the package r2dii.data</a>.</p>
 <pre><code><span><span class="co"># install.packages("r2dii.data")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">loanbook_demo</span></span>
 <span><span class="co">#&gt; # A tibble: 320 x 19</span></span>
@@ -181,8 +187,10 @@
 <span><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></span></code></pre>
-<p>Next you should validate the matched data (<a href="https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html">learn how</a>).</p>
-<p>Finally, <a href="https://rmi-pacta.github.io/r2dii.match/reference/prioritize.html"><code>prioritize()</code></a> takes matched data and picks rows of highest priority.</p>
+<p>Next you should validate the matched data (<a href="https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html">learn
+how</a>).</p>
+<p>Finally, <a href="https://rmi-pacta.github.io/r2dii.match/reference/prioritize.html"><code>prioritize()</code></a>
+takes matched data and picks rows of highest priority.</p>
 <pre><code><span><span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">matched</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 267 x 27</span></span>
 <span><span class="co">#&gt;    id_loan id_direct_loant… name_direct_loa… id_intermediate… name_intermedia…</span></span>
@@ -207,11 +215,13 @@
 <span><span class="co">#&gt; #   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_ald &lt;chr&gt;, name &lt;chr&gt;, name_ald &lt;chr&gt;,</span></span>
 <span><span class="co">#&gt; #   score &lt;dbl&gt;, source &lt;chr&gt;</span></span></code></pre>
-<p>We look forward to <a href="https://github.com/RMI-PACTA/r2dii.match/issues" class="external-link">your feedback</a>.</p>
+<p>We look forward to <a href="https://github.com/RMI-PACTA/r2dii.match/issues" class="external-link">your
+feedback</a>.</p>
 <div class="section level2">
 <h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
 </h2>
-<p>A big thanks to all 5 contributors who helped with ideas, code, or reviews: <a href="https://github.com/cjyetman" class="external-link">cjyetman</a>, <a href="https://github.com/Clare2D" class="external-link">Clare2D</a>, <a href="https://github.com/georgeharris2deg" class="external-link">georgeharris2deg</a>, <a href="https://github.com/koopmand" class="external-link">koopmand</a>, <a href="https://github.com/vintented" class="external-link">vintented</a>.</p>
+<p>A big thanks to all 5 contributors who helped with ideas, code, or
+reviews: <a href="https://github.com/cjyetman" class="external-link">cjyetman</a>, <a href="https://github.com/Clare2D" class="external-link">Clare2D</a>, <a href="https://github.com/georgeharris2deg" class="external-link">georgeharris2deg</a>, <a href="https://github.com/koopmand" class="external-link">koopmand</a>, <a href="https://github.com/vintented" class="external-link">vintented</a>.</p>
 </div>
   </main>
 </div>

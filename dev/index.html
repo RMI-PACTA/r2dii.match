@@ -8,7 +8,7 @@
 <meta name="description" content="These tools implement in R a fundamental part of the software
     PACTA (Paris Agreement Capital Transition Assessment), which is a
     free tool that calculates the alignment between financial portfolios
-    and climate scenarios (&lt;https://transitionmonitor.com/&gt;). Financial
+    and climate scenarios (&lt;https://www.transitionmonitor.com/&gt;). Financial
     institutions use PACTA to study how their capital allocation
     decisions align with climate change mitigation goals. This package
     matches data from corporate lending portfolios to asset level data
@@ -30,7 +30,7 @@
 <meta property="og:description" content="These tools implement in R a fundamental part of the software
     PACTA (Paris Agreement Capital Transition Assessment), which is a
     free tool that calculates the alignment between financial portfolios
-    and climate scenarios (&lt;https://transitionmonitor.com/&gt;). Financial
+    and climate scenarios (&lt;https://www.transitionmonitor.com/&gt;). Financial
     institutions use PACTA to study how their capital allocation
     decisions align with climate change mitigation goals. This package
     matches data from corporate lending portfolios to asset level data
@@ -116,7 +116,8 @@
 </h1>
 </div>
 <!-- badges: start -->
-<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://transitionmonitor.com/" class="external-link uri">https://transitionmonitor.com/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
+
+<p>These tools implement in R a fundamental part of the software PACTA (Paris Agreement Capital Transition Assessment), which is a free tool that calculates the alignment between financial portfolios and climate scenarios (<a href="https://www.transitionmonitor.com/" class="external-link uri">https://www.transitionmonitor.com/</a>). Financial institutions use PACTA to study how their capital allocation impacts the climate. This package matches data from financial portfolios to asset level data from market-intelligence databases (e.g. power plant capacities, emission factors, etc.). This is the first step to assess if a financial portfolio aligns with climate goals.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -132,11 +133,11 @@
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></span></code></pre></div>
 <p>Matching is achieved in two main steps:</p>
 <div class="section level3">
-<h3 id="1-run-fuzzy-matching">1. Run fuzzy matching<a class="anchor" aria-label="anchor" href="#1-run-fuzzy-matching"></a>
+<h3 id="id_1-run-fuzzy-matching">1. Run fuzzy matching<a class="anchor" aria-label="anchor" href="#id_1-run-fuzzy-matching"></a>
 </h3>
 <p><code><a href="reference/match_name.html">match_name()</a></code> will extract all unique counterparty names from the columns: <code>direct_loantaker</code>, <code>ultimate_parent</code> or <code>intermediate_parent*</code> and run fuzzy matching against all company names in the <code>abcd</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -164,7 +165,7 @@
 <span><span class="co">#&gt; #   level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="2-prioritize-validated-matches">2. Prioritize validated matches<a class="anchor" aria-label="anchor" href="#2-prioritize-validated-matches"></a>
+<h3 id="id_2-prioritize-validated-matches">2. Prioritize validated matches<a class="anchor" aria-label="anchor" href="#id_2-prioritize-validated-matches"></a>
 </h3>
 <p>The user should then manually validate the output of [match_name()], ensuring that the value of the column <code>score</code> is equal to <code>1</code> for perfect matches only.</p>
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
@@ -197,7 +198,7 @@
 <div class="section level2">
 <h2 id="funding">Funding<a class="anchor" aria-label="anchor" href="#funding"></a>
 </h2>
-<p>This project has received funding from the <a href="https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/" class="external-link">European Union LIFE program</a> and the <a href="https://www.international-climate-initiative.com/en/search-project/" class="external-link">International Climate Initiative (IKI)</a>. The Federal Ministry for the Environment, Nature Conservation and Nuclear Safety (BMU) supports this initiative on the basis of a decision adopted by the German Bundestag. The views expressed are the sole responsibility of the authors and do not necessarily reflect the views of the funders. The funders are not responsible for any use that may be made of the information it contains.</p>
+<p>This project has received funding from the <a href="https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/" class="external-link">European Union LIFE program</a> and the International Climate Initiative (IKI). The Federal Ministry for the Environment, Nature Conservation and Nuclear Safety (BMU) supports this initiative on the basis of a decision adopted by the German Bundestag. The views expressed are the sole responsibility of the authors and do not necessarily reflect the views of the funders. The funders are not responsible for any use that may be made of the information it contains.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -206,7 +207,7 @@
 <li><a href="https://cloud.r-project.org/package=r2dii.match" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/RMI-PACTA/r2dii.match/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/RMI-PACTA/r2dii.match/issues" class="external-link">Report a bug</a></li>
-<li><a href="https://transitionmonitor.com/" class="external-link">Learn more</a></li>
+<li><a href="https://www.transitionmonitor.com/" class="external-link">Learn more</a></li>
 </ul>
 </div>
 

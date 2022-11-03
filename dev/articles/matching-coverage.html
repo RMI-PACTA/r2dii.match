@@ -106,9 +106,17 @@
 
     
     
-<p><code>r2dii.match</code> allows you to match loans from your loanbook to the companies in an asset-based company dataset. However, matching every loan is unlikely – some loan-taking companies may be missing from the asset-based company dataset, or they may not operate in the sectors 2DII focuses on (power, cement, oil and gas, shipping, aviation, coal, automotive, steel, and hdv). Thus, you may want to measure how much of the loanbook matched some asset. This article shows two ways to calculate such matching coverage:</p>
+<p><code>r2dii.match</code> allows you to match loans from your loanbook
+to the companies in an asset-based company dataset. However, matching
+every loan is unlikely – some loan-taking companies may be missing from
+the asset-based company dataset, or they may not operate in the sectors
+2DII focuses on (power, cement, oil and gas, shipping, aviation, coal,
+automotive, steel, and hdv). Thus, you may want to measure how much of
+the loanbook matched some asset. This article shows two ways to
+calculate such matching coverage:</p>
 <ol style="list-style-type: decimal">
-<li><p>Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the <code>loan_size_*</code> columns).</p></li>
+<li><p>Calculate the portion of your loanbook covered, by dollar value
+(i.e. using one of the <code>loan_size_*</code> columns).</p></li>
 <li><p>Count the number of companies matched.</p></li>
 </ol>
 <div class="section level3">
@@ -117,11 +125,13 @@
 <p>First we will need to load up the useful packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></span></code></pre></div>
-<p>We will use example datasets from <code>r2dii.data</code>. To demonstrate our point, we create a <code>loanbook</code> dataset with two mismatching loans:</p>
+<p>We will use example datasets from <code>r2dii.data</code>. To
+demonstrate our point, we create a <code>loanbook</code> dataset with
+two mismatching loans:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
@@ -135,11 +145,31 @@
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">abcd_demo</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Note that this <code>matched</code> dataset will contain <em>only</em> loans that were matched successfully. To determine coverage, we need to go back to the original <code>loanbook</code> dataset. We must determine the 2DII sectors of each loan, as dictated by the <code>sector_classification_direct_loantaker</code> column.</p>
-<p>For this, we join the loanbook with the <a href="https://rmi-pacta.github.io/r2dii.data/reference/sector_classifications.html" class="external-link"><code>sector_classifications</code></a> dataset, which lists all sector classification code standards used by ‘PACTA’. Unfortunately we need to work around two caveats (you may ignore them because they are conceptually uninteresting):</p>
+<p>Note that this <code>matched</code> dataset will contain
+<em>only</em> loans that were matched successfully. To determine
+coverage, we need to go back to the original <code>loanbook</code>
+dataset. We must determine the 2DII sectors of each loan, as dictated by
+the <code>sector_classification_direct_loantaker</code> column.</p>
+<p>For this, we join the loanbook with the <a href="https://rmi-pacta.github.io/r2dii.data/reference/sector_classifications.html" class="external-link"><code>sector_classifications</code></a>
+dataset, which lists all sector classification code standards used by
+‘PACTA’. Unfortunately we need to work around two caveats (you may
+ignore them because they are conceptually uninteresting):</p>
 <ul>
-<li><p>In the two datasets, the columns we want to merge by have different names. We use the argument <code>by</code> to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> to merge the columns <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> (from <code>loanbook</code>) with the columns <code>code_system</code> and <code>code</code> (from <code>sector_classifications</code>), respectively.</p></li>
-<li><p>In the two datasets, the sector classification codes are represented with different data-types. We modify the column <code>sector_classification_direct_loantaker</code> before <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> so it has the same type as the corresponding column <code>code</code> (otherwise <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> throws an error), and again after <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> to restore its original type.</p></li>
+<li><p>In the two datasets, the columns we want to merge by have
+different names. We use the argument <code>by</code> to
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> to merge the columns
+<code>sector_classification_system</code> and
+<code>sector_classification_direct_loantaker</code> (from
+<code>loanbook</code>) with the columns <code>code_system</code> and
+<code>code</code> (from <code>sector_classifications</code>),
+respectively.</p></li>
+<li><p>In the two datasets, the sector classification codes are
+represented with different data-types. We modify the column
+<code>sector_classification_direct_loantaker</code> before
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> so it has the same type as the corresponding
+column <code>code</code> (otherwise <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> throws an
+error), and again after <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join()</a></code> to restore its original
+type.</p></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">merge_by</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"code_system"</span>, <span class="st">"code"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -149,7 +179,8 @@
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html" class="external-link">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">sector_classifications</span>, by <span class="op">=</span> <span class="va">merge_by</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html" class="external-link">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.double</span><span class="op">)</span></span></code></pre></div>
-<p>We can join these two datasets together, to generate our <code>coverage</code> dataset:</p>
+<p>We can join these two datasets together, to generate our
+<code>coverage</code> dataset:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coverage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">loanbook_with_sectors</span>, <span class="va">matched</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
@@ -175,9 +206,13 @@
 <span><span class="co">#&gt; "isin_direct_loantaker", "sector", "borderline")</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="calculate-the-portion-of-your-loanbook-covered-by-dollar-value">1. Calculate the portion of your loanbook covered by dollar value<a class="anchor" aria-label="anchor" href="#calculate-the-portion-of-your-loanbook-covered-by-dollar-value"></a>
+<h3 id="calculate-the-portion-of-your-loanbook-covered-by-dollar-value">1. Calculate the portion of your loanbook covered by dollar
+value<a class="anchor" aria-label="anchor" href="#calculate-the-portion-of-your-loanbook-covered-by-dollar-value"></a>
 </h3>
-<p>From the <code>coverage</code> dataset, we can calculate the total loanbook coverage by dollar value. Let’s create two helper functions, one to calculate dollar-value and another one to plot coverage in general.</p>
+<p>From the <code>coverage</code> dataset, we can calculate the total
+loanbook coverage by dollar value. Let’s create two helper functions,
+one to calculate dollar-value and another one to plot coverage in
+general.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dollar_value</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">data</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -235,7 +270,9 @@
 <div class="section level3">
 <h3 id="count-the-number-of-companies">2. Count the number of companies<a class="anchor" aria-label="anchor" href="#count-the-number-of-companies"></a>
 </h3>
-<p>You might also be interested in knowing how many companies in your loanbook were matched. It probably makes most sense to do this at the <code>direct_loantaker</code> level:</p>
+<p>You might also be interested in knowing how many companies in your
+loanbook were matched. It probably makes most sense to do this at the
+<code>direct_loantaker</code> level:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">companies_matched</span> <span class="op">&lt;-</span> <span class="va">coverage</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">matched</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
@@ -248,13 +285,23 @@
 <p><img src="matching-coverage_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div class="section level2">
-<h2 id="a-note-on-sector-classifications-and-the-borderline-flag">A Note on Sector Classifications and the <code>borderline</code> Flag<a class="anchor" aria-label="anchor" href="#a-note-on-sector-classifications-and-the-borderline-flag"></a>
+<h2 id="a-note-on-sector-classifications-and-the-borderline-flag">A Note on Sector Classifications and the <code>borderline</code>
+Flag<a class="anchor" aria-label="anchor" href="#a-note-on-sector-classifications-and-the-borderline-flag"></a>
 </h2>
-<p>There are a zoo of sector classification code systems out there. Some are granular, some are not. Since we currently cover a particular portion of the supply chain (i.e. production), it is important we try to only match the ABCD with companies that are actually active in this portion of the supply chain.</p>
-<p>An issue arises when, for example, a company is classified in the “power transmission” sector. In a perfect world, these companies would produce no electricity, and we would not try to match them. In practice, however, we find there is often overlap. For this reason, we introduced the <code>borderline</code> flag.</p>
-<p>In the example below, we see two classification codes coming from the SIC classification standard:</p>
+<p>There are a zoo of sector classification code systems out there. Some
+are granular, some are not. Since we currently cover a particular
+portion of the supply chain (i.e. production), it is important we try to
+only match the ABCD with companies that are actually active in this
+portion of the supply chain.</p>
+<p>An issue arises when, for example, a company is classified in the
+“power transmission” sector. In a perfect world, these companies would
+produce no electricity, and we would not try to match them. In practice,
+however, we find there is often overlap. For this reason, we introduced
+the <code>borderline</code> flag.</p>
+<p>In the example below, we see two classification codes coming from the
+SIC classification standard:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/r2dii.data/man/sic_classification.html" class="external-link">sic_classification</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/sic_classification.html" class="external-link">sic_classification</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">41111</span>, <span class="fl">36200</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
 <span><span class="co">#&gt;   code  description                                               sector borde…¹</span></span>
@@ -262,8 +309,18 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 36200 manufacture of electricity distribution and control appa… power  TRUE   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 41111 generation                                                power  FALSE  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​borderline</span></span></span></code></pre></div>
-<p>Notice that the code 41111 corresponds to power generation. This is an identical match to 2DII’s <code>power</code> sector, and thus the <code>borderline</code> flag is set to <code>FALSE</code>. In contrast, code 36200 corresponds to the manufacture of electricity distribution and control apparatus. In a perfect world, we would set this code to <code>not in scope</code>, however there is still a chance that these companies produce electricity. For this reason, we have mapped it to <code>power</code> with <code>borderline = TRUE</code>.</p>
-<p>In practice, if a company has a <code>borderline</code> of <code>TRUE</code> and <em>is</em> matched, then consider the company in scope. If it has a <code>borderline</code> of <code>TRUE</code> and <em>isn’t</em> matched, then consider it out of scope.</p>
+<p>Notice that the code 41111 corresponds to power generation. This is
+an identical match to 2DII’s <code>power</code> sector, and thus the
+<code>borderline</code> flag is set to <code>FALSE</code>. In contrast,
+code 36200 corresponds to the manufacture of electricity distribution
+and control apparatus. In a perfect world, we would set this code to
+<code>not in scope</code>, however there is still a chance that these
+companies produce electricity. For this reason, we have mapped it to
+<code>power</code> with <code>borderline = TRUE</code>.</p>
+<p>In practice, if a company has a <code>borderline</code> of
+<code>TRUE</code> and <em>is</em> matched, then consider the company in
+scope. If it has a <code>borderline</code> of <code>TRUE</code> and
+<em>isn’t</em> matched, then consider it out of scope.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

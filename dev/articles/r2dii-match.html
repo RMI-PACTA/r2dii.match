@@ -106,26 +106,43 @@
 
     
     
-<p>The package r2dii.match helps you to match counterparties from a loanbook to companies in a physical-asset database. Each section below shows you how.</p>
+<p>The package r2dii.match helps you to match counterparties from a
+loanbook to companies in a physical-asset database. Each section below
+shows you how.</p>
 <div class="section level2">
 <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
-<p>We use the package r2dii.match to access the most important functions you’ll learn about. We also use example datasets from the package r2dii.data, and optional but convenient functions from the packages dplyr and readr.</p>
+<p>We use the package r2dii.match to access the most important functions
+you’ll learn about. We also use example datasets from the package
+r2dii.data, and optional but convenient functions from the packages
+dplyr and readr.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://2degreesinvesting.github.io/r2dii.data//" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.match/">r2dii.match</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="format-input-data-loanbook-and-asset-based-company-data-abcd">Format input data loanbook and asset-based company data (abcd)<a class="anchor" aria-label="anchor" href="#format-input-data-loanbook-and-asset-based-company-data-abcd"></a>
 </h2>
-<p>We need two datasets: a “loanbook” and an “asset-based company dataset” (abcd). These should be formatted like: <a href="https://rmi-pacta.github.io/r2dii.data/reference/loanbook_demo.html" class="external-link"><code>loanbook_demo</code></a> and <a href="https://rmi-pacta.github.io/r2dii.data/reference/abcd_demo.html" class="external-link"><code>abcd_demo</code></a> (from the <a href="https://rmi-pacta.github.io/r2dii.data" class="external-link">r2dii.data package</a>).</p>
-<p>A note on sector classification: Matches are preferred when the sector from the <code>loanbook</code> matches the sector from the <code>abcd</code>. The <code>loanbook</code> sector is determined internally using the <code>sector_classification_system</code> and <code>sector_classification_direct_loantaker</code> columns. Currently, we only allow a couple specific values for <code>sector_classification_system</code>:</p>
+<p>We need two datasets: a “loanbook” and an “asset-based company
+dataset” (abcd). These should be formatted like: <a href="https://rmi-pacta.github.io/r2dii.data/reference/loanbook_demo.html" class="external-link"><code>loanbook_demo</code></a>
+and <a href="https://rmi-pacta.github.io/r2dii.data/reference/abcd_demo.html" class="external-link"><code>abcd_demo</code></a>
+(from the <a href="https://rmi-pacta.github.io/r2dii.data" class="external-link">r2dii.data
+package</a>).</p>
+<p>A note on sector classification: Matches are preferred when the
+sector from the <code>loanbook</code> matches the sector from the
+<code>abcd</code>. The <code>loanbook</code> sector is determined
+internally using the <code>sector_classification_system</code> and
+<code>sector_classification_direct_loantaker</code> columns. Currently,
+we only allow a couple specific values for
+<code>sector_classification_system</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sector_classifications</span><span class="op">$</span><span class="va">code_system</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "CNB"   "GICS"  "ISIC"  "NACE"  "NAICS" "PSIC"  "SIC"</span></span></code></pre></div>
-<p>If you would like to use a different classification system, please raise an issue in <a href="https://github.com/RMI-PACTA/r2dii.data" class="external-link">r2dii.data</a> and we can incorporate it.</p>
+<p>If you would like to use a different classification system, please
+raise an issue in <a href="https://github.com/RMI-PACTA/r2dii.data" class="external-link">r2dii.data</a> and we can
+incorporate it.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loanbook_demo</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 321 × 19</span></span></span>
@@ -167,9 +184,12 @@
 <span><span class="co">#&gt; <span style="color: #949494;">#   is_ultimate_owner &lt;lgl&gt;, abcd_timestamp &lt;chr&gt;, emission_factor_unit &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   and abbreviated variable names ¹​name_company, ²​technology,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ³​production_unit, ⁴​production, ⁵​emission_factor, ⁶​country_of_domicile</span></span></span></code></pre></div>
-<p>If you want to use <code>loanbook_demo</code> and <code>abcd_demo</code> as template to create your own datasets, do this:</p>
+<p>If you want to use <code>loanbook_demo</code> and
+<code>abcd_demo</code> as template to create your own datasets, do
+this:</p>
 <ul>
-<li>Write <em>loanbook_demo.csv</em> and <em>abcd_demo.csv</em> with:</li>
+<li>Write <em>loanbook_demo.csv</em> and <em>abcd_demo.csv</em>
+with:</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Writting to current working directory </span></span>
@@ -180,32 +200,48 @@
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu">write_csv</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"abcd_demo.csv"</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>For each dataset, replace our demo data with your data.</li>
-<li>Save each dataset as, for example, <em>your_loanbook.csv</em> and <em>your_abcd.csv</em>.</li>
+<li>Save each dataset as, for example, <em>your_loanbook.csv</em> and
+<em>your_abcd.csv</em>.</li>
 <li>Read your datasets back into R with:</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Reading from current working directory </span></span>
 <span><span class="va">your_loanbook</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="st">"your_loanbook.csv"</span><span class="op">)</span></span>
 <span><span class="va">your_abcd</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="st">"your_abcd.csv"</span><span class="op">)</span></span></code></pre></div>
-<p>Here we continue to use the <code>*_demo</code> datasets, pretending they contain the data of your own.</p>
+<p>Here we continue to use the <code>*_demo</code> datasets, pretending
+they contain the data of your own.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># WARNING: Skip this to avoid overwriting your data with our demo data</span></span>
 <span><span class="va">your_loanbook</span> <span class="op">&lt;-</span> <span class="va">loanbook_demo</span></span>
 <span><span class="va">your_abcd</span> <span class="op">&lt;-</span> <span class="va">abcd_demo</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="score-the-goodness-of-the-match-between-the-loanbook-and-abcd-datasets">Score the goodness of the match between the loanbook and abcd datasets<a class="anchor" aria-label="anchor" href="#score-the-goodness-of-the-match-between-the-loanbook-and-abcd-datasets"></a>
+<h2 id="score-the-goodness-of-the-match-between-the-loanbook-and-abcd-datasets">Score the goodness of the match between the loanbook and abcd
+datasets<a class="anchor" aria-label="anchor" href="#score-the-goodness-of-the-match-between-the-loanbook-and-abcd-datasets"></a>
 </h2>
-<p><code><a href="../reference/match_name.html">match_name()</a></code> scores the match between names in a loanbook dataset (lbk) and names in an asset-based company dataset (abcd). The names come from the columns <code>name_direct_loantaker</code>, <code>name_intermediate_parent_*</code> and <code>name_ultimate_parent</code> of the loanbook dataset, and from the column <code>name_company</code> of the a asset-based company dataset. There can be any number of <code>name_intermediate_parent_*</code> columns, where <code>*</code> indicates the level up the corporate tree from <code>direct_loantaker</code>.</p>
-<p>The raw names are internally transformed applying best-practices commonly used in name matching algorithms, such as:</p>
+<p><code><a href="../reference/match_name.html">match_name()</a></code> scores the match between names in a
+loanbook dataset (lbk) and names in an asset-based company dataset
+(abcd). The names come from the columns
+<code>name_direct_loantaker</code>,
+<code>name_intermediate_parent_*</code> and
+<code>name_ultimate_parent</code> of the loanbook dataset, and from the
+column <code>name_company</code> of the a asset-based company dataset.
+There can be any number of <code>name_intermediate_parent_*</code>
+columns, where <code>*</code> indicates the level up the corporate tree
+from <code>direct_loantaker</code>.</p>
+<p>The raw names are internally transformed applying best-practices
+commonly used in name matching algorithms, such as:</p>
 <ul>
 <li>Remove special characters.</li>
 <li>Replace language specific characters.</li>
-<li>Abbreviate certain names to reduce their importance in the matching.</li>
+<li>Abbreviate certain names to reduce their importance in the
+matching.</li>
 <li>Removing corporate suffixes when necessary.</li>
 <li>Spell out numbers to increase their importance.</li>
 </ul>
-<p>The similarity is then scored between the internally-transformed names of the loanbook against the abcd. (For more information on the scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html" class="external-link">stringdist::stringsim()</a></code>).</p>
+<p>The similarity is then scored between the internally-transformed
+names of the loanbook against the abcd. (For more information on the
+scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html" class="external-link">stringdist::stringsim()</a></code>).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 410 × 28</span></span></span>
@@ -228,7 +264,11 @@
 <span><span class="co">#&gt; <span style="color: #949494;">#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;lgl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   lei_direct_loantaker &lt;lgl&gt;, isin_direct_loantaker &lt;lgl&gt;, id_2dii &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   level &lt;chr&gt;, sector &lt;chr&gt;, sector_abcd &lt;chr&gt;, name &lt;chr&gt;, …</span></span></span></code></pre></div>
-<p><code><a href="../reference/match_name.html">match_name()</a></code> defaults to scoring matches between name strings that belong to the same sector. Using <code>by_sector = FALSE</code> removes this limitation – increasing computation time, and the number of potentially incorrect matches to manually validate.</p>
+<p><code><a href="../reference/match_name.html">match_name()</a></code> defaults to scoring matches between name
+strings that belong to the same sector. Using
+<code>by_sector = FALSE</code> removes this limitation – increasing
+computation time, and the number of potentially incorrect matches to
+manually validate.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, by_sector <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -238,7 +278,8 @@
 <span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, by_sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 410</span></span></code></pre></div>
-<p><code>min_score</code> allows you to minimum threshold <code>score</code>.</p>
+<p><code>min_score</code> allows you to minimum threshold
+<code>score</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, min_score <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">matched</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span>
@@ -246,18 +287,29 @@
 <div class="section level3">
 <h3 id="maybe-overwrite-matches">Maybe overwrite matches<a class="anchor" aria-label="anchor" href="#maybe-overwrite-matches"></a>
 </h3>
-<p>If you are happy with the matching coverage achieved, proceed to the next step. Otherwise, you can manually add matches, not found automatically by <code><a href="../reference/match_name.html">match_name()</a></code>. To do this, manually inspect the <code>abcd</code> and find a company you would like to match to your loanbook. Once a match is found, use excel to write a .csv file similar to <a href="https://rmi-pacta.github.io/r2dii.data/reference/overwrite_demo.html" class="external-link"><code>overwrite_demo</code></a>, where:</p>
+<p>If you are happy with the matching coverage achieved, proceed to the
+next step. Otherwise, you can manually add matches, not found
+automatically by <code><a href="../reference/match_name.html">match_name()</a></code>. To do this, manually inspect
+the <code>abcd</code> and find a company you would like to match to your
+loanbook. Once a match is found, use excel to write a .csv file similar
+to <a href="https://rmi-pacta.github.io/r2dii.data/reference/overwrite_demo.html" class="external-link"><code>overwrite_demo</code></a>,
+where:</p>
 <ul>
 <li>
-<code>level</code> indicates the level that the manual match should be added to (e.g. <code>direct_loantaker</code>)</li>
+<code>level</code> indicates the level that the manual match should
+be added to (e.g. <code>direct_loantaker</code>)</li>
 <li>
-<code>id_2dii</code> is the id of the loanbook company you would like to match (from the output of <code><a href="../reference/match_name.html">match_name()</a></code>)</li>
+<code>id_2dii</code> is the id of the loanbook company you would
+like to match (from the output of <code><a href="../reference/match_name.html">match_name()</a></code>)</li>
 <li>
-<code>name</code> is the abcd company you would like to manually link to</li>
+<code>name</code> is the abcd company you would like to manually
+link to</li>
 <li>
-<code>sector</code> optionally you can also overwrite the sector.</li>
+<code>sector</code> optionally you can also overwrite the
+sector.</li>
 <li>
-<code>source</code> this can be used later to determine where all manual matches came from.</li>
+<code>source</code> this can be used later to determine where all
+manual matches came from.</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span></span>
@@ -274,19 +326,26 @@
 <div class="section level2">
 <h2 id="validate-matches">Validate matches<a class="anchor" aria-label="anchor" href="#validate-matches"></a>
 </h2>
-<p>Write the output of <code><a href="../reference/match_name.html">match_name()</a></code> into a .csv file with:</p>
+<p>Write the output of <code><a href="../reference/match_name.html">match_name()</a></code> into a .csv file
+with:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Writting to current working directory</span></span>
 <span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu">write_csv</span><span class="op">(</span><span class="st">"matched.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>Compare, edit, and save the data manually:</p>
 <ul>
-<li>Open <em>matched.csv</em> with any spreadsheet editor (Excel, Google Sheets, etc.).</li>
-<li>Compare the columns <code>name</code> and <code>name_abcd</code> manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)</li>
+<li>Open <em>matched.csv</em> with any spreadsheet editor (Excel, Google
+Sheets, etc.).</li>
+<li>Compare the columns <code>name</code> and <code>name_abcd</code>
+manually to determine if the match is valid. Other information can be
+used in conjunction with just the names to ensure the two entities match
+(sector, internal information on the company structure, etc.)</li>
 <li>Edit the data:
 <ul>
-<li>If you are happy with the match, set the <code>score</code> value to <code>1</code>.</li>
-<li>Otherwise set or leave the <code>score</code> value to anything other than <code>1</code>.</li>
+<li>If you are happy with the match, set the <code>score</code> value to
+<code>1</code>.</li>
+<li>Otherwise set or leave the <code>score</code> value to anything
+other than <code>1</code>.</li>
 </ul>
 </li>
 <li>Save the edited file as, say, <em>valid_matches.csv</em>.</li>
@@ -299,7 +358,13 @@
 <div class="section level2">
 <h2 id="prioritize-validated-matches-by-level">Prioritize validated matches by level<a class="anchor" aria-label="anchor" href="#prioritize-validated-matches-by-level"></a>
 </h2>
-<p>The validated dataset may have multiple matches per loan. Consider the case where a loan is given to “Acme Power USA”, a subsidiary of “Acme Power Co.”. There may be both “Acme Power USA” and “Acme Power Co.” in the <code>abcd</code>, and so there could be two valid matches for this loan. To get the best match only, use <code><a href="../reference/prioritize.html">prioritize()</a></code> – it picks rows where <code>score</code> is 1 and <code>level</code> per loan is of highest <code>priority()</code>:</p>
+<p>The validated dataset may have multiple matches per loan. Consider
+the case where a loan is given to “Acme Power USA”, a subsidiary of
+“Acme Power Co.”. There may be both “Acme Power USA” and “Acme Power
+Co.” in the <code>abcd</code>, and so there could be two valid matches
+for this loan. To get the best match only, use <code><a href="../reference/prioritize.html">prioritize()</a></code>
+– it picks rows where <code>score</code> is 1 and <code>level</code> per
+loan is of highest <code>priority()</code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pretend we validated the matched dataset</span></span>
 <span><span class="va">valid_matches</span> <span class="op">&lt;-</span> <span class="va">matched</span></span>
@@ -323,11 +388,15 @@
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> DL281   direct_loantaker     1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> DL280   direct_loantaker     1</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 206 more rows</span></span></span></code></pre></div>
-<p>By default, highest priority refers to the most granular match (<code>direct_loantaker</code>). The default priority is set internally via <code>prioritize_levels()</code>.</p>
+<p>By default, highest priority refers to the most granular match
+(<code>direct_loantaker</code>). The default priority is set internally
+via <code>prioritize_levels()</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prioritize_level.html">prioritize_level</a></span><span class="op">(</span><span class="va">matched</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></span></code></pre></div>
-<p>You may use a different priority. One way to do that is to pass a function to <code>priority</code>. For example, use <code>rev</code> to reverse the default priority.</p>
+<p>You may use a different priority. One way to do that is to pass a
+function to <code>priority</code>. For example, use <code>rev</code> to
+reverse the default priority.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span>priority <span class="op">=</span> <span class="va">rev</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
