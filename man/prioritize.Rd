@@ -41,17 +41,16 @@ matched \%>\%
 
 Compare, edit, and save the data manually:
 \itemize{
-\item Open \emph{matched.csv} with any spreadsheet editor (Excel, Google
-Sheets, etc.).
+\item Open \emph{matched.csv} with any spreadsheet editor (Excel, Google Sheets,
+etc.).
 \item Compare the columns \code{name} and \code{name_abcd} manually to determine if
-the match is valid. Other information can be used in conjunction
-with just the names to ensure the two entities match (sector,
-internal information on the company structure, etc.)
+the match is valid. Other information can be used in conjunction with
+just the names to ensure the two entities match (sector, internal
+information on the company structure, etc.)
 \item Edit the data:
 \itemize{
 \item If you are happy with the match, set the \code{score} value to \code{1}.
-\item Otherwise set or leave the \code{score} value to anything other than
-\code{1}.
+\item Otherwise set or leave the \code{score} value to anything other than \code{1}.
 }
 \item Save the edited file as, say, \emph{valid_matches.csv}.
 }
