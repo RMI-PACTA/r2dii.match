@@ -18,11 +18,11 @@ coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.sv
 These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
-scenarios (<https://transitionmonitor.com/>). Financial institutions use
-PACTA to study how their capital allocation impacts the climate. This
-package matches data from financial portfolios to asset level data from
-market-intelligence databases (e.g. power plant capacities, emission
-factors, etc.). This is the first step to assess if a financial
+scenarios (<https://www.transitionmonitor.com/>). Financial institutions
+use PACTA to study how their capital allocation impacts the climate.
+This package matches data from financial portfolios to asset level data
+from market-intelligence databases (e.g. power plant capacities,
+emission factors, etc.). This is the first step to assess if a financial
 portfolio aligns with climate goals.
 
 ## Installation
@@ -49,7 +49,7 @@ library(r2dii.match)
 
 Matching is achieved in two main steps:
 
-### 1\. Run fuzzy matching
+### 1. Run fuzzy matching
 
 `match_name()` will extract all unique counterparty names from the
 columns: `direct_loantaker`, `ultimate_parent` or `intermediate_parent*`
@@ -80,9 +80,9 @@ match_result
 #> #   level <chr>, sector <chr>, sector_abcd <chr>, name <chr>, …
 ```
 
-### 2\. Prioritize validated matches
+### 2. Prioritize validated matches
 
-The user should then manually validate the output of \[match\_name()\],
+The user should then manually validate the output of \[match_name()\],
 ensuring that the value of the column `score` is equal to `1` for
 perfect matches only.
 
@@ -124,11 +124,10 @@ started](https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html).
 
 This project has received funding from the [European Union LIFE
 program](https://wayback.archive-it.org/12090/20210412123959/https://ec.europa.eu/easme/en/)
-and the [International Climate Initiative
-(IKI)](https://www.international-climate-initiative.com/en/search-project/).
-The Federal Ministry for the Environment, Nature Conservation and
-Nuclear Safety (BMU) supports this initiative on the basis of a decision
-adopted by the German Bundestag. The views expressed are the sole
-responsibility of the authors and do not necessarily reflect the views
-of the funders. The funders are not responsible for any use that may be
-made of the information it contains.
+and the International Climate Initiative (IKI). The Federal Ministry for
+the Environment, Nature Conservation and Nuclear Safety (BMU) supports
+this initiative on the basis of a decision adopted by the German
+Bundestag. The views expressed are the sole responsibility of the
+authors and do not necessarily reflect the views of the funders. The
+funders are not responsible for any use that may be made of the
+information it contains.

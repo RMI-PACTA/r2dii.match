@@ -16,7 +16,7 @@ from market-intelligence databases (e.g. power plant capacities,
 emission factors, etc.). This is the first step to assess if a financial
 portfolio aligns with climate goals. For details see the package’s
 [website](https://rmi-pacta.github.io/r2dii.match/) and
-<a href="https://transitionmonitor.com/" class="uri">https://transitionmonitor.com/</a>.
+<a href="https://www.transitionmonitor.com/" class="uri">https://transitionmonitor.com/</a>.
 
 Install r2dii.match with:
 
