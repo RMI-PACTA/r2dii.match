@@ -262,3 +262,11 @@ test_that("get_ownership_type() is equal to its legacy in pacta", {
     character(0)
   )
 })
+
+test_that("to_alias() handles string encoding before calling to_lower(),
+          (#425, @kalashsinghal and @Tilmon)", {
+  x <- "o_\xfc_dd"
+
+  expect_equal(to_alias(x), "odd")
+
+})

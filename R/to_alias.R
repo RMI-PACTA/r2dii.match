@@ -65,12 +65,15 @@ to_alias <- function(x,
                      from_to = NULL,
                      ownership = NULL,
                      remove_ownership = FALSE) {
-  # lowercase
-  out <- tolower(x)
+
+  out <- x
 
   # base latin characters
   out <- stringi::stri_trans_general(out, "any-latin")
   out <- stringi::stri_trans_general(out, "latin-ascii")
+
+  # lowercase
+  out <- tolower(out)
 
   # symbols
   out <- reduce(get_sym_replace(), replace_abbrev, fixed = TRUE, .init = out)
