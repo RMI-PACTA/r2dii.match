@@ -1,4 +1,4 @@
-# r2dii.match (development version)
+# r2dii.match 0.1.4
 
 * `to_alias` can now handle strange encodings without error (#425, @kalashsinghal @Tilmon).
 
