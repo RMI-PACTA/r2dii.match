@@ -58,26 +58,26 @@ and run fuzzy matching against all company names in the `abcd`:
 ``` r
 match_result <- match_name(loanbook_demo, abcd_demo)
 match_result 
-#> # A tibble: 410 × 28
-#>    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸
-#>    <chr>   <chr>         <chr>   <chr>   <chr>   <chr>   <chr>     <dbl> <chr>  
-#>  1 L1      C294          Yuamen… <NA>    <NA>    UP15    Alpine…  225625 EUR    
-#>  2 L3      C292          Yuama … IP5     Yuama … UP288   Univer…  410297 EUR    
-#>  3 L3      C292          Yuama … IP5     Yuama … UP288   Univer…  410297 EUR    
-#>  4 L5      C305          Yukon … <NA>    <NA>    UP104   Garlan…  406585 EUR    
-#>  5 L5      C305          Yukon … <NA>    <NA>    UP104   Garlan…  406585 EUR    
-#>  6 L6      C304          Yukon … <NA>    <NA>    UP83    Earthp…  185721 EUR    
-#>  7 L6      C304          Yukon … <NA>    <NA>    UP83    Earthp…  185721 EUR    
-#>  8 L8      C303          Yueyan… <NA>    <NA>    UP163   Kraftw…  291513 EUR    
-#>  9 L9      C301          Yuedxi… IP10    Yuedxi… UP138   Jai Bh…  407513 EUR    
-#> 10 L10     C302          Yuexi … <NA>    <NA>    UP32    Bhagwa…  186649 EUR    
-#> # … with 400 more rows, 19 more variables: loan_size_credit_limit <dbl>,
-#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
-#> #   sector_classification_input_type <chr>,
-#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
-#> #   level <chr>, sector <chr>, sector_abcd <chr>, name <chr>, …
+#> # A tibble: 26 × 28
+#>    id_direct_loantaker name_direct_loantaker          id_intermediate_parent_1
+#>    <chr>               <chr>                          <chr>                   
+#>  1 C26                 large oil and gas company four <NA>                    
+#>  2 C26                 large oil and gas company four <NA>                    
+#>  3 C1                  large automotive company five  <NA>                    
+#>  4 C1                  large automotive company five  <NA>                    
+#>  5 C35                 large steel company five       <NA>                    
+#>  6 C35                 large steel company five       <NA>                    
+#>  7 C5                  large automotive company two   <NA>                    
+#>  8 C5                  large automotive company two   <NA>                    
+#>  9 C30                 large power company five       <NA>                    
+#> 10 C30                 large power company five       <NA>                    
+#> # ℹ 16 more rows
+#> # ℹ 25 more variables: name_intermediate_parent_1 <chr>,
+#> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
+#> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
+#> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
+#> #   sector_classification_system <chr>, sector_classification_input_type <chr>,
+#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>, …
 ```
 
 ### 2. Prioritize validated matches
@@ -92,26 +92,29 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 216 × 28
-#>    id_loan id_direct_l…¹ name_…² id_in…³ name_…⁴ id_ul…⁵ name_…⁶ loan_…⁷ loan_…⁸
-#>    <chr>   <chr>         <chr>   <chr>   <chr>   <chr>   <chr>     <dbl> <chr>  
-#>  1 L6      C304          Yukon … <NA>    <NA>    UP83    Earthp…  185721 EUR    
-#>  2 L13     C297          Yuba C… <NA>    <NA>    UP69    Consor…  200569 EUR    
-#>  3 L20     C287          Ytl Po… <NA>    <NA>    UP35    Bnb Re…  308217 EUR    
-#>  4 L21     C286          Ytl Po… <NA>    <NA>    UP63    Cisa S…  226553 EUR    
-#>  5 L22     C285          Ytl Co… <NA>    <NA>    UP187   Mr. La…  196857 EUR    
-#>  6 L23     C283          Ypic I… <NA>    <NA>    UP297   Wallen…  195929 EUR    
-#>  7 L24     C282          Ypfb C… <NA>    <NA>    UP209   Phoeni…  309145 EUR    
-#>  8 L25     C281          Ypf Sa  <NA>    <NA>    UP296   Viridi…  266457 EUR    
-#>  9 L26     C280          Ypf En… <NA>    <NA>    UP67    Coast …  199641 EUR    
-#> 10 L27     C278          Younic… <NA>    <NA>    UP45    Ce Ene…  197785 EUR    
-#> # … with 206 more rows, 19 more variables: loan_size_credit_limit <dbl>,
-#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
-#> #   sector_classification_input_type <chr>,
+#> # A tibble: 13 × 28
+#>    id_direct_loantaker name_direct_loantaker          id_intermediate_parent_1
+#>    <chr>               <chr>                          <chr>                   
+#>  1 C26                 large oil and gas company four <NA>                    
+#>  2 C1                  large automotive company five  <NA>                    
+#>  3 C35                 large steel company five       <NA>                    
+#>  4 C5                  large automotive company two   <NA>                    
+#>  5 C30                 large power company five       <NA>                    
+#>  6 C3                  large automotive company one   <NA>                    
+#>  7 C23                 large hdv company three        <NA>                    
+#>  8 C33                 large power company three      <NA>                    
+#>  9 C31                 large power company four       <NA>                    
+#> 10 C32                 large power company one        <NA>                    
+#> 11 C34                 large power company two        <NA>                    
+#> 12 C25                 large oil and gas company five <NA>                    
+#> 13 C20                 large coal company two         <NA>                    
+#> # ℹ 25 more variables: name_intermediate_parent_1 <chr>,
+#> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
+#> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
+#> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
+#> #   sector_classification_system <chr>, sector_classification_input_type <chr>,
 #> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <lgl>,
-#> #   lei_direct_loantaker <lgl>, isin_direct_loantaker <lgl>, id_2dii <chr>,
-#> #   level <chr>, sector <chr>, sector_abcd <chr>, name <chr>, …
+#> #   flag_project_finance_loan <chr>, name_project <chr>, …
 ```
 
 The result is a dataset with identical columns to the input loanbook,
