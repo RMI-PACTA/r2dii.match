@@ -179,10 +179,15 @@ test_that("takes `min_score`", {
 })
 
 test_that("takes `method`", {
+  lbk_method <- slice(loanbook_demo, 4)
+  lbk_method <- mutate(
+    lbk_method,
+    name_direct_loantaker = "large automotive comapny two"
+  )
   expect_false(
     identical(
-      match_name(slice(loanbook_demo, 4:15), abcd_demo, method = "jw"),
-      match_name(slice(loanbook_demo, 4:15), abcd_demo, method = "osa")
+      match_name(lbk_method, abcd_demo, method = "jw"),
+      match_name(lbk_method, abcd_demo, method = "osa")
     )
   )
 })
