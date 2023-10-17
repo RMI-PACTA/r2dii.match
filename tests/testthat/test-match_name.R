@@ -435,10 +435,15 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
 })
 
 test_that("0-row output has expected column type", {
-  lbk <- slice(loanbook_demo, 2)
-  out <- expect_warning(match_name(lbk, abcd_demo), "no match")
+  lbk2 <- slice(loanbook_demo, 2)
+  lbk2 <- mutate(
+    lbk2,
+    name_direct_loantaker = "Foo",
+    name_ultimate_parent = "Bar"
+  )
+  out <- suppressWarnings(match_name(lbk2, abcd_demo))
 
-  lbk_types <- purrr::map_chr(lbk, typeof)
+  lbk_types <- purrr::map_chr(lbk2, typeof)
   out_types <- purrr::map_chr(out, typeof)
 
   same <- intersect(names(out_types), names(lbk_types))
