@@ -212,7 +212,7 @@ test_that("takes `overwrite`", {
   overwrite_demo <- tibble(
     level = "ultimate_parent",
     id_2dii = "UP1",
-    name = "Ovewritten name",
+    name = "Overwritten name",
     sector = "coal",
     source = "manual"
   )
