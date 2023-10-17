@@ -142,7 +142,7 @@ test_that("w/ loanbook that matches nothing, yields expected", {
     name_ultimate_parent = "Bar"
   )
   expect_warning(
-    out <- match_name(lbk2b, slice(abcd_demo, 1:10)),
+    out <- match_name(lbk2, slice(abcd_demo, 1:10)),
     "no match"
   )
   expect_equal(nrow(out), 0L)
@@ -200,6 +200,13 @@ test_that("takes `p`", {
 
 test_that("takes `overwrite`", {
   lbk <- slice(loanbook_demo, 4:25)
+  overwrite_demo <- tibble(
+    level = "ultimate_parent",
+    id_2dii = "UP1",
+    name = "Ovewritten name",
+    sector = "coal",
+    source = "manual"
+  )
 
   expect_false(
     identical(
@@ -241,22 +248,22 @@ test_that("works with `min_score = 0` (bug fix)", {
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
-  this_name <- "Nanaimo Forest Products Ltd."
+  this_name <- "large hdv company three"
   this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
     filter(name_direct_loantaker == this_name)
 
-  nanimo_scores <- this_lbk %>%
+  scores <- this_lbk %>%
     match_name(abcd_demo) %>%
     mutate(alias = to_alias(name)) %>%
     filter(alias == this_alias) %>%
     pull(score)
 
   expect_true(
-    any(nanimo_scores == 1)
+    any(scores == 1)
   )
   expect_true(
-    all(nanimo_scores == 1)
+    all(scores == 1)
   )
 })
 
