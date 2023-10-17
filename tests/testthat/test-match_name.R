@@ -226,6 +226,14 @@ test_that("takes `overwrite`", {
 })
 
 test_that("warns overwrite", {
+  lbk <- slice(loanbook_demo, 4:25)
+  overwrite_demo <- tibble(
+    level = "ultimate_parent",
+    id_2dii = "UP1",
+    name = "Ovewritten name",
+    sector = "coal",
+    source = "manual"
+  )
   expect_warning(
     match_name(lbk, abcd_demo, overwrite = overwrite_demo),
     class = "overwrite_warning"
