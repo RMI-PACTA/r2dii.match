@@ -136,8 +136,13 @@ test_that("takes unprepared loanbook and abcd datasets", {
 test_that("w/ loanbook that matches nothing, yields expected", {
   # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
+  lbk2 <- mutate(
+    lbk2,
+    name_direct_loantaker = "Foo",
+    name_ultimate_parent = "Bar"
+  )
   expect_warning(
-    out <- match_name(lbk2, abcd_demo),
+    out <- match_name(lbk2b, slice(abcd_demo, 1:10)),
     "no match"
   )
   expect_equal(nrow(out), 0L)
