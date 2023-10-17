@@ -125,7 +125,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 })
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
-  out <- match_name(slice(loanbook_demo, 1L), fake_abcd())
+  out <- suppressWarnings(match_name(slice(loanbook_demo, 1L), fake_abcd()))
   expect_equal(names(out), expect_names_match_name)
 })
 
@@ -136,8 +136,13 @@ test_that("takes unprepared loanbook and abcd datasets", {
 test_that("w/ loanbook that matches nothing, yields expected", {
   # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
+  lbk2 <- mutate(
+    lbk2,
+    name_direct_loantaker = "Foo",
+    name_ultimate_parent = "Bar"
+  )
   expect_warning(
-    out <- match_name(lbk2, abcd_demo),
+    out <- match_name(lbk2, slice(abcd_demo, 1:10)),
     "no match"
   )
   expect_equal(nrow(out), 0L)
@@ -174,27 +179,43 @@ test_that("takes `min_score`", {
 })
 
 test_that("takes `method`", {
+  lbk_method <- slice(loanbook_demo, 4)
+  lbk_method <- mutate(
+    lbk_method,
+    name_direct_loantaker = "large automotive comapny two"
+  )
   expect_false(
     identical(
-      match_name(slice(loanbook_demo, 4:15), abcd_demo, method = "jw"),
-      match_name(slice(loanbook_demo, 4:15), abcd_demo, method = "osa")
+      match_name(lbk_method, abcd_demo, method = "jw"),
+      match_name(lbk_method, abcd_demo, method = "osa")
     )
   )
 })
 
 test_that("takes `p`", {
-  lbk45 <- slice(loanbook_demo, 4:5) # slice(., 1) seems insensitive to `p`
+  lbk_p <- slice(loanbook_demo, 4)
+  lbk_p <- mutate(
+    lbk_p,
+    name_direct_loantaker = "large automotive comapny two"
+  )
 
   expect_false(
     identical(
-      match_name(lbk45, abcd_demo, p = 0.1),
-      match_name(lbk45, abcd_demo, p = 0.2)
+      match_name(lbk_p, abcd_demo, p = 0.1),
+      match_name(lbk_p, abcd_demo, p = 0.2)
     )
   )
 })
 
 test_that("takes `overwrite`", {
   lbk <- slice(loanbook_demo, 4:25)
+  overwrite_demo <- tibble(
+    level = "ultimate_parent",
+    id_2dii = "UP1",
+    name = "Overwritten name",
+    sector = "coal",
+    source = "manual"
+  )
 
   expect_false(
     identical(
@@ -205,8 +226,16 @@ test_that("takes `overwrite`", {
 })
 
 test_that("warns overwrite", {
+  lbk <- slice(loanbook_demo, 4:25)
+  overwrite_demo <- tibble(
+    level = "ultimate_parent",
+    id_2dii = "UP1",
+    name = "Ovewritten name",
+    sector = "coal",
+    source = "manual"
+  )
   expect_warning(
-    match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo),
+    match_name(lbk, abcd_demo, overwrite = overwrite_demo),
     class = "overwrite_warning"
   )
 })
@@ -236,22 +265,22 @@ test_that("works with `min_score = 0` (bug fix)", {
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
-  this_name <- "Nanaimo Forest Products Ltd."
+  this_name <- "large hdv company three"
   this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
     filter(name_direct_loantaker == this_name)
 
-  nanimo_scores <- this_lbk %>%
+  scores <- this_lbk %>%
     match_name(abcd_demo) %>%
     mutate(alias = to_alias(name)) %>%
     filter(alias == this_alias) %>%
     pull(score)
 
   expect_true(
-    any(nanimo_scores == 1)
+    any(scores == 1)
   )
   expect_true(
-    all(nanimo_scores == 1)
+    all(scores == 1)
   )
 })
 
@@ -430,27 +459,19 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
 })
 
 test_that("0-row output has expected column type", {
-  lbk <- slice(loanbook_demo, 2)
-  out <- expect_warning(match_name(lbk, abcd_demo), "no match")
+  lbk2 <- slice(loanbook_demo, 2)
+  lbk2 <- mutate(
+    lbk2,
+    name_direct_loantaker = "Foo",
+    name_ultimate_parent = "Bar"
+  )
+  out <- suppressWarnings(match_name(lbk2, abcd_demo))
 
-  lbk_types <- purrr::map_chr(lbk, typeof)
+  lbk_types <- purrr::map_chr(lbk2, typeof)
   out_types <- purrr::map_chr(out, typeof)
 
   same <- intersect(names(out_types), names(lbk_types))
   expect_identical(lbk_types[same], out_types[same])
-})
-
-test_that("works with UP266", {
-  up266 <- filter(loanbook_demo, id_ultimate_parent == "UP266")
-  out <- match_name(up266, abcd_demo)
-
-  prefix <- c(glue("id_{level()}"), glue("name_{level()}"))
-  prefix <- paste0(prefix, collapse = "|")
-
-  expect_snapshot_value(
-    select(out, all_of("id_2dii"), matches(prefix)),
-    style = "json2"
-    )
 })
 
 test_that("with loanbook_demo and abcd_demo outputs expected value", {

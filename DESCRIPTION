@@ -1,6 +1,6 @@
 Package: r2dii.match
 Title: Tools to Match Corporate Lending Portfolios with Climate Data
-Version: 0.1.3.9000
+Version: 0.1.4
 Authors@R: 
     c(person(given = "Alex",
              family = "Axthelm",
@@ -54,7 +54,7 @@ Imports:
     lifecycle,
     magrittr,
     purrr,
-    r2dii.data,
+    r2dii.data (>= 0.4.0),
     rlang,
     stringdist,
     stringi,
