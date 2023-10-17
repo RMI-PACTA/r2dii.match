@@ -125,7 +125,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 })
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
-  out <- match_name(slice(loanbook_demo, 1L), fake_abcd())
+  out <- suppressWarnings(match_name(slice(loanbook_demo, 1L), fake_abcd()))
   expect_equal(names(out), expect_names_match_name)
 })
 
@@ -193,12 +193,16 @@ test_that("takes `method`", {
 })
 
 test_that("takes `p`", {
-  lbk45 <- slice(loanbook_demo, 4:5) # slice(., 1) seems insensitive to `p`
+  lbk_p <- slice(loanbook_demo, 4)
+  lbk_p <- mutate(
+    lbk_p,
+    name_direct_loantaker = "large automotive comapny two"
+  )
 
   expect_false(
     identical(
-      match_name(lbk45, abcd_demo, p = 0.1),
-      match_name(lbk45, abcd_demo, p = 0.2)
+      match_name(lbk_p, abcd_demo, p = 0.1),
+      match_name(lbk_p, abcd_demo, p = 0.2)
     )
   )
 })
@@ -223,7 +227,7 @@ test_that("takes `overwrite`", {
 
 test_that("warns overwrite", {
   expect_warning(
-    match_name(fake_lbk(), fake_abcd(), overwrite = overwrite_demo),
+    match_name(lbk, abcd_demo, overwrite = overwrite_demo),
     class = "overwrite_warning"
   )
 })
