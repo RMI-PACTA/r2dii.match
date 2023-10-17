@@ -54,7 +54,7 @@ Imports:
     lifecycle,
     magrittr,
     purrr,
-    r2dii.data,
+    r2dii.data (>= 0.4.0),
     rlang,
     stringdist,
     stringi,
