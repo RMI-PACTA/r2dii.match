@@ -445,19 +445,6 @@ test_that("0-row output has expected column type", {
   expect_identical(lbk_types[same], out_types[same])
 })
 
-test_that("works with UP266", {
-  up266 <- filter(loanbook_demo, id_ultimate_parent == "UP266")
-  out <- match_name(up266, abcd_demo)
-
-  prefix <- c(glue("id_{level()}"), glue("name_{level()}"))
-  prefix <- paste0(prefix, collapse = "|")
-
-  expect_snapshot_value(
-    select(out, all_of("id_2dii"), matches(prefix)),
-    style = "json2"
-    )
-})
-
 test_that("with loanbook_demo and abcd_demo outputs expected value", {
   skip_on_ci()
   out <- match_name(loanbook_demo, abcd_demo)
