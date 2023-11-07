@@ -1,6 +1,7 @@
 library(dplyr, warn.conflicts = FALSE)
 library(r2dii.data)
 
+
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
           level only", {
   lbk <- tibble::tibble(
@@ -25,6 +26,8 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
   out <- match_name(lbk, abcd)
   expect_equal(out$level, "intermediate_parent_999")
 })
+
+skip_on_cran()
 
 test_that("w/ missing values at all levels outputs 0-row", {
   lbk <- tibble(

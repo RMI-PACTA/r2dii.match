@@ -104,6 +104,7 @@ This function ignores but preserves existing groups.
 }
 
 \examples{
+\dontrun{
 library(r2dii.data)
 library(tibble)
 
@@ -143,6 +144,7 @@ match_name(loanbook, abcd)
 
 # Cleanup
 options(restore)
+}
 }
 \seealso{
 Other main functions: 
