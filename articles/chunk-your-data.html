@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Using `match_name()` with large loanbooks">
 <meta property="og:description" content="How to resolve memory issues">
@@ -148,15 +148,15 @@ the sum of the rows across chunks.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 1</span></span></span>
 <span><span class="co">#&gt;       n</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>    13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   323</span></span>
 <span></span>
 <span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">chunked</span>, <span class="va">chunk</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   chunk     n</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1     5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2     4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3     4</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1   108</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2   107</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3   108</span></span></code></pre></div>
 <p>For each chunk you need to repeat this process:</p>
 <ol style="list-style-type: decimal">
 <li>Match this chunk against the entire <code>abcd</code> dataset.</li>
@@ -183,42 +183,42 @@ the sum of the rows across chunks.</p>
 <p>The result is one .csv file per chunk.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
-<span><span class="co">#&gt; /tmp/RtmpcRofeo/output/1.csv /tmp/RtmpcRofeo/output/2.csv </span></span>
-<span><span class="co">#&gt; /tmp/RtmpcRofeo/output/3.csv</span></span></code></pre></div>
+<span><span class="co">#&gt; /tmp/RtmpCkQ6iB/output/1.csv /tmp/RtmpCkQ6iB/output/2.csv </span></span>
+<span><span class="co">#&gt; /tmp/RtmpCkQ6iB/output/3.csv</span></span></code></pre></div>
 <p>You can read and combine all files in one step with
 <code><a href="https://vroom.r-lib.org/reference/vroom.html" class="external-link">vroom()</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://vroom.r-lib.org/reference/vroom.html" class="external-link">vroom</a></span><span class="op">(</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_ls.html" class="external-link">dir_ls</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">26</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">29</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">307</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">29</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> "\t"</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span> (19): id_direct_loantaker, name_direct_loantaker, id_ultimate_parent, na...</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span> (20): id_loan, id_direct_loantaker, name_direct_loantaker, id_intermedia...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">dbl</span>  (5): loan_size_outstanding, loan_size_credit_limit, sector_classificati...</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">lgl</span>  (5): id_intermediate_parent_1, name_intermediate_parent_1, name_project...</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">lgl</span>  (4): name_project, lei_direct_loantaker, isin_direct_loantaker, borderline</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
 <span><span class="va">matched</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 26 × 29</span></span></span>
-<span><span class="co">#&gt;    id_direct_loantaker name_direct_loantaker          id_intermediate_parent_1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> C26                 large oil and gas company four <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> C26                 large oil and gas company four <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> C1                  large automotive company five  <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> C1                  large automotive company five  <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> C35                 large steel company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> C35                 large steel company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> C5                  large automotive company two   <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> C5                  large automotive company two   <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> C30                 large power company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> C30                 large power company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 16 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 26 more variables: name_intermediate_parent_1 &lt;lgl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 307 × 29</span></span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L1      C294                Vitale Group               <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L3      C292                Rowe-Rowe                  IP5                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L5      C305                Ring AG &amp; Co. KGaA         <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L6      C304                Kassulke-Kassulke          <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L6      C304                Kassulke-Kassulke          <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L7      C227                Morissette Group           <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L7      C227                Morissette Group           <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L8      C303                Barone s.r.l.              <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 297 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 25 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, sector_classification_input_type &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, …</span></span></span></code></pre></div>
 <p>The <code>matched</code> result should be similar to that of
 <code>match_name(loanbook, abcd)</code>. Your next steps are documented
 on the <a href="https://rmi-pacta.github.io/r2dii.match/index.html">Home</a> page

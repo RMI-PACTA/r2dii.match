@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to r2dii.match">
 <meta property="og:description" content="r2dii.match">
@@ -144,48 +144,45 @@ raise an issue in <a href="https://github.com/RMI-PACTA/r2dii.data" class="exter
 incorporate it.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loanbook_demo</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13 × 19</span></span></span>
-<span><span class="co">#&gt;    id_direct_loantaker name_direct_loantaker          id_intermediate_parent_1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> C26                 large oil and gas company four <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> C1                  large automotive company five  <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> C35                 large steel company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> C5                  large automotive company two   <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> C30                 large power company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> C3                  large automotive company one   <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> C23                 large hdv company three        <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> C33                 large power company three      <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> C31                 large power company four       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> C32                 large power company one        <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> C34                 large power company two        <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> C25                 large oil and gas company five <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> C20                 large coal company two         <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 16 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 323 × 19</span></span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L1      C294                Vitale Group               <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L2      C293                Moen-Moen                  <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L3      C292                Rowe-Rowe                  IP5                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L4      C299                Fadel-Fadel                <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L5      C305                Ring AG &amp; Co. KGaA         <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L6      C304                Kassulke-Kassulke          <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L7      C227                Morissette Group           <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L8      C303                Barone s.r.l.              <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L10     C302                De rosa s.r.l.             <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 313 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 15 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, sector_classification_input_type &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   flag_project_finance_loan &lt;chr&gt;, name_project &lt;chr&gt;, …</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, …</span></span></span>
 <span></span>
 <span><span class="va">abcd_demo</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1,470 × 14</span></span></span>
-<span><span class="co">#&gt;    company_id name_company              lei   sector technology  year production</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>020    6.86<span style="color: #949494;">e</span>10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>021    1.09<span style="color: #949494;">e</span>11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>022    9.34<span style="color: #949494;">e</span>10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>023    1.08<span style="color: #949494;">e</span>11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>024    8.55<span style="color: #949494;">e</span>10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>025    7.13<span style="color: #949494;">e</span>10</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>026    1.11<span style="color: #949494;">e</span>11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>027    1.09<span style="color: #949494;">e</span>11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>028    1.35<span style="color: #949494;">e</span>11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 11         large aviation company t… 9178… aviat… passenger   <span style="text-decoration: underline;">2</span>029    1.27<span style="color: #949494;">e</span>11</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1,460 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: production_unit &lt;chr&gt;, emission_factor &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   emission_factor_unit &lt;chr&gt;, country_of_domicile &lt;fct&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   plant_location &lt;fct&gt;, is_ultimate_owner &lt;lgl&gt;, abcd_timestamp &lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,972 × 14</span></span></span>
+<span><span class="co">#&gt;    company_id name_company         lei   sector technology production_unit  year</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>020</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>021</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>022</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>023</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>024</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>025</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>020</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>021</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>022</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>023</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,962 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: production &lt;dbl&gt;, emission_factor &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, is_ultimate_owner &lt;lgl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   abcd_timestamp &lt;chr&gt;, emission_factor_unit &lt;chr&gt;</span></span></span></code></pre></div>
 <p>If you want to use <code>loanbook_demo</code> and
 <code>abcd_demo</code> as template to create your own datasets, do
 this:</p>
@@ -246,26 +243,26 @@ names of the loanbook against the abcd. (For more information on the
 scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html" class="external-link">stringdist::stringsim()</a></code>).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 26 × 28</span></span></span>
-<span><span class="co">#&gt;    id_direct_loantaker name_direct_loantaker          id_intermediate_parent_1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> C26                 large oil and gas company four <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> C26                 large oil and gas company four <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> C1                  large automotive company five  <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> C1                  large automotive company five  <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> C35                 large steel company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> C35                 large steel company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> C5                  large automotive company two   <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> C5                  large automotive company two   <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> C30                 large power company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> C30                 large power company five       <span style="color: #BB0000;">NA</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 16 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 25 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 307 × 28</span></span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L1      C294                Vitale Group               <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> L3      C292                Rowe-Rowe                  IP5                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> L5      C305                Ring AG &amp; Co. KGaA         <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> L6      C304                Kassulke-Kassulke          <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> L6      C304                Kassulke-Kassulke          <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> L7      C227                Morissette Group           <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> L7      C227                Morissette Group           <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L8      C303                Barone s.r.l.              <span style="color: #BB0000;">NA</span>                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 297 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, sector_classification_input_type &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_direct_loantaker &lt;dbl&gt;, fi_type &lt;chr&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   sector_classification_system &lt;chr&gt;, …</span></span></span></code></pre></div>
 <p><code><a href="../reference/match_name.html">match_name()</a></code> defaults to scoring matches between name
 strings that belong to the same sector. Using
 <code>by_sector = FALSE</code> removes this limitation – increasing
@@ -274,18 +271,18 @@ manually validate.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, by_sector <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 30</span></span>
+<span><span class="co">#&gt; [1] 801</span></span>
 <span></span>
 <span><span class="co"># Compare</span></span>
 <span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, by_sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 26</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 307</span></span></code></pre></div>
 <p><code>min_score</code> allows you to minimum threshold
 <code>score</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, min_score <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">matched</span><span class="op">$</span><span class="va">score</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1 1</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.9007692 1.0000000</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="maybe-overwrite-matches">Maybe overwrite matches<a class="anchor" aria-label="anchor" href="#maybe-overwrite-matches"></a>
 </h3>
@@ -376,28 +373,26 @@ loan is of highest <code>priority()</code>:</p>
 <span><span class="va">valid_matches</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">some_interesting_columns</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 168 × 3</span></span></span>
 <span><span class="co">#&gt;    id_2dii level            score</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DL7     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> DL1     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> DL13    direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> DL3     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> DL8     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> DL2     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> DL5     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> DL11    direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> DL9     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> DL10    direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> DL12    direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> DL6     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> DL4     direct_loantaker     1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DL147   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> DL165   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> DL310   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> DL100   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> DL5     direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> DL92    direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> DL172   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> DL3     direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> DL74    direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> DL91    direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more rows</span></span></span></code></pre></div>
 <p>By default, highest priority refers to the most granular match
 (<code>direct_loantaker</code>). The default priority is set internally
 via <code>prioritize_levels()</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prioritize_level.html">prioritize_level</a></span><span class="op">(</span><span class="va">matched</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "direct_loantaker" "ultimate_parent"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></span></code></pre></div>
 <p>You may use a different priority. One way to do that is to pass a
 function to <code>priority</code>. For example, use <code>rev</code> to
 reverse the default priority.</p>
@@ -405,22 +400,20 @@ reverse the default priority.</p>
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span>priority <span class="op">=</span> <span class="va">rev</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">some_interesting_columns</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 168 × 3</span></span></span>
 <span><span class="co">#&gt;    id_2dii level           score</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> UP7     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> UP1     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> UP13    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> UP3     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> UP8     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> UP2     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> UP5     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> UP11    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> UP9     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> UP10    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> UP12    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> UP6     ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> UP4     ultimate_parent     1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> UP220   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> UP115   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> UP43    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> UP74    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> UP258   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> UP154   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> UP13    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> UP21    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> UP156   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> UP149   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more rows</span></span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
