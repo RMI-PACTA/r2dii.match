@@ -1,6 +1,7 @@
 # Extract this here so it's available in all tests. This makes it easier to
 # run individual tests interactively, after running devtools::load_all()
 expect_names_match_name <- c(
+  "id_loan",
   "id_direct_loantaker",
   "name_direct_loantaker",
 
@@ -25,8 +26,6 @@ expect_names_match_name <- c(
 
   "lei_direct_loantaker",
   "isin_direct_loantaker",
-
-  "id_loan",
 
   "id_2dii",
   "level",
