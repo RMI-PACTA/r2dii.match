@@ -185,7 +185,8 @@ test_that("takes `method`", {
   lbk_method <- slice(loanbook_demo, 4)
   lbk_method <- mutate(
     lbk_method,
-    name_direct_loantaker = "large automotive comapny two"
+    name_direct_loantaker = "Jahne",
+    sector_classification_direct_loantaker = "451"
   )
   expect_false(
     identical(
@@ -199,7 +200,8 @@ test_that("takes `p`", {
   lbk_p <- slice(loanbook_demo, 4)
   lbk_p <- mutate(
     lbk_p,
-    name_direct_loantaker = "large automotive comapny two"
+    name_direct_loantaker = "Jahne",
+    sector_classification_direct_loantaker = "451"
   )
 
   expect_false(
@@ -268,7 +270,7 @@ test_that("works with `min_score = 0` (bug fix)", {
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
-  this_name <- "large hdv company three"
+  this_name <- "Jacob"
   this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
     filter(name_direct_loantaker == this_name)
