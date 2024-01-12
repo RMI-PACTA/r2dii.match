@@ -307,7 +307,7 @@ test_that("preserves groups", {
 })
 
 test_that("outputs id consistent with level", {
-  out <- slice(loanbook_demo, 5) %>% match_name(abcd_demo)
+  out <- slice(loanbook_demo, 6) %>% match_name(abcd_demo)
   expect_equal(out$level, c("direct_loantaker", "ultimate_parent"))
   expect_equal(out$id_2dii, c("DL1", "UP1"))
 })
