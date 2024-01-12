@@ -27,8 +27,6 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
   expect_equal(out$level, "intermediate_parent_999")
 })
 
-skip_on_cran()
-
 test_that("w/ missing values at all levels outputs 0-row", {
   lbk <- tibble(
     id_direct_loantaker = NA_character_,
