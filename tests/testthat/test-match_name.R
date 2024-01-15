@@ -27,8 +27,6 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
   expect_equal(out$level, "intermediate_parent_999")
 })
 
-skip_on_cran()
-
 test_that("w/ missing values at all levels outputs 0-row", {
   lbk <- tibble(
     id_direct_loantaker = NA_character_,
@@ -185,7 +183,8 @@ test_that("takes `method`", {
   lbk_method <- slice(loanbook_demo, 4)
   lbk_method <- mutate(
     lbk_method,
-    name_direct_loantaker = "large automotive comapny two"
+    name_direct_loantaker = "Jahne",
+    sector_classification_direct_loantaker = "451"
   )
   expect_false(
     identical(
@@ -199,7 +198,8 @@ test_that("takes `p`", {
   lbk_p <- slice(loanbook_demo, 4)
   lbk_p <- mutate(
     lbk_p,
-    name_direct_loantaker = "large automotive comapny two"
+    name_direct_loantaker = "Jahne",
+    sector_classification_direct_loantaker = "451"
   )
 
   expect_false(
@@ -268,7 +268,7 @@ test_that("works with `min_score = 0` (bug fix)", {
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
-  this_name <- "large hdv company three"
+  this_name <- "Jacob"
   this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
     filter(name_direct_loantaker == this_name)
@@ -305,7 +305,7 @@ test_that("preserves groups", {
 })
 
 test_that("outputs id consistent with level", {
-  out <- slice(loanbook_demo, 5) %>% match_name(abcd_demo)
+  out <- slice(loanbook_demo, 6) %>% match_name(abcd_demo)
   expect_equal(out$level, c("direct_loantaker", "ultimate_parent"))
   expect_equal(out$id_2dii, c("DL1", "UP1"))
 })
