@@ -15,8 +15,6 @@ coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.sv
 [![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-FIXME: This is just a test, delete me! foo bar baz
-
 These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
