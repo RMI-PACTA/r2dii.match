@@ -23,6 +23,11 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v2
 
+      - name: Install the local package
+        run: |
+          install.packages("remotes")
+          remotes::install_local(".")
+
       - name: Render README.Rmd file and Commit Results
         run: |
           README_PATH=($(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep 'README.Rmd$'))
