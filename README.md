@@ -3,8 +3,6 @@
 
 # r2dii.match <img src="man/figures/logo.png" align="right" width="120" />
 
-\#FIXME: foo
-
 <!-- badges: start -->
 
 [![Lifecycle:
