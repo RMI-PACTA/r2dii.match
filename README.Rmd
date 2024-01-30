@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 # r2dii.match <img src="man/figures/logo.png" align="right" width="120" />
 
-#FIXME: test foo bar baz
+#FIXME: test foo bar
 
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
