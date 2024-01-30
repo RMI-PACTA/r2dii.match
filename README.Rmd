@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-FIXME: This is just a test, delete me!
+FIXME: This is just a test, delete me! foo bar
 
 These tools implement in R a fundamental part of
 the software PACTA (Paris Agreement Capital Transition Assessment),
