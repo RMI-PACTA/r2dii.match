@@ -25,8 +25,8 @@ jobs:
 
       - name: Install the local package
         run: |
-          install.packages("remotes")
-          remotes::install_local(".")
+          Rscript -e 'install.packages("remotes")'
+          Rscript -e 'remotes::install_local(".")'
 
       - name: Render README.Rmd file and Commit Results
         run: |
