@@ -3,7 +3,7 @@
 
 # r2dii.match <img src="man/figures/logo.png" align="right" width="120" />
 
-\#FIXME: test foo
+\#FIXME: foo
 
 <!-- badges: start -->
 
