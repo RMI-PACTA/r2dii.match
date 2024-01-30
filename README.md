@@ -15,6 +15,8 @@ coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.sv
 [![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+FIXME: This is just a test, delete me! foo bar baz
+
 These tools implement in R a fundamental part of the software PACTA
 (Paris Agreement Capital Transition Assessment), which is a free tool
 that calculates the alignment between financial portfolios and climate
@@ -58,26 +60,26 @@ and run fuzzy matching against all company names in the `abcd`:
 ``` r
 match_result <- match_name(loanbook_demo, abcd_demo)
 match_result 
-#> # A tibble: 26 × 28
-#>    id_direct_loantaker name_direct_loantaker          id_intermediate_parent_1
-#>    <chr>               <chr>                          <chr>                   
-#>  1 C26                 large oil and gas company four <NA>                    
-#>  2 C26                 large oil and gas company four <NA>                    
-#>  3 C1                  large automotive company five  <NA>                    
-#>  4 C1                  large automotive company five  <NA>                    
-#>  5 C35                 large steel company five       <NA>                    
-#>  6 C35                 large steel company five       <NA>                    
-#>  7 C5                  large automotive company two   <NA>                    
-#>  8 C5                  large automotive company two   <NA>                    
-#>  9 C30                 large power company five       <NA>                    
-#> 10 C30                 large power company five       <NA>                    
-#> # ℹ 16 more rows
-#> # ℹ 25 more variables: name_intermediate_parent_1 <chr>,
+#> # A tibble: 307 × 28
+#>    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹
+#>    <chr>   <chr>               <chr>                      <chr>                 
+#>  1 L1      C294                Vitale Group               <NA>                  
+#>  2 L3      C292                Rowe-Rowe                  IP5                   
+#>  3 L5      C305                Ring AG & Co. KGaA         <NA>                  
+#>  4 L6      C304                Kassulke-Kassulke          <NA>                  
+#>  5 L6      C304                Kassulke-Kassulke          <NA>                  
+#>  6 L7      C227                Morissette Group           <NA>                  
+#>  7 L7      C227                Morissette Group           <NA>                  
+#>  8 L8      C303                Barone s.r.l.              <NA>                  
+#>  9 L9      C301                Werner Werner AG & Co. KG… IP10                  
+#> 10 L9      C301                Werner Werner AG & Co. KG… IP10                  
+#> # ℹ 297 more rows
+#> # ℹ abbreviated name: ¹​id_intermediate_parent_1
+#> # ℹ 24 more variables: name_intermediate_parent_1 <chr>,
 #> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
 #> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
 #> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
-#> #   sector_classification_system <chr>, sector_classification_input_type <chr>,
-#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>, …
+#> #   sector_classification_system <chr>, …
 ```
 
 ### 2. Prioritize validated matches
@@ -92,29 +94,26 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 13 × 28
-#>    id_direct_loantaker name_direct_loantaker          id_intermediate_parent_1
-#>    <chr>               <chr>                          <chr>                   
-#>  1 C26                 large oil and gas company four <NA>                    
-#>  2 C1                  large automotive company five  <NA>                    
-#>  3 C35                 large steel company five       <NA>                    
-#>  4 C5                  large automotive company two   <NA>                    
-#>  5 C30                 large power company five       <NA>                    
-#>  6 C3                  large automotive company one   <NA>                    
-#>  7 C23                 large hdv company three        <NA>                    
-#>  8 C33                 large power company three      <NA>                    
-#>  9 C31                 large power company four       <NA>                    
-#> 10 C32                 large power company one        <NA>                    
-#> 11 C34                 large power company two        <NA>                    
-#> 12 C25                 large oil and gas company five <NA>                    
-#> 13 C20                 large coal company two         <NA>                    
-#> # ℹ 25 more variables: name_intermediate_parent_1 <chr>,
+#> # A tibble: 168 × 28
+#>    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹
+#>    <chr>   <chr>               <chr>                      <chr>                 
+#>  1 L6      C304                Kassulke-Kassulke          <NA>                  
+#>  2 L13     C297                Ladeck                     <NA>                  
+#>  3 L20     C287                Weinhold                   <NA>                  
+#>  4 L21     C286                Gallo Group                <NA>                  
+#>  5 L22     C285                Austermuhle GmbH           <NA>                  
+#>  6 L24     C282                Ferraro-Ferraro Group      <NA>                  
+#>  7 L25     C281                Lockman, Lockman and Lock… <NA>                  
+#>  8 L26     C280                Ankunding, Ankunding and … <NA>                  
+#>  9 L27     C278                Donati-Donati Group        <NA>                  
+#> 10 L28     C276                Ferraro, Ferraro e Ferrar… <NA>                  
+#> # ℹ 158 more rows
+#> # ℹ abbreviated name: ¹​id_intermediate_parent_1
+#> # ℹ 24 more variables: name_intermediate_parent_1 <chr>,
 #> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
 #> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
 #> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
-#> #   sector_classification_system <chr>, sector_classification_input_type <chr>,
-#> #   sector_classification_direct_loantaker <dbl>, fi_type <chr>,
-#> #   flag_project_finance_loan <chr>, name_project <chr>, …
+#> #   sector_classification_system <chr>, …
 ```
 
 The result is a dataset with identical columns to the input loanbook,
