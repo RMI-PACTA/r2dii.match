@@ -36,8 +36,8 @@ Install the released version of r2dii.match from CRAN with:
 Or install the development version of r2dii.match from GitHub with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("RMI-PACTA/r2dii.match")
+# install.packages("pak")
+pak::pak("RMI-PACTA/r2dii.match")
 ```
 
 ## Example
