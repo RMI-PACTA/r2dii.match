@@ -3,20 +3,20 @@
     {
       "type": "list",
       "attributes": {
-        "names": {
+        "class": {
           "type": "character",
           "attributes": {},
-          "value": ["sector_classification_system", "id_ultimate_parent", "name_ultimate_parent", "id_direct_loantaker", "name_direct_loantaker", "sector_classification_direct_loantaker"]
+          "value": ["tbl_df", "tbl", "data.frame"]
         },
         "row.names": {
           "type": "integer",
           "attributes": {},
           "value": [1]
         },
-        "class": {
+        "names": {
           "type": "character",
           "attributes": {},
-          "value": ["tbl_df", "tbl", "data.frame"]
+          "value": ["sector_classification_system", "id_ultimate_parent", "name_ultimate_parent", "id_direct_loantaker", "name_direct_loantaker", "sector_classification_direct_loantaker"]
         }
       },
       "value": [
@@ -46,9 +46,9 @@
           "value": ["Yuamen Xinneng Thermal Power Co Ltd"]
         },
         {
-          "type": "double",
+          "type": "character",
           "attributes": {},
-          "value": [3511]
+          "value": ["D35.11"]
         }
       ]
     }

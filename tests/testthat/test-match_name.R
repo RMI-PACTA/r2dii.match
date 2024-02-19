@@ -15,7 +15,7 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
     name_direct_loantaker = NA_character_,
 
     sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = 3511,
+    sector_classification_direct_loantaker = "D35.11",
   )
 
   abcd <- tibble(
@@ -105,7 +105,7 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     name_ultimate_parent = "Alpine Knits India Pvt. Limited",
     id_direct_loantaker = "C294",
     name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
-    sector_classification_direct_loantaker = 3511,
+    sector_classification_direct_loantaker = "D35.11",
     id_2dii = "UP1",
     level = "ultimate_parent",
     sector = "power",
@@ -184,7 +184,7 @@ test_that("takes `method`", {
   lbk_method <- mutate(
     lbk_method,
     name_direct_loantaker = "Jahne",
-    sector_classification_direct_loantaker = "451"
+    sector_classification_direct_loantaker = "G45.11"
   )
   expect_false(
     identical(
@@ -199,7 +199,7 @@ test_that("takes `p`", {
   lbk_p <- mutate(
     lbk_p,
     name_direct_loantaker = "Jahne",
-    sector_classification_direct_loantaker = "451"
+    sector_classification_direct_loantaker = "G45.11"
   )
 
   expect_false(
@@ -345,7 +345,7 @@ test_that("handles any number of intermediate_parent columns (#84)", {
     id_ultimate_parent = "UP1",
 
     sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = 3511
+    sector_classification_direct_loantaker = "D35.11"
   )
 
   out <- match_name(lbk_mini, fake_abcd())
@@ -694,7 +694,7 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
   abcd <- fake_abcd()
   custom_classification <- tibble::tribble(
     ~sector,       ~borderline,  ~code, ~code_system,
-    "power",             FALSE, "3511",        "XYZ",
+    "power",             FALSE, "D35.11",        "XYZ",
   )
 
   # Allow users to inject their own `sector_classifications`
