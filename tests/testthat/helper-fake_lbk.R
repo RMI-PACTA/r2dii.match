@@ -61,7 +61,7 @@ fake_lbk <- function(sector_classification_system = NULL,
     name_direct_loantaker =
       name_direct_loantaker %||% "Yuamen Xinneng Thermal Power Co Ltd",
     sector_classification_direct_loantaker =
-      sector_classification_direct_loantaker %||% 3511,
+      sector_classification_direct_loantaker %||% "D35.11",
     ...
   )
 }
