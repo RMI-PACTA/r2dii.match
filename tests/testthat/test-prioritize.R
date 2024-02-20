@@ -225,6 +225,7 @@ test_that("passes if score=1 & values by id_loan are duplicated for distinct
 })
 
 test_that("with 0-row input returns 0-row input", {
+  skip_if_r2dii_data_outdated()
   lbk <- fake_lbk()
   abcd <- fake_abcd(name_company = "won't match")
   zero_row <- suppressWarnings(match_name(lbk, abcd))
