@@ -4,6 +4,7 @@ library(r2dii.data)
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
           level only", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   lbk <- tibble::tibble(
     id_intermediate_parent_999 = "IP8",
     name_intermediate_parent_999 = "Nanco Hosiery Mills",
@@ -71,6 +72,7 @@ test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
 })
 
 test_that("`by_sector = TRUE` yields only matching sectors", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   out <- match_name(
     fake_lbk(),
     fake_abcd(),
@@ -99,6 +101,7 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
 })
 
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   expected <- tibble(
     sector_classification_system = "NACE",
     id_ultimate_parent = "UP15",
@@ -116,8 +119,6 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
     source = "loanbook",
     borderline = TRUE
   )
-
-  if (packageVersion("r2dii.data") > "0.1.4") expected$borderline <- FALSE
 
   expect_equal(
     match_name(fake_lbk(), fake_abcd()),
@@ -180,6 +181,7 @@ test_that("takes `min_score`", {
 })
 
 test_that("takes `method`", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   lbk_method <- slice(loanbook_demo, 4)
   lbk_method <- mutate(
     lbk_method,
@@ -195,6 +197,7 @@ test_that("takes `method`", {
 })
 
 test_that("takes `p`", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   lbk_p <- slice(loanbook_demo, 4)
   lbk_p <- mutate(
     lbk_p,
@@ -328,6 +331,7 @@ test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
 })
 
 test_that("handles any number of intermediate_parent columns (#84)", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   # name_level is identical for all levels. I expect them all in the output
   name_level <- "Alpine Knits India Pvt. Limited"
 
@@ -357,6 +361,7 @@ test_that("handles any number of intermediate_parent columns (#84)", {
 })
 
 test_that("warns/errors if some/all system classification is unknown", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   some_bad_system <- fake_lbk(sector_classification_system = c("NACE", "bad"))
 
   expect_warning(
@@ -393,6 +398,7 @@ test_that("warns/errors if some/all system classification is unknown", {
 # crucial names -----------------------------------------------------------
 
 test_that("w/ loanbook or abcd with missing names errors gracefully", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   invalid <- function(data, x) dplyr::rename(data, bad = all_of_(x))
 
   expect_error_missing_names <- function(lbk = NULL, abcd = NULL) {
@@ -479,6 +485,7 @@ test_that("0-row output has expected column type", {
 
 test_that("with loanbook_demo and abcd_demo outputs expected value", {
   skip_on_ci()
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   out <- match_name(loanbook_demo, abcd_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
 })
@@ -498,6 +505,7 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
 })
 
 test_that("takes `by_sector`", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:15), abcd_demo, by_sector = TRUE),
@@ -507,6 +515,7 @@ test_that("takes `by_sector`", {
 })
 
 test_that("w/ duplicates in abcd throws now error; instead remove duplicates", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   dupl <- rbind(fake_abcd(), fake_abcd())
   expect_error(out <- match_name(fake_lbk(), dupl), NA)
   expect_equal(nrow(out), 1L)
@@ -550,6 +559,7 @@ test_that("throws an error if the `loanbook` has reserved columns", {
 })
 
 test_that("outputs correct `borderline` (#269)", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   # This sector-code matches the 2DII sector "coal" fully.
   border_false <- 21000
   coal_2dii <- "coal"
@@ -581,6 +591,7 @@ test_that("outputs correct `borderline` (#269)", {
 })
 
 test_that("matches any case of abcd$sector, but converts sector to lowercase", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   low <- match_name(fake_lbk(), fake_abcd(sector = "power"))
   expect_equal(low$sector, "power")
 
@@ -593,6 +604,7 @@ test_that("matches any case of abcd$sector, but converts sector to lowercase", {
 })
 
 test_that("matches any case of abcd$name_company, but preserves original case", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   low <- match_name(fake_lbk(), fake_abcd(name_company = "alpine knits"))
   expect_equal(nrow(low), 1L)
   expect_equal(low$name_abcd, "alpine knits")
@@ -604,6 +616,7 @@ test_that("matches any case of abcd$name_company, but preserves original case", 
 })
 
 test_that("with arguments passed via ellipsis, throws no error (#310)", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   # `q` isn't a formal argument of `match_name()`
   expect_false(any(grepl("^q$", names(formals(match_name)))))
 
@@ -612,6 +625,7 @@ test_that("with arguments passed via ellipsis, throws no error (#310)", {
 })
 
 test_that("with arguments passed via ellipsis, outputs the expected score", {
+  skip_if(packageVersion("r2dii.data") <= "0.4.1", "We expect different output")
   lbk <-
     fake_lbk(name_direct_loantaker = "Yuamen Changyuan Hydropower Co., Ltd.")
   abcd <-
