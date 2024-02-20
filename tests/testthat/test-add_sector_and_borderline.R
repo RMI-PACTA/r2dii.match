@@ -8,7 +8,7 @@ test_that("$borderline is of type logical", {
 })
 
 test_that("outputs expected value", {
-  skip_if(packageVersion("r2dii.data") <= "0.1.4", "We expect different output")
+  skip_if_r2dii_data_outdated()
   expect_snapshot_value(add_sector_and_borderline(loanbook_demo), style = "json2")
 })
 

@@ -4,6 +4,7 @@ library(r2dii.data)
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
           level only", {
+  skip_if_r2dii_data_outdated()
   lbk <- tibble::tibble(
     id_intermediate_parent_999 = "IP8",
     name_intermediate_parent_999 = "Nanco Hosiery Mills",
@@ -15,7 +16,7 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
     name_direct_loantaker = NA_character_,
 
     sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = 3511,
+    sector_classification_direct_loantaker = "D35.11",
   )
 
   abcd <- tibble(
@@ -71,6 +72,7 @@ test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
 })
 
 test_that("`by_sector = TRUE` yields only matching sectors", {
+  skip_if_r2dii_data_outdated()
   out <- match_name(
     fake_lbk(),
     fake_abcd(),
@@ -99,13 +101,14 @@ test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
 })
 
 test_that("w/ row 1 of loanbook and crucial cols yields expected", {
+  skip_if_r2dii_data_outdated()
   expected <- tibble(
     sector_classification_system = "NACE",
     id_ultimate_parent = "UP15",
     name_ultimate_parent = "Alpine Knits India Pvt. Limited",
     id_direct_loantaker = "C294",
     name_direct_loantaker = "Yuamen Xinneng Thermal Power Co Ltd",
-    sector_classification_direct_loantaker = 3511,
+    sector_classification_direct_loantaker = "D35.11",
     id_2dii = "UP1",
     level = "ultimate_parent",
     sector = "power",
@@ -180,11 +183,12 @@ test_that("takes `min_score`", {
 })
 
 test_that("takes `method`", {
+  skip_if_r2dii_data_outdated()
   lbk_method <- slice(loanbook_demo, 4)
   lbk_method <- mutate(
     lbk_method,
     name_direct_loantaker = "Jahne",
-    sector_classification_direct_loantaker = "451"
+    sector_classification_direct_loantaker = "G45.11"
   )
   expect_false(
     identical(
@@ -195,11 +199,12 @@ test_that("takes `method`", {
 })
 
 test_that("takes `p`", {
+  skip_if_r2dii_data_outdated()
   lbk_p <- slice(loanbook_demo, 4)
   lbk_p <- mutate(
     lbk_p,
     name_direct_loantaker = "Jahne",
-    sector_classification_direct_loantaker = "451"
+    sector_classification_direct_loantaker = "G45.11"
   )
 
   expect_false(
@@ -328,6 +333,7 @@ test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
 })
 
 test_that("handles any number of intermediate_parent columns (#84)", {
+  skip_if_r2dii_data_outdated()
   # name_level is identical for all levels. I expect them all in the output
   name_level <- "Alpine Knits India Pvt. Limited"
 
@@ -345,7 +351,7 @@ test_that("handles any number of intermediate_parent columns (#84)", {
     id_ultimate_parent = "UP1",
 
     sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = 3511
+    sector_classification_direct_loantaker = "D35.11"
   )
 
   out <- match_name(lbk_mini, fake_abcd())
@@ -357,6 +363,7 @@ test_that("handles any number of intermediate_parent columns (#84)", {
 })
 
 test_that("warns/errors if some/all system classification is unknown", {
+  skip_if_r2dii_data_outdated()
   some_bad_system <- fake_lbk(sector_classification_system = c("NACE", "bad"))
 
   expect_warning(
@@ -393,6 +400,7 @@ test_that("warns/errors if some/all system classification is unknown", {
 # crucial names -----------------------------------------------------------
 
 test_that("w/ loanbook or abcd with missing names errors gracefully", {
+  skip_if_r2dii_data_outdated()
   invalid <- function(data, x) dplyr::rename(data, bad = all_of_(x))
 
   expect_error_missing_names <- function(lbk = NULL, abcd = NULL) {
@@ -479,6 +487,7 @@ test_that("0-row output has expected column type", {
 
 test_that("with loanbook_demo and abcd_demo outputs expected value", {
   skip_on_ci()
+  skip_if_r2dii_data_outdated()
   out <- match_name(loanbook_demo, abcd_demo)
   expect_snapshot_value(round_dbl(out), style = "json2")
 })
@@ -498,6 +507,7 @@ test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
 })
 
 test_that("takes `by_sector`", {
+  skip_if_r2dii_data_outdated()
   expect_false(
     identical(
       match_name(slice(loanbook_demo, 4:15), abcd_demo, by_sector = TRUE),
@@ -507,6 +517,7 @@ test_that("takes `by_sector`", {
 })
 
 test_that("w/ duplicates in abcd throws now error; instead remove duplicates", {
+  skip_if_r2dii_data_outdated()
   dupl <- rbind(fake_abcd(), fake_abcd())
   expect_error(out <- match_name(fake_lbk(), dupl), NA)
   expect_equal(nrow(out), 1L)
@@ -550,6 +561,7 @@ test_that("throws an error if the `loanbook` has reserved columns", {
 })
 
 test_that("outputs correct `borderline` (#269)", {
+  skip_if_r2dii_data_outdated()
   # This sector-code matches the 2DII sector "coal" fully.
   border_false <- 21000
   coal_2dii <- "coal"
@@ -581,6 +593,7 @@ test_that("outputs correct `borderline` (#269)", {
 })
 
 test_that("matches any case of abcd$sector, but converts sector to lowercase", {
+  skip_if_r2dii_data_outdated()
   low <- match_name(fake_lbk(), fake_abcd(sector = "power"))
   expect_equal(low$sector, "power")
 
@@ -593,6 +606,7 @@ test_that("matches any case of abcd$sector, but converts sector to lowercase", {
 })
 
 test_that("matches any case of abcd$name_company, but preserves original case", {
+  skip_if_r2dii_data_outdated()
   low <- match_name(fake_lbk(), fake_abcd(name_company = "alpine knits"))
   expect_equal(nrow(low), 1L)
   expect_equal(low$name_abcd, "alpine knits")
@@ -604,6 +618,7 @@ test_that("matches any case of abcd$name_company, but preserves original case", 
 })
 
 test_that("with arguments passed via ellipsis, throws no error (#310)", {
+  skip_if_r2dii_data_outdated()
   # `q` isn't a formal argument of `match_name()`
   expect_false(any(grepl("^q$", names(formals(match_name)))))
 
@@ -612,6 +627,7 @@ test_that("with arguments passed via ellipsis, throws no error (#310)", {
 })
 
 test_that("with arguments passed via ellipsis, outputs the expected score", {
+  skip_if_r2dii_data_outdated()
   lbk <-
     fake_lbk(name_direct_loantaker = "Yuamen Changyuan Hydropower Co., Ltd.")
   abcd <-
@@ -694,7 +710,7 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
   abcd <- fake_abcd()
   custom_classification <- tibble::tribble(
     ~sector,       ~borderline,  ~code, ~code_system,
-    "power",             FALSE, "3511",        "XYZ",
+    "power",             FALSE, "D35.11",        "XYZ",
   )
 
   # Allow users to inject their own `sector_classifications`
