@@ -120,7 +120,7 @@ match_name(loanbook, abcd, min_score = 0.9)
 your_classifications <- tibble(
   sector = "power",
   borderline = FALSE,
-  code = "3511",
+  code = "D35.11",
   code_system = "XYZ"
 )
 
@@ -128,7 +128,7 @@ restore <- options(r2dii.match.sector_classifications = your_classifications)
 
 loanbook <- tibble(
   sector_classification_system = "XYZ",
-  sector_classification_direct_loantaker = "3511",
+  sector_classification_direct_loantaker = "D35.11",
   id_ultimate_parent = "UP15",
   name_ultimate_parent = "Alpine Knits India Pvt. Limited",
   id_direct_loantaker = "C294",
