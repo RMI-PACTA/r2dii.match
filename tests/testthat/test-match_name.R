@@ -29,13 +29,14 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
 })
 
 test_that("w/ missing values at all levels outputs 0-row", {
+  skip_if_r2dii_data_outdated()
   lbk <- tibble(
     id_direct_loantaker = NA_character_,
     name_direct_loantaker = NA_character_,
     id_ultimate_parent = NA_character_,
     name_ultimate_parent = NA_character_,
     sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = 291,
+    sector_classification_direct_loantaker = "C29.10",
   )
 
   abcd <- tibble(
@@ -48,13 +49,14 @@ test_that("w/ missing values at all levels outputs 0-row", {
 })
 
 test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
+  skip_if_r2dii_data_outdated()
   sector_abcd <- c("automotive", "shipping")
 
   lbk <- tibble(
     id_direct_loantaker = "C196",
     name_direct_loantaker = "Suzuki Motor Corp",
     sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = 291,
+    sector_classification_direct_loantaker = "C29.10",
 
     id_ultimate_parent = NA_character_,
     name_ultimate_parent = NA_character_,
@@ -85,8 +87,9 @@ test_that("`by_sector = TRUE` yields only matching sectors", {
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
+  skip_if_r2dii_data_outdated()
   # Lookup code to sectors via r2dii.data::sector_classifications$code
-  code_for_sector_power <- 27
+  code_for_sector_power <- "D35.1"
   sector_not_power <- "coal"
 
   expect_warning(
@@ -379,7 +382,7 @@ test_that("warns/errors if some/all system classification is unknown", {
   )
 
   bad <- -999
-  some_bad_code <- fake_lbk(sector_classification_direct_loantaker = c(35, bad))
+  some_bad_code <- fake_lbk(sector_classification_direct_loantaker = c("D35.1", bad))
 
   suppressWarnings(
     # In this expectation, we only care about this specific warning
@@ -495,7 +498,8 @@ test_that("with loanbook_demo and abcd_demo outputs expected value", {
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
   # Lookup code to sectors via r2dii.data::sector_classifications$code
-  code_for_sector_power <- 27
+  skip_if_r2dii_data_outdated()
+  code_for_sector_power <- "D35.1"
   sector_not_power <- "coal"
 
   out <- match_name(
