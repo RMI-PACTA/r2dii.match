@@ -29,6 +29,7 @@ test_that("w/ non-NA only at intermediate level yields matches at intermediate
 })
 
 test_that("w/ missing values at all levels outputs 0-row", {
+  skip_if_r2dii_data_outdated()
   lbk <- tibble(
     id_direct_loantaker = NA_character_,
     name_direct_loantaker = NA_character_,
@@ -48,6 +49,7 @@ test_that("w/ missing values at all levels outputs 0-row", {
 })
 
 test_that("w/ 1 lbk row matching 1 abcd company in 2 sectors outputs 2 rows", {
+  skip_if_r2dii_data_outdated()
   sector_abcd <- c("automotive", "shipping")
 
   lbk <- tibble(
@@ -85,6 +87,7 @@ test_that("`by_sector = TRUE` yields only matching sectors", {
 
 test_that("w/ mismatching sector_classification and `by_sector = TRUE` yields
           no match", {
+  skip_if_r2dii_data_outdated()
   # Lookup code to sectors via r2dii.data::sector_classifications$code
   code_for_sector_power <- "D35.1"
   sector_not_power <- "coal"
@@ -495,6 +498,7 @@ test_that("with loanbook_demo and abcd_demo outputs expected value", {
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
   # Lookup code to sectors via r2dii.data::sector_classifications$code
+  skip_if_r2dii_data_outdated()
   code_for_sector_power <- "D35.1"
   sector_not_power <- "coal"
 
