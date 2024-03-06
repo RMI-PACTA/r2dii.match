@@ -68,6 +68,7 @@ Suggests:
     spelling,
     testthat (>= 2.1.0)
 Config/testthat/edition: 3
+Config/Needs/website: rmi-pacta/pacta.pkgdown.rmitemplate
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
