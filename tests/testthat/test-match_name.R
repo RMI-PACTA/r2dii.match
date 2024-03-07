@@ -724,6 +724,8 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
   options(old)
 })
 
+
+
 test_that("`join_id` optionally joins as expected (#135)", {
 
   loanbook <- tibble(
@@ -754,5 +756,17 @@ test_that("`join_id` optionally joins as expected (#135)", {
   abcd_lei <- rename(abcd, lei = id_col)
   out_lei <- match_name(loanbook_lei, abcd_lei, join_id = "lei")
   expect_equal(nrow(out_lei), 1L)
+
+})
+
+test_that("with `join_id`, outputs data with join column (#135)", {
+
+  out <- match_name(
+    fake_lbk(foo = "1"),
+    fake_abcd(foo = "1"),
+    join_id = "foo"
+    )
+
+  expect_contains(names(out), "foo")
 
 })
