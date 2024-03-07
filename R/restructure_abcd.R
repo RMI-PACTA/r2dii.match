@@ -5,6 +5,8 @@
 #' from values in the `name_company` column.
 #'
 #' @param data A data frame. Should be an asset-level dataset.
+#' @param join_id (Optional) A string giving the name of an `ID` column to
+#'   preserve in the restructuring
 #'
 #' @seealso [r2dii.data::abcd_demo] `to_alias()`.
 #'
@@ -14,13 +16,27 @@
 #' @examples
 #' restructure_abcd(r2dii.data::abcd_demo)
 #' @noRd
-restructure_abcd <- function(data) {
-  check_crucial_names(data, c("name_company", "sector"))
+restructure_abcd <- function(data, join_id = NULL) {
+  crucial_names <- c("name_company", "sector")
+  if (!is.null(join_id)) {
+    check_crucial_names(data, c(join_id, crucial_names))
 
-  out <- dplyr::transmute(
-    data,
-    name = .data$name_company, sector = tolower(.data$sector)
-  )
+    out <- dplyr::transmute(
+      data,
+      name = .data$name_company,
+      sector = tolower(.data$sector),
+      !!join_id := .data[[join_id]]
+    )
+  } else {
+    check_crucial_names(data, crucial_names)
+
+    out <- dplyr::transmute(
+      data,
+      name = .data$name_company,
+      sector = tolower(.data$sector)
+    )
+  }
+
   out <- distinct(out)
   add_alias(out)
 }

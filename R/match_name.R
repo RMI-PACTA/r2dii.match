@@ -129,7 +129,7 @@ match_name <- function(loanbook,
     abcd <- ald
   }
 
-  prep_abcd <- restructure_abcd(abcd)
+  prep_abcd <- restructure_abcd(abcd, join_id)
 
   if (!is.null(join_id)) {
     check_join_id(join_id, loanbook, prep_abcd)
