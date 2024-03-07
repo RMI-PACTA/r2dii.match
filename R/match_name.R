@@ -137,31 +137,33 @@ match_name <- function(loanbook,
     join_matched <- dplyr::inner_join(
       loanbook, prep_abcd, by = join_id
       )
-    join_matched <- dplyr::mutate(
-      join_matched,
-      !!join_id := NULL,
-      score = 1
-      )
+
+    join_matched <- dplyr::mutate(join_matched, score = 1)
 
     loanbook <- dplyr::filter(
-      loanbook, !.data[[join_id]] %in% join_matched[[join_id]]
-      )
+      loanbook,
+      !.data[[join_id]] %in% join_matched[[join_id]]
+    )
   }
 
-  out <- match_name_impl(
-    loanbook = loanbook,
-    prep_abcd = prep_abcd,
-    by_sector = by_sector,
-    min_score = min_score,
-    method = method,
-    p = p,
-    overwrite = overwrite,
-    ...
-  )
+  if (nrow(loanbook) != 0) {
+    fuzzy_matched <- match_name_impl(
+      loanbook = loanbook,
+      prep_abcd = prep_abcd,
+      by_sector = by_sector,
+      min_score = min_score,
+      method = method,
+      p = p,
+      overwrite = overwrite,
+      ...
+    )
+  } else {
+    fuzzy_matched <- tibble()
+  }
 
-  if (nrow(out) != 0 && exists("join_matched")) {
-    out <- dplyr::bind_rows(join_matched, out)
-  } else if (nrow(out) == 0 && exists("join_matched")) {
+  if (exists("join_matched")) {
+    out <- dplyr::bind_rows(join_matched, fuzzy_matched)
+  } else if (nrow(fuzzy_matched) == 0 && exists("join_matched")) {
     out <- join_matched
   }
 
