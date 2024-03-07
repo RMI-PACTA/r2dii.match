@@ -31,6 +31,9 @@
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   abcd.
+#' @param join_id A character string naming an ID column used to left join
+#'   `abcd` to the `loanbook` (e.g. "lei"). ID column must be present, as named,
+#'   in both input datasets.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
 #' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
 #'   `abcd`.
@@ -111,6 +114,7 @@ match_name <- function(loanbook,
                        method = "jw",
                        p = 0.1,
                        overwrite = NULL,
+                       join_id = NULL,
                        ald = deprecated(),
                        ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
@@ -125,9 +129,28 @@ match_name <- function(loanbook,
     abcd <- ald
   }
 
-  match_name_impl(
+  prep_abcd <- restructure_abcd(abcd)
+
+  if (!is.null(join_id)) {
+    check_join_id(join_id, loanbook, prep_abcd)
+
+    join_matched <- dplyr::inner_join(
+      loanbook, prep_abcd, by = join_id
+      )
+    join_matched <- dplyr::mutate(
+      join_matched,
+      !!join_id := NULL,
+      score = 1
+      )
+
+    loanbook <- dplyr::filter(
+      loanbook, !.data[[join_id]] %in% join_matched[[join_id]]
+      )
+  }
+
+  out <- match_name_impl(
     loanbook = loanbook,
-    abcd = abcd,
+    prep_abcd = prep_abcd,
     by_sector = by_sector,
     min_score = min_score,
     method = method,
@@ -135,16 +158,30 @@ match_name <- function(loanbook,
     overwrite = overwrite,
     ...
   )
+
+  if (nrow(out) != 0 && exists("join_matched")) {
+    out <- dplyr::bind_rows(join_matched, out)
+  } else if (nrow(out) == 0 && exists("join_matched")) {
+    out <- join_matched
+  }
+
+  if (identical(nrow(out), 0L)) {
+    rlang::warn("Found no match.")
+    return(empty_loanbook_tibble(loanbook, dplyr::groups(loanbook)))
+  }
+
+  out
 }
 
 match_name_impl <- function(loanbook,
-                            abcd,
+                            prep_abcd,
                             by_sector = TRUE,
                             min_score = 0.8,
                             method = "jw",
                             p = 0.1,
                             overwrite = NULL,
                             ...) {
+
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
@@ -153,7 +190,6 @@ match_name_impl <- function(loanbook,
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
-  prep_abcd <- restructure_abcd(abcd)
 
   if (by_sector) {
     a <- expand_alias(prep_lbk, prep_abcd)
@@ -164,8 +200,8 @@ match_name_impl <- function(loanbook,
   setDT(a)
 
   if (identical(nrow(a), 0L)) {
-    rlang::warn("Found no match.")
-    return(empty_loanbook_tibble(loanbook, old_groups))
+    rlang::inform("Found no match via fuzzy matching.")
+    return(a)
   }
 
   a <- unique(a)[
@@ -179,8 +215,8 @@ match_name_impl <- function(loanbook,
   a <- a[score >= min_score, ]
 
   if (identical(nrow(a), 0L)) {
-    rlang::warn("Found no match.")
-    return(empty_loanbook_tibble(loanbook, old_groups))
+    rlang::inform("Found no match via fuzzy matching.")
+    return(a)
   }
 
   l <- rename(prep_lbk, alias_lbk = "alias")
@@ -348,4 +384,26 @@ names_added_by_match_name <- function() {
     "source",
     "borderline"
   )
+}
+
+check_join_id <- function(join_id, loanbook, abcd) {
+  stopifnot(is.character(join_id))
+
+  if (!rlang::has_name(loanbook, join_id)) {
+    rlang::abort(
+      "join_id_not_in_loanbook",
+      message = glue(
+        "The join_id `{join_id}` must be present in both `loanbook` and `abcd`. It's not present in `loanbook`."
+      )
+    )
+  } else if (!rlang::has_name(abcd, join_id)) {
+    rlang::abort(
+      "join_id_not_in_abcd",
+      message = glue(
+        "The join_id `{join_id}` must be present in both `loanbook` and `abcd`. It's not present in `abcd`."
+      )
+    )
+  }
+
+  invisible(join_id)
 }
