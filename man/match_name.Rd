@@ -12,6 +12,7 @@ match_name(
   method = "jw",
   p = 0.1,
   overwrite = NULL,
+  join_id = NULL,
   ald = deprecated(),
   ...
 )
@@ -38,6 +39,10 @@ columns of a particular direct loantaker or ultimate parent. To overwrite
 only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to
 abcd.}
+
+\item{join_id}{A character string naming an ID column used to left join
+\code{abcd} to the \code{loanbook} (e.g. "lei"). ID column must be present, as named,
+in both input datasets.}
 
 \item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
 \code{abcd}.}
