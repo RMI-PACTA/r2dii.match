@@ -723,3 +723,36 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
   expect_equal(nrow(out), 1L)
   options(old)
 })
+
+test_that("`join_id` optionally joins as expected (#135)", {
+
+  loanbook <- tibble(
+    sector_classification_system = "NACE",
+    sector_classification_direct_loantaker = "100", # this generally shouldn't match to anything
+    id_ultimate_parent = c("UP15", "UP16"),
+    name_ultimate_parent = c("Foo", "Bar"),
+    id_direct_loantaker = c("C294", "C295"),
+    name_direct_loantaker = "Baz",
+    id_col = c("LEI123", NA_character_)
+  )
+
+  abcd <- tibble(
+    name_company = "alpine knits india pvt. limited",
+    sector = "power",
+    id_col = "LEI123"
+  )
+
+  # expect no match here, the company names are completely different
+  expect_warning(match_name(loanbook, abcd, join_id = NULL), "no match")
+
+  # expect exactly one match here, based on input ID
+  out_with_join_id <- match_name(loanbook, abcd, join_id = "id_col")
+  expect_equal(nrow(out_with_join_id), 1L)
+
+  # should work for id_col with any name, e.g. `lei`
+  loanbook_lei <- rename(loanbook, lei = id_col)
+  abcd_lei <- rename(abcd, lei = id_col)
+  out_lei <- match_name(loanbook_lei, abcd_lei, join_id = "lei")
+  expect_equal(nrow(out_lei), 1L)
+
+})
