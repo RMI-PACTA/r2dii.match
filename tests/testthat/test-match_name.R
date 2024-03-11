@@ -724,23 +724,15 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
   options(old)
 })
 
-
-
 test_that("`join_id` optionally joins as expected (#135)", {
 
-  loanbook <- tibble(
-    sector_classification_system = "NACE",
-    sector_classification_direct_loantaker = "100", # this generally shouldn't match to anything
-    id_ultimate_parent = c("UP15", "UP16"),
-    name_ultimate_parent = c("Foo", "Bar"),
-    id_direct_loantaker = c("C294", "C295"),
-    name_direct_loantaker = "Baz",
-    id_col = c("LEI123", NA_character_)
-  )
+  loanbook <- fake_lbk(
+    name_direct_loantaker = "DL won't fuzzy match",
+    name_ultimate_parent = "UP won't fuzzy match",
+    id_col = "LEI123"
+    )
 
-  abcd <- tibble(
-    name_company = "alpine knits india pvt. limited",
-    sector = "power",
+  abcd <- fake_abcd(
     id_col = "LEI123"
   )
 
@@ -750,17 +742,33 @@ test_that("`join_id` optionally joins as expected (#135)", {
   # expect exactly one match here, based on input ID
   out_with_join_id <- match_name(loanbook, abcd, join_id = "id_col")
   expect_equal(nrow(out_with_join_id), 1L)
+})
 
-  # should work for id_col with any name, e.g. `lei`
-  loanbook_lei <- rename(loanbook, lei = id_col)
-  abcd_lei <- rename(abcd, lei = id_col)
-  out_lei <- match_name(loanbook_lei, abcd_lei, join_id = "lei")
-  expect_equal(nrow(out_lei), 1L)
+test_that("with `join_id` accepts list input indicating different cols", {
+
+  loanbook <- fake_lbk(
+    name_direct_loantaker = "DL won't fuzzy match",
+    name_ultimate_parent = "UP won't fuzzy match",
+    lei_direct_loantaker = "LEI123"
+  )
+
+  abcd <- fake_abcd(
+    lei = "LEI123"
+  )
+
+  out_with_join_id <- match_name(
+    loanbook,
+    abcd,
+    join_id = c(lei_direct_loantaker = "lei")
+    )
+
+  expect_equal(nrow(out_with_join_id), 1L)
 
 })
 
-test_that("with `join_id`, outputs data with join column (#135)", {
+test_that("with `join_id`, outputs data with loanbook join column (#135)", {
 
+  # with `join_id` as character
   out <- match_name(
     fake_lbk(foo = "1"),
     fake_abcd(foo = "1"),
@@ -768,5 +776,14 @@ test_that("with `join_id`, outputs data with join column (#135)", {
     )
 
   expect_contains(names(out), "foo")
+
+  # with `join_id` as named list
+  out <- match_name(
+    fake_lbk(foo_lbk = "1"),
+    fake_abcd(foo_abcd = "1"),
+    join_id = c(foo_lbk = "foo_abcd")
+  )
+
+  expect_contains(names(out), "foo_lbk")
 
 })
