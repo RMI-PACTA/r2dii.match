@@ -409,3 +409,35 @@ check_join_id <- function(join_id, loanbook, abcd) {
 
   invisible(join_id)
 }
+
+as_join_by <- function(x) {
+
+  if (rlang::is_list(x)) {
+    if (length(x) != 1L) {
+      rlang::abort("`join_id` must be a list of length 1.")
+    }
+    x_name <- names(x) %||% x
+    y_name <- unname(x)
+  } else if (rlang::is_character(x)) {
+    x_name <- names(x) %||% x
+    y_name <- unname(x)
+
+    # If x partially named, assume unnamed are the same in both tables
+    x_name[x_name == ""] <- y_name[x_name == ""]
+  } else {
+    rlang::abort("`by` must be a list or a character vector.")
+  }
+
+  if (!rlang::is_character(x_name)) {
+    rlang::abort("`by$x` must evaluate to a character vector.")
+  }
+  if (!rlang::is_character(y_name)) {
+    rlang::abort("`by$y` must evaluate to a character vector.")
+  }
+
+  c(x_name, y_name)
+}
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
