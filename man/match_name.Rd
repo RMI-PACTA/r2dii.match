@@ -130,6 +130,25 @@ your_classifications <- tibble(
   code_system = "XYZ"
 )
 
+# match on LEI
+loanbook <- tibble(
+  sector_classification_system = "XYZ",
+  sector_classification_direct_loantaker = "D35.11",
+  id_ultimate_parent = "UP15",
+  name_ultimate_parent = "Won't fuzzy match",
+  id_direct_loantaker = "C294",
+  name_direct_loantaker = "Won't fuzzy match",
+  lei_direct_loantaker = "LEI123"
+)
+
+abcd <- tibble(
+  name_company = "alpine knits india pvt. limited",
+  sector = "power",
+  lei = "LEI123"
+)
+
+match_name(loanbook, abcd, join_by = c(lei_direct_loantaker = "lei"))
+
 restore <- options(r2dii.match.sector_classifications = your_classifications)
 
 loanbook <- tibble(
