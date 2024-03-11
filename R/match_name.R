@@ -140,9 +140,12 @@ match_name <- function(loanbook,
 
     join_matched <- dplyr::mutate(join_matched, score = 1)
 
+    join_by_list <- as_join_by(join_id)
+    loanbook_join_id <- join_by_list[[1]]
+
     loanbook <- dplyr::filter(
       loanbook,
-      !.data[[join_id]] %in% join_matched[[join_id]]
+      !.data[[loanbook_join_id]] %in% join_matched[[loanbook_join_id]]
     )
   }
 
@@ -165,6 +168,8 @@ match_name <- function(loanbook,
     out <- dplyr::bind_rows(join_matched, fuzzy_matched)
   } else if (nrow(fuzzy_matched) == 0 && exists("join_matched")) {
     out <- join_matched
+  } else {
+    out <- fuzzy_matched
   }
 
   if (identical(nrow(out), 0L)) {
@@ -389,16 +394,17 @@ names_added_by_match_name <- function() {
 }
 
 check_join_id <- function(join_id, loanbook, abcd) {
-  stopifnot(is.character(join_id))
 
-  if (!rlang::has_name(loanbook, join_id)) {
+  join_id_list <- as_join_by(join_id)
+
+  if (!rlang::has_name(loanbook, join_id_list[[1]])) {
     rlang::abort(
       "join_id_not_in_loanbook",
       message = glue(
         "The join_id `{join_id}` must be present in both `loanbook` and `abcd`. It's not present in `loanbook`."
       )
     )
-  } else if (!rlang::has_name(abcd, join_id)) {
+  } else if (!rlang::has_name(abcd, join_id_list[[2]])) {
     rlang::abort(
       "join_id_not_in_abcd",
       message = glue(
