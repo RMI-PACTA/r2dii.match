@@ -31,9 +31,10 @@
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   abcd.
-#' @param join_id A character string naming an ID column used to left join
-#'   `abcd` to the `loanbook` (e.g. "lei"). ID column must be present, as named,
-#'   in both input datasets.
+#' @param join_id A join specification passe to [dplyr::inner_join()]. If a
+#'   character string, it assumes identical join columns between `loanbook` and
+#'   `abcd`. If a named list, uses the name as the join column of `loanbook` and
+#'   the value as the join column of `abcd`.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
 #' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
 #'   `abcd`.

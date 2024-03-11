@@ -40,9 +40,10 @@ only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to
 abcd.}
 
-\item{join_id}{A character string naming an ID column used to left join
-\code{abcd} to the \code{loanbook} (e.g. "lei"). ID column must be present, as named,
-in both input datasets.}
+\item{join_id}{A join specification passe to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}. If a
+character string, it assumes identical join columns between \code{loanbook} and
+\code{abcd}. If a named list, uses the name as the join column of \code{loanbook} and
+the value as the join column of \code{abcd}.}
 
 \item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
 \code{abcd}.}
