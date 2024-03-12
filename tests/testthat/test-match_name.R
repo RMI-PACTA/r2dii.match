@@ -814,7 +814,7 @@ test_that("with `join_id` and multiple matches, prefers ID (#135)", {
     join_id = c(lei_direct_loantaker = "lei")
   )
 
-  expect_equal(unique(out_with_join_id$lei_direct_loantaker), "LEI123")
+  expect_equal(unique(out$lei_direct_loantaker), "LEI123")
 
 })
 
