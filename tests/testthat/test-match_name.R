@@ -724,7 +724,7 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
   options(old)
 })
 
-test_that("`join_id` optionally joins as expected (#135)", {
+test_that("with `join_id`, joins as expected (#135)", {
 
   loanbook <- fake_lbk(
     name_direct_loantaker = "DL won't fuzzy match",
