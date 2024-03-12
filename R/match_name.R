@@ -164,16 +164,26 @@ match_name <- function(loanbook,
 
     prep_abcd <- dplyr::distinct(prep_abcd)
 
-    join_matched <- dplyr::inner_join(loanbook, prep_abcd, by = join_id)
+    prep_lbk <- may_add_sector_and_borderline(loanbook)
+    prep_lbk <- distinct(prep_lbk)
 
-    join_matched <- dplyr::mutate(
-      join_matched,
-      score = 1,
-      source = "id joined"
+    join_matched <- dplyr::inner_join(
+      prep_lbk,
+      prep_abcd,
+      by = join_id,
+      na_matches = "never"
       )
 
     join_by_list <- as_join_by(join_id)
     loanbook_join_id <- join_by_list[[1]]
+
+    join_matched <- dplyr::mutate(
+      join_matched,
+      score = 1,
+      source = "id joined",
+      level = loanbook_join_id,
+      name = .data[["name_abcd"]]
+    )
 
     loanbook <- dplyr::filter(
       loanbook,
