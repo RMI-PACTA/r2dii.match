@@ -16,26 +16,15 @@
 #' @examples
 #' restructure_abcd(r2dii.data::abcd_demo)
 #' @noRd
-restructure_abcd <- function(data, join_id = NULL) {
+restructure_abcd <- function(data) {
   crucial_names <- c("name_company", "sector")
-  if (!is.null(join_id)) {
-    check_crucial_names(data, c(join_id, crucial_names))
+  check_crucial_names(data, crucial_names)
 
-    out <- dplyr::transmute(
-      data,
-      name = .data$name_company,
-      sector = tolower(.data$sector),
-      !!join_id := .data[[join_id]]
-    )
-  } else {
-    check_crucial_names(data, crucial_names)
-
-    out <- dplyr::transmute(
-      data,
-      name = .data$name_company,
-      sector = tolower(.data$sector)
-    )
-  }
+  out <- dplyr::transmute(
+    data,
+    name = .data$name_company,
+    sector = tolower(.data$sector)
+  )
 
   out <- distinct(out)
   add_alias(out)

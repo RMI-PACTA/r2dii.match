@@ -149,16 +149,28 @@ match_name <- function(loanbook,
     abcd <- ald
   }
 
-  prep_abcd <- restructure_abcd(abcd, join_id)
-
   if (!is.null(join_id)) {
-    check_join_id(join_id, loanbook, prep_abcd)
+    check_join_id(join_id, loanbook, abcd)
 
-    join_matched <- dplyr::inner_join(
-      loanbook, prep_abcd, by = join_id
+    crucial_names <- c("name_company", "sector", join_id)
+    check_crucial_names(abcd, crucial_names)
+
+    prep_abcd <- dplyr::transmute(
+      abcd,
+      name_abcd = .data[["name_company"]],
+      sector_abcd = tolower(.data[["sector"]]),
+      !!join_id := .data[[join_id]]
+    )
+
+    prep_abcd <- dplyr::distinct(prep_abcd)
+
+    join_matched <- dplyr::inner_join(loanbook, prep_abcd, by = join_id)
+
+    join_matched <- dplyr::mutate(
+      join_matched,
+      score = 1,
+      source = "id joined"
       )
-
-    join_matched <- dplyr::mutate(join_matched, score = 1)
 
     join_by_list <- as_join_by(join_id)
     loanbook_join_id <- join_by_list[[1]]
@@ -172,7 +184,7 @@ match_name <- function(loanbook,
   if (nrow(loanbook) != 0) {
     fuzzy_matched <- match_name_impl(
       loanbook = loanbook,
-      prep_abcd = prep_abcd,
+      abcd = abcd,
       by_sector = by_sector,
       min_score = min_score,
       method = method,
@@ -201,7 +213,7 @@ match_name <- function(loanbook,
 }
 
 match_name_impl <- function(loanbook,
-                            prep_abcd,
+                            abcd,
                             by_sector = TRUE,
                             min_score = 0.8,
                             method = "jw",
@@ -217,6 +229,7 @@ match_name_impl <- function(loanbook,
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
   prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
+  prep_abcd <- restructure_abcd(abcd)
 
   if (by_sector) {
     a <- expand_alias(prep_lbk, prep_abcd)

@@ -842,6 +842,6 @@ test_that("with `join_id` and one ID match, one fuzzy match, outputs as expected
   out <- split(out, out$id_loan)
 
   expect_equal(out$L1$lei_direct_loantaker, "LEI123")
-  expect_equal(out$L2$name, "UP will fuzzy match")
+  expect_equal(out$L2$name_abcd, "UP will fuzzy match")
 
 })
