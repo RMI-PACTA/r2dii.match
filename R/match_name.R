@@ -31,6 +31,10 @@
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   abcd.
+#' @param join_id A join specification passed to [dplyr::inner_join()]. If a
+#'   character string, it assumes identical join columns between `loanbook` and
+#'   `abcd`. If a named character vector, it uses the name as the join column of `loanbook` and
+#'   the value as the join column of `abcd`.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
 #' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
 #'   `abcd`.
@@ -83,6 +87,25 @@
 #'   code_system = "XYZ"
 #' )
 #'
+#' # match on LEI
+#' loanbook <- tibble(
+#'   sector_classification_system = "XYZ",
+#'   sector_classification_direct_loantaker = "D35.11",
+#'   id_ultimate_parent = "UP15",
+#'   name_ultimate_parent = "Won't fuzzy match",
+#'   id_direct_loantaker = "C294",
+#'   name_direct_loantaker = "Won't fuzzy match",
+#'   lei_direct_loantaker = "LEI123"
+#' )
+#'
+#' abcd <- tibble(
+#'   name_company = "alpine knits india pvt. limited",
+#'   sector = "power",
+#'   lei = "LEI123"
+#' )
+#'
+#' match_name(loanbook, abcd, join_by = c(lei_direct_loantaker = "lei"))
+#'
 #' restore <- options(r2dii.match.sector_classifications = your_classifications)
 #'
 #' loanbook <- tibble(
@@ -111,6 +134,7 @@ match_name <- function(loanbook,
                        method = "jw",
                        p = 0.1,
                        overwrite = NULL,
+                       join_id = NULL,
                        ald = deprecated(),
                        ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
@@ -125,16 +149,77 @@ match_name <- function(loanbook,
     abcd <- ald
   }
 
-  match_name_impl(
-    loanbook = loanbook,
-    abcd = abcd,
-    by_sector = by_sector,
-    min_score = min_score,
-    method = method,
-    p = p,
-    overwrite = overwrite,
-    ...
-  )
+  if (!is.null(join_id)) {
+    check_join_id(join_id, loanbook, abcd)
+
+    crucial_names <- c("name_company", "sector", join_id)
+    check_crucial_names(abcd, crucial_names)
+
+    prep_abcd <- dplyr::transmute(
+      abcd,
+      name_abcd = .data[["name_company"]],
+      sector_abcd = tolower(.data[["sector"]]),
+      !!join_id := .data[[join_id]]
+    )
+
+    prep_abcd <- dplyr::distinct(prep_abcd)
+
+    prep_lbk <- may_add_sector_and_borderline(loanbook)
+    prep_lbk <- distinct(prep_lbk)
+
+    join_matched <- dplyr::inner_join(
+      prep_lbk,
+      prep_abcd,
+      by = join_id,
+      na_matches = "never"
+      )
+
+    join_by_list <- as_join_by(join_id)
+    loanbook_join_id <- join_by_list[[1]]
+
+    join_matched <- dplyr::mutate(
+      join_matched,
+      score = 1,
+      source = "id joined",
+      level = loanbook_join_id,
+      name = .data[["name_abcd"]]
+    )
+
+    loanbook <- dplyr::filter(
+      loanbook,
+      !.data[[loanbook_join_id]] %in% join_matched[[loanbook_join_id]]
+    )
+  }
+
+  if (nrow(loanbook) != 0) {
+    fuzzy_matched <- match_name_impl(
+      loanbook = loanbook,
+      abcd = abcd,
+      by_sector = by_sector,
+      min_score = min_score,
+      method = method,
+      p = p,
+      overwrite = overwrite,
+      ...
+    )
+  } else {
+    fuzzy_matched <- tibble()
+  }
+
+  if (exists("join_matched")) {
+    out <- dplyr::bind_rows(join_matched, fuzzy_matched)
+  } else if (nrow(fuzzy_matched) == 0 && exists("join_matched")) {
+    out <- join_matched
+  } else {
+    out <- fuzzy_matched
+  }
+
+  if (identical(nrow(out), 0L)) {
+    rlang::warn("Found no match.")
+    return(empty_loanbook_tibble(loanbook, dplyr::groups(loanbook)))
+  }
+
+  out
 }
 
 match_name_impl <- function(loanbook,
@@ -145,6 +230,7 @@ match_name_impl <- function(loanbook,
                             p = 0.1,
                             overwrite = NULL,
                             ...) {
+
   old_groups <- dplyr::groups(loanbook)
   loanbook <- ungroup(loanbook)
 
@@ -164,8 +250,8 @@ match_name_impl <- function(loanbook,
   setDT(a)
 
   if (identical(nrow(a), 0L)) {
-    rlang::warn("Found no match.")
-    return(empty_loanbook_tibble(loanbook, old_groups))
+    rlang::inform("Found no match via fuzzy matching.")
+    return(a)
   }
 
   a <- unique(a)[
@@ -179,8 +265,8 @@ match_name_impl <- function(loanbook,
   a <- a[score >= min_score, ]
 
   if (identical(nrow(a), 0L)) {
-    rlang::warn("Found no match.")
-    return(empty_loanbook_tibble(loanbook, old_groups))
+    rlang::inform("Found no match via fuzzy matching.")
+    return(a)
   }
 
   l <- rename(prep_lbk, alias_lbk = "alias")
@@ -348,4 +434,59 @@ names_added_by_match_name <- function() {
     "source",
     "borderline"
   )
+}
+
+check_join_id <- function(join_id, loanbook, abcd) {
+
+  join_id_list <- as_join_by(join_id)
+
+  if (!rlang::has_name(loanbook, join_id_list[[1]])) {
+    rlang::abort(
+      "join_id_not_in_loanbook",
+      message = glue(
+        "The join_id `{join_id_list[[1]]}` must be present in `loanbook` input."
+      )
+    )
+  } else if (!rlang::has_name(abcd, join_id_list[[2]])) {
+    rlang::abort(
+      "join_id_not_in_abcd",
+      message = glue(
+        "The join_id `{join_id_list[[2]]}` must be present in `abcd` input."
+      )
+    )
+  }
+
+  invisible(join_id)
+}
+
+as_join_by <- function(x) {
+
+  if (rlang::is_list(x)) {
+    if (length(x) != 1L) {
+      rlang::abort("`join_id` must be a vector of length 1.")
+    }
+    x_name <- names(x) %||% x
+    y_name <- unname(x)
+  } else if (rlang::is_character(x)) {
+    x_name <- names(x) %||% x
+    y_name <- unname(x)
+
+    # If x partially named, assume unnamed are the same in both tables
+    x_name[x_name == ""] <- y_name[x_name == ""]
+  } else {
+    rlang::abort("`by` must be a string or a character vector.")
+  }
+
+  if (!rlang::is_character(x_name)) {
+    rlang::abort("`by$x` must evaluate to a character vector.")
+  }
+  if (!rlang::is_character(y_name)) {
+    rlang::abort("`by$y` must evaluate to a character vector.")
+  }
+
+  c(x_name, y_name)
+}
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
 }

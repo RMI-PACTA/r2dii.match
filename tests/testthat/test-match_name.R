@@ -723,3 +723,124 @@ test_that("allows custom `sector_classifications` via options() (#354)", {
   expect_equal(nrow(out), 1L)
   options(old)
 })
+
+test_that("with `join_id`, joins as expected (#135)", {
+  skip_if_r2dii_data_outdated()
+  loanbook <- fake_lbk(
+    name_direct_loantaker = "DL won't fuzzy match",
+    name_ultimate_parent = "UP won't fuzzy match",
+    id_col = "LEI123"
+    )
+
+  abcd <- fake_abcd(
+    id_col = "LEI123"
+  )
+
+  # expect no match here, the company names are completely different
+  expect_warning(match_name(loanbook, abcd, join_id = NULL), "no match")
+
+  # expect exactly one match here, based on input ID
+  out_with_join_id <- match_name(loanbook, abcd, join_id = "id_col")
+  expect_equal(nrow(out_with_join_id), 1L)
+  expect_contains(names(out_with_join_id), "id_col")
+  expect_equal(unique(out_with_join_id$id_col), "LEI123")
+
+})
+
+test_that("with `join_id` accepts named character vector input indicating different cols (#135)", {
+  skip_if_r2dii_data_outdated()
+  loanbook <- fake_lbk(
+    name_direct_loantaker = "DL won't fuzzy match",
+    name_ultimate_parent = "UP won't fuzzy match",
+    lei_direct_loantaker = "LEI123"
+  )
+
+  abcd <- fake_abcd(
+    lei = "LEI123"
+  )
+
+  out_with_join_id <- match_name(
+    loanbook,
+    abcd,
+    join_id = c(lei_direct_loantaker = "lei")
+    )
+
+  expect_equal(nrow(out_with_join_id), 1L)
+  expect_contains(names(out_with_join_id), "lei_direct_loantaker")
+  expect_equal(unique(out_with_join_id$lei_direct_loantaker), "LEI123")
+
+})
+
+test_that("with `join_id`, outputs data with loanbook join column (#135)", {
+  skip_if_r2dii_data_outdated()
+  # with `join_id` as character
+  out <- match_name(
+    fake_lbk(foo = "1"),
+    fake_abcd(foo = "1"),
+    join_id = "foo"
+    )
+
+  expect_contains(names(out), "foo")
+
+  # with `join_id` as a named vector
+  out <- match_name(
+    fake_lbk(foo_lbk = "1"),
+    fake_abcd(foo_abcd = "1"),
+    join_id = c(foo_lbk = "foo_abcd")
+  )
+
+  expect_contains(names(out), "foo_lbk")
+
+})
+
+test_that("with `join_id` and multiple matches, prefers ID (#135)", {
+  skip_if_r2dii_data_outdated()
+  # loanbook might match at UP
+  loanbook <- fake_lbk(
+    name_direct_loantaker = "DL won't fuzzy match",
+    name_ultimate_parent = "UP will fuzzy match",
+    lei_direct_loantaker = "LEI123"
+  )
+
+  abcd <- fake_abcd(
+    lei = "LEI123",
+    name_company = "UP will fuzzy match"
+  )
+
+  # with `join_id` as named vector
+  out <- match_name(
+    loanbook,
+    abcd,
+    join_id = c(lei_direct_loantaker = "lei")
+  )
+
+  expect_equal(unique(out$lei_direct_loantaker), "LEI123")
+
+})
+
+test_that("with `join_id` and one ID match, one fuzzy match, outputs as expected (#135)", {
+  skip_if_r2dii_data_outdated()
+  loanbook <- fake_lbk(
+    id_loan = c("L1", "L2"), # L1 should ID match, L2 should fuzzy match
+    name_direct_loantaker = "DL won't fuzzy match",
+    name_ultimate_parent = c("UP won't fuzzy match", "UP will fuzzy match"),
+    lei_direct_loantaker = c("LEI123", NA_character_)
+  )
+
+  abcd <- fake_abcd(
+    name_company = c("a power company", "UP will fuzzy match"),
+    lei = c("LEI123", NA_character_)
+  )
+
+  out <- match_name(
+    loanbook,
+    abcd,
+    join_id = c(lei_direct_loantaker = "lei")
+  )
+
+  out <- split(out, out$id_loan)
+
+  expect_equal(out$L1$lei_direct_loantaker, "LEI123")
+  expect_equal(out$L2$name_abcd, "UP will fuzzy match")
+
+})

@@ -235,3 +235,13 @@ test_that("with 0-row input returns 0-row input", {
 
   expect_no_error(prioritize(zero_row))
 })
+
+test_that("with `match_name` with `join_id`, outputs as expected (#135)", {
+  skip_if_r2dii_data_outdated()
+  lbk <- fake_lbk(id_loan = "L1", id_col = "1")
+  abcd <- fake_abcd(id_col = "1")
+  matched <- match_name(lbk, abcd, join_id = "id_col")
+
+  out <- prioritize(matched)
+  expect_equal(nrow(out), 1L)
+})
