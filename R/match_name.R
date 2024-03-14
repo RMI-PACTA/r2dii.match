@@ -33,7 +33,7 @@
 #'   abcd.
 #' @param join_id A join specification passed to [dplyr::inner_join()]. If a
 #'   character string, it assumes identical join columns between `loanbook` and
-#'   `abcd`. If a named list, uses the name as the join column of `loanbook` and
+#'   `abcd`. If a named character vector, it uses the name as the join column of `loanbook` and
 #'   the value as the join column of `abcd`.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
 #' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
