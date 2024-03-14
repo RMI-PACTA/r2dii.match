@@ -31,7 +31,7 @@
 #'   only `sector`, the value in the `name` column should be `NA` and
 #'   vice-versa. This file can be used to manually match loanbook companies to
 #'   abcd.
-#' @param join_id A join specification passe to [dplyr::inner_join()]. If a
+#' @param join_id A join specification passed to [dplyr::inner_join()]. If a
 #'   character string, it assumes identical join columns between `loanbook` and
 #'   `abcd`. If a named list, uses the name as the join column of `loanbook` and
 #'   the value as the join column of `abcd`.
