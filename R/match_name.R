@@ -444,14 +444,14 @@ check_join_id <- function(join_id, loanbook, abcd) {
     rlang::abort(
       "join_id_not_in_loanbook",
       message = glue(
-        "The join_id `{join_id}` must be present in both `loanbook` and `abcd`. It's not present in `loanbook`."
+        "The join_id `{join_id_list[[1]]}` must be present in `loanbook` input."
       )
     )
   } else if (!rlang::has_name(abcd, join_id_list[[2]])) {
     rlang::abort(
       "join_id_not_in_abcd",
       message = glue(
-        "The join_id `{join_id}` must be present in both `loanbook` and `abcd`. It's not present in `abcd`."
+        "The join_id `{join_id_list[[2]]}` must be present in `abcd` input."
       )
     )
   }
