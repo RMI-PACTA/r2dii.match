@@ -747,7 +747,7 @@ test_that("with `join_id`, joins as expected (#135)", {
 
 })
 
-test_that("with `join_id` accepts list input indicating different cols (#135)", {
+test_that("with `join_id` accepts named character vector input indicating different cols (#135)", {
   skip_if_r2dii_data_outdated()
   loanbook <- fake_lbk(
     name_direct_loantaker = "DL won't fuzzy match",
