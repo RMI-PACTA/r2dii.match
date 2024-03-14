@@ -463,7 +463,7 @@ as_join_by <- function(x) {
 
   if (rlang::is_list(x)) {
     if (length(x) != 1L) {
-      rlang::abort("`join_id` must be a list of length 1.")
+      rlang::abort("`join_id` must be a vector of length 1.")
     }
     x_name <- names(x) %||% x
     y_name <- unname(x)
@@ -474,7 +474,7 @@ as_join_by <- function(x) {
     # If x partially named, assume unnamed are the same in both tables
     x_name[x_name == ""] <- y_name[x_name == ""]
   } else {
-    rlang::abort("`by` must be a list or a character vector.")
+    rlang::abort("`by` must be a string or a character vector.")
   }
 
   if (!rlang::is_character(x_name)) {
