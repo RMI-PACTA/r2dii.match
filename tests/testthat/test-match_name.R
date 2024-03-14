@@ -807,7 +807,7 @@ test_that("with `join_id` and multiple matches, prefers ID (#135)", {
     name_company = "UP will fuzzy match"
   )
 
-  # with `join_id` as named list
+  # with `join_id` as named vector
   out <- match_name(
     loanbook,
     abcd,
