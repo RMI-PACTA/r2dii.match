@@ -40,7 +40,7 @@ only \code{sector}, the value in the \code{name} column should be \code{NA} and
 vice-versa. This file can be used to manually match loanbook companies to
 abcd.}
 
-\item{join_id}{A join specification passe to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}. If a
+\item{join_id}{A join specification passed to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}. If a
 character string, it assumes identical join columns between \code{loanbook} and
 \code{abcd}. If a named list, uses the name as the join column of \code{loanbook} and
 the value as the join column of \code{abcd}.}
