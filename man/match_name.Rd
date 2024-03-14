@@ -42,7 +42,7 @@ abcd.}
 
 \item{join_id}{A join specification passed to \code{\link[dplyr:mutate-joins]{dplyr::inner_join()}}. If a
 character string, it assumes identical join columns between \code{loanbook} and
-\code{abcd}. If a named list, uses the name as the join column of \code{loanbook} and
+\code{abcd}. If a named character vector, it uses the name as the join column of \code{loanbook} and
 the value as the join column of \code{abcd}.}
 
 \item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
