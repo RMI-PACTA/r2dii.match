@@ -36,8 +36,6 @@
 #'   `abcd`. If a named character vector, it uses the name as the join column of `loanbook` and
 #'   the value as the join column of `abcd`.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
-#' @param ald `r lifecycle::badge('superseded')` `ald` has been superseded by
-#'   `abcd`.
 #'
 #' @family main functions
 #'
@@ -135,19 +133,9 @@ match_name <- function(loanbook,
                        p = 0.1,
                        overwrite = NULL,
                        join_id = NULL,
-                       ald = deprecated(),
                        ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
-
-  if (lifecycle::is_present(ald)) {
-    lifecycle::deprecate_warn(
-      "0.1.0 (expected July 2022)",
-      "match_name(ald)",
-      "match_name(abcd)"
-      )
-    abcd <- ald
-  }
 
   if (!is.null(join_id)) {
     check_join_id(join_id, loanbook, abcd)

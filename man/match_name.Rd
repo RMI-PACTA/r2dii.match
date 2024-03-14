@@ -13,7 +13,6 @@ match_name(
   p = 0.1,
   overwrite = NULL,
   join_id = NULL,
-  ald = deprecated(),
   ...
 )
 }
@@ -44,9 +43,6 @@ abcd.}
 character string, it assumes identical join columns between \code{loanbook} and
 \code{abcd}. If a named character vector, it uses the name as the join column of \code{loanbook} and
 the value as the join column of \code{abcd}.}
-
-\item{ald}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}} \code{ald} has been superseded by
-\code{abcd}.}
 
 \item{...}{Arguments passed on to \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.}
 }
