@@ -22,14 +22,12 @@ globalVariables(
     ".",
     ".data",
     "alias_abcd",
-    "alias_ald",
     "alias_lbk",
     "id_2dii",
     "pick",
     "rowid",
     "score",
     "sector",
-    "sector_abcd",
-    "sector_ald"
+    "sector_abcd"
   )
 )

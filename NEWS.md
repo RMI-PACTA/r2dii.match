@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* Complete deprecation of `ald` in favour of `abcd` (#399).
+
 * `match_name` gains argument `join_id` allowing an optional perfect join based on a mutual ID column between `loanbook` and `abcd` inputs, prior to attempting fuzzy matching (#135).
 
 # r2dii.match 0.1.4
