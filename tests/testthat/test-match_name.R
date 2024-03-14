@@ -782,7 +782,7 @@ test_that("with `join_id`, outputs data with loanbook join column (#135)", {
 
   expect_contains(names(out), "foo")
 
-  # with `join_id` as named list
+  # with `join_id` as a named vector
   out <- match_name(
     fake_lbk(foo_lbk = "1"),
     fake_abcd(foo_abcd = "1"),
