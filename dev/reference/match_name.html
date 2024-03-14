@@ -98,6 +98,7 @@ is scored using <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html
 <span>  method <span class="op">=</span> <span class="st">"jw"</span>,</span>
 <span>  p <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  join_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ald <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -137,6 +138,13 @@ columns of a particular direct loantaker or ultimate parent. To overwrite
 only <code>sector</code>, the value in the <code>name</code> column should be <code>NA</code> and
 vice-versa. This file can be used to manually match loanbook companies to
 abcd.</p></dd>
+
+
+<dt>join_id</dt>
+<dd><p>A join specification passed to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::inner_join()</a></code>. If a
+character string, it assumes identical join columns between <code>loanbook</code> and
+<code>abcd</code>. If a named character vector, it uses the name as the join column of <code>loanbook</code> and
+the value as the join column of <code>abcd</code>.</p></dd>
 
 
 <dt>ald</dt>
@@ -226,6 +234,25 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 <span class="r-in"><span>  code_system <span class="op">=</span> <span class="st">"XYZ"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># match on LEI</span></span></span>
+<span class="r-in"><span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sector_classification_system <span class="op">=</span> <span class="st">"XYZ"</span>,</span></span>
+<span class="r-in"><span>  sector_classification_direct_loantaker <span class="op">=</span> <span class="st">"D35.11"</span>,</span></span>
+<span class="r-in"><span>  id_ultimate_parent <span class="op">=</span> <span class="st">"UP15"</span>,</span></span>
+<span class="r-in"><span>  name_ultimate_parent <span class="op">=</span> <span class="st">"Won't fuzzy match"</span>,</span></span>
+<span class="r-in"><span>  id_direct_loantaker <span class="op">=</span> <span class="st">"C294"</span>,</span></span>
+<span class="r-in"><span>  name_direct_loantaker <span class="op">=</span> <span class="st">"Won't fuzzy match"</span>,</span></span>
+<span class="r-in"><span>  lei_direct_loantaker <span class="op">=</span> <span class="st">"LEI123"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">abcd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  name_company <span class="op">=</span> <span class="st">"alpine knits india pvt. limited"</span>,</span></span>
+<span class="r-in"><span>  sector <span class="op">=</span> <span class="st">"power"</span>,</span></span>
+<span class="r-in"><span>  lei <span class="op">=</span> <span class="st">"LEI123"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">match_name</span><span class="op">(</span><span class="va">loanbook</span>, <span class="va">abcd</span>, join_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>lei_direct_loantaker <span class="op">=</span> <span class="st">"lei"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">restore</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>r2dii.match.sector_classifications <span class="op">=</span> <span class="va">your_classifications</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">loanbook</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
@@ -260,6 +287,7 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
             <div class="col-10">
                 <div class="row">
                     <div class="col-md-4 col-xs-6">
+                        <a href="https://pacta.rmi.org/" target="_blank" class="external-link"><div class="icon fa fa-link"></div></a>
                         <a href="https://github.com/RMI-PACTA" target="_blank" class="external-link"><div class="icon fab fa-github"></div></a>
                         <a href="https://twitter.com/RockyMtnInst" target="_blank" class="external-link"><div class="icon fab fa-twitter"></div></a>
                         <a href="https://www.linkedin.com/showcase/rmi-pacta/" target="_blank" class="external-link"><div class="icon fab fa-linkedin-in"></div></a>
