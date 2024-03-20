@@ -276,7 +276,7 @@ test_that("works with `min_score = 0` (bug fix)", {
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
-  this_name <- "Jacob"
+  this_name <- "Ladeck"
   this_alias <- to_alias(this_name)
   this_lbk <- loanbook_demo %>%
     filter(name_direct_loantaker == this_name)
