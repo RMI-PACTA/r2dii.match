@@ -187,12 +187,8 @@ test_that("takes `min_score`", {
 
 test_that("takes `method`", {
   skip_if_r2dii_data_outdated()
-  lbk_method <- slice(loanbook_demo, 4)
-  lbk_method <- mutate(
-    lbk_method,
-    name_direct_loantaker = "Jahne",
-    sector_classification_direct_loantaker = "G45.11"
-  )
+  lbk_method <- fake_lbk(name_direct_loantaker = "Fontana SP")
+
   expect_false(
     identical(
       match_name(lbk_method, abcd_demo, method = "jw"),
@@ -203,12 +199,7 @@ test_that("takes `method`", {
 
 test_that("takes `p`", {
   skip_if_r2dii_data_outdated()
-  lbk_p <- slice(loanbook_demo, 4)
-  lbk_p <- mutate(
-    lbk_p,
-    name_direct_loantaker = "Jahne",
-    sector_classification_direct_loantaker = "G45.11"
-  )
+  lbk_p <- fake_lbk(name_direct_loantaker = "Fontana SP")
 
   expect_false(
     identical(
@@ -567,15 +558,15 @@ test_that("throws an error if the `loanbook` has reserved columns", {
 test_that("outputs correct `borderline` (#269)", {
   skip_if_r2dii_data_outdated()
   # This sector-code matches the 2DII sector "coal" fully.
-  border_false <- 21000
+  border_false <- "B05"
   coal_2dii <- "coal"
   # This sector-code matches the 2DII sector "power" as "borderline".
-  border_true <- 36100
+  border_true <- "D35.1"
   power_2dii <- "power"
   # Confirm with:
   # filter(sector_classifications, code %in% c(border_false, border_true))
 
-  a_code_system <- "SIC"
+  a_code_system <- "NACE"
   some_ids <- c(1, 2)
   some_companies <- c("a", "b")
 
