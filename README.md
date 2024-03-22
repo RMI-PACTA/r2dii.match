@@ -58,7 +58,7 @@ and run fuzzy matching against all company names in the `abcd`:
 ``` r
 match_result <- match_name(loanbook_demo, abcd_demo)
 match_result 
-#> # A tibble: 307 × 28
+#> # A tibble: 329 × 28
 #>    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹
 #>    <chr>   <chr>               <chr>                      <chr>                 
 #>  1 L1      C294                Vitale Group               <NA>                  
@@ -71,7 +71,7 @@ match_result
 #>  8 L8      C303                Barone s.r.l.              <NA>                  
 #>  9 L9      C301                Werner Werner AG & Co. KG… IP10                  
 #> 10 L9      C301                Werner Werner AG & Co. KG… IP10                  
-#> # ℹ 297 more rows
+#> # ℹ 319 more rows
 #> # ℹ abbreviated name: ¹​id_intermediate_parent_1
 #> # ℹ 24 more variables: name_intermediate_parent_1 <chr>,
 #> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
@@ -92,7 +92,7 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 168 × 28
+#> # A tibble: 177 × 28
 #>    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹
 #>    <chr>   <chr>               <chr>                      <chr>                 
 #>  1 L6      C304                Kassulke-Kassulke          <NA>                  
@@ -105,7 +105,7 @@ prioritize(match_result)
 #>  8 L26     C280                Ankunding, Ankunding and … <NA>                  
 #>  9 L27     C278                Donati-Donati Group        <NA>                  
 #> 10 L28     C276                Ferraro, Ferraro e Ferrar… <NA>                  
-#> # ℹ 158 more rows
+#> # ℹ 167 more rows
 #> # ℹ abbreviated name: ¹​id_intermediate_parent_1
 #> # ℹ 24 more variables: name_intermediate_parent_1 <chr>,
 #> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
