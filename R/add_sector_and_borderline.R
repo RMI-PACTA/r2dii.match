@@ -90,20 +90,27 @@ check_classification <- function(data,
 abort_all_sec_classif_unknown <- function(column, known) {
   abort(
     class = "all_sec_classif_unknown",
-    message = glue(
-      "Some `{column}` must be known, i.e. one of:
-      {collapse2(known)}"
-    )
+    message = c(
+      glue("Some `{column}` must be known, i.e. one of: {collapse2(known)}"),
+      "i" = "If you wish to request a new sector classification system, please create an issue here:",
+      "*" = "https://github.com/RMI-PACTA/r2dii.data/issues",
+      "i" = "Or contact the PACTA team here:",
+      "*" = "pacta4banks@rmi.org"
+    ),
+    use_cli_format = TRUE
   )
 }
 
 warn_some_sec_classif_unknown <- function(column, unknown) {
   warn(
     class = "some_sec_classif_unknown",
-    message = glue(
-      "Some `{column}` are unknown:
-      {collapse2(unknown)}"
-    )
+    message = c(
+      glue("Some `{column}` are unknown:{collapse2(unknown)}"),
+      "i" = "If you wish to request a new sector classification system, please create an issue here:",
+      "*" = "https://github.com/RMI-PACTA/r2dii.data/issues",
+      "i" = "Or contact the PACTA team here:",
+      "*" = "pacta4banks@rmi.org"
+      )
   )
 
   invisible(column)
