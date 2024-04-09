@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">r2dii.match</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.4.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,7 +143,7 @@ raise an issue in <a href="https://github.com/RMI-PACTA/r2dii.data" class="exter
 incorporate it.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loanbook_demo</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 323 × 19</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 283 × 19</span></span></span>
 <span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L1      C294                Vitale Group               <span style="color: #BB0000;">NA</span>                    </span></span>
@@ -156,7 +156,7 @@ incorporate it.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L8      C303                Barone s.r.l.              <span style="color: #BB0000;">NA</span>                    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L10     C302                De rosa s.r.l.             <span style="color: #BB0000;">NA</span>                    </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 313 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 273 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 15 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
@@ -167,17 +167,17 @@ incorporate it.</p>
 <span><span class="va">abcd_demo</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4,972 × 14</span></span></span>
 <span><span class="co">#&gt;    company_id name_company         lei   sector technology production_unit  year</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>020</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>021</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>022</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>023</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>024</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 181        Giordano, Giordano … <span style="color: #BB0000;">NA</span>    power  hydrocap   MW               <span style="text-decoration: underline;">2</span>025</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>020</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>021</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>022</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 525        Vitali, Vitali e Vi… <span style="color: #BB0000;">NA</span>    cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>023</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 184        Giordano, Giordano … 2756… power  hydrocap   MW               <span style="text-decoration: underline;">2</span>020</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 184        Giordano, Giordano … 2756… power  hydrocap   MW               <span style="text-decoration: underline;">2</span>021</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 184        Giordano, Giordano … 2756… power  hydrocap   MW               <span style="text-decoration: underline;">2</span>022</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 184        Giordano, Giordano … 2756… power  hydrocap   MW               <span style="text-decoration: underline;">2</span>023</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 184        Giordano, Giordano … 2756… power  hydrocap   MW               <span style="text-decoration: underline;">2</span>024</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 184        Giordano, Giordano … 2756… power  hydrocap   MW               <span style="text-decoration: underline;">2</span>025</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 527        Vitali, Vitali e Vi… 9341… cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>020</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 527        Vitali, Vitali e Vi… 9341… cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>021</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 527        Vitali, Vitali e Vi… 9341… cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>022</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 527        Vitali, Vitali e Vi… 9341… cement integrate… tonnes per year  <span style="text-decoration: underline;">2</span>023</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4,962 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: production &lt;dbl&gt;, emission_factor &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   country_of_domicile &lt;chr&gt;, plant_location &lt;chr&gt;, is_ultimate_owner &lt;lgl&gt;,</span></span></span>
@@ -242,7 +242,7 @@ names of the loanbook against the abcd. (For more information on the
 scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html" class="external-link">stringdist::stringsim()</a></code>).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 307 × 28</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 329 × 28</span></span></span>
 <span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> L1      C294                Vitale Group               <span style="color: #BB0000;">NA</span>                    </span></span>
@@ -255,7 +255,7 @@ scoring algorithm used, see: <code><a href="https://rdrr.io/pkg/stringdist/man/s
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> L8      C303                Barone s.r.l.              <span style="color: #BB0000;">NA</span>                    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 297 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 319 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 24 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span></span>
@@ -270,12 +270,12 @@ manually validate.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, by_sector <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 801</span></span>
+<span><span class="co">#&gt; [1] 675</span></span>
 <span></span>
 <span><span class="co"># Compare</span></span>
 <span><span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">your_loanbook</span>, <span class="va">your_abcd</span>, by_sector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 307</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 329</span></span></code></pre></div>
 <p><code>min_score</code> allows you to minimum threshold
 <code>score</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -372,20 +372,20 @@ loan is of highest <code>priority()</code>:</p>
 <span><span class="va">valid_matches</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">some_interesting_columns</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 168 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 175 × 3</span></span></span>
 <span><span class="co">#&gt;    id_2dii level            score</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DL147   direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> DL165   direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> DL310   direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> DL100   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> DL129   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> DL144   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> DL270   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> DL86    direct_loantaker     1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> DL5     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> DL92    direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> DL172   direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> DL80    direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> DL150   direct_loantaker     1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> DL3     direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> DL74    direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> DL91    direct_loantaker     1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> DL65    direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> DL79    direct_loantaker     1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 165 more rows</span></span></span></code></pre></div>
 <p>By default, highest priority refers to the most granular match
 (<code>direct_loantaker</code>). The default priority is set internally
 via <code>prioritize_levels()</code>.</p>
@@ -399,20 +399,20 @@ reverse the default priority.</p>
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span>priority <span class="op">=</span> <span class="va">rev</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">some_interesting_columns</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 168 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 175 × 3</span></span></span>
 <span><span class="co">#&gt;    id_2dii level           score</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> UP220   ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> UP115   ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> UP43    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> UP74    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> UP258   ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> UP154   ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> UP13    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> UP21    ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> UP156   ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> UP149   ultimate_parent     1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 158 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> UP190   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> UP101   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> UP39    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> UP63    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> UP224   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> UP132   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> UP12    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> UP20    ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> UP134   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> UP127   ultimate_parent     1</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 165 more rows</span></span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

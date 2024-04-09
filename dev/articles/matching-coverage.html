@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">r2dii.match</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.1.4.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,10 +108,10 @@
 to the companies in an asset-based company dataset. However, matching
 every loan is unlikely – some loan-taking companies may be missing from
 the asset-based company dataset, or they may not operate in the sectors
-2DII focuses on (power, cement, oil and gas, aviation, coal, automotive,
-steel, and hdv). Thus, you may want to measure how much of the loanbook
-matched some asset. This article shows two ways to calculate such
-matching coverage:</p>
+PACTA focuses on (power, cement, oil and gas, aviation, coal,
+automotive, steel, and hdv). Thus, you may want to measure how much of
+the loanbook matched some asset. This article shows two ways to
+calculate such matching coverage:</p>
 <ol style="list-style-type: decimal">
 <li><p>Calculate the portion of your loanbook covered, by dollar value
 (i.e. using one of the <code>loan_size_*</code> columns).</p></li>
@@ -136,13 +136,18 @@ two mismatching loans:</p>
 <span>    name_ultimate_parent <span class="op">=</span> </span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">id_loan</span> <span class="op">==</span> <span class="st">"L1"</span>, <span class="st">"unmatched company name"</span>, <span class="va">name_ultimate_parent</span><span class="op">)</span>,</span>
 <span>    sector_classification_direct_loantaker <span class="op">=</span> </span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">id_loan</span> <span class="op">==</span> <span class="st">"L2"</span>, <span class="fl">99</span>, <span class="va">sector_classification_direct_loantaker</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">id_loan</span> <span class="op">==</span> <span class="st">"L2"</span>, <span class="st">"99"</span>, <span class="va">sector_classification_direct_loantaker</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>We will then run the matching algorithm on this loanbook:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">abcd_demo</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Some `sector_classification_direct_loantaker` are unknown:99</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> If you wish to request a new sector classification system, please create an issue here:</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> https://github.com/RMI-PACTA/r2dii.data/issues</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Or contact the PACTA team here:</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> pacta4banks@rmi.org</span></span></code></pre></div>
 <p>Note that this <code>matched</code> dataset will contain
 <em>only</em> loans that were matched successfully. To determine
 coverage, we need to go back to the original <code>loanbook</code>
@@ -176,7 +181,7 @@ type.</p></li>
 <span><span class="va">loanbook_with_sectors</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html" class="external-link">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.character</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">sector_classifications</span>, by <span class="op">=</span> <span class="va">merge_by</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html" class="external-link">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.double</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/modify.html" class="external-link">modify_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">merge_by</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">as.character</span><span class="op">)</span></span></code></pre></div>
 <p>We can join these two datasets together, to generate our
 <code>coverage</code> dataset:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -298,21 +303,21 @@ the <code>borderline</code> flag.</p>
 <p>In the example below, we see two classification codes coming from the
 SIC classification standard:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/sic_classification.html" class="external-link">sic_classification</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">41111</span>, <span class="fl">36200</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
-<span><span class="co">#&gt;   code  description                                            sector borderline</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 36200 manufacture of electricity distribution and control a… power  TRUE      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 41111 generation                                             power  FALSE</span></span></code></pre></div>
-<p>Notice that the code 41111 corresponds to power generation. This is
-an identical match to 2DII’s <code>power</code> sector, and thus the
+<code class="sourceCode R"><span><span class="fu">r2dii.data</span><span class="fu">::</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/reference/nace_classification.html" class="external-link">nace_classification</a></span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">code</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"D35.11"</span>, <span class="st">"D35.14"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 6</span></span></span>
+<span><span class="co">#&gt;   original_code description                      code  sector borderline version</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 35.11         35.11 Production of electricity… D35.… power  FALSE      2.1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 35.14         35.14 Distribution of electrici… D35.… power  TRUE       2.1</span></span></code></pre></div>
+<p>Notice that the code D35.11 corresponds to power generation. This is
+an identical match to PACTA’s <code>power</code> sector, and thus the
 <code>borderline</code> flag is set to <code>FALSE</code>. In contrast,
-code 36200 corresponds to the manufacture of electricity distribution
-and control apparatus. In a perfect world, we would set this code to
-<code>not in scope</code>, however there is still a chance that these
-companies produce electricity. For this reason, we have mapped it to
-<code>power</code> with <code>borderline = TRUE</code>.</p>
+code D35.14 corresponds to the distribution of electricity. In a perfect
+world, we would set this code to <code>not in scope</code>, however
+there is still a chance that these companies produce electricity. For
+this reason, we have mapped it to <code>power</code> with
+<code>borderline = TRUE</code>.</p>
 <p>In practice, if a company has a <code>borderline</code> of
 <code>TRUE</code> and <em>is</em> matched, then consider the company in
 scope. If it has a <code>borderline</code> of <code>TRUE</code> and
