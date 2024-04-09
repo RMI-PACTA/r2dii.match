@@ -17,9 +17,15 @@ sector_in_scope <- glue::glue_collapse(
 )
 ```
 
-`r2dii.match` allows you to match loans from your loanbook to the companies in an asset-based company dataset. However, matching every loan is unlikely -- some loan-taking companies may be missing from the asset-based company dataset, or they may not operate in the sectors 2DII focuses on (`r sector_in_scope`). Thus, you may want to measure how much of the loanbook matched some asset. This article shows two ways to calculate such matching coverage: 
+`r2dii.match` allows you to match loans from your loanbook to the companies in
+an asset-based company dataset. However, matching every loan is unlikely -- some
+loan-taking companies may be missing from the asset-based company dataset, or
+they may not operate in the sectors PACTA focuses on (`r sector_in_scope`).
+Thus, you may want to measure how much of the loanbook matched some asset. This
+article shows two ways to calculate such matching coverage:
 
-(1) Calculate the portion of your loanbook covered, by dollar value (i.e. using one of the `loan_size_*` columns).
+(1) Calculate the portion of your loanbook covered, by dollar value (i.e. using
+one of the `loan_size_*` columns).
 
 (2) Count the number of companies matched.
 
@@ -35,7 +41,8 @@ library(r2dii.data)
 library(r2dii.match)
 ```
 
-We will use example datasets from `r2dii.data`. To demonstrate our point, we create a `loanbook` dataset with two mismatching loans:
+We will use example datasets from `r2dii.data`. To demonstrate our point, we
+create a `loanbook` dataset with two mismatching loans:
 
 ```{r}
 loanbook <- loanbook_demo %>% 
@@ -43,7 +50,7 @@ loanbook <- loanbook_demo %>%
     name_ultimate_parent = 
       ifelse(id_loan == "L1", "unmatched company name", name_ultimate_parent),
     sector_classification_direct_loantaker = 
-      ifelse(id_loan == "L2", 99, sector_classification_direct_loantaker)
+      ifelse(id_loan == "L2", "99", sector_classification_direct_loantaker)
   )
 ```
 
@@ -55,9 +62,16 @@ matched <- loanbook %>%
     prioritize()
 ```
 
-Note that this `matched` dataset will contain _only_ loans that were matched successfully. To determine coverage, we need to go back to the original `loanbook` dataset. We must determine the 2DII sectors of each loan, as dictated by the `sector_classification_direct_loantaker` column. 
+Note that this `matched` dataset will contain _only_ loans that were matched
+successfully. To determine coverage, we need to go back to the original
+`loanbook` dataset. We must determine the 2DII sectors of each loan, as dictated
+by the `sector_classification_direct_loantaker` column.
 
-For this, we join the loanbook with the [`sector_classifications`](https://rmi-pacta.github.io/r2dii.data/reference/sector_classifications.html) dataset, which lists all sector classification code standards used by 'PACTA'. Unfortunately we need to work around two caveats (you may ignore them because they are conceptually uninteresting):
+For this, we join the loanbook with the
+[`sector_classifications`](https://rmi-pacta.github.io/r2dii.data/reference/sector_classifications.html)
+dataset, which lists all sector classification code standards used by 'PACTA'.
+Unfortunately we need to work around two caveats (you may ignore them because
+they are conceptually uninteresting):
 
 * In the two datasets, the columns we want to merge by have different names. We use the argument `by` to `left_join()` to merge the columns `sector_classification_system` and `sector_classification_direct_loantaker` (from `loanbook`) with the columns `code_system` and `code` (from `sector_classifications`), respectively. 
 
@@ -70,7 +84,7 @@ merge_by <- c("code_system", "code") %>%
 loanbook_with_sectors <- loanbook %>% 
   modify_at(names(merge_by)[[2]], as.character) %>% 
   left_join(sector_classifications, by = merge_by) %>% 
-  modify_at(names(merge_by)[[2]], as.double)
+  modify_at(names(merge_by)[[2]], as.character)
 ```
 
 We can join these two datasets together, to generate our `coverage` dataset:
@@ -94,7 +108,9 @@ coverage <- left_join(loanbook_with_sectors, matched) %>%
 
 ### 1. Calculate the portion of your loanbook covered by dollar value
 
-From the `coverage` dataset, we can calculate the total loanbook coverage by dollar value. Let's create two helper functions, one to calculate dollar-value and another one to plot coverage in general.
+From the `coverage` dataset, we can calculate the total loanbook coverage by
+dollar value. Let's create two helper functions, one to calculate dollar-value
+and another one to plot coverage in general.
 
 ```{r}
 dollar_value <- function(data, ...) {
@@ -155,8 +171,8 @@ coverage %>%
 
 ### 2. Count the number of companies
 
-You might also be interested in knowing how many companies in your loanbook were 
-matched. It probably makes most sense to do this at the `direct_loantaker` 
+You might also be interested in knowing how many companies in your loanbook were
+matched. It probably makes most sense to do this at the `direct_loantaker`
 level:
 
 ``` {r}
@@ -185,17 +201,16 @@ In the example below, we see two classification codes coming from the SIC
 classification standard:
 
 ``` {r}
-r2dii.data::sic_classification %>% 
-  filter(code %in% c(41111, 36200))
+r2dii.data::nace_classification %>% 
+  filter(code %in% c("D35.11", "D35.14"))
 ```
 
-Notice that the code 41111 corresponds to power generation. This is an identical 
-match to 2DII's `power` sector, and thus the `borderline` flag is set to 
-`FALSE`. In contrast, code 36200 corresponds to the manufacture of electricity 
-distribution and control apparatus. In a perfect world, we would set this code 
-to `not in scope`, however there is still a chance that these companies produce 
-electricity. For this reason, we have mapped it to `power` with 
-`borderline = TRUE`.
+Notice that the code D35.11 corresponds to power generation. This is an
+identical match to PACTA's `power` sector, and thus the `borderline` flag is set
+to `FALSE`. In contrast, code D35.14 corresponds to the distribution of
+electricity. In a perfect world, we would set this code to `not in scope`,
+however there is still a chance that these companies produce electricity. For
+this reason, we have mapped it to `power` with `borderline = TRUE`.
 
 In practice, if a company has a `borderline` of `TRUE` and _is_ matched, then 
 consider the company in scope. If it has a `borderline` of `TRUE` and _isn't_
