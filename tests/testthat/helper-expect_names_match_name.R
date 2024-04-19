@@ -5,9 +5,6 @@ expect_names_match_name <- c(
   "id_direct_loantaker",
   "name_direct_loantaker",
 
-  "id_intermediate_parent_1",
-  "name_intermediate_parent_1",
-
   "id_ultimate_parent",
   "name_ultimate_parent",
 
@@ -17,12 +14,7 @@ expect_names_match_name <- c(
   "loan_size_credit_limit_currency",
 
   "sector_classification_system",
-  "sector_classification_input_type",
   "sector_classification_direct_loantaker",
-
-  "fi_type",
-  "flag_project_finance_loan",
-  "name_project",
 
   "lei_direct_loantaker",
   "isin_direct_loantaker",
