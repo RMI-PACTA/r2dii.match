@@ -1,12 +1,12 @@
 pandoc: 3.1.11
-pkgdown: 2.0.7
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   chunk-your-data: chunk-your-data.html
   matching-coverage: matching-coverage.html
   r2dii-match-0-0-1: r2dii-match-0-0-1.html
   r2dii-match: r2dii-match.html
-last_built: 2024-04-09T11:14Z
+last_built: 2024-04-22T10:26Z
 urls:
   reference: https://rmi-pacta.github.io/r2dii.match/reference
   article: https://rmi-pacta.github.io/r2dii.match/articles
