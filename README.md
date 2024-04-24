@@ -60,26 +60,26 @@ and run fuzzy matching against all company names in the `abcd`:
 ``` r
 match_result <- match_name(loanbook_demo, abcd_demo)
 match_result 
-#> # A tibble: 329 × 28
-#>    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹
-#>    <chr>   <chr>               <chr>                      <chr>                 
-#>  1 L1      C294                Vitale Group               <NA>                  
-#>  2 L3      C292                Rowe-Rowe                  IP5                   
-#>  3 L5      C305                Ring AG & Co. KGaA         <NA>                  
-#>  4 L6      C304                Kassulke-Kassulke          <NA>                  
-#>  5 L6      C304                Kassulke-Kassulke          <NA>                  
-#>  6 L7      C227                Morissette Group           <NA>                  
-#>  7 L7      C227                Morissette Group           <NA>                  
-#>  8 L8      C303                Barone s.r.l.              <NA>                  
-#>  9 L9      C301                Werner Werner AG & Co. KG… IP10                  
-#> 10 L9      C301                Werner Werner AG & Co. KG… IP10                  
-#> # ℹ 319 more rows
-#> # ℹ abbreviated name: ¹​id_intermediate_parent_1
-#> # ℹ 24 more variables: name_intermediate_parent_1 <chr>,
-#> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
-#> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
-#> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
-#> #   sector_classification_system <chr>, …
+#> # A tibble: 326 × 22
+#>    id_loan id_direct_loantaker name_direct_loantaker       id_ultimate_parent
+#>    <chr>   <chr>               <chr>                       <chr>             
+#>  1 L1      C294                Vitale Group                UP15              
+#>  2 L3      C292                Rowe-Rowe                   UP288             
+#>  3 L5      C305                Ring AG & Co. KGaA          UP104             
+#>  4 L6      C304                Kassulke-Kassulke           UP83              
+#>  5 L6      C304                Kassulke-Kassulke           UP83              
+#>  6 L7      C227                Morissette Group            UP134             
+#>  7 L7      C227                Morissette Group            UP134             
+#>  8 L8      C303                Barone s.r.l.               UP163             
+#>  9 L9      C301                Werner Werner AG & Co. KGaA UP138             
+#> 10 L9      C301                Werner Werner AG & Co. KGaA UP138             
+#> # ℹ 316 more rows
+#> # ℹ 18 more variables: name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+#> #   sector_classification_direct_loantaker <chr>, lei_direct_loantaker <chr>,
+#> #   isin_direct_loantaker <chr>, id_2dii <chr>, level <chr>, sector <chr>,
+#> #   sector_abcd <chr>, name <chr>, name_abcd <chr>, score <dbl>, …
 ```
 
 ### 2. Prioritize validated matches
@@ -94,26 +94,26 @@ matches, prioritizing (by default) `direct_loantaker` matches over
 
 ``` r
 prioritize(match_result)
-#> # A tibble: 177 × 28
-#>    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹
-#>    <chr>   <chr>               <chr>                      <chr>                 
-#>  1 L6      C304                Kassulke-Kassulke          <NA>                  
-#>  2 L13     C297                Ladeck                     <NA>                  
-#>  3 L20     C287                Weinhold                   <NA>                  
-#>  4 L21     C286                Gallo Group                <NA>                  
-#>  5 L22     C285                Austermuhle GmbH           <NA>                  
-#>  6 L24     C282                Ferraro-Ferraro Group      <NA>                  
-#>  7 L25     C281                Lockman, Lockman and Lock… <NA>                  
-#>  8 L26     C280                Ankunding, Ankunding and … <NA>                  
-#>  9 L27     C278                Donati-Donati Group        <NA>                  
-#> 10 L28     C276                Ferraro, Ferraro e Ferrar… <NA>                  
+#> # A tibble: 177 × 22
+#>    id_loan id_direct_loantaker name_direct_loantaker          id_ultimate_parent
+#>    <chr>   <chr>               <chr>                          <chr>             
+#>  1 L6      C304                Kassulke-Kassulke              UP83              
+#>  2 L13     C297                Ladeck                         UP69              
+#>  3 L20     C287                Weinhold                       UP35              
+#>  4 L21     C286                Gallo Group                    UP63              
+#>  5 L22     C285                Austermuhle GmbH               UP187             
+#>  6 L24     C282                Ferraro-Ferraro Group          UP209             
+#>  7 L25     C281                Lockman, Lockman and Lockman   UP296             
+#>  8 L26     C280                Ankunding, Ankunding and Anku… UP67              
+#>  9 L27     C278                Donati-Donati Group            UP45              
+#> 10 L28     C276                Ferraro, Ferraro e Ferraro SPA UP195             
 #> # ℹ 167 more rows
-#> # ℹ abbreviated name: ¹​id_intermediate_parent_1
-#> # ℹ 24 more variables: name_intermediate_parent_1 <chr>,
-#> #   id_ultimate_parent <chr>, name_ultimate_parent <chr>,
-#> #   loan_size_outstanding <dbl>, loan_size_outstanding_currency <chr>,
-#> #   loan_size_credit_limit <dbl>, loan_size_credit_limit_currency <chr>,
-#> #   sector_classification_system <chr>, …
+#> # ℹ 18 more variables: name_ultimate_parent <chr>, loan_size_outstanding <dbl>,
+#> #   loan_size_outstanding_currency <chr>, loan_size_credit_limit <dbl>,
+#> #   loan_size_credit_limit_currency <chr>, sector_classification_system <chr>,
+#> #   sector_classification_direct_loantaker <chr>, lei_direct_loantaker <chr>,
+#> #   isin_direct_loantaker <chr>, id_2dii <chr>, level <chr>, sector <chr>,
+#> #   sector_abcd <chr>, name <chr>, name_abcd <chr>, score <dbl>, …
 ```
 
 The result is a dataset with identical columns to the input loanbook,

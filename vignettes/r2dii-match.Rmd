@@ -72,7 +72,7 @@ your_abcd <- abcd_demo
 
 ## Score the goodness of the match between the loanbook and abcd datasets
 
-`match_name()` scores the match between names in a loanbook dataset (lbk) and names in an asset-based company dataset (abcd). The names come from the columns `name_direct_loantaker`, `name_intermediate_parent_*` and `name_ultimate_parent` of the loanbook dataset, and from the column `name_company` of the a asset-based company dataset. There can be any number of `name_intermediate_parent_*` columns, where `*` indicates the level up the corporate tree from `direct_loantaker`. 
+`match_name()` scores the match between names in a loanbook dataset (lbk) and names in an asset-based company dataset (abcd). The names come from the columns `name_direct_loantaker` and `name_ultimate_parent` of the loanbook dataset, and from the column `name_company` of the a asset-based company dataset. In the loan book data set, it is possible to optionally add any number of `name_intermediate_parent_*` columns, where `*` indicates the level up the corporate tree from `direct_loantaker`. 
 
 The raw names are internally transformed applying best-practices commonly used in name matching algorithms, such as:
 
