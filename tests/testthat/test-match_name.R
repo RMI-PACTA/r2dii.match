@@ -132,6 +132,8 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 })
 
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
+  skip_if_r2dii_data_outdated()
+
   out <- suppressWarnings(match_name(slice(loanbook_demo, 1L), fake_abcd()))
   expect_equal(names(out), expect_names_match_name)
 })
@@ -141,6 +143,8 @@ test_that("takes unprepared loanbook and abcd datasets", {
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
+  skip_if_r2dii_data_outdated()
+
   # Matches zero row ...
   lbk2 <- slice(loanbook_demo, 2)
   lbk2 <- mutate(
@@ -162,6 +166,8 @@ test_that("w/ loanbook that matches nothing, yields expected", {
 })
 
 test_that("w/ 2 lbk rows matching 2 abcd rows, yields expected names", {
+  skip_if_r2dii_data_outdated()
+
   # Slice 5 once was problematic (#85)
   lbk45 <- slice(loanbook_demo, 4:5)
   expect_named(
@@ -171,6 +177,8 @@ test_that("w/ 2 lbk rows matching 2 abcd rows, yields expected names", {
 })
 
 test_that("w/ 1 lbk row matching ultimate, yields expected names", {
+  skip_if_r2dii_data_outdated()
+
   lbk1 <- slice(loanbook_demo, 1)
 
   expect_named(
