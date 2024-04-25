@@ -123,26 +123,26 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">match_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">loanbook_demo</span>, <span class="va">abcd_demo</span><span class="op">)</span></span>
 <span><span class="va">match_result</span> </span>
-<span><span class="co">#&gt; # A tibble: 329 × 28</span></span>
-<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;                      &lt;chr&gt;                 </span></span>
-<span><span class="co">#&gt;  1 L1      C294                Vitale Group               &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  2 L3      C292                Rowe-Rowe                  IP5                   </span></span>
-<span><span class="co">#&gt;  3 L5      C305                Ring AG &amp; Co. KGaA         &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  4 L6      C304                Kassulke-Kassulke          &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  5 L6      C304                Kassulke-Kassulke          &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  6 L7      C227                Morissette Group           &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  7 L7      C227                Morissette Group           &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  8 L8      C303                Barone s.r.l.              &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  9 L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
-<span><span class="co">#&gt; 10 L9      C301                Werner Werner AG &amp; Co. KG… IP10                  </span></span>
-<span><span class="co">#&gt; # ℹ 319 more rows</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span>
-<span><span class="co">#&gt; # ℹ 24 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   sector_classification_system &lt;chr&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 326 × 22</span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker       id_ultimate_parent</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;                       &lt;chr&gt;             </span></span>
+<span><span class="co">#&gt;  1 L1      C294                Vitale Group                UP15              </span></span>
+<span><span class="co">#&gt;  2 L3      C292                Rowe-Rowe                   UP288             </span></span>
+<span><span class="co">#&gt;  3 L5      C305                Ring AG &amp; Co. KGaA          UP104             </span></span>
+<span><span class="co">#&gt;  4 L6      C304                Kassulke-Kassulke           UP83              </span></span>
+<span><span class="co">#&gt;  5 L6      C304                Kassulke-Kassulke           UP83              </span></span>
+<span><span class="co">#&gt;  6 L7      C227                Morissette Group            UP134             </span></span>
+<span><span class="co">#&gt;  7 L7      C227                Morissette Group            UP134             </span></span>
+<span><span class="co">#&gt;  8 L8      C303                Barone s.r.l.               UP163             </span></span>
+<span><span class="co">#&gt;  9 L9      C301                Werner Werner AG &amp; Co. KGaA UP138             </span></span>
+<span><span class="co">#&gt; 10 L9      C301                Werner Werner AG &amp; Co. KGaA UP138             </span></span>
+<span><span class="co">#&gt; # ℹ 316 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 18 more variables: name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;chr&gt;, lei_direct_loantaker &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   isin_direct_loantaker &lt;chr&gt;, id_2dii &lt;chr&gt;, level &lt;chr&gt;, sector &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_abcd &lt;chr&gt;, name &lt;chr&gt;, name_abcd &lt;chr&gt;, score &lt;dbl&gt;, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_2-prioritize-validated-matches">2. Prioritize validated matches<a class="anchor" aria-label="anchor" href="#id_2-prioritize-validated-matches"></a>
@@ -151,26 +151,26 @@
 <p>Once validated, the <code><a href="reference/prioritize.html">prioritize()</a></code> function, will choose only the valid matches, prioritizing (by default) <code>direct_loantaker</code> matches over <code>ultimate_parent</code> matches:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="va">match_result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 177 × 28</span></span>
-<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker      id_intermediate_pare…¹</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;                      &lt;chr&gt;                 </span></span>
-<span><span class="co">#&gt;  1 L6      C304                Kassulke-Kassulke          &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  2 L13     C297                Ladeck                     &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  3 L20     C287                Weinhold                   &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  4 L21     C286                Gallo Group                &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  5 L22     C285                Austermuhle GmbH           &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  6 L24     C282                Ferraro-Ferraro Group      &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  7 L25     C281                Lockman, Lockman and Lock… &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  8 L26     C280                Ankunding, Ankunding and … &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt;  9 L27     C278                Donati-Donati Group        &lt;NA&gt;                  </span></span>
-<span><span class="co">#&gt; 10 L28     C276                Ferraro, Ferraro e Ferrar… &lt;NA&gt;                  </span></span>
+<span><span class="co">#&gt; # A tibble: 177 × 22</span></span>
+<span><span class="co">#&gt;    id_loan id_direct_loantaker name_direct_loantaker          id_ultimate_parent</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;               &lt;chr&gt;                          &lt;chr&gt;             </span></span>
+<span><span class="co">#&gt;  1 L6      C304                Kassulke-Kassulke              UP83              </span></span>
+<span><span class="co">#&gt;  2 L13     C297                Ladeck                         UP69              </span></span>
+<span><span class="co">#&gt;  3 L20     C287                Weinhold                       UP35              </span></span>
+<span><span class="co">#&gt;  4 L21     C286                Gallo Group                    UP63              </span></span>
+<span><span class="co">#&gt;  5 L22     C285                Austermuhle GmbH               UP187             </span></span>
+<span><span class="co">#&gt;  6 L24     C282                Ferraro-Ferraro Group          UP209             </span></span>
+<span><span class="co">#&gt;  7 L25     C281                Lockman, Lockman and Lockman   UP296             </span></span>
+<span><span class="co">#&gt;  8 L26     C280                Ankunding, Ankunding and Anku… UP67              </span></span>
+<span><span class="co">#&gt;  9 L27     C278                Donati-Donati Group            UP45              </span></span>
+<span><span class="co">#&gt; 10 L28     C276                Ferraro, Ferraro e Ferraro SPA UP195             </span></span>
 <span><span class="co">#&gt; # ℹ 167 more rows</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​id_intermediate_parent_1</span></span>
-<span><span class="co">#&gt; # ℹ 24 more variables: name_intermediate_parent_1 &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   id_ultimate_parent &lt;chr&gt;, name_ultimate_parent &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   loan_size_outstanding &lt;dbl&gt;, loan_size_outstanding_currency &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   loan_size_credit_limit &lt;dbl&gt;, loan_size_credit_limit_currency &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   sector_classification_system &lt;chr&gt;, …</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 18 more variables: name_ultimate_parent &lt;chr&gt;, loan_size_outstanding &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_outstanding_currency &lt;chr&gt;, loan_size_credit_limit &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   loan_size_credit_limit_currency &lt;chr&gt;, sector_classification_system &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_classification_direct_loantaker &lt;chr&gt;, lei_direct_loantaker &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   isin_direct_loantaker &lt;chr&gt;, id_2dii &lt;chr&gt;, level &lt;chr&gt;, sector &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   sector_abcd &lt;chr&gt;, name &lt;chr&gt;, name_abcd &lt;chr&gt;, score &lt;dbl&gt;, …</span></span></code></pre></div>
 <p>The result is a dataset with identical columns to the input loanbook, and added columns bridging all matched loans to their abcd counterpart.</p>
 <p><a href="https://rmi-pacta.github.io/r2dii.match/articles/r2dii-match.html">Get started</a>.</p>
 </div>

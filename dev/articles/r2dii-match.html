@@ -220,13 +220,13 @@ datasets<a class="anchor" aria-label="anchor" href="#score-the-goodness-of-the-m
 <p><code><a href="../reference/match_name.html">match_name()</a></code> scores the match between names in a
 loanbook dataset (lbk) and names in an asset-based company dataset
 (abcd). The names come from the columns
-<code>name_direct_loantaker</code>,
-<code>name_intermediate_parent_*</code> and
-<code>name_ultimate_parent</code> of the loanbook dataset, and from the
-column <code>name_company</code> of the a asset-based company dataset.
-There can be any number of <code>name_intermediate_parent_*</code>
-columns, where <code>*</code> indicates the level up the corporate tree
-from <code>direct_loantaker</code>.</p>
+<code>name_direct_loantaker</code> and <code>name_ultimate_parent</code>
+of the loanbook dataset, and from the column <code>name_company</code>
+of the a asset-based company dataset. In the loan book data set, it is
+possible to optionally add any number of
+<code>name_intermediate_parent_*</code> columns, where <code>*</code>
+indicates the level up the corporate tree from
+<code>direct_loantaker</code>.</p>
 <p>The raw names are internally transformed applying best-practices
 commonly used in name matching algorithms, such as:</p>
 <ul>
