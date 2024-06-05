@@ -20,3 +20,10 @@ jobs:
   R-package:
     name: R Package Checks
     uses: RMI-PACTA/actions/.github/workflows/R.yml@main
+
+  dev-r-cmd-check:
+    name: R CMD Check (dev versions)
+    uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@add-extra-repos-to-rcmdcheck
+    with:
+      extra-repositories: 'https://rmi-pacta.r-universe.dev'
+
