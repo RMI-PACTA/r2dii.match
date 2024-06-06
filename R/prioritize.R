@@ -28,34 +28,6 @@
 #'
 #' @export
 #'
-#' @examples
-#' library(dplyr)
-#'
-#' # styler: off
-#' matched <- tribble(
-#'   ~sector, ~sector_abcd,  ~score, ~id_loan,                ~level,
-#'    "coal",      "coal",       1,     "aa",     "ultimate_parent",
-#'    "coal",      "coal",       1,     "aa",    "direct_loantaker",
-#'    "coal",      "coal",       1,     "bb", "intermediate_parent",
-#'    "coal",      "coal",       1,     "bb",     "ultimate_parent",
-#' )
-#' # styler: on
-#'
-#' prioritize_level(matched)
-#'
-#' # Using default priority
-#' prioritize(matched)
-#'
-#' # Using the reverse of the default priority
-#' prioritize(matched, priority = rev)
-#'
-#' # Same
-#' prioritize(matched, priority = ~ rev(.x))
-#'
-#' # Using a custom priority
-#' bad_idea <- c("intermediate_parent", "ultimate_parent", "direct_loantaker")
-#'
-#' prioritize(matched, priority = bad_idea)
 prioritize <- function(data, priority = NULL) {
   if (has_zero_rows(data)) {
     return(data)
