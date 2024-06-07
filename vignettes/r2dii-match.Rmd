@@ -127,7 +127,9 @@ Notice the warning.
 
 ## Validate matches
 
-For information on validating matches, please see the documentation for `prioritize()` (`?r2dii.match::prioritize`)
+```{r child="_validate-matches.md"}
+
+```
 
 ## Prioritize validated matches by level
 
