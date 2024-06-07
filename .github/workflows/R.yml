@@ -28,4 +28,3 @@ jobs:
       prepend-repositories: 'https://rmi-pacta.r-universe.dev'
       upgrade-packages: 'TRUE'
       cache-version: 'dev'
-
