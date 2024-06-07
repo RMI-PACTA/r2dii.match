@@ -26,3 +26,6 @@ jobs:
     uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@add-extra-repos-to-rcmdcheck
     with:
       prepend-repositories: 'https://rmi-pacta.r-universe.dev'
+      upgrade-packages: 'TRUE'
+      cache-version: 'dev'
+
