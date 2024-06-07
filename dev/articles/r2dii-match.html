@@ -326,34 +326,9 @@ manual matches came from.</li>
 <div class="section level2">
 <h2 id="validate-matches">Validate matches<a class="anchor" aria-label="anchor" href="#validate-matches"></a>
 </h2>
-<p>Write the output of <code><a href="../reference/match_name.html">match_name()</a></code> into a .csv file
-with:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Writting to current working directory</span></span>
-<span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">readr</span><span class="fu">::</span><span class="fu">write_csv</span><span class="op">(</span><span class="st">"matched.csv"</span><span class="op">)</span></span></code></pre></div>
-<p>Compare, edit, and save the data manually:</p>
-<ul>
-<li>Open <em>matched.csv</em> with any spreadsheet editor (Excel, Google
-Sheets, etc.).</li>
-<li>Compare the columns <code>name</code> and <code>name_abcd</code>
-manually to determine if the match is valid. Other information can be
-used in conjunction with just the names to ensure the two entities match
-(sector, internal information on the company structure, etc.)</li>
-<li>Edit the data:
-<ul>
-<li>If you are happy with the match, set the <code>score</code> value to
-<code>1</code>.</li>
-<li>Otherwise set or leave the <code>score</code> value to anything
-other than <code>1</code>.</li>
-</ul>
-</li>
-<li>Save the edited file as, say, <em>valid_matches.csv</em>.</li>
-</ul>
-<p>Re-read the edited file (validated) with:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Reading from current working directory</span></span>
-<span><span class="va">valid_matches</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu">read_csv</span><span class="op">(</span><span class="st">"valid_matches.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>For information on validating matches, please see the documentation
+for <code><a href="../reference/prioritize.html">prioritize()</a></code>
+(<code><a href="../reference/prioritize.html">?r2dii.match::prioritize</a></code>)</p>
 </div>
 <div class="section level2">
 <h2 id="prioritize-validated-matches-by-level">Prioritize validated matches by level<a class="anchor" aria-label="anchor" href="#prioritize-validated-matches-by-level"></a>
@@ -365,7 +340,7 @@ Co.” in the <code>abcd</code>, and so there could be two valid matches
 for this loan. To get the best match only, use <code><a href="../reference/prioritize.html">prioritize()</a></code>
 – it picks rows where <code>score</code> is 1 and <code>level</code> per
 loan is of highest <code>priority()</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Pretend we validated the matched dataset</span></span>
 <span><span class="va">valid_matches</span> <span class="op">&lt;-</span> <span class="va">matched</span></span>
 <span></span>
@@ -391,13 +366,13 @@ loan is of highest <code>priority()</code>:</p>
 <p>By default, highest priority refers to the most granular match
 (<code>direct_loantaker</code>). The default priority is set internally
 via <code>prioritize_levels()</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/prioritize_level.html">prioritize_level</a></span><span class="op">(</span><span class="va">matched</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "direct_loantaker"      "intermediate_parent_1" "ultimate_parent"</span></span></code></pre></div>
 <p>You may use a different priority. One way to do that is to pass a
 function to <code>priority</code>. For example, use <code>rev</code> to
 reverse the default priority.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span>priority <span class="op">=</span> <span class="va">rev</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">some_interesting_columns</span><span class="op">)</span><span class="op">)</span></span>
