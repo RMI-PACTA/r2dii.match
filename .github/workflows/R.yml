@@ -3,7 +3,7 @@
 # branch.
 # It will also run the checks every weeknight at midnight UTC
 #
-# Note the @fix/artifact-name in `uses:` on the last line. This will call the latest version
+# Note the @main in `uses:` on the last line. This will call the latest version
 # of the workflow from the `main` brnach in the RMI-PACTA/actions repo. You can
 # also specify a tag from that repo, or a commit SHA to pin action versions.
 on:
@@ -19,11 +19,11 @@ name: R
 jobs:
   R-package:
     name: R Package Checks
-    uses: RMI-PACTA/actions/.github/workflows/R.yml@fix/artifact-name
+    uses: RMI-PACTA/actions/.github/workflows/R.yml@main
 
   dev-r-cmd-check:
     name: R CMD Check (dev versions)
-    uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@fix/artifact-name
+    uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@main
     with:
       upgrade-packages: 'TRUE'
       cache-version: 'dev'
