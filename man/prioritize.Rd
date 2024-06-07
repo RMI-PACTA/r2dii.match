@@ -31,22 +31,17 @@ desired match. By default, the highest \code{priority} is the most granular matc
 }
 \details{
 \strong{How to validate \code{data}}
-
 Write the output of \code{match_name()} into a .csv file with:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Writting to current working directory
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# Writting to current working directory
 matched \%>\%
   readr::write_csv("matched.csv")
 }\if{html}{\out{</div>}}
 
 Compare, edit, and save the data manually:
 \itemize{
-\item Open \emph{matched.csv} with any spreadsheet editor (Excel, Google Sheets,
-etc.).
-\item Compare the columns \code{name} and \code{name_abcd} manually to determine if
-the match is valid. Other information can be used in conjunction with
-just the names to ensure the two entities match (sector, internal
-information on the company structure, etc.)
+\item Open \emph{matched.csv} with any spreadsheet editor (Excel, Google Sheets, etc.).
+\item Compare the columns \code{name} and \code{name_abcd} manually to determine if the match is valid. Other information can be used in conjunction with just the names to ensure the two entities match (sector, internal information on the company structure, etc.)
 \item Edit the data:
 \itemize{
 \item If you are happy with the match, set the \code{score} value to \code{1}.
@@ -57,7 +52,7 @@ information on the company structure, etc.)
 
 Re-read the edited file (validated) with:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{# Reading from current working directory
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# Reading from current working directory
 valid_matches <- readr::read_csv("valid_matches.csv")
 }\if{html}{\out{</div>}}
 }
