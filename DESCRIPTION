@@ -28,6 +28,11 @@ Authors@R:
       person(given = "Evgeny",
              family = "Petrovsky",
              role = "aut"),
+      person(given = "Jacob",
+             family = "Kastl",
+             email = "jacob.kastl@gmail.com",
+             role = c("ctr"),
+             comment = c(ORCID = "0009-0000-8281-8129")),
       person(given = "Rocky Mountain Institute",
              role = c("cph", "fnd"),
              email = "PACTA4banks@rmi.org"))

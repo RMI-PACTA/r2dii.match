@@ -33,6 +33,7 @@ Authors:
 
 Other contributors:
 \itemize{
+  \item Jacob Kastl \email{jacob.kastl@gmail.com} (\href{https://orcid.org/0009-0000-8281-8129}{ORCID}) [contractor]
   \item Rocky Mountain Institute \email{PACTA4banks@rmi.org} [copyright holder, funder]
 }
 
