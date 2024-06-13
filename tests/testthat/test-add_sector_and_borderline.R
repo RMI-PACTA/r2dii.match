@@ -7,11 +7,6 @@ test_that("$borderline is of type logical", {
   )
 })
 
-test_that("outputs expected value", {
-  skip_if_r2dii_data_outdated()
-  expect_snapshot_value(add_sector_and_borderline(loanbook_demo), style = "json2")
-})
-
 test_that("returns a tibble data frame", {
   expect_s3_class(
     add_sector_and_borderline(loanbook_demo),

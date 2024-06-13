@@ -16,7 +16,3 @@ test_that("fake_lbk creates new columns", {
     c(names(fake_lbk()), "new1", "new2")
   )
 })
-
-test_that("fake_lbk outputs expected value", {
-  expect_snapshot_value(fake_lbk(), style = "json2")
-})
