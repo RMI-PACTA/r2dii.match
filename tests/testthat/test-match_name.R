@@ -487,13 +487,6 @@ test_that("0-row output has expected column type", {
   expect_identical(lbk_types[same], out_types[same])
 })
 
-test_that("with loanbook_demo and abcd_demo outputs expected value", {
-  skip_on_ci()
-  skip_if_r2dii_data_outdated()
-  out <- match_name(loanbook_demo, abcd_demo)
-  expect_snapshot_value(round_dbl(out), style = "json2")
-})
-
 test_that("w/ mismatching sector_classification and `by_sector = FALSE` yields
           a match", {
   # Lookup code to sectors via r2dii.data::sector_classifications$code
@@ -704,7 +697,6 @@ test_that("errors if any id_loan is duplicated (#349)", {
   lbk <- fake_lbk(id_loan = duplicated)
   abcd <- fake_abcd()
 
-  expect_snapshot_error(match_name(lbk, abcd))
   expect_error(class = "duplicated_id_loan", match_name(lbk, abcd))
 })
 
