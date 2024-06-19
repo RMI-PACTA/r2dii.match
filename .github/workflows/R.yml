@@ -19,7 +19,7 @@ name: R
 jobs:
   R-package:
     name: R Package Checks
-    uses: RMI-PACTA/actions/.github/workflows/R.yml@ci/95-r-rev-dep-check
+    uses: RMI-PACTA/actions/.github/workflows/R.yml@main
     with:
       revdeps: |
           [
@@ -31,7 +31,7 @@ jobs:
 
   dev-r-cmd-check:
     name: R CMD Check (dev versions)
-    uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@ci/95-r-rev-dep-check
+    uses: RMI-PACTA/actions/.github/workflows/R-CMD-check.yml@main
     with:
       upgrade-packages: 'TRUE'
       cache-version: 'dev'
