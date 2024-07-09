@@ -1,54 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/chunk-your-data.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/matching-coverage.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/r2dii-match-0-0-1.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/r2dii-match.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/crucial_lbk.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/match_name.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/prioritize.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/prioritize_level.html</loc>
-  </url>
-  <url>
-    <loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/r2dii.match-package.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/LICENSE-text.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/LICENSE.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/chunk-your-data.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/index.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/matching-coverage.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/r2dii-match-0-0-1.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/articles/r2dii-match.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/authors.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/index.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/news/index.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/crucial_lbk.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/index.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/match_name.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/pipe.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/prioritize.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/prioritize_level.html</loc></url>
+<url><loc>https://rmi-pacta.github.io/r2dii.match/dev/reference/r2dii.match-package.html</loc></url>
 </urlset>
+

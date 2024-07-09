@@ -4,7 +4,7 @@ can be name_direct_loantaker, name_intermediate_parent* and
 name_ultimate_parent) with names in an asset-based company data (column
 name_company). The raw names are first internally transformed, and aliases
 are assigned. The similarity between aliases in each of the loanbook and abcd
-is scored using stringdist::stringsim()."><title>Match a loanbook to asset-based company data (abcd) by the name_* columns — match_name • r2dii.match</title><link rel="icon" type="image/png" sizes="16x16" href="/headshot_placeholder.png"><link rel="icon" type="image/png" sizes="32x32" href="/headshot_placeholder.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/headshot_placeholder.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Overpass-0.4.9/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Match a loanbook to asset-based company data (abcd) by the name_* columns — match_name"><meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
+is scored using stringdist::stringsim()."><title>Match a loanbook to asset-based company data (abcd) by the name_* columns — match_name • r2dii.match</title><link rel="icon" type="image/png" sizes="16x16" href="/headshot_placeholder.png"><link rel="icon" type="image/png" sizes="32x32" href="/headshot_placeholder.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/headshot_placeholder.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Overpass-0.4.9/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Match a loanbook to asset-based company data (abcd) by the name_* columns — match_name"><meta property="og:description" content="match_name() scores the match between names in a loanbook dataset (columns
 can be name_direct_loantaker, name_intermediate_parent* and
 name_ultimate_parent) with names in an asset-based company data (column
 name_company). The raw names are first internally transformed, and aliases
@@ -14,68 +14,50 @@ is scored using stringdist::stringsim()."><meta property="og:image" content="htt
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-info" data-bs-theme="default"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-info" data-bs-theme="default" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">r2dii.match</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.2.1.9001</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item">
-  <a class="nav-link" href="../articles/r2dii-match.html">Get started</a>
-</li>
-<li class="active nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/r2dii-match.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/matching-coverage.html">Calculating Matching Coverage</a>
-    <a class="dropdown-item" href="../articles/chunk-your-data.html">Using `match_name()` with large loanbooks</a>
-  </div>
-</li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/matching-coverage.html">Calculating Matching Coverage</a></li>
+    <li><a class="dropdown-item" href="../articles/chunk-your-data.html">Using `match_name()` with large loanbooks</a></li>
+  </ul></li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-news">News</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-news">
-    <a class="external-link dropdown-item" href="https://rmi-pacta.github.io/#category:r2dii">r2dii blog posts</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="../news/index.html">Change log</a>
-  </div>
-</li>
-      </ul><form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
-
-      <ul class="navbar-nav"><li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-packages">Packages</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-packages">
-    <a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.data">r2dii.data</a>
-    <a class="dropdown-item" href="https://rmi-pacta.github.io/r2dii.match">r2dii.match</a>
-    <a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.analysis">r2dii.analysis</a>
-    <a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.plot">r2dii.plot</a>
-  </div>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/RMI-PACTA/r2dii.match">
-    <span class="fa fa-github"></span>
-     
-  </a>
-</li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-news" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">News</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-news"><li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/#category:r2dii">r2dii blog posts</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="../news/index.html">Change log</a></li>
+  </ul></li>
+      </ul><ul class="navbar-nav"><li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-packages" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Packages</button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-packages"><li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.data">r2dii.data</a></li>
+    <li><a class="dropdown-item" href="https://rmi-pacta.github.io/r2dii.match">r2dii.match</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.analysis">r2dii.analysis</a></li>
+    <li><a class="external-link dropdown-item" href="https://rmi-pacta.github.io/r2dii.plot">r2dii.plot</a></li>
+  </ul></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/RMI-PACTA/r2dii.match"><span class="fa fa-github"></span></a></li>
       </ul></div>
 
-    
+
   </div>
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Match a loanbook to asset-based company data (abcd) by the <code>name_*</code> columns</h1>
-      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.match/blob/HEAD/R/match_name.R" class="external-link"><code>R/match_name.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RMI-PACTA/r2dii.match/blob/main/R/match_name.R" class="external-link"><code>R/match_name.R</code></a></small>
       <div class="d-none name"><code>match_name.Rd</code></div>
     </div>
 
@@ -105,33 +87,35 @@ is scored using <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>loanbook, abcd</dt>
+
+
+<dl><dt id="arg-loanbook-abcd">loanbook, abcd<a class="anchor" aria-label="anchor" href="#arg-loanbook-abcd"></a></dt>
 <dd><p>data frames structured like <a href="https://rmi-pacta.github.io/r2dii.data/reference/loanbook_demo.html" class="external-link">r2dii.data::loanbook_demo</a>
 and <a href="https://rmi-pacta.github.io/r2dii.data/reference/abcd_demo.html" class="external-link">r2dii.data::abcd_demo</a>.</p></dd>
 
 
-<dt>by_sector</dt>
+<dt id="arg-by-sector">by_sector<a class="anchor" aria-label="anchor" href="#arg-by-sector"></a></dt>
 <dd><p>Should names only be compared if companies belong to the
 same <code>sector</code>?</p></dd>
 
 
-<dt>min_score</dt>
+<dt id="arg-min-score">min_score<a class="anchor" aria-label="anchor" href="#arg-min-score"></a></dt>
 <dd><p>A number between 0-1, to set the minimum <code>score</code> threshold.
 A <code>score</code> of 1 is a perfect match.</p></dd>
 
 
-<dt>method</dt>
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>Method for distance calculation. One of <code>c("osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex")</code>. See
 <a href="https://rdrr.io/pkg/stringdist/man/stringdist-metrics.html" class="external-link">stringdist::stringdist-metrics</a>.</p></dd>
 
 
-<dt>p</dt>
-<dd><p>Prefix factor for Jaro-Winkler distance. The valid range for 
+<dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
+<dd><p>Prefix factor for Jaro-Winkler distance. The valid range for
 <code>p</code> is <code>0 &lt;= p &lt;= 0.25</code>. If <code>p=0</code> (default), the
 Jaro-distance is returned. Applies only to <code>method='jw'</code>.</p></dd>
 
 
-<dt>overwrite</dt>
+<dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
 <dd><p>A data frame used to overwrite the <code>sector</code> and/or <code>name</code>
 columns of a particular direct loantaker or ultimate parent. To overwrite
 only <code>sector</code>, the value in the <code>name</code> column should be <code>NA</code> and
@@ -139,22 +123,20 @@ vice-versa. This file can be used to manually match loanbook companies to
 abcd.</p></dd>
 
 
-<dt>join_id</dt>
+<dt id="arg-join-id">join_id<a class="anchor" aria-label="anchor" href="#arg-join-id"></a></dt>
 <dd><p>A join specification passed to <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::inner_join()</a></code>. If a
 character string, it assumes identical join columns between <code>loanbook</code> and
 <code>abcd</code>. If a named character vector, it uses the name as the join column of <code>loanbook</code> and
 the value as the join column of <code>abcd</code>.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/stringdist/man/stringsim.html" class="external-link">stringdist::stringsim()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    
-
-<p>A data frame with the same groups (if any) and columns as <code>loanbook</code>,
+    <p>A data frame with the same groups (if any) and columns as <code>loanbook</code>,
 and the additional columns:</p><ul><li><p><code>id_2dii</code> - an id used internally by <code>match_name()</code> to distinguish
 companies</p></li>
 <li><p><code>level</code> - the level of granularity that the loan was matched at
@@ -172,12 +154,12 @@ column <code>score</code> for each loan: * If any row has <code>score</code> equ
 <code>match_name()</code> returns all rows where <code>score</code> equals 1, dropping all other
 rows. * If no row has <code>score</code> equal to 1,<code>match_name()</code> returns all rows
 where <code>score</code> is equal to or greater than <code>min_score</code>. * If there is no
-match the output is a 0-row tibble with the expected column names -- for
+match the output is a 0-row tibble with the expected column names – for
 type stability.</p>
     </div>
     <div class="section level2">
     <h2 id="package-options">Package options<a class="anchor" aria-label="anchor" href="#package-options"></a></h2>
-    
+
 
 <p><code>r2dii.match.sector_classifications</code>: Allows you to use your own
 <code>sector_classififications</code> instead of the default. This feature is
@@ -186,7 +168,7 @@ experimental and may be dropped and/or become a new argument to
     </div>
     <div class="section level2">
     <h2 id="assigning-aliases">Assigning aliases<a class="anchor" aria-label="anchor" href="#assigning-aliases"></a></h2>
-    
+
 
 <p>The transformation process used to compare names between loanbook and abcd
 datasets applies best practices commonly used in name matching algorithms:</p><ul><li><p>Remove special characters.</p></li>
@@ -196,19 +178,19 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 </ul></div>
     <div class="section level2">
     <h2 id="handling-grouped-data">Handling grouped data<a class="anchor" aria-label="anchor" href="#handling-grouped-data"></a></h2>
-    
+
 
 <p>This function ignores but preserves existing groups.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other main functions: 
+    <div class="dont-index"><p>Other main functions:
 <code><a href="prioritize.html">prioritize</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rmi-pacta.github.io/r2dii.data/" class="external-link">r2dii.data</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -267,10 +249,10 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cleanup</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="va">restore</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
 
@@ -303,9 +285,9 @@ datasets applies best practices commonly used in name matching algorithms:</p><u
     
    
 
-  
 
-  
+
+
 
   </body></html>
 
