@@ -4,13 +4,6 @@ development:
 template:
   package: pacta.pkgdown.rmitemplate
 url: https://rmi-pacta.github.io/r2dii.match
-authors:
-  Jackson Hoffart:
-    href: https://github.com/jdhoffa/
-  Mauro Lepore:
-    href: https://github.com/maurolepore/
-  Rocky Mountain Institute:
-    href: https://rmi.org/
 home:
   links:
   - text: Learn more
