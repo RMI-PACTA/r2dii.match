@@ -39,6 +39,8 @@ navbar:
         href: https://rmi-pacta.github.io/r2dii.analysis
       - text: r2dii.plot
         href: https://rmi-pacta.github.io/r2dii.plot
+      - text: pacta.multi.loanbook
+        href: https://rmi-pacta.github.io/pacta.multi.loanbook
 reference:
 - title: Main functions
   contents: has_concept("main functions")
