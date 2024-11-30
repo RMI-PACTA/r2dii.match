@@ -128,7 +128,7 @@ match_name <- function(loanbook,
                        p = 0.1,
                        overwrite = NULL,
                        join_id = NULL,
-                       sector_classification = r2dii.data::sector_classifications,
+                       sector_classification = default_sector_classification(),
                        ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
@@ -214,7 +214,7 @@ match_name_impl <- function(loanbook,
                             method = "jw",
                             p = 0.1,
                             overwrite = NULL,
-                            sector_classification = r2dii.data::sector_classifications,
+                            sector_classification = default_sector_classification(),
                             ...) {
 
   old_groups <- dplyr::groups(loanbook)

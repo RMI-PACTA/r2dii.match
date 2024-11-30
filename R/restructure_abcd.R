@@ -51,7 +51,7 @@ restructure_abcd <- function(data) {
 #'
 #' restructure_loanbook(lbk, overwrite = overwrite_demo)
 #' @noRd
-restructure_loanbook <- function(data, overwrite = NULL, sector_classification = r2dii.data::sector_classifications) {
+restructure_loanbook <- function(data, overwrite = NULL, sector_classification = default_sector_classification()) {
   check_prep_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
@@ -77,7 +77,7 @@ restructure_loanbook <- function(data, overwrite = NULL, sector_classification =
   out
 }
 
-may_add_sector_and_borderline <- function(data, sector_classification = r2dii.data::sector_classifications) {
+may_add_sector_and_borderline <- function(data, sector_classification = default_sector_classification()) {
   if (lacks_borderline(data) || lacks_sector(data)) {
     abort("Must have both `sector` and `borderline`")
   }

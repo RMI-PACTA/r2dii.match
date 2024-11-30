@@ -31,7 +31,7 @@
 #' out %>%
 #'   select(new_columns, everything())
 #' @noRd
-add_sector_and_borderline <- function(data, sector_classification = r2dii.data::sector_classifications) {
+add_sector_and_borderline <- function(data, sector_classification = default_sector_classification()) {
   crucial <- c(
     "sector_classification_system", "sector_classification_direct_loantaker"
   )
@@ -49,6 +49,10 @@ add_sector_and_borderline <- function(data, sector_classification = r2dii.data::
   )
 
   restore_typeof(data, out, crucial)
+}
+
+default_sector_classification <- function() {
+  r2dii.data::sector_classifications
 }
 
 check_classification <- function(data,

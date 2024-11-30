@@ -13,7 +13,7 @@ match_name(
   p = 0.1,
   overwrite = NULL,
   join_id = NULL,
-  sector_classification = r2dii.data::sector_classifications,
+  sector_classification = default_sector_classification(),
   ...
 )
 }
