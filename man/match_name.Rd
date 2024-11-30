@@ -13,6 +13,7 @@ match_name(
   p = 0.1,
   overwrite = NULL,
   join_id = NULL,
+  sector_classification = r2dii.data::sector_classifications,
   ...
 )
 }
@@ -43,6 +44,10 @@ abcd.}
 character string, it assumes identical join columns between \code{loanbook} and
 \code{abcd}. If a named character vector, it uses the name as the join column of \code{loanbook} and
 the value as the join column of \code{abcd}.}
+
+\item{sector_classification}{A data frame containing sector classifications
+in the same format as \code{r2dii.data::sector_classifications}. The default
+value is \code{r2dii.data::sector_classifications}.}
 
 \item{...}{Arguments passed on to \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.}
 }
@@ -80,14 +85,6 @@ can be \code{name_direct_loantaker}, \verb{name_intermediate_parent*} and
 are assigned. The similarity between aliases in each of the loanbook and abcd
 is scored using \code{\link[stringdist:stringsim]{stringdist::stringsim()}}.
 }
-\section{Package options}{
-
-\code{r2dii.match.sector_classifications}: Allows you to use your own
-\code{sector_classififications} instead of the default. This feature is
-experimental and may be dropped and/or become a new argument to
-\code{match_name()}.
-}
-
 \section{Assigning aliases}{
 
 The transformation process used to compare names between loanbook and abcd
@@ -145,8 +142,6 @@ abcd <- tibble(
 
 match_name(loanbook, abcd, join_by = c(lei_direct_loantaker = "lei"))
 
-restore <- options(r2dii.match.sector_classifications = your_classifications)
-
 loanbook <- tibble(
   sector_classification_system = "XYZ",
   sector_classification_direct_loantaker = "D35.11",
@@ -161,7 +156,7 @@ abcd <- tibble(
   sector = "power"
 )
 
-match_name(loanbook, abcd)
+match_name(loanbook, abcd, sector_classification = your_classifications)
 
 # Cleanup
 options(restore)
