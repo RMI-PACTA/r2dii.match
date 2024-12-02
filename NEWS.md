@@ -1,5 +1,11 @@
 # r2dii.match (development version)
 
+## Lifecycle changes
+
+### Breaking changes
+
+* `match_name()` gains a new argument in its signature, `sector_classification`, which is placed before the `...` argument. Where users have used `...` to pass additional unnamed arguments by position, they will need to update their code to pass these arguments by name so that they are not confused as an input to `sector_classfication`. The new argument `sector_classification` is optional and defaults to `r2dii.data::sector_classifications`. Explicitly passing a `sector_classification` to `match_name()`, enables users to use their own sector classification systems to match loan books to the abcd, assuming the `sector_classification` is mapped appropriately to PACTA sectors and has the same format as `r2dii.data::sector_classifications`. There is no more need to pass own sector classifications to `match_name()` via options.
+
 # r2dii.match 0.2.1
 
 * r2dii.match is now [stable](https://lifecycle.r-lib.org/articles/stages.html).
