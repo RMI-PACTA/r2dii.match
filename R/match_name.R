@@ -74,17 +74,9 @@
 #'
 #' match_name(loanbook, abcd, min_score = 0.9)
 #'
-#' # Use your own `sector_classifications`
-#' your_classifications <- tibble(
-#'   sector = "power",
-#'   borderline = FALSE,
-#'   code = "D35.11",
-#'   code_system = "XYZ"
-#' )
-#'
 #' # match on LEI
 #' loanbook <- tibble(
-#'   sector_classification_system = "XYZ",
+#'   sector_classification_system = "NACE",
 #'   sector_classification_direct_loantaker = "D35.11",
 #'   id_ultimate_parent = "UP15",
 #'   name_ultimate_parent = "Won't fuzzy match",
@@ -99,7 +91,15 @@
 #'   lei = "LEI123"
 #' )
 #'
-#' match_name(loanbook, abcd, join_by = c(lei_direct_loantaker = "lei"))
+#' match_name(loanbook, abcd, join_id = c(lei_direct_loantaker = "lei"))
+#'
+#' # Use your own `sector_classifications`
+#' your_classifications <- tibble(
+#'   sector = "power",
+#'   borderline = FALSE,
+#'   code = "D35.11",
+#'   code_system = "XYZ"
+#' )
 #'
 #' loanbook <- tibble(
 #'   sector_classification_system = "XYZ",
