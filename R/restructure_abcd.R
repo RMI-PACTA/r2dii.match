@@ -51,7 +51,7 @@ restructure_abcd <- function(data) {
 #'
 #' restructure_loanbook(lbk, overwrite = overwrite_demo)
 #' @noRd
-restructure_loanbook <- function(data, overwrite = NULL) {
+restructure_loanbook <- function(data, overwrite = NULL, sector_classification = default_sector_classification()) {
   check_prep_loanbook_overwrite(overwrite)
   check_prepare_loanbook_data(data)
 
@@ -63,7 +63,7 @@ restructure_loanbook <- function(data, overwrite = NULL) {
   name_level <- extract_level_names(data, prefix = "name_")
   important_columns <- c("rowid", id_level, name_level)
 
-  out <- may_add_sector_and_borderline(data)
+  out <- may_add_sector_and_borderline(data, sector_classification = sector_classification)
   out <- select(
     out, all_of(c("rowid", important_columns, "sector", "borderline"))
   )
@@ -77,7 +77,7 @@ restructure_loanbook <- function(data, overwrite = NULL) {
   out
 }
 
-may_add_sector_and_borderline <- function(data) {
+may_add_sector_and_borderline <- function(data, sector_classification = default_sector_classification()) {
   if (lacks_borderline(data) || lacks_sector(data)) {
     abort("Must have both `sector` and `borderline`")
   }
@@ -85,7 +85,7 @@ may_add_sector_and_borderline <- function(data) {
   if (has_sector(data) & has_borderline(data)) {
     data2 <- data
   } else {
-    data2 <- add_sector_and_borderline(data)
+    data2 <- add_sector_and_borderline(data, sector_classification = sector_classification)
   }
 
   data2

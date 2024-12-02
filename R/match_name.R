@@ -7,12 +7,6 @@
 #' are assigned. The similarity between aliases in each of the loanbook and abcd
 #'  is scored using [stringdist::stringsim()].
 #'
-#' @section Package options:
-#' `r2dii.match.sector_classifications`: Allows you to use your own
-#' `sector_classififications` instead of the default. This feature is
-#' experimental and may be dropped and/or become a new argument to
-#' `match_name()`.
-#'
 #' @template alias-assign
 #' @template ignores-but-preserves-existing-groups
 #'
@@ -35,6 +29,9 @@
 #'   character string, it assumes identical join columns between `loanbook` and
 #'   `abcd`. If a named character vector, it uses the name as the join column of `loanbook` and
 #'   the value as the join column of `abcd`.
+#' @param sector_classification A data frame containing sector classifications
+#'   in the same format as `r2dii.data::sector_classifications`. The default
+#'   value is `r2dii.data::sector_classifications`.
 #' @param ... Arguments passed on to [stringdist::stringsim()].
 #'
 #' @family main functions
@@ -77,17 +74,9 @@
 #'
 #' match_name(loanbook, abcd, min_score = 0.9)
 #'
-#' # Use your own `sector_classifications`
-#' your_classifications <- tibble(
-#'   sector = "power",
-#'   borderline = FALSE,
-#'   code = "D35.11",
-#'   code_system = "XYZ"
-#' )
-#'
 #' # match on LEI
 #' loanbook <- tibble(
-#'   sector_classification_system = "XYZ",
+#'   sector_classification_system = "NACE",
 #'   sector_classification_direct_loantaker = "D35.11",
 #'   id_ultimate_parent = "UP15",
 #'   name_ultimate_parent = "Won't fuzzy match",
@@ -102,9 +91,15 @@
 #'   lei = "LEI123"
 #' )
 #'
-#' match_name(loanbook, abcd, join_by = c(lei_direct_loantaker = "lei"))
+#' match_name(loanbook, abcd, join_id = c(lei_direct_loantaker = "lei"))
 #'
-#' restore <- options(r2dii.match.sector_classifications = your_classifications)
+#' # Use your own `sector_classifications`
+#' your_classifications <- tibble(
+#'   sector = "power",
+#'   borderline = FALSE,
+#'   code = "D35.11",
+#'   code_system = "XYZ"
+#' )
 #'
 #' loanbook <- tibble(
 #'   sector_classification_system = "XYZ",
@@ -120,7 +115,7 @@
 #'   sector = "power"
 #' )
 #'
-#' match_name(loanbook, abcd)
+#' match_name(loanbook, abcd, sector_classification = your_classifications)
 #'
 #' # Cleanup
 #' options(restore)
@@ -133,6 +128,7 @@ match_name <- function(loanbook,
                        p = 0.1,
                        overwrite = NULL,
                        join_id = NULL,
+                       sector_classification = default_sector_classification(),
                        ...) {
   restore <- options(datatable.allow.cartesian = TRUE)
   on.exit(options(restore), add = TRUE)
@@ -152,7 +148,7 @@ match_name <- function(loanbook,
 
     prep_abcd <- dplyr::distinct(prep_abcd)
 
-    prep_lbk <- may_add_sector_and_borderline(loanbook)
+    prep_lbk <- may_add_sector_and_borderline(loanbook, sector_classification = sector_classification)
     prep_lbk <- distinct(prep_lbk)
 
     join_matched <- dplyr::inner_join(
@@ -188,6 +184,7 @@ match_name <- function(loanbook,
       method = method,
       p = p,
       overwrite = overwrite,
+      sector_classification = sector_classification,
       ...
     )
   } else {
@@ -217,6 +214,7 @@ match_name_impl <- function(loanbook,
                             method = "jw",
                             p = 0.1,
                             overwrite = NULL,
+                            sector_classification = default_sector_classification(),
                             ...) {
 
   old_groups <- dplyr::groups(loanbook)
@@ -226,7 +224,7 @@ match_name_impl <- function(loanbook,
   if (!allow_reserved_columns()) abort_reserved_column(loanbook)
   loanbook_rowid <- tibble::rowid_to_column(loanbook)
 
-  prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite)
+  prep_lbk <- restructure_loanbook(loanbook_rowid, overwrite = overwrite, sector_classification = sector_classification)
   prep_abcd <- restructure_abcd(abcd)
 
   if (by_sector) {
