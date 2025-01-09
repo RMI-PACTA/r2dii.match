@@ -31,7 +31,7 @@
 #' out %>%
 #'   select(new_columns, everything())
 #' @noRd
-add_sector_and_borderline <- function(data) {
+add_sector_and_borderline <- function(data, sector_classification = default_sector_classification()) {
   crucial <- c(
     "sector_classification_system", "sector_classification_direct_loantaker"
   )
@@ -40,40 +40,31 @@ add_sector_and_borderline <- function(data) {
     check_crucial_names(crucial) %>%
     # Coerce crucial columns to character for more robust join()
     purrr::modify_at(crucial, as.character) %>%
-    check_classification(column = "sector_classification_system") %>%
-    check_classification(column = "sector_classification_direct_loantaker")
+    check_classification(column = "sector_classification_system", classification = sector_classification) %>%
+    check_classification(column = "sector_classification_direct_loantaker", classification = sector_classification)
 
   out <- left_join(
-    checked, get_classifications(),
+    checked, sector_classification,
     by = set_names(c("code_system", "code"), crucial)
   )
 
   restore_typeof(data, out, crucial)
 }
 
-get_classifications <- function() {
-  custom_sector_classifications() %||% default_sector_classification()
-}
-
 default_sector_classification <- function() {
   r2dii.data::sector_classifications
-}
-
-custom_sector_classifications <- function() {
-  getOption("r2dii.match.sector_classifications")
 }
 
 check_classification <- function(data,
                                  column,
                                  # FIXME: Remove needless argument?
                                  classification = NULL) {
-  classification <- classification %||% get_classifications()
   # To call columns from both data and classification with the same colname
   reference <- rename_as_loanbook(classification)
 
   all_unknown <- !any(data[[column]] %in% reference[[column]])
   known <- unique(reference[[column]])
-  if (all_unknown && is.null(custom_sector_classifications())) {
+  if (all_unknown) {
     abort_all_sec_classif_unknown(column, known)
   }
 
