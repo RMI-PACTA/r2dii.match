@@ -2,6 +2,6 @@ dataset,column,typeof,definition
 prioritize_output,id_loan,character,Unique loan identifier
 prioritize_output,id_2dii,character,identifier used internally by `match_name()` to distinguish companies
 prioritize_output,level,character,the level of granularity that the loan was matched at (e.g direct_loantaker or ultimate_parent)
-prioritize_output,score,character,the score of the match (manually set this to 1 prior to calling prioritize() to validate the match)
+prioritize_output,score,double,the score of the match (manually set this to 1 prior to calling prioritize() to validate the match)
 prioritize_output,sector,character,the sector of the loanbook company
 prioritize_output,sector_abcd,character,the sector of the abcd company
