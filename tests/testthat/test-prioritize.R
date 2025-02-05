@@ -256,4 +256,3 @@ test_that("columns in output match what is documented in `data_dictionary`", {
 
   expect_setequal(names(out), expected_col_names)
 })
-
