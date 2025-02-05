@@ -2,9 +2,14 @@ Package: r2dii.match
 Title: Tools to Match Corporate Lending Portfolios with Climate Data
 Version: 0.3.0.9000
 Authors@R: 
-    c(person(given = "Alex",
+    c(person(given = "Jacob",
+             family = "Kastl",
+             role = c("aut", "cre", "ctr"),
+             comment = c(ORCID = "0009-0000-8281-8129"),
+             email = "jacob.kastl@gmail.com"),
+      person(given = "Alex",
              family = "Axthelm",
-             role = c("aut", "cre"),
+             role = c("aut", "ctr"),
              comment = c(ORCID = "0000-0001-8579-8565"),
              email = "aaxthelm@rmi.org"),
       person(given = "Jackson",
@@ -28,11 +33,6 @@ Authors@R:
       person(given = "Evgeny",
              family = "Petrovsky",
              role = "aut"),
-      person(given = "Jacob",
-             family = "Kastl",
-             email = "jacob.kastl@gmail.com",
-             role = c("ctr"),
-             comment = c(ORCID = "0009-0000-8281-8129")),
       person(given = "RMI",
              role = c("cph", "fnd"),
              email = "PACTA4banks@rmi.org"))
