@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* @jacobvjk is now the maintainer.
+
 # r2dii.match 0.3.0
 
 ## Breaking changes
