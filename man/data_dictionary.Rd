@@ -9,7 +9,7 @@
 
 \describe{
 \item{dataset}{Name of the dataset}
-\item{column}{Nmae of the column}
+\item{column}{Name of the column}
 \item{typeof}{Type of the column}
 \item{definition}{Definition of the column}
 ...
