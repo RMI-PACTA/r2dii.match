@@ -3,6 +3,8 @@
 #' A table of column names and descriptions of data frames used or exported by
 #' the functions in this package.
 #'
+#' @family data dictionary
+#'
 #' @format ## `data_dictionary`
 #' \describe{
 #'   \item{dataset}{Name of the dataset}

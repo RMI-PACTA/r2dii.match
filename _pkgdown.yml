@@ -46,4 +46,5 @@ reference:
   contents: has_concept("main functions")
 - title: Helper functions
   contents: has_concept("helpers")
-
+- title: Data dictionary
+  contents: has_concept("data dictionary")

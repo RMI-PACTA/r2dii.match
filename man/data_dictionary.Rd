@@ -26,4 +26,5 @@ the functions in this package.
 \examples{
 data_dictionary
 }
+\concept{data dictionary}
 \keyword{datasets}
