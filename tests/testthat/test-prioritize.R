@@ -245,3 +245,15 @@ test_that("with `match_name` with `join_id`, outputs as expected (#135)", {
   out <- prioritize(matched)
   expect_equal(nrow(out), 1L)
 })
+
+test_that("columns in output match what is documented in `data_dictionary`", {
+  skip_if_r2dii_data_outdated()
+
+  out <- prioritize(fake_matched())
+
+  expected_col_names <-
+    dplyr::pull(dplyr::filter(r2dii.match::data_dictionary, dataset == "prioritize_output"), column)
+
+  expect_setequal(names(out), expected_col_names)
+})
+

@@ -1,5 +1,7 @@
 # r2dii.match (development version)
 
+* `data_dictionary` dataset added to define the columns in each dataset used or exported by the functions in this package
+
 # r2dii.match 0.3.0
 
 ## Breaking changes
