@@ -251,8 +251,8 @@ test_that("columns in output match what is documented in `data_dictionary`", {
 
   out <- prioritize(fake_matched())
 
-  expected_col_names <-
-    dplyr::pull(dplyr::filter(r2dii.match::data_dictionary, dataset == "prioritize_output"), column)
+  data_dict <- dplyr::filter(r2dii.match::data_dictionary, dataset == "prioritize_output")
 
-  expect_setequal(names(out), expected_col_names)
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
 })

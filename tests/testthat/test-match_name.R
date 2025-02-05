@@ -857,8 +857,8 @@ test_that("columns in output match what is documented in `data_dictionary`", {
     join_id = c(lei_direct_loantaker = "lei")
   )
 
-  expected_col_names <-
-    dplyr::pull(dplyr::filter(r2dii.match::data_dictionary, dataset == "match_name_output"), column)
+  data_dict <- dplyr::filter(r2dii.match::data_dictionary, dataset == "match_name_output")
 
-  expect_setequal(names(out), expected_col_names)
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
 })
