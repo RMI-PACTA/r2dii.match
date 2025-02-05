@@ -852,8 +852,8 @@ test_that("columns in output match what is documented in `data_dictionary`", {
   )
 
   out <- match_name(
-    loanbook,
-    abcd,
+    loanbook = loanbook,
+    abcd = abcd,
     join_id = c(lei_direct_loantaker = "lei")
   )
 

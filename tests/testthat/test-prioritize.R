@@ -249,7 +249,7 @@ test_that("with `match_name` with `join_id`, outputs as expected (#135)", {
 test_that("columns in output match what is documented in `data_dictionary`", {
   skip_if_r2dii_data_outdated()
 
-  out <- prioritize(fake_matched())
+  out <- prioritize(data = fake_matched())
 
   data_dict <- dplyr::filter(r2dii.match::data_dictionary, dataset == "prioritize_output")
 
