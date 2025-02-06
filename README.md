@@ -12,7 +12,7 @@ status](https://www.r-pkg.org/badges/version/r2dii.match)](https://CRAN.R-projec
 [![](https://cranlogs.r-pkg.org/badges/grand-total/r2dii.match)](https://CRAN.R-project.org/package=r2dii.match)
 [![Codecov test
 coverage](https://codecov.io/gh/RMI-PACTA/r2dii.match/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/r2dii.match?branch=main)
-[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R.yml)
+[![R-CMD-check](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R.yml/badge.svg)](https://github.com/RMI-PACTA/r2dii.match/actions/workflows/R.yml)
 <!-- badges: end -->
 
 These tools implement in R a fundamental part of the software PACTA
