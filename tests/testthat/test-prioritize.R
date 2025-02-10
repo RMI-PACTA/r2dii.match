@@ -257,6 +257,9 @@ test_that("columns in output match what is documented in `data_dictionary`", {
 
   data_dict <- dplyr::filter(r2dii.match::data_dictionary, dataset == "prioritize_output")
 
+  # replace <join_id> with default internal join id `id_2dii` to data dictionary
+  data_dict[data_dict["column"] == "<join_id>", "column"] <- "id_2dii"
+
   expect_setequal(names(out), data_dict[["column"]])
   expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
 })
@@ -264,17 +267,19 @@ test_that("columns in output match what is documented in `data_dictionary`", {
 test_that("custom `join_id` columns are passed through to output", {
   skip_if_r2dii_data_outdated()
 
-  custom_join_id <- "lei_direct_loantaker"
+  custom_lbk_id <- "lei_loantaker"
 
   lbk <- fake_lbk(id_loan = "L1")
-  lbk[[custom_join_id]] <- "xxx"
-  abcd <- fake_abcd(custom_id = "1", custom_abcd_id = "xxx")
-  matched <- match_name(lbk, abcd, join_id = setNames("custom_abcd_id", custom_join_id))
+  lbk[[custom_lbk_id]] <- "LEI123"
+  abcd <- fake_abcd(lei = "LEI123")
+  matched <- match_name(lbk, abcd, join_id = setNames("lei", custom_lbk_id))
 
   out <- prioritize(data = matched)
 
   data_dict <- dplyr::filter(r2dii.match::data_dictionary, dataset == "prioritize_output")
-  data_dict[data_dict["column"] == "id_2dii", "column"] <- custom_join_id
+
+  # replace <join_id> with custom internal join id to data dictionary
+  data_dict[data_dict["column"] == "<join_id>", "column"] <- custom_lbk_id
 
   expect_setequal(names(out), data_dict[["column"]])
   expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
