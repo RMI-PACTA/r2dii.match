@@ -1,0 +1,18 @@
+dataset,column,typeof,definition
+match_name_output,sector_classification_system,character,Name of the sector classification standard being used
+match_name_output,id_ultimate_parent,character,Ultimate parent identifier unique to each ultimate parent/sector combination
+match_name_output,name_ultimate_parent,character,Name of the ultimate parent company to which the borrower belongs. Can be the same as borrower
+match_name_output,id_direct_loantaker,character,Borrower identifier unique to each borrower/sector combination in loanbook
+match_name_output,name_direct_loantaker,character,Name of the company directly taking the loan
+match_name_output,sector_classification_direct_loantaker,character,Sector classification code of the direct loantaker
+match_name_output,id_loan,character,Unique loan identifier
+match_name_output,lei_direct_loantaker,character,Optional input: providing the lei (legal entity identifier) of the direct loan taker to improve the matching coverage
+match_name_output,sector,character,the sector of the loanbook company
+match_name_output,borderline,logical,indicates if the classification is borderline or not
+match_name_output,name_abcd,character,the name of the abcd company
+match_name_output,sector_abcd,character,the sector of the abcd company
+match_name_output,score,double,the score of the match (manually set this to 1 prior to calling prioritize() to validate the match)
+match_name_output,source,character,determines the source of the match. (equal to loanbook unless the match is from overwrite
+match_name_output,level,character,the level of granularity that the loan was matched at (e.g direct_loantaker or ultimate_parent)
+match_name_output,name,character,the name of the loanbook company
+match_name_output,id_2dii,character,an id used internally by match_name() to distinguish companies

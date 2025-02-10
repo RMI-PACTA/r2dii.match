@@ -20,3 +20,4 @@
 ^CRAN-RELEASE$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+^data-raw$

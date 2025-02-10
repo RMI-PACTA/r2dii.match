@@ -835,3 +835,30 @@ test_that("with `join_id` and one ID match, one fuzzy match, outputs as expected
   expect_equal(out$L2$name_abcd, "UP will fuzzy match")
 
 })
+
+test_that("columns in output match what is documented in `data_dictionary`", {
+  skip_if_r2dii_data_outdated()
+
+  loanbook <- fake_lbk(
+    id_loan = c("L1", "L2"), # L1 should ID match, L2 should fuzzy match
+    name_direct_loantaker = "DL won't fuzzy match",
+    name_ultimate_parent = c("UP won't fuzzy match", "UP will fuzzy match"),
+    lei_direct_loantaker = c("LEI123", NA_character_)
+  )
+
+  abcd <- fake_abcd(
+    name_company = c("a power company", "UP will fuzzy match"),
+    lei = c("LEI123", NA_character_)
+  )
+
+  out <- match_name(
+    loanbook = loanbook,
+    abcd = abcd,
+    join_id = c(lei_direct_loantaker = "lei")
+  )
+
+  data_dict <- dplyr::filter(r2dii.match::data_dictionary, dataset == "match_name_output")
+
+  expect_setequal(names(out), data_dict[["column"]])
+  expect_mapequal(sapply(out, typeof), setNames(data_dict[["typeof"]], data_dict[["column"]]))
+})
