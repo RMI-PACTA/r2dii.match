@@ -45,6 +45,11 @@ pak::pak("RMI-PACTA/r2dii.match")
 ``` r
 library(r2dii.data)
 library(r2dii.match)
+#> 
+#> Attaching package: 'r2dii.match'
+#> The following object is masked from 'package:r2dii.data':
+#> 
+#>     data_dictionary
 ```
 
 Matching is achieved in two main steps:
