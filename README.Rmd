@@ -51,7 +51,7 @@ pak::pak("RMI-PACTA/r2dii.match")
 
 ## Example
 
-```{r}
+```{r, message=FALSE}
 library(r2dii.data)
 library(r2dii.match)
 ```
