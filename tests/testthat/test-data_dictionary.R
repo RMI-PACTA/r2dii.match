@@ -1,6 +1,6 @@
 test_that("matches raw data dictionary CSVs", {
-  if (nzchar(Sys.getenv("R_CMD")) | covr::in_covr()) {
-    skip("Not run in R CMD check or `covr::package_coverage()`")
+  if (nzchar(Sys.getenv("R_CMD")) | nzchar(Sys.getenv("TESTTHAT_IS_CHECKING"))) {
+    skip("Not run in R CMD check or when using `testthat::test_check()`")
   }
   
   paths <- list.files(test_path("../../data-raw/data_dictionary"), full.names = TRUE)
