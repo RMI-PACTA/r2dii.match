@@ -1,7 +1,5 @@
-library(r2dii.data)
-
 test_that("uniquify_id_column overwrites id_ultimate_parent", {
-  lbk <- loanbook_demo
+  lbk <- r2dii.data::loanbook_demo
   lbk$id_ultimate_parent <- "bla"
 
   out <- uniquify_id_column(lbk, id_column = "id_ultimate_parent")
@@ -15,7 +13,7 @@ test_that("uniquify_id_column overwrites id_ultimate_parent", {
 })
 
 test_that("uniquify_id_column overwrites id_direct_loantaker", {
-  lbk <- loanbook_demo
+  lbk <- r2dii.data::loanbook_demo
   lbk$id_direct_loantaker <- "bla"
 
   out <- uniquify_id_column(lbk, id_column = "id_direct_loantaker")
@@ -33,7 +31,7 @@ test_that("uniquify_id_column prints its output (fix not returned result)", {
   # 6#pullrequestreview-301599396
   out <- capture.output(
     uniquify_id_column(
-      loanbook_demo,
+      r2dii.data::loanbook_demo,
       id_column = "id_ultimate_parent"
     )
   )
