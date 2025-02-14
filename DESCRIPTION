@@ -70,6 +70,7 @@ Imports:
 Suggests: 
     cli,
     covr,
+    readr,
     rmarkdown,
     spelling,
     testthat (>= 2.1.0),
