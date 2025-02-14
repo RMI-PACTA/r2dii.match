@@ -1,6 +1,4 @@
 library(dplyr, warn.conflicts = FALSE)
-library(r2dii.data)
-
 
 test_that("w/ non-NA only at intermediate level yields matches at intermediate
           level only", {
@@ -134,26 +132,26 @@ test_that("w/ row 1 of loanbook and crucial cols yields expected", {
 test_that("w/ 1 row of full loanbook_demo yields expected names", {
   skip_if_r2dii_data_outdated()
 
-  out <- suppressWarnings(match_name(slice(loanbook_demo, 1L), fake_abcd()))
+  out <- suppressWarnings(match_name(slice(r2dii.data::loanbook_demo, 1L), fake_abcd()))
   expect_equal(names(out), expect_names_match_name)
 })
 
 test_that("takes unprepared loanbook and abcd datasets", {
-  expect_no_error(match_name(slice(loanbook_demo, 1), abcd_demo))
+  expect_no_error(match_name(slice(r2dii.data::loanbook_demo, 1), r2dii.data::abcd_demo))
 })
 
 test_that("w/ loanbook that matches nothing, yields expected", {
   skip_if_r2dii_data_outdated()
 
   # Matches zero row ...
-  lbk2 <- slice(loanbook_demo, 2)
+  lbk2 <- slice(r2dii.data::loanbook_demo, 2)
   lbk2 <- mutate(
     lbk2,
     name_direct_loantaker = "Foo",
     name_ultimate_parent = "Bar"
   )
   expect_warning(
-    out <- match_name(lbk2, slice(abcd_demo, 1:10)),
+    out <- match_name(lbk2, slice(r2dii.data::abcd_demo, 1:10)),
     "no match"
   )
   expect_equal(nrow(out), 0L)
@@ -169,9 +167,9 @@ test_that("w/ 2 lbk rows matching 2 abcd rows, yields expected names", {
   skip_if_r2dii_data_outdated()
 
   # Slice 5 once was problematic (#85)
-  lbk45 <- slice(loanbook_demo, 4:5)
+  lbk45 <- slice(r2dii.data::loanbook_demo, 4:5)
   expect_named(
-    match_name(lbk45, abcd_demo),
+    match_name(lbk45, r2dii.data::abcd_demo),
     expect_names_match_name
   )
 })
@@ -179,17 +177,17 @@ test_that("w/ 2 lbk rows matching 2 abcd rows, yields expected names", {
 test_that("w/ 1 lbk row matching ultimate, yields expected names", {
   skip_if_r2dii_data_outdated()
 
-  lbk1 <- slice(loanbook_demo, 1)
+  lbk1 <- slice(r2dii.data::loanbook_demo, 1)
 
   expect_named(
-    match_name(lbk1, abcd_demo),
+    match_name(lbk1, r2dii.data::abcd_demo),
     expect_names_match_name
   )
 })
 
 test_that("takes `min_score`", {
   expect_no_error(
-    match_name(slice(loanbook_demo, 1), abcd_demo, min_score = 0.5)
+    match_name(slice(r2dii.data::loanbook_demo, 1), r2dii.data::abcd_demo, min_score = 0.5)
   )
 })
 
@@ -199,8 +197,8 @@ test_that("takes `method`", {
 
   expect_false(
     identical(
-      match_name(lbk_method, abcd_demo, method = "jw"),
-      match_name(lbk_method, abcd_demo, method = "osa")
+      match_name(lbk_method, r2dii.data::abcd_demo, method = "jw"),
+      match_name(lbk_method, r2dii.data::abcd_demo, method = "osa")
     )
   )
 })
@@ -211,14 +209,14 @@ test_that("takes `p`", {
 
   expect_false(
     identical(
-      match_name(lbk_p, abcd_demo, p = 0.1),
-      match_name(lbk_p, abcd_demo, p = 0.2)
+      match_name(lbk_p, r2dii.data::abcd_demo, p = 0.1),
+      match_name(lbk_p, r2dii.data::abcd_demo, p = 0.2)
     )
   )
 })
 
 test_that("takes `overwrite`", {
-  lbk <- slice(loanbook_demo, 4:25)
+  lbk <- slice(r2dii.data::loanbook_demo, 4:25)
   overwrite_demo <- tibble(
     level = "ultimate_parent",
     id_2dii = "UP1",
@@ -229,14 +227,14 @@ test_that("takes `overwrite`", {
 
   expect_false(
     identical(
-      match_name(lbk, abcd_demo, overwrite = NULL),
-      suppressWarnings(match_name(lbk, abcd_demo, overwrite = overwrite_demo))
+      match_name(lbk, r2dii.data::abcd_demo, overwrite = NULL),
+      suppressWarnings(match_name(lbk, r2dii.data::abcd_demo, overwrite = overwrite_demo))
     )
   )
 })
 
 test_that("warns overwrite", {
-  lbk <- slice(loanbook_demo, 4:25)
+  lbk <- slice(r2dii.data::loanbook_demo, 4:25)
   overwrite_demo <- tibble(
     level = "ultimate_parent",
     id_2dii = "UP1",
@@ -245,7 +243,7 @@ test_that("warns overwrite", {
     source = "manual"
   )
   expect_warning(
-    match_name(lbk, abcd_demo, overwrite = overwrite_demo),
+    match_name(lbk, r2dii.data::abcd_demo, overwrite = overwrite_demo),
     class = "overwrite_warning"
   )
 })
@@ -253,7 +251,7 @@ test_that("warns overwrite", {
 test_that("recovers `sector_lbk`", {
   expect_true(
     rlang::has_name(
-      match_name(slice(loanbook_demo, 1), abcd_demo),
+      match_name(slice(r2dii.data::loanbook_demo, 1), r2dii.data::abcd_demo),
       "sector"
     )
   )
@@ -261,27 +259,27 @@ test_that("recovers `sector_lbk`", {
 
 test_that("recovers `sector_abcd`", {
   expect_true(
-    rlang::has_name(match_name(loanbook_demo, abcd_demo), "sector_abcd")
+    rlang::has_name(match_name(r2dii.data::loanbook_demo, r2dii.data::abcd_demo), "sector_abcd")
   )
 })
 
 test_that("outputs name from loanbook, not name.y (bug fix)", {
-  out <- match_name(slice(loanbook_demo, 1), abcd_demo)
+  out <- match_name(slice(r2dii.data::loanbook_demo, 1), r2dii.data::abcd_demo)
   expect_false(has_name(out, "name.y"))
 })
 
 test_that("works with `min_score = 0` (bug fix)", {
-  expect_no_error(match_name(slice(loanbook_demo, 1), abcd_demo, min_score = 0))
+  expect_no_error(match_name(slice(r2dii.data::loanbook_demo, 1), r2dii.data::abcd_demo, min_score = 0))
 })
 
 test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
   this_name <- "Ladeck"
   this_alias <- to_alias(this_name)
-  this_lbk <- loanbook_demo %>%
+  this_lbk <- r2dii.data::loanbook_demo %>%
     filter(name_direct_loantaker == this_name)
 
   scores <- this_lbk %>%
-    match_name(abcd_demo) %>%
+    match_name(r2dii.data::abcd_demo) %>%
     mutate(alias = to_alias(name)) %>%
     filter(alias == this_alias) %>%
     pull(score)
@@ -295,7 +293,7 @@ test_that("outputs only perfect matches if any (#40 @2diiKlaus)", {
 })
 
 test_that("match_name()$level lacks prefix 'name_' suffix '_lbk'", {
-  out <- match_name(slice(loanbook_demo, 1), abcd_demo)
+  out <- match_name(slice(r2dii.data::loanbook_demo, 1), r2dii.data::abcd_demo)
   expect_false(
     any(startsWith(unique(out$level), "name_"))
   )
@@ -305,20 +303,20 @@ test_that("match_name()$level lacks prefix 'name_' suffix '_lbk'", {
 })
 
 test_that("preserves groups", {
-  grouped_loanbook <- slice(loanbook_demo, 1) %>%
+  grouped_loanbook <- slice(r2dii.data::loanbook_demo, 1) %>%
     group_by(id_loan)
 
-  expect_true(is_grouped_df(match_name(grouped_loanbook, abcd_demo)))
+  expect_true(is_grouped_df(match_name(grouped_loanbook, r2dii.data::abcd_demo)))
 })
 
 test_that("outputs id consistent with level", {
-  out <- slice(loanbook_demo, 6) %>% match_name(abcd_demo)
+  out <- slice(r2dii.data::loanbook_demo, 6) %>% match_name(r2dii.data::abcd_demo)
   expect_equal(out$level, c("direct_loantaker", "ultimate_parent"))
   expect_equal(out$id_2dii, c("DL1", "UP1"))
 })
 
 test_that("no longer yiels all NAs in lbk columns (#85 @jdhoffa)", {
-  out <- match_name(loanbook_demo, abcd_demo)
+  out <- match_name(r2dii.data::loanbook_demo, r2dii.data::abcd_demo)
   out_lbk_cols <- out %>%
     select(
       setdiff(
@@ -458,10 +456,10 @@ test_that("w/ overwrite with missing names errors gracefully", {
 })
 
 test_that("with bad input errors gracefully", {
-  bad_loanbook <- loanbook_demo %>%
+  bad_loanbook <- r2dii.data::loanbook_demo %>%
     mutate(name_direct_loantaker = as.numeric(12))
 
-  expect_no_error(match_name(bad_loanbook, abcd_demo))
+  expect_no_error(match_name(bad_loanbook, r2dii.data::abcd_demo))
 })
 
 test_that("with name_intermediate but not id_intermediate throws an error", {
@@ -472,13 +470,13 @@ test_that("with name_intermediate but not id_intermediate throws an error", {
 })
 
 test_that("0-row output has expected column type", {
-  lbk2 <- slice(loanbook_demo, 2)
+  lbk2 <- slice(r2dii.data::loanbook_demo, 2)
   lbk2 <- mutate(
     lbk2,
     name_direct_loantaker = "Foo",
     name_ultimate_parent = "Bar"
   )
-  out <- suppressWarnings(match_name(lbk2, abcd_demo))
+  out <- suppressWarnings(match_name(lbk2, r2dii.data::abcd_demo))
 
   lbk_types <- purrr::map_chr(lbk2, typeof)
   out_types <- purrr::map_chr(out, typeof)
@@ -506,8 +504,8 @@ test_that("takes `by_sector`", {
   skip_if_r2dii_data_outdated()
   expect_false(
     identical(
-      match_name(slice(loanbook_demo, 4:15), abcd_demo, by_sector = TRUE),
-      match_name(slice(loanbook_demo, 4:15), abcd_demo, by_sector = FALSE)
+      match_name(slice(r2dii.data::loanbook_demo, 4:15), r2dii.data::abcd_demo, by_sector = TRUE),
+      match_name(slice(r2dii.data::loanbook_demo, 4:15), r2dii.data::abcd_demo, by_sector = FALSE)
     )
   )
 })

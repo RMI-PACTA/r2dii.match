@@ -1,6 +1,4 @@
-library(r2dii.data)
-
-loanbook_rowid <- loanbook_demo %>%
+loanbook_rowid <- r2dii.data::loanbook_demo %>%
   tibble::rowid_to_column()
 
 test_that("may input add_sector_and_borderline(data)", {
@@ -21,7 +19,7 @@ test_that("errors gracefully with bad input", {
 })
 
 test_that("correctly overwrites name", {
-  overwrite <- overwrite_demo
+  overwrite <- r2dii.data::overwrite_demo
 
   out <- suppressWarnings(
     restructure_loanbook(loanbook_rowid, overwrite)
@@ -33,7 +31,7 @@ test_that("correctly overwrites name", {
 })
 
 test_that("correctly overwrites sector", {
-  overwrite <- overwrite_demo
+  overwrite <- r2dii.data::overwrite_demo
 
   out <- suppressWarnings(
     restructure_loanbook(loanbook_rowid, overwrite)

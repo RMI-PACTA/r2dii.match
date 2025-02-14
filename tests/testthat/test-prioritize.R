@@ -1,11 +1,10 @@
 library(dplyr, warn.conflicts = FALSE)
-library(r2dii.data)
 
 test_that("w/ full demo datasets throws no error", {
   expect_no_error(
-    loanbook_demo %>%
+    r2dii.data::loanbook_demo %>%
       slice(4:5) %>%
-      match_name(abcd_demo) %>%
+      match_name(r2dii.data::abcd_demo) %>%
       prioritize(priority = "ultimate_parent")
   )
 })
