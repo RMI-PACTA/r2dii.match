@@ -1,3 +1,5 @@
+#' @export
+
 calculate_match_success_rate <- function(matched, loanbook) {
   merge_by <-
     c(
