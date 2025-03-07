@@ -1,3 +1,15 @@
+#' Calculate the success rate of the matching process
+#'
+#' @param matched A data frame like the validated output of [match_name()].
+#'
+#' @param loanbook A data frame structured like [r2dii.data::loanbook_demo].
+#'
+#' @return A data frame.
+#'
+#' @examples
+#' matched <- match_name(r2dii.data::loanbook_demo, r2dii.data::abcd_demo)
+#' calculate_match_success_rate(matched, r2dii.data::loanbook_demo)
+#'
 #' @export
 
 calculate_match_success_rate <- function(matched, loanbook) {
