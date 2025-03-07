@@ -10,6 +10,8 @@
 #' matched <- match_name(r2dii.data::loanbook_demo, r2dii.data::abcd_demo)
 #' calculate_match_success_rate(matched, r2dii.data::loanbook_demo)
 #'
+#' @family main functions
+#'
 #' @export
 
 calculate_match_success_rate <- function(matched, loanbook) {

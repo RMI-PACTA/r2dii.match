@@ -22,3 +22,9 @@ matched <- match_name(r2dii.data::loanbook_demo, r2dii.data::abcd_demo)
 calculate_match_success_rate(matched, r2dii.data::loanbook_demo)
 
 }
+\seealso{
+Other main functions: 
+\code{\link{match_name}()},
+\code{\link{prioritize}()}
+}
+\concept{main functions}
