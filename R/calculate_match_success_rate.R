@@ -12,6 +12,8 @@
 #'
 #' @family main functions
 #'
+#' @importFrom dplyr %>%
+#'
 #' @export
 
 calculate_match_success_rate <- function(matched, loanbook) {
