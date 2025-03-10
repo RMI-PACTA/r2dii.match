@@ -37,7 +37,7 @@ calculate_match_success_rate <- function(matched, loanbook) {
       matched = dplyr::case_when(
         score == 1   ~ "Matched",
         is.na(score) ~ "Not Matched",
-        TRUE         ~ "Not Mached"
+        TRUE         ~ "Not Matched"
       ),
       sector = dplyr::case_when(
         borderline == TRUE & matched == "Not Matched" ~ "not in scope",
