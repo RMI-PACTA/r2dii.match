@@ -62,7 +62,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' library(r2dii.data)
 #' library(tibble)
 #'
@@ -119,7 +118,6 @@
 #'
 #' # Cleanup
 #' options(restore)
-#' }
 match_name <- function(loanbook,
                        abcd,
                        by_sector = TRUE,
