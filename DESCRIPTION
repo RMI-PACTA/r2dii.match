@@ -53,6 +53,7 @@ BugReports: https://github.com/RMI-PACTA/r2dii.match/issues
 Depends: 
     R (>= 3.5)
 Imports: 
+    cli,
     data.table,
     dplyr (>= 0.8.5),
     glue,
@@ -68,7 +69,6 @@ Imports:
     tidyselect,
     utils
 Suggests: 
-    cli,
     covr,
     readr,
     rmarkdown,
