@@ -83,7 +83,7 @@ abort_all_sec_classif_unknown <- function(column, known) {
     message = c(
       "Some values in {.col {column}} must be known, i.e. one of: {.val {known}}",
       "i" = "All of the values do not appear in the specified sector classification system.",
-      "i" = "You may want to specify a different sector classification system."
+      "i" = "You may want to specify a different sector classification system (see {.fun r2dii.match::match_name})."
     ),
     class = "all_sec_classif_unknown"
   )
