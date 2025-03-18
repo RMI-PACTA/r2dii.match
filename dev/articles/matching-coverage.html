@@ -138,11 +138,9 @@ two mismatching loans:</p>
 <code class="sourceCode R"><span><span class="va">matched</span> <span class="op">&lt;-</span> <span class="va">loanbook</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="../reference/match_name.html">match_name</a></span><span class="op">(</span><span class="va">abcd_demo</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="../reference/prioritize.html">prioritize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Some `sector_classification_direct_loantaker` are unknown:99</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> If you wish to request a new sector classification system, please create an issue here:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> https://github.com/RMI-PACTA/r2dii.data/issues</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Or contact the PACTA team here:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">•</span> pacta4banks@rmi.org</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Some values in `sector_classification_direct_loantaker` are unknown: <span style="color: #0000BB;">"99"</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The unknown values do not appear in the specified sector classification</span></span>
+<span><span class="co">#&gt;   system.</span></span></code></pre></div>
 <p>Note that this <code>matched</code> dataset will contain
 <em>only</em> loans that were matched successfully. To determine
 coverage, we need to go back to the original <code>loanbook</code>
