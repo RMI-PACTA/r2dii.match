@@ -115,9 +115,6 @@
 #' )
 #'
 #' match_name(loanbook, abcd, sector_classification = your_classifications)
-#'
-#' # Cleanup
-#' options(restore)
 match_name <- function(loanbook,
                        abcd,
                        by_sector = TRUE,
