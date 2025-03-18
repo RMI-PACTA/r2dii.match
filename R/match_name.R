@@ -62,7 +62,6 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' library(r2dii.data)
 #' library(tibble)
 #'
@@ -116,7 +115,6 @@
 #' )
 #'
 #' match_name(loanbook, abcd, sector_classification = your_classifications)
-#' }
 match_name <- function(loanbook,
                        abcd,
                        by_sector = TRUE,
