@@ -79,36 +79,26 @@ check_classification <- function(data,
 }
 
 abort_all_sec_classif_unknown <- function(column, known) {
-  abort(
-    class = "all_sec_classif_unknown",
+  cli::cli_abort(
     message = c(
-      glue("Some `{column}` must be known, i.e. one of: {collapse2(known)}"),
-      "i" = "If you wish to request a new sector classification system, please create an issue here:",
-      "*" = "https://github.com/RMI-PACTA/r2dii.data/issues",
-      "i" = "Or contact the PACTA team here:",
-      "*" = "pacta4banks@rmi.org"
+      "Some values in {.col {column}} must be known, i.e. one of: {.val {known}}",
+      "i" = "All of the values do not appear in the specified sector classification system.",
+      "i" = "You may want to specify a different sector classification system (see {.fun r2dii.match::match_name})."
     ),
-    use_cli_format = TRUE
+    class = "all_sec_classif_unknown"
   )
 }
 
 warn_some_sec_classif_unknown <- function(column, unknown) {
-  warn(
-    class = "some_sec_classif_unknown",
+  cli::cli_warn(
     message = c(
-      glue("Some `{column}` are unknown:{collapse2(unknown)}"),
-      "i" = "If you wish to request a new sector classification system, please create an issue here:",
-      "*" = "https://github.com/RMI-PACTA/r2dii.data/issues",
-      "i" = "Or contact the PACTA team here:",
-      "*" = "pacta4banks@rmi.org"
-      )
+      "Some values in {.col {column}} are unknown: {.val {unknown}}",
+      "i" = "The unknown values do not appear in the specified sector classification system."
+    ),
+    class = "some_sec_classif_unknown"
   )
 
   invisible(column)
-}
-
-collapse2 <- function(x, sep = ", ", last = " and ", width = 80) {
-  glue::glue_collapse(x, sep = sep, last = last, width = width)
 }
 
 rename_as_loanbook <- function(classification) {
