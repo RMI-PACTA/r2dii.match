@@ -157,9 +157,6 @@ abcd <- tibble(
 )
 
 match_name(loanbook, abcd, sector_classification = your_classifications)
-
-# Cleanup
-options(restore)
 }
 }
 \seealso{
