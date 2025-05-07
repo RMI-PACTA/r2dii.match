@@ -103,7 +103,6 @@ This function ignores but preserves existing groups.
 }
 
 \examples{
-\dontrun{
 library(r2dii.data)
 library(tibble)
 
@@ -157,7 +156,6 @@ abcd <- tibble(
 )
 
 match_name(loanbook, abcd, sector_classification = your_classifications)
-}
 }
 \seealso{
 Other main functions: 
