@@ -94,6 +94,7 @@ prioritize(matched, priority = bad_idea)
 \code{\link[=match_name]{match_name()}}, \code{\link[=prioritize_level]{prioritize_level()}}.
 
 Other main functions: 
+\code{\link{calculate_match_success_rate}()},
 \code{\link{match_name}()}
 }
 \concept{main functions}

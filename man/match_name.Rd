@@ -159,6 +159,7 @@ match_name(loanbook, abcd, sector_classification = your_classifications)
 }
 \seealso{
 Other main functions: 
+\code{\link{calculate_match_success_rate}()},
 \code{\link{prioritize}()}
 }
 \concept{main functions}
