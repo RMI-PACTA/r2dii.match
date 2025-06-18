@@ -1,4 +1,4 @@
-# r2dii.match (development version)
+# r2dii.match 0.4.1
 
 * minor documentation edits (#532 and #534)
 
